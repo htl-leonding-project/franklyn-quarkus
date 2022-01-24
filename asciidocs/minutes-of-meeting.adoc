@@ -8,7 +8,7 @@ Content entered directly below the header but before the first section heading i
 
 == 2022-01-17
 * Initialize the github-repo
-* Initialize new UTrack project for Franklyn
+* Initialize new YouTrack project for Franklyn
 * Discussed the first steps
 
 
