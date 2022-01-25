@@ -18,25 +18,32 @@ endif::backend-html5[]
 
 .Teilnehmer
 |===
-|anwesend |
+|anwesend | |
 
 |Vorname
 |Nachname
+|Klasse
+
 
 | Jonas
 | Birklbauer
+| 5AHIF
 
 | Nico
 | Bojer
+| 5AHIF
 
 | Tarik
 | Hosic
+| 5AHIF
 
 | Tamara
 | Melcher
+| 4AHIF
 
 | Michael
 | Tran
+| 4AHIF
 |===
 
 .Ort und Zeit
@@ -46,7 +53,7 @@ endif::backend-html5[]
 |Online (Discord)
 
 |von-bis
-|Mo. 24.01.2021
+|Mo. 24.01.2022, 18.00 - 18.20
 |Dauer
 | 20 min.
 |===
