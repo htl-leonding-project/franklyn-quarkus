@@ -13,10 +13,9 @@ import java.util.Timer;
 public class InitBean {
     void init(@Observes StartupEvent event) {
         int count = 0;
-        while (count <= 10) {
+        while (count < 10) {
             count++;
             try {
-                Thread.sleep(5000);
                 Robot robot = new Robot();
                 String format = "jpg";
                 String fileName = "FullScreenshot"+count+"." + format;
@@ -26,6 +25,7 @@ public class InitBean {
                 ImageIO.write(screenFullImage, format, new File(fileName));
 
                 System.out.println("A full screenshot saved!");
+                Thread.sleep(5000);
             } catch (AWTException | IOException | InterruptedException ex) {
                 System.err.println(ex);
             }
