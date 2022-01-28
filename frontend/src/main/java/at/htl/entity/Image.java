@@ -4,15 +4,15 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "F_IMAGE")
+//@Entity
+//@Table(name = "F_IMAGE")
 public class Image extends PanacheEntityBase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "I_ID", nullable = false)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(name = "I_ID", nullable = false)
     private Long id;
 
-    @Column(name = "I_BYTES")
+    //@Column(name = "I_BYTES")
     private byte[] imgInByte;
 
     //region Constructor
