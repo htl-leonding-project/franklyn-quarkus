@@ -1,0 +1,51 @@
+= Minutes of Meeting
+Melcher Tamara and Tran Micheal
+21. January 2022
+:toc:
+:icons: font
+
+.Teilnehmer
+|===
+|anwesend | |
+
+|Vorname
+|Nachname
+|Klasse
+
+
+|
+| Prof. Stuetz
+|
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|Online (Discord)
+
+|von-bis
+|Mo. 17.01.2022, 9.20 - 9.45
+|Dauer
+| 25 Minuten
+|===
+
+
+== 2022-01-17
+=== Besprochene Thhemen
+* Das neue Github-Repo wurde initialisiert
+* Ein neues UTrack Projekt wurde für Franklyn2 in Quarkus
+* Weitere Schritte wurden besprochen
+** Image Upload
+** Demnächst ein Treffen mit der 5ahif ausmachen
+
+
+
