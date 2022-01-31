@@ -4,26 +4,21 @@ import org.jboss.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("image")
+@Path("/uploadImage")
 public class ImageResource {
     String DIRECTORY = "./test-screenshots/";
-
-    @Inject
-    Logger LOG;
 
     @GET
     @Produces("image/png")
@@ -32,26 +27,33 @@ public class ImageResource {
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response sentImage() throws IOException {
-        List<BufferedImage> bImages = new ArrayList<>();
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void sentImage(InputStream is) throws IOException {
         File[] files = new File(DIRECTORY).listFiles();
-
-        List<byte[]> images = new ArrayList<>();
 
         if(files != null){
             for (File f:
                     files) {
-                BufferedImage bI = ImageIO.read(f);
-                bImages.add(bI);
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                ImageIO.write(bI, "jpg", bos);
-                images.add(bos.toByteArray());
-                LOG.info(bos.toByteArray());
+                try(ByteArrayOutputStream bos = new ByteArrayOutputStream()){
+                    is.transferTo(new FileOutputStream(f));
+                }
+
+                int read = 0;
+                byte[] bytes = new byte[1024];
+
+                try(OutputStream os = new FileOutputStream(f)){
+                    while((read = is.read(bytes)) != -1){
+                        os.write(bytes, 0, read);
+                    }
+                    os.flush();
+                }
+
+                try{
+                    Files.copy(is, Paths.get(f.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
+                } finally {
+                    is.close();
+                }
             }
         }
-
-
-        return Response.ok(images).build();
     }
 }
