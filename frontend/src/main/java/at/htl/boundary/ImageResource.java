@@ -20,7 +20,7 @@ import java.util.List;
 
 @Path("image")
 public class ImageResource {
-    String DIRECTORY = "./Test-Screenshots/";
+    String DIRECTORY = "./test-screenshots/";
 
     @Inject
     Logger LOG;
