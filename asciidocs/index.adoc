@@ -14,22 +14,6 @@ ifdef::backend-html5[]
 // print the toc here (not at the default position)
 //toc::[]
 
-== How to run
-
-<<how-to-run-protocol.adoc#, How-To-Run>>
-
-== System architecture
-
-<<system-architecture.adoc#, System architecture>>
-
-== System specifications
-
-<<system-specs.adoc#, System Specifications>>
-
-== Projektbericht
-
-<<projekt-bericht.adoc#, Projektbericht>>
-
 == Presentation
 
 <<presentation.adoc#, Presentation>>
