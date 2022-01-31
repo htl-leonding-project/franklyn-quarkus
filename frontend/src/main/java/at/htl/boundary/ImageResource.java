@@ -1,20 +1,12 @@
 package at.htl.boundary;
 
-import org.jboss.logging.Logger;
-
-import javax.imageio.ImageIO;
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
 
 @Path("/uploadImage")
 public class ImageResource {
@@ -28,7 +20,7 @@ public class ImageResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void sentImage(InputStream is) throws IOException {
+    public void uploadImage(InputStream is) throws IOException {
         File[] files = new File(DIRECTORY).listFiles();
 
         if(files != null){
