@@ -11,7 +11,7 @@ docker run --rm \
 cd $PWD/$BUILD_DIR
 CURRENT_FOLDER=${PWD}
 echo "current folder->${CURRENT_FOLDER}"
-git push --force https://github.com/htl-leonding-project/franklyn2.git docs:gh-pages
+git push --force https://github.com/htl-leonding-project/franklyn-quarkus.git docs:gh-pages
 echo gh-pages pushed to github ...
 cd $OLD
 rm -rf $BUILD_DIR
