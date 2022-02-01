@@ -1,5 +1,8 @@
 package at.htl.boundary;
 
+import org.jboss.logging.Logger;
+
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -10,13 +13,10 @@ import java.nio.file.StandardCopyOption;
 
 @Path("/uploadImage")
 public class ImageResource {
-    String DIRECTORY = "./test-screenshots/";
+    final String DIRECTORY = "./test-screenshots/";
 
-    @GET
-    @Produces("image/png")
-    public Response getImage(){
-        return Response.ok().build();
-    }
+    @Inject
+    Logger LOG;
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)

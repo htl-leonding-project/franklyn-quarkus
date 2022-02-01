@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-@Path("receiveImage")
+@Path("image")
 public class ImageResource {
     @Inject
     Logger LOG;
