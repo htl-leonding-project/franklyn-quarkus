@@ -1,8 +1,7 @@
-= Franklyn2
-Jonas Birklbauer, Nico Bojer, Lorenz Gahleitner, Tarik Hosic
+= Franklyn2 in Quarkus
+Melcher Tamara und Michael Tran
 1.0.0, 2021-11-16:
 ifndef::imagesdir[:imagesdir: images]
-//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
 :sourcedir: ../src/main/java
 :icons: font
 :sectnums:    // Nummerierung der Überschriften / section numbering
