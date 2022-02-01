@@ -16,4 +16,6 @@ ifdef::backend-html5[]
 == Presentation
 
 <<presentation.adoc#, Presentation>>
+<<minutes-of-meeting.adoc#, Presentation>>
+
 
