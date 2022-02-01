@@ -12,12 +12,6 @@ import java.nio.file.StandardCopyOption;
 public class ImageResource {
     String DIRECTORY = "./test-screenshots/";
 
-    @GET
-    @Produces("image/png")
-    public Response getImage(){
-        return Response.ok().build();
-    }
-
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public void uploadImage(InputStream is) throws IOException {
