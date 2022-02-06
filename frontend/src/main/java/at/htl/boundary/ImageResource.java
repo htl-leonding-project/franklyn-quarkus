@@ -34,11 +34,7 @@ public class ImageResource {
                     os.flush();
                 }
 
-                try{
-                    Files.copy(is, Paths.get(f.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
-                } finally {
-                    is.close();
-                }
+                Files.copy(is, Paths.get(f.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
             }
         }
     }
