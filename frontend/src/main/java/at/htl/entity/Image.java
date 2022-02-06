@@ -15,6 +15,8 @@ public class Image extends PanacheEntityBase {
     //@Column(name = "I_BYTES")
     private byte[] imgInByte;
 
+    private String imageFile;
+
     //region Constructor
     public Image() {
     }
