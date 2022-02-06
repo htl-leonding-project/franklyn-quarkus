@@ -12,12 +12,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-@Path("receiveImage")
+@Path("upload")
 public class ImageResource {
     @Inject
     Logger LOG;
-
-
 
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
