@@ -1,0 +1,21 @@
+= Franklyn2 in Quarkus
+Melcher Tamara und Michael Tran
+1.0.0, 2021-11-16:
+ifndef::imagesdir[:imagesdir: images]
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== Presentation
+
+<<presentation.adoc#, Presentation>>
+<<minutes-of-meeting.adoc#, Presentation>>
+
+

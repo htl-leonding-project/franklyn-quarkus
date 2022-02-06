@@ -1,0 +1,152 @@
+= Minutes of Meeting
+Melcher Tamara and Tran Micheal
+2022
+:toc:
+:icons: font
+
+== 2022-01-17
+
+.Teilnehmer
+|===
+|anwesend | |
+
+|Vorname
+|Nachname
+|Klasse
+
+
+|
+| Prof. Stuetz
+|
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|Online (Discord)
+
+|von-bis
+|Mo. 17.01.2022, 9.20 - 9.45
+|Dauer
+| 25 Minuten
+|===
+
+=== Besprochene Thhemen
+* Das neue Github-Repo wurde initialisiert
+* Ein neues UTrack Projekt wurde für Franklyn2 in Quarkus
+* Weitere Schritte wurden besprochen
+** Image Upload
+** Demnächst ein Treffen mit der 5ahif ausmachen
+
+
+
+== 2022-01-24
+.Teilnehmer
+|===
+|anwesend | |
+
+|Vorname
+|Nachname
+|Klasse
+
+
+| Jonas
+| Birklbauer
+| 5AHIF
+
+| Nico
+| Bojer
+| 5AHIF
+
+| Tarik
+| Hosic
+| 5AHIF
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|Online (Discord)
+
+|von-bis
+|Mo. 24.01.2022, 18.00 - 18.20
+|Dauer
+| 20 min.
+|===
+
+=== Besprochene Themen
+
+* Dokumenten übergabe
+* Implementierung im Quarkus
+* Was sind die nächsten Schritte
+
+
+=== Vereinbarungen und Entscheidungen
+
+.Was wurde vereinbart?
+[%autowidth]
+|===
+|wer |macht was |bis wann
+
+| Michael Tran / Tamara Melcher
+| neues Quarkus Projekt erstellen
+| nächste SYP-Stunde (25. Jän 2022)
+
+| Michael Tran / Tamara Melcher
+| Upload von Bildern im im Backend
+| nächste SYP-Stunde (25. Jän 2022)
+|===
+
+
+
+
+== 2022-01-25
+=== Ziele des Projektes
+
+* Aufrechterhaltung des Betriebs von Franklyn 1
+** Dazu zählen die beiden Instanzen:
+*** Produktivsystem franklyn.htl-leonding.ac.at
+*** Ausfallsystem franklyn2.htl-leonding.ac.at
+
+* Neuentwicklung des Franklyn in Quarkus
+** Backend als Quarkus
+** Student-Frontend ev. als Quarkus
+** Teacher-Frontend ev. als Quarkus
+
+=== Nächste Schritte
+
+* Kennenlernen der wichtigsten Funktionen des bestehenden Franklyn-Produktivsystem
+** Starten
+** Stoppen
+** Ausführen von Shell-Commands
+
+* Machbarkeitsstudie
+** Screenshoter in einer Quarkus App
+** Image Upload
+
+* Ist-Zustandserhebung des derzeitigen Produktivsystems
+** Besonders wichtig sind die Business-Rules
+*** zB Ab welcher Speicherauslastung werden automatisch die ältesten Tests gelöscht?
+*** Wie werden die Images gespeichert?(Festplatte oder Files?)
+*** Datenmodell
+
+
+

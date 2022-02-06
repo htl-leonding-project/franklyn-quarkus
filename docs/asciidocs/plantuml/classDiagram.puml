@@ -1,0 +1,13 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Server{}
+
+class Examine{}
+
+class Examiner{}
+
+Examine "*" --> "1" Server
+Examiner "*" --> "1" Server
+
+@enduml
