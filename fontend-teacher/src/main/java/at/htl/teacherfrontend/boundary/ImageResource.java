@@ -35,6 +35,8 @@ public class ImageResource {
                     Paths.get("file-upload", filename),
                     StandardCopyOption.REPLACE_EXISTING
             );
+            LOG.info("File saved!");
+
         }
 
         return Response.ok().build();
