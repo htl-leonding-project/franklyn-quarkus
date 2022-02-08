@@ -22,6 +22,8 @@ The teacher can look at the students' screens and see if one or more students ne
 
 `./mvnw clean quarkus:dev`
 
-3. finally open a terminal in `frontend`-project and execute:
+3. finally start the frontend
+
+* open a terminal in `frontend`-project and execute:
 
 `./mvnw clean quarkus:dev`
