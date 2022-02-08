@@ -21,7 +21,7 @@ public class ImageResource {
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response upload(InputStream is, @QueryParam("filename") String filename) throws IOException {
+    public Response download(InputStream is, @QueryParam("filename") String filename) throws IOException {
 
         if (filename.isBlank()) {
             filename = "unknown.xxx";
