@@ -22,7 +22,7 @@ der SchülerInnen überwachen.
 |done
 
 |Download Image
-|In progress
+|Done
 
 |Datenmodell
 |In Progess
@@ -32,4 +32,6 @@ der SchülerInnen überwachen.
 |===
 
 == Was noch kommt
+
+* Datenmodell
 * lt. Prof. Stütz WebUntis-Authentifizierung
