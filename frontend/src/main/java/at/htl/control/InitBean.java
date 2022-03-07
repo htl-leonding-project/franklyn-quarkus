@@ -24,7 +24,7 @@ public class InitBean {
 
     private AtomicInteger count = new AtomicInteger();
 
-    //@Scheduled(every = "5s")
+    @Scheduled(every = "5s")
     void makeScreenshot() {
 
         count.incrementAndGet();
