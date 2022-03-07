@@ -37,4 +37,4 @@ nb-configuration.xml
 *.rej
 
 # Local environment
-.env
+docs/.env
