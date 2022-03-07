@@ -18,6 +18,6 @@ ifdef::backend-html5[]
 <<presentation.adoc#, Presentation>>
 
 
-<<minutes-of-meeting.adoc#, Presentation>>
+<<minutes-of-meeting.adoc#, Protocols>>
 
 
