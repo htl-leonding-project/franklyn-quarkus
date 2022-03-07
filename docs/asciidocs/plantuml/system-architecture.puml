@@ -1,0 +1,26 @@
+@startuml
+
+skinparam linetype polyline
+skinparam databaseBackgroundColor Aqua
+
+package backend{
+    frame "quarkus-backend"
+}
+
+package frontend{
+    frame "quarkus-frontend"
+}
+
+'package TeacherFrontend{
+'
+'    frame "angular"
+'}
+
+database db{
+}
+
+db -r- backend
+backend -d- frontend : http
+'TeacherFrontend -- backend : http
+
+@enduml
