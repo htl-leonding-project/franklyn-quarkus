@@ -40,13 +40,12 @@ Melcher Tamara and Tran Micheal
 | 25 Minuten
 |===
 
-=== Besprochene Thhemen
+=== Besprochene Themen
 * Das neue Github-Repo wurde initialisiert
 * Ein neues UTrack Projekt wurde für Franklyn2 in Quarkus
 * Weitere Schritte wurden besprochen
 ** Image Upload
 ** Demnächst ein Treffen mit der 5ahif ausmachen
-
 
 
 == 2022-01-24
@@ -147,6 +146,126 @@ Melcher Tamara and Tran Micheal
 *** zB Ab welcher Speicherauslastung werden automatisch die ältesten Tests gelöscht?
 *** Wie werden die Images gespeichert?(Festplatte oder Files?)
 *** Datenmodell
+
+
+== 2022-03-01
+
+.Teilnehmer
+|===
+|anwesend | |
+
+|Vorname
+|Nachname
+|Klasse
+
+
+|
+| Prof. Stuetz
+|
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|Online (Discord)
+
+|von-bis
+|Di. 01.03.2022, 14:45 - 16:40
+|Dauer
+| 55 Minuten
+|===
+
+=== Nächste Schritte
+
+* Mehrere Clients anmelden
+** Screenshot nach Client benennen
+
+* docker-compose für backend
+
+* docker-compose für die Datenbank (postgres)
+
+* Einrichten der CI/CD - Pipeline
+
+* Keycloak einrichten
+** Berechtigungen für Schul-Keycloak von Prof. Stütz
+
+=== Fragen
+* Datenbankstruktur derzeit?
+
+
+== 2022-03-07
+
+.Teilnehmer
+|===
+|anwesend | |
+
+|Vorname
+|Nachname
+|Klasse
+
+
+|
+| Prof. Stuetz
+|
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|HTL Leonding
+
+|von-bis
+|Mo. 07.03.2022, 8:45-9:30
+|Dauer
+| 45 Minuten
+|===
+
+=== Besprochene Themen
+
+* Problem in der Applikation
+* Fragen, die wir der 5. noch stellen müssen
+* Systemarchitektur vom Franklyn
+
+=== Problemstellung
+
+@Scheduled hat nicht funktioniert. Applikation hat nur einen Screenshot gemacht und dann nichts mehr.
+
+=== Lösung
+
+Port war bereits besetzt von Docker Containern, die darauf liefen.
+
+=== Fragen
+* Wo werden im aktuellen Franklyn die Bilder gespeichert?
+** Datenbank
+** Filesystem
+
+* Datenmodell des aktuellen Franklyn
+
+=== Systemarchitektur
+
+Wurde gemeinsam mit Herr Prof. Stütz besprochen und aufgezeichnet.
+
+image::images/systemarchitecture.jpeg[]
+
+
 
 
 
