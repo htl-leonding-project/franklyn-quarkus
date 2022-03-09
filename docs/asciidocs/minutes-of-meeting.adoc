@@ -315,8 +315,10 @@ image::images/systemarchitecture.jpeg[]
 ** Über VM lassen uns Datenblatt noch zukommen
 ** Gemeinsam am 10.03 mit der 5ahif Zugriff auf die Franklyn VM einrichten
 *** Zeigen uns wie wir den Franklyn starten und stoppen können
+
 * Datenmodell vom Franklyn 2
 ** Ist im Franklyn 2 im Server/server/app/models abgebildet
+
 * Welche Datenbank wurde genutzt, um die Bilder zu speichern
 ** MongoDB
 
