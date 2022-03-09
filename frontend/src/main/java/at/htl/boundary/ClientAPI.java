@@ -27,16 +27,18 @@ public class ClientAPI {
         this.firstName = fName;
         this.lastName = lName;
 
-        return Response
+        /*return Response
                 .status(Response.Status.BAD_REQUEST)
                 .entity(clientResource.enterPin())
                 .type(MediaType.TEXT_HTML_TYPE)
-                .build();
+                .build();*/
 
         //user anlegen
         //weiterleiten um pin einzugeben
         //wenn pin korrekt --> user in db
         //wenn falsch --> Fehlermeldung
+        return Response
+                .ok().build();
     }
 
     @Path("enterPin")
