@@ -266,6 +266,61 @@ Wurde gemeinsam mit Herr Prof. Stütz besprochen und aufgezeichnet.
 image::images/systemarchitecture.jpeg[]
 
 
+== 2022-03-09
+.Teilnehmer
+|===
+|anwesend | |
+
+|Vorname
+|Nachname
+|Klasse
+
+
+| Jonas
+| Birklbauer
+| 5AHIF
+
+| Nico
+| Bojer
+| 5AHIF
+
+| Tarik
+| Hosic
+| 5AHIF
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|HTL Leonding
+
+|von-bis
+|Mo. 09.03.2022, 11.55 - 12.20
+|Dauer
+| 25 min.
+|===
+
+=== Besprochene Themen
+
+* Instandhaltung von Franklyn 2
+** Über VM lassen uns Datenblatt noch zukommen
+** Gemeinsam am 10.03 mit der 5ahif Zugriff auf die Franklyn VM einrichten
+*** Zeigen uns wie wir den Franklyn starten und stoppen können
+* Datenmodell vom Franklyn 2
+** Ist im Franklyn 2 im Server/server/app/models abgebildet
+* Welche Datenbank wurde genutzt, um die Bilder zu speichern
+** MongoDB
+
+
 
 
 
