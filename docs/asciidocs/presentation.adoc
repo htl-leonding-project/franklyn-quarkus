@@ -12,8 +12,24 @@ der SchülerInnen überwachen.
 
 == Use Case Diagram
 
-image:images/useCase.png[]
+[plantuml]
+----
+include::plantuml/ucd.puml[]
+----
 
+== Datenmodell
+
+[plantuml]
+----
+include::plantuml/classDiagram.puml[]
+----
+
+== Systemarchitektur
+
+[plantuml]
+----
+include::plantuml/system-architecture.puml[]
+----
 
 == Unsere Aufgaben
 .Aufgaben
@@ -34,9 +50,16 @@ image:images/useCase.png[]
 
 |MOM
 |up-to-date
+
+|Qute - Student Login
+|In progress
+
+|Datenmodell
+|In progress
+
 |===
 
 == Was noch kommt
 
-* Datenmodell
-* lt. Prof. Stütz WebUntis-Authentifizierung
+* Datenmodellbesprechung mit Prof. Stütz
+* Login für Schüler
