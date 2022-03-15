@@ -15,7 +15,7 @@ ifdef::backend-html5[]
 
 == Presentation
 
-<<presentation.adoc#, Presentation>>
+<<system-specification.adoc#, System Specification>>
 
 == Protocol
 
