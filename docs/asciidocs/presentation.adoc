@@ -10,6 +10,9 @@ Franklyn ist eine Applikation, die die Bildschirme der SchülerInnen "überwacht
 Die ProfessorInnen können somit sehen, wenn jemand Hilfe braucht bzw. für Chancengleichheit sorgen, indem sie die Bildschirme
 der SchülerInnen überwachen.
 
+== Was war?
+Franklyn in Node.js. Wir sollen es nun in Quarkus umschreiben, da somit die Fehlersuche optimiert werden kann.
+
 == Use Case Diagram
 
 [plantuml]
@@ -63,3 +66,6 @@ include::plantuml/system-architecture.puml[]
 
 * Datenmodellbesprechung mit Prof. Stütz
 * Login für Schüler
+* Tests
+* Lehrerfrontend
+
