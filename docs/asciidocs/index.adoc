@@ -13,12 +13,12 @@ ifdef::backend-html5[]
 // print the toc here (not at the default position)
 //toc::[]
 
-== Presentation
+== System Specification
 
 <<system-specification.adoc#, System Specification>>
 
 == Protocol
 
-<<minutes-of-meeting.adoc#, Protocol>>
+<<minutes-of-meeting.adoc#, Minutes of Meeting>>
 
 

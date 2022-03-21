@@ -116,8 +116,8 @@ Melcher Tamara and Tran Micheal
 
 
 
-
 == 2022-01-25
+
 === Ziele des Projektes
 
 * Aufrechterhaltung des Betriebs von Franklyn 1
@@ -321,6 +321,8 @@ image::images/systemarchitecture.jpeg[]
 
 * Welche Datenbank wurde genutzt, um die Bilder zu speichern
 ** MongoDB
+
+
 
 == 2022-03-14
 
