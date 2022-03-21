@@ -2,6 +2,7 @@ package at.htl.control;
 
 import at.htl.boundary.ImageService;
 import io.quarkus.runtime.StartupEvent;
+import org.apache.james.mime4j.dom.datetime.DateTime;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -12,6 +13,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 // https://stackoverflow.com/questions/66347707/send-a-simple-post-request-from-quarkus-java
 
@@ -22,8 +26,26 @@ public class InitBean {
     @RestClient
     ImageService imageService;
 
-    void init(@Observes StartupEvent event) {
-        int count = 0;
+    public void init( String firstName, String lastName) {
+        try {
+            Robot robot = new Robot();
+            String format = "png";
+            LocalDateTime localDateTime = LocalDateTime.now();
+            String fileName = localDateTime+"_"+lastName+"_"+firstName+"." + format;
+
+            Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+            BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+            File newFile = new File(fileName);
+            ImageIO.write(screenFullImage, format, newFile);
+
+            System.out.println(imageService.uploadFile(newFile, fileName));
+
+            System.out.println("A full screenshot saved!");
+            Thread.sleep(5000);
+        } catch (AWTException | IOException | InterruptedException ex) {
+            System.err.println(ex);
+        }
+        /*int count = 0;
         while (count < 10) {
             count++;
             try {
@@ -43,6 +65,6 @@ public class InitBean {
             } catch (AWTException | IOException | InterruptedException ex) {
                 System.err.println(ex);
             }
-        }
+        }*/
     }
 }

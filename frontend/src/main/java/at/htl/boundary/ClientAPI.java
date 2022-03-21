@@ -1,5 +1,7 @@
 package at.htl.boundary;
 
+import at.htl.control.InitBean;
+
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -15,6 +17,9 @@ public class ClientAPI {
     String firstName;
     @Inject
     ClientResource clientResource;
+
+    @Inject
+    InitBean initBean;
 
     @Path("login")
     @POST
@@ -37,8 +42,10 @@ public class ClientAPI {
         //weiterleiten um pin einzugeben
         //wenn pin korrekt --> user in db
         //wenn falsch --> Fehlermeldung
+        initBean.init(firstName, lastName);
         return Response
                 .ok().build();
+
     }
 
     @Path("enterPin")

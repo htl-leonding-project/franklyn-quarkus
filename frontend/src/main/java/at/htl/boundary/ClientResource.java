@@ -30,7 +30,7 @@ public class ClientResource {
     @Path("login")
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance getAllRoutes() {
+    public TemplateInstance login() {
         return Templates.login();
     }
 }
