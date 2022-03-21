@@ -322,6 +322,139 @@ image::images/systemarchitecture.jpeg[]
 * Welche Datenbank wurde genutzt, um die Bilder zu speichern
 ** MongoDB
 
+== 2022-03-14
+
+.Teilnehmer
+|===
+|anwesend | |
+
+|Vorname
+|Nachname
+|Klasse
+
+|
+| Prof. Stütz
+|
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|HTL Leonding
+
+|von-bis
+|Di. 21.03.2022, 14.40 - 15.20
+|Dauer
+| 40 min.
+|===
+
+=== Besprochene Themen
+
+* Datenmodell des Franklyn2
+* Teacher-frontend
+* Lehreranmeldung
+* Schüleranmeldung
+* Speichern der Screenshots -> in Filesystem
+
+
+===  Nächste Schritte
+
+* Teacher-frontend rauswerfen
+* 1 Entität reaktiv programmieren
+** Entität testen
+** Testdaten schreiben
+* Anmeldung von Lehrern und Schüler herausfinden
+
+
+=== Fragen
+
+* Was wird in der MongoDB gespeichert?
+** Wo?
+* Was ist die Struktur der MongoDB
+* Wie funktioniert die Anmeldung in Franklyn?
+** Welcher Programmteil greift auf WebUntis zu?
+** Was kommt retour?
+** Was davon wird in der DB gespeichert?
+** Gibt es einen Testlehrer für WebUntis?
+
+
+=== Bemerkungen
+
+* Alle 5 Minuten Request an Server, ob Client noch online
+* keine Katalognummer
+* enrolementNr automatisch zuweisen
+* config -> application properties
+* RestClient Insomnia
+
+
+
+== 2022-03-21
+
+.Teilnehmer
+|===
+|anwesend | |
+
+|Vorname
+|Nachname
+|Klasse
+
+|
+| Prof. Stütz
+|
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|HTL Leonding
+
+|von-bis
+|Mo. 21.03.2022, 10.00 - 10.50
+|Dauer
+| 50 min.
+|===
+
+=== Besprochene Themen
+
+* Nächste Schritte
+** Datenmodell (Entity-Klassen)
+*** Was bedeuten (machen) die einzelnen Felder
+** Erste Funktionalität reaktiv programmieren und anschließend mit Betreuer besprechen
+*** Upload von Bildern
+*** Nicht-blockierendes Speichern in DB
+** Schnittstellenbeschreibung des Legacy-Systems
+*** Beschreibung der filenamen
+
+
+[plantuml,sys-arch,png]
+----
+@startuml
+node screenshots << filesystem >>
+node backend << quarkus >>
+node client << desktop-compose >>
+backend -- client: rest
+backend -right- screenshots
+@enduml
+----
+
 
 
 
