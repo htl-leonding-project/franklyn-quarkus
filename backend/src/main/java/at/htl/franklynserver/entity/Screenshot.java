@@ -11,10 +11,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "F_SCREENSHOT")
 public class Screenshot extends PanacheEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ED_ID")
-    public Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "ED_ID")
+//    public Long id;
 
     @NotNull
     @Column(name = "S_TIMESTAMP")
@@ -45,4 +45,18 @@ public class Screenshot extends PanacheEntity {
     @Column(name = "S_IS_COMPRESSED")
     @ConfigProperty(defaultValue = "NOT_COMPRESSED")
     public IsCompressed isCompressed;
+
+    public Screenshot() {
+    }
+
+    public Screenshot(Long timestamp, Long screenshotNumber, Long examId, Long examineeId,
+                      Resolution resolution, int compression, IsCompressed isCompressed) {
+        this.timestamp = timestamp;
+        this.screenshotNumber = screenshotNumber;
+        this.examId = examId;
+        this.examineeId = examineeId;
+        this.resolution = resolution;
+        this.compression = compression;
+        this.isCompressed = isCompressed;
+    }
 }

@@ -7,10 +7,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "F_EXAMINER")
 public class Examiner extends PanacheEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "E_ID")
-    public Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "E_ID")
+//    public Long id;
 
     @Column(name = "E_USER_Name")
     public String userName;
@@ -23,4 +23,15 @@ public class Examiner extends PanacheEntity {
 
     @Column(name = "E_IS_ADMIN")
     public boolean isAdmin;
+
+    public Examiner() {
+    }
+
+
+    public Examiner(String userName, String firstName, String lastName, boolean isAdmin) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.isAdmin = isAdmin;
+    }
 }

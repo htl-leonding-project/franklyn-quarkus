@@ -9,11 +9,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "F_FORM")
 public class Form extends PanacheEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "E_ID")
-    public Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "E_ID")
+//    public Long id;
 
     @NotNull
     @Size(min = 1, max = 15)
@@ -24,4 +23,12 @@ public class Form extends PanacheEntity {
     @Size(min = 4, max = 4)
     @Column(name = "F_YEAR")
     public String year;
+
+    public Form() {
+    }
+
+    public Form(String title, String year) {
+        this.title = title;
+        this.year = year;
+    }
 }
