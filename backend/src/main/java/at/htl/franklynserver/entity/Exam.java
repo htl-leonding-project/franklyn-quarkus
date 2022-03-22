@@ -77,4 +77,21 @@ public class Exam extends PanacheEntity {
     @Max(100)
     @Column(name = "E_COMPRESSION")
     public int compression;
+
+    public Exam(){}
+
+    public Exam(String pin, String title, boolean ongoing, List<Form> formIds, LocalDate date, LocalDateTime startTime, LocalDateTime endTime, List<Examinee> examineeIds, List<Examiner> examinerIds, int interval, Resolution resolution, int compression) {
+        this.pin = pin;
+        this.title = title;
+        this.ongoing = ongoing;
+        this.formIds = formIds;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.examineeIds = examineeIds;
+        this.examinerIds = examinerIds;
+        this.interval = interval;
+        this.resolution = resolution;
+        this.compression = compression;
+    }
 }

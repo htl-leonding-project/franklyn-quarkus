@@ -17,4 +17,11 @@ public class Examinee extends PanacheEntity {
 
     @Column(name = "E_LAST_NAME")
     public String lastName;
+
+    public Examinee(){}
+
+    public Examinee(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

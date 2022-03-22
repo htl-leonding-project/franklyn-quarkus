@@ -30,4 +30,15 @@ public class ExamineeDetails extends PanacheEntity {
 
     @Column(name = "ED_LATEST_SCREENSHOT_NUMBER")
     public int latestScreenshotNumber;
+
+    public ExamineeDetails(){}
+
+    public ExamineeDetails(Long examId, Long examineeId, boolean isOnline, Long lastOnline, Long latestTimestamp, int latestScreenshotNumber) {
+        this.examId = examId;
+        this.examineeId = examineeId;
+        this.isOnline = isOnline;
+        this.lastOnline = lastOnline;
+        this.latestTimestamp = latestTimestamp;
+        this.latestScreenshotNumber = latestScreenshotNumber;
+    }
 }

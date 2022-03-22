@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExamTest {
 
     @Test
-    void createExam() {
+    void createExam_simpleSuccess() {
         Exam exam = new Exam();
-
+        //exam.s
     }
 }
