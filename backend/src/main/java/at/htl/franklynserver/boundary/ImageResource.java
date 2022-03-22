@@ -17,9 +17,6 @@ public class ImageResource {
     @Inject
     Logger LOG;
 
-    @Inject
-    ImageResourceUpload imageResourceUpload;
-
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,8 +34,6 @@ public class ImageResource {
                     Paths.get("file-upload", filename),
                     StandardCopyOption.REPLACE_EXISTING
             );
-
-            imageResourceUpload.uploadToTeacher(filename);
         }
 
         return Response.ok().build();
