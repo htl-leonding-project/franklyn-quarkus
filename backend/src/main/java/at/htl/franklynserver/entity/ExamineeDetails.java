@@ -8,10 +8,10 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "F_EXAMINEE_DETAILS")
 public class ExamineeDetails extends PanacheEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ED_ID")
-    public Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "ED_ID")
+//    public Long id;
 
     @Column(name = "ED_EXAM_ID")
     public Long examId;

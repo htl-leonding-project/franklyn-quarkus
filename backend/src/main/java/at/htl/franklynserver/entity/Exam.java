@@ -13,10 +13,10 @@ import java.util.List;
 @Entity
 @Table(name = "F_EXAM")
 public class Exam extends PanacheEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "E_ID")
-    public Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "E_ID")
+//    public Long id;
 
     @Column(name = "E_PIN")
     @NotNull

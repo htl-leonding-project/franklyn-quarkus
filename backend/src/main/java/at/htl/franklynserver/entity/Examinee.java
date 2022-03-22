@@ -7,10 +7,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "F_EXAMINEE")
 public class Examinee extends PanacheEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "E_ID")
-    public Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "E_ID")
+//    public Long id;
 
     @Column(name = "E_FIRST_NAME")
     public String firstName;

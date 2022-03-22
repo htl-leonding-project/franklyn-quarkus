@@ -9,6 +9,6 @@ class ExamTest {
     @Test
     void createExam_simpleSuccess() {
         Exam exam = new Exam();
-        //exam.s
+        //exam.
     }
 }
