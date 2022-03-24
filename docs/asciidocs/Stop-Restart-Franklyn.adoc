@@ -1,0 +1,32 @@
+= AsciiDoc Article Title
+Firstname Lastname <author@asciidoctor.org>
+3.0, July 29, 2022: AsciiDoc article template
+:toc:
+:icons: font
+:url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
+
+Content entered directly below the header but before the first section heading is called the preamble.
+
+== Access the VM
+```bash
+# Connect to the VM
+ssh fradmin@franklyn2.htl-leonding.ac.at
+
+# Enter password, which is on Discord
+
+# Install dependencies
+yarn
+
+# Decide whether you want to use the local server or the production server:
+Location: franklyn-client\Franklyn\app\config\config.js
+Variable: const locally = true/false;
+
+# Run the app in development mode
+yarn dev
+
+# OR
+
+# Run the app without the developer console
+yarn start
+```
+
