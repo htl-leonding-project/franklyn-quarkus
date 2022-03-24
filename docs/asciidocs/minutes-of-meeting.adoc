@@ -458,6 +458,66 @@ backend -right- screenshots
 ----
 
 
+== 2022-03-24
+
+.Teilnehmer
+|===
+|anwesend | |
+
+|Vorname
+|Nachname
+|Klasse
 
 
+| Jonas
+| Birklbauer
+| 5AHIF
 
+| Nico
+| Bojer
+| 5AHIF
+
+| Tarik
+| Hosic
+| 5AHIF
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|HTL Leonding
+
+|von-bis
+|Do. 24.03.2022,
+|Dauer
+|
+|===
+
+=== Besprochene Themen
+
+* Franklyn VM
+** Zugang
+** Starten und Stoppen vom Franklyn
+* Filesystem und Datenbank
+** Referenz von der Datenbank auf das Filesystem
+** Struktur des Filesystems
+*** Exams -> Screenshots -> Examinees
+**** Screeshot number mit examineeid und examid
+* Testlehrer
+** Daten in Discord
+* Schnittstellenbeschreibung
+* Beschreibung der Felder
+** enrolemntnr -> wievielte person man ist, die sich anmeldet
+** module -> anonyme Klasse, kann man weglassen
+* Anmeldung
+** Frontend schickt Anmeldedaten an Server -> prüft Anmeldedaten
+** Methode in server -> app -> controller -> services
