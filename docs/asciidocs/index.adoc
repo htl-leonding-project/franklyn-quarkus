@@ -21,4 +21,9 @@ ifdef::backend-html5[]
 
 <<minutes-of-meeting.adoc#, Minutes of Meeting>>
 
+== Franklyn maintenance
+
+<<stop-restart-franklyn.adoc#, How to stop and restart Franklyn>>
+
+
 

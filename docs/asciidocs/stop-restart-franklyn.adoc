@@ -7,26 +7,17 @@ Firstname Lastname <author@asciidoctor.org>
 
 Content entered directly below the header but before the first section heading is called the preamble.
 
-== Access the VM
+== Stop and Restart Franklyn
 ```bash
 # Connect to the VM
 ssh fradmin@franklyn2.htl-leonding.ac.at
 
 # Enter password, which is on Discord
 
-# Install dependencies
-yarn
+# Go to directory
+cd /franklyn2/franklyn2/src/server
 
-# Decide whether you want to use the local server or the production server:
-Location: franklyn-client\Franklyn\app\config\config.js
-Variable: const locally = true/false;
-
-# Run the app in development mode
-yarn dev
-
-# OR
-
-# Run the app without the developer console
-yarn start
+# Execute the sh-file
+./clean-build.sh
 ```
 
