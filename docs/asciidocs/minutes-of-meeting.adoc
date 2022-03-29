@@ -323,6 +323,51 @@ image::images/systemarchitecture.jpeg[]
 ** MongoDB
 
 
+== 2022-03-29
+
+Anwesend Prof. Stuetz, Prof. Bucek, Tamara Melcher, Michael Tran
 
 
+.Teilnehmer
+|===
+|anwesend | |
 
+|Vorname
+|Nachname
+|Klasse
+
+|
+| Prof. Stuetz
+|
+
+|
+| Prof. Bucek
+|
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+
+|===
+
+=== Was wurde besprochen?
+
+* `Form` -> `SchoolClass` umbenannt
+* Assoziative Tabelle
+** `Exam` und `SchoolClass`
+** `Examiner` und `Exam` machen
+* `Examinee` soll auf die `Exam` referenziert werden
+* Screenshot
+** Examinee-Referenz hinzufügen
+** `screenshotNumber` -> `runningNo` ändern
+* Wie funktioniert der `ImageCompressor`?
+** Vorgang `ImageCompressor` Bild komprimieren
+* Resolution einmalig in `Exam` initialisiert werden
+
+=== Vereinbarung
+* Datenmodell erstellen
+* reaktiv machen (jdbc der nicht blockiert, ...)
