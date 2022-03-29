@@ -1,5 +1,4 @@
 package at.htl.franklynserver.entity;
-
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

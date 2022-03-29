@@ -14,6 +14,4 @@ class ExamineeTest {
         assertEquals("Tamara", examinee.firstName);
         assertEquals("Melcher", examinee.lastName);
     }
-
-
 }

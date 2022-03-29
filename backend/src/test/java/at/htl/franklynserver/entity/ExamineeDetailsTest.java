@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExamineeDetailsTest {
+
     @Test
     void add_examinee_details_simple_success() {
         ExamineeDetails examineeDetails = new ExamineeDetails();
@@ -18,4 +19,5 @@ class ExamineeDetailsTest {
         assertFalse(examineeDetails.isOnline);
         assertEquals(1,examineeDetails.latestScreenshotNumber);
     }
+
 }
