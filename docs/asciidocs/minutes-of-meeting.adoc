@@ -526,6 +526,9 @@ backend -right- screenshots
 ** Frontend schickt Anmeldedaten an Server -> prüft Anmeldedaten
 ** Methode in server -> app -> controller -> services
 
+== 2022-03-29
+
+Anwesend Prof. Stuetz, Prof. Bucek, Tamara Melcher, Michael Tran
 
 
 .Teilnehmer
@@ -571,3 +574,5 @@ backend -right- screenshots
 === Vereinbarung
 * Datenmodell erstellen
 * reaktiv machen (jdbc der nicht blockiert, ...)
+
+
