@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
-class FormTest {
+class SchoolClassTest {
 
     @Test
     void simpleSuccess_addForm() {
-        Form form = new Form("SYP1-Test", "2022");
+        SchoolClass form = new SchoolClass("SYP1-Test", "2022");
 
         assertEquals("SYP1-Test", form.title);
         assertEquals("2022", form.year);

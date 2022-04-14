@@ -29,8 +29,8 @@ class ExamTest {
         examinees.add(new Examinee("Tamara", "Melcher"));
         List<Examiner> examiners = new ArrayList<>();
         examiners.add(new Examiner("stuetz", "Thomas", "Stuetz", true));
-        List<Form> forms = new ArrayList<>();
-        forms.add(new Form("4AHIF", "2022"));
+        List<SchoolClass> forms = new ArrayList<>();
+        forms.add(new SchoolClass("4AHIF", "2022"));
         exam.examineeIds = examinees;
         exam.examinerIds = examiners;
         exam.formIds = forms;

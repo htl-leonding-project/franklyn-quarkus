@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "F_FORM")
-public class Form extends PanacheEntity {
+public class SchoolClass extends PanacheEntity {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Column(name = "E_ID")
@@ -24,10 +24,10 @@ public class Form extends PanacheEntity {
     @Column(name = "F_YEAR")
     public String year;
 
-    public Form() {
+    public SchoolClass() {
     }
 
-    public Form(String title, String year) {
+    public SchoolClass(String title, String year) {
         this.title = title;
         this.year = year;
     }

@@ -3,7 +3,6 @@ package at.htl.franklynserver.entity;
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import javax.enterprise.inject.Default;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -38,7 +37,7 @@ public class Exam extends PanacheEntity {
     @NotNull
     @Size(min = 1)
     @JoinColumn(name = "E_FORM_IDS")
-    public List<Form> formIds;
+    public List<SchoolClass> formIds;
 
     @NotNull
     @Column(name = "E_DATE")
@@ -80,7 +79,7 @@ public class Exam extends PanacheEntity {
 
     public Exam(){}
 
-    public Exam(String pin, String title, boolean ongoing, List<Form> formIds, LocalDate date, LocalDateTime startTime, LocalDateTime endTime, List<Examinee> examineeIds, List<Examiner> examinerIds, int interval, Resolution resolution, int compression) {
+    public Exam(String pin, String title, boolean ongoing, List<SchoolClass> formIds, LocalDate date, LocalDateTime startTime, LocalDateTime endTime, List<Examinee> examineeIds, List<Examiner> examinerIds, int interval, Resolution resolution, int compression) {
         this.pin = pin;
         this.title = title;
         this.ongoing = ongoing;
