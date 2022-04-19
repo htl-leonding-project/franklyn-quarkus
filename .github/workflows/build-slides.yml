@@ -4,12 +4,12 @@ on:
     branches: [main]
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: quirinecker/asciidoctor-convert-action@1.0
-        with:
-          slides: true
-          inputPath: input
-          outputPath: output
+  building-slides:
+    build-and-deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: quirinecker/asciidoctor-convert-action@1.0
+          with:
+            slides: true
+            inputPath: input
+            outputPath: output
