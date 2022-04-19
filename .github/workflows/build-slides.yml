@@ -10,5 +10,3 @@ jobs:
         uses: quirinecker/asciidoctor-convert-action@1.0
         with:
           slides: true
-          inputPath: input
-          outputPath: output
