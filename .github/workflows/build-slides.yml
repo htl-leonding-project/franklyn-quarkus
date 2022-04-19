@@ -1,12 +1,32 @@
-name: Build
-on: [push]
+name: Docs
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - docs/**
 
 jobs:
-  build-and-deploy:
+  build:
+    name: Build & Publish 🚀
     runs-on: ubuntu-latest
-
+    env:
+      INPUTPATH: docs
+      OUTPUTPATH: dist
+      SLIDES: true
+      BRANCH: gh-pages
     steps:
-      - name: build-slides
-        uses: quirinecker/asciidoctor-convert-action@1.0
+      - uses: actions/checkout@v2
+      - name: Build
+        uses: quirinecker/asciidoctor-convert-action@main
         with:
-          slides: true
+          slides: ${{ env.SLIDES }}
+          inputPath: ${{ env.INPUTPATH }}
+          outputPath: ${{ env.OUTPUTPATH }}
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ github.TOKEN }}
+          BRANCH: ${{ env.BRANCH }}
+          FOLDER: ${{ env.OUTPUTPATH }}
