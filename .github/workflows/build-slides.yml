@@ -12,3 +12,6 @@ jobs:
           slides: true
           inputPath: input
           outputPath: output
+      - run: |
+          #sudo chmod +x ./docker-scripts/docker-convert.sh
+          #sudo ./docker-scripts/docker-convert.sh
