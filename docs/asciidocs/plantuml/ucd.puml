@@ -14,7 +14,6 @@ rectangle "Franklyn" {
 }
 
 student -- uc_sendsScreenshots
-student -- uc_raiseHand
 teacher -- uc_createLobby
 teacher -- uc_seeScreenshots
 @enduml
