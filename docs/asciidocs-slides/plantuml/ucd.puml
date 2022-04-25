@@ -2,29 +2,19 @@
 
 :Student: as student
 :Teacher: as teacher
-:Server: as server
 
 rectangle "Franklyn" {
     rectangle Client {
-        usecase "Starts the client" as uc_startClient
-        usecase "Can raise his hand virtually" as uc_raiseHand
+        usecase "Sends screenshots" as uc_sendsScreenshots
     }
     rectangle Examiner {
             usecase "Creates virtual classroom" as uc_createLobby
-            usecase "Can call up screenshots of all participants" as uc_seeScreenshots
+            usecase "Observes desktops of all participants" as uc_seeScreenshots
         }
-    rectangle Server {
-        usecase "Communication between student (client) \nand teacher (examiner)" as uc_serverInterface
-        usecase "Image compressor stores\n(compressed) screenshots in the database" as uc_imageCompressor
-        usecase "Sends pictures to the teacher (examiner)" as uc_sendScreenshots
-    }
 }
 
-student -- uc_startClient
+student -- uc_sendsScreenshots
 student -- uc_raiseHand
 teacher -- uc_createLobby
 teacher -- uc_seeScreenshots
-server -- uc_serverInterface
-server -- uc_imageCompressor
-server -- uc_sendScreenshots
 @enduml
