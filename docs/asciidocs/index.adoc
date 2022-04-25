@@ -25,5 +25,8 @@ ifdef::backend-html5[]
 
 <<stop-restart-franklyn.adoc#, How to stop and restart Franklyn>>
 
+== Slides
+
+https://htl-leonding-project.github.io/franklyn-quarkus/slides/#/
 
 

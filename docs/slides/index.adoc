@@ -15,7 +15,7 @@ der SchülerInnen überwachen.
 
 === Use-Case
 
-[plantuml,cld,png]
+[plantuml,cld,svg]
 ----
 include::plantuml/ucd.puml[]
 ----
