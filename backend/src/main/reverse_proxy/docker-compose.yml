@@ -1,0 +1,30 @@
+version: '3'
+services:
+  traefik:
+    image: traefik:1.7
+    command: --docker
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8100:8080"
+    restart: always
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./traefik.toml:/traefik.toml:ro"
+      - "./acme.json:/acme.json"
+    #network_mode: "bridge"
+    labels:
+      # Exclude traefik from dashboard
+      - "traefik.enable=false"
+      # Make sure this domain points to your IP so that traefik can request a cert
+      - "traefik.frontend.rule=Host:franklyn2.htl-leonding.ac.at"
+      # Traefik will proxy to its own GUI
+      - "traefik.port=8100"
+      - "traefik.docker.network=web"
+    networks:
+      - web
+    container_name: traefik
+
+networks:
+  web:
+    external: true

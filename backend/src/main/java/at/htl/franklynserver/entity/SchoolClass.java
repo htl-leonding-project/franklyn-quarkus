@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "F_FORM")
+@Table(name = "F_SCHOOL_CLASS")
 public class SchoolClass extends PanacheEntity {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

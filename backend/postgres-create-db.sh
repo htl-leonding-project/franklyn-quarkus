@@ -9,4 +9,4 @@ fi
 echo "Installing postgres into ${DIR} ..."
 mkdir ${DIR}
 cd ${DIR}
-cp ../src/main/docker/docker-compose-postgres.yml ./docker-compose-postgres.yml
+cp src/main/docker/docker-compose-postgres.yml ./docker-compose-postgres.yml

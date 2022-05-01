@@ -1,5 +1,6 @@
 package at.htl.franklynserver.boundary;
 
+import io.smallrye.mutiny.Multi;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
@@ -11,6 +12,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Path("upload")
 public class ImageResource {
@@ -20,7 +22,7 @@ public class ImageResource {
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response upload(InputStream is, @QueryParam("filename") String filename) throws IOException {
+    public Multi<Response> upload(InputStream is, @QueryParam("filename") String filename) throws IOException {
 
         if (filename.isBlank()) {
             filename = "unknown.xxx";
@@ -36,6 +38,6 @@ public class ImageResource {
             );
         }
 
-        return Response.ok().build();
+        return null;
     }
 }
