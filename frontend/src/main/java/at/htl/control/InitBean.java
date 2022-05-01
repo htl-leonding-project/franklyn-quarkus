@@ -1,5 +1,6 @@
 package at.htl.control;
 
+import at.htl.boundary.ClientAPI;
 import at.htl.boundary.ImageService;
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.scheduler.Scheduled;
@@ -35,28 +36,6 @@ public class InitBean {
 
         this.firstName = firstName;
         this.lastName = lastName;
-
-        /*int count = 0;
-        while (count < 10) {
-            count++;
-            try {
-                Robot robot = new Robot();
-                String format = "jpg";
-                String fileName = "fullscreenshot-"+count+"." + format;
-
-                Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-                BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
-                File newFile = new File(fileName);
-                ImageIO.write(screenFullImage, format, newFile);
-
-                System.out.println(imageService.uploadFile(newFile, fileName));
-
-                System.out.println("A full screenshot saved!");
-                Thread.sleep(5000);
-            } catch (AWTException | IOException | InterruptedException ex) {
-                System.err.println(ex);
-            }
-        }*/
     }
 
     @Scheduled(every = "5s")
