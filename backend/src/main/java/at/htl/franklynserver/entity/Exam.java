@@ -20,13 +20,9 @@ public class Exam extends PanacheEntity {
     @Column(name = "E_PIN")
     @NotNull
     @NotBlank
-    @Min(1)
-    @Max(10)
     public String pin;
 
     @NotNull
-    @Min(1)
-    @Max(100)
     @Column(name = "E_TITLE")
     public String title;
 
