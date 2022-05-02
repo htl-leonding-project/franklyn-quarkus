@@ -4,6 +4,7 @@ Melcher Tamara, Tran Michael
 ifndef::sourcedir[:sourcedir: ../src/main/java]
 ifndef::imagesdir[:imagesdir: images]
 ifndef::backend[:backend: html5]
+:stylesheet: styles.css
 :icons: font
 
 == Ausgangslage
