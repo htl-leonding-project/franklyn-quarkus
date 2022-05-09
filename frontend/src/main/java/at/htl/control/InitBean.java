@@ -44,7 +44,7 @@ public class InitBean {
             try {
                 Robot robot = new Robot();
                 String format = "png";
-                LocalDateTime localDateTime = LocalDateTime.now();
+                String localDateTime = LocalDateTime.now().toString().replace(':', '_');
                 String fileName = localDateTime+"_"+lastName+"_"+firstName+"." + format;
 
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
