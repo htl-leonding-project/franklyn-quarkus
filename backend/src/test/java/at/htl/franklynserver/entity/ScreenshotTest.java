@@ -14,8 +14,9 @@ class ScreenshotTest {
 
     @Test
     void simpleSuccess_addScreenshot() {
-        Long timestamp = Timestamp.valueOf(
-                LocalDateTime.now()).getTime();
+        //Timestamp timestamp = Timestamp.valueOf(
+                //LocalDateTime.now()).getTime();
+        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
 
         Screenshot screenshot = new Screenshot(timestamp, 1L,
                 1L, 1L, Resolution.HD, 30, IsCompressed.CURRENTLY_COMPRESSED);

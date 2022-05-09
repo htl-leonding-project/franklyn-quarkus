@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 // https://stackoverflow.com/questions/66347707/send-a-simple-post-request-from-quarkus-java
 
@@ -28,9 +29,9 @@ public class InitBean {
     @RestClient
     ImageService imageService;
 
-    private String firstName = "";
+    private String firstName = "Tamara";
 
-    private String lastName = "";
+    private String lastName = "Melcher";
 
     public void init( String firstName, String lastName) {
 
@@ -40,7 +41,7 @@ public class InitBean {
 
     @Scheduled(every = "5s")
     public void makeScreenshot(){
-        if (firstName != "" && lastName != "") {
+        if (!Objects.equals(firstName, "") && !Objects.equals(lastName, "")) {
             try {
                 Robot robot = new Robot();
                 String format = "png";
