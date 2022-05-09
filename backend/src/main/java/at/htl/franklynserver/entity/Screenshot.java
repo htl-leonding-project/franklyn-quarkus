@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "F_SCREENSHOT")
@@ -18,7 +19,7 @@ public class Screenshot extends PanacheEntity {
 
     @NotNull
     @Column(name = "S_TIMESTAMP")
-    public Long timestamp;
+    public Timestamp timestamp;
 
     @NotNull
     @Column(name = "S_SCREENSHOT_NUMBER")
@@ -49,7 +50,7 @@ public class Screenshot extends PanacheEntity {
     public Screenshot() {
     }
 
-    public Screenshot(Long timestamp, Long screenshotNumber, Long examId, Long examineeId,
+    public Screenshot(Timestamp timestamp, Long screenshotNumber, Long examId, Long examineeId,
                       Resolution resolution, int compression, IsCompressed isCompressed) {
         this.timestamp = timestamp;
         this.screenshotNumber = screenshotNumber;

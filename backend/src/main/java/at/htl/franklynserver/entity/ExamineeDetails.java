@@ -4,6 +4,7 @@ import io.quarkus.hibernate.reactive.panache.PanacheEntity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "F_EXAMINEE_DETAILS")
@@ -23,17 +24,17 @@ public class ExamineeDetails extends PanacheEntity {
     public boolean isOnline;
 
     @Column(name = "ED_LAST_ONLINE")
-    public Long lastOnline;
+    public LocalDateTime lastOnline;
 
     @Column(name = "ED_LATEST_TIMESTAMP")
-    public Long latestTimestamp;
+    public Timestamp latestTimestamp;
 
     @Column(name = "ED_LATEST_SCREENSHOT_NUMBER")
     public int latestScreenshotNumber;
 
     public ExamineeDetails(){}
 
-    public ExamineeDetails(Long examId, Long examineeId, boolean isOnline, Long lastOnline, Long latestTimestamp, int latestScreenshotNumber) {
+    public ExamineeDetails(Long examId, Long examineeId, boolean isOnline, LocalDateTime lastOnline, Timestamp latestTimestamp, int latestScreenshotNumber) {
         this.examId = examId;
         this.examineeId = examineeId;
         this.isOnline = isOnline;
