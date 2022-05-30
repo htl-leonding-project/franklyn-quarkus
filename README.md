@@ -10,7 +10,7 @@ The teacher can look at the students' screens and see if one or more students ne
 
 
 # gh-Pages
-https://htl-leonding-project.github.io/franklyn-quarkus/
+https://htl-leonding-project.github.io/franklyn-quarkus/asciidocs/
 
 # How to start the application
 
