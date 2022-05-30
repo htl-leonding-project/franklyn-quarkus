@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class Main{
 
     public static void main(String[] args) throws IOException, AWTException {
-
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Vorname: ");
@@ -52,8 +51,8 @@ public class Main{
             for (String line : response) {
                 System.out.println(line);
             }
-        } catch (IOException ex) {
-            System.err.println(ex);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

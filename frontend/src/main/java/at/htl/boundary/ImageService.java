@@ -15,5 +15,5 @@ public interface ImageService {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
-    Response uploadFile(@MultipartForm File file, @QueryParam("filename") String fileName);
+    Response uploadFile(File file, @QueryParam("filename") String fileName);
 }
