@@ -10,7 +10,7 @@ The teacher can look at the students' screens and see if one or more students ne
 
 
 # gh-Pages
-https://htl-leonding-project.github.io/franklyn-quarkus/
+https://htl-leonding-project.github.io/franklyn-quarkus/asciidocs/
 
 # How to start the application
 
@@ -20,14 +20,11 @@ https://htl-leonding-project.github.io/franklyn-quarkus/
 
 `./mvnw clean quarkus:dev`
 
-2. then start the teacher-frontend
-
-* open a terminal in `teacher-frontend`-project and execute:
-
-`./mvnw clean quarkus:dev`
-
-3. finally start the frontend
+2. start the frontend
 
 * open a terminal in `frontend`-project and execute:
 
 `./mvnw clean quarkus:dev`
+
+* after that open http://localhost:8090/client/login and log yourself in
+
