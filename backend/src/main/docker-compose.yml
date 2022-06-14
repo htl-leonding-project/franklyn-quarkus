@@ -1,0 +1,75 @@
+version: "3.3"
+
+services:
+  frontend:
+    image: "ghcr.io/birklbauerjonas/franklyn_frontend:latest"
+    #build:
+    #  dockerfile: Dockerfile
+    #  context: ./docker/frontend
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.backend=frontend
+      - traefik.frontend.rule=Host:franklyn2.htl-leonding.ac.at
+      - traefik.port=80
+    networks:
+      - web
+    volumes:
+      - type: bind
+        source: ./docker/frontend/app/app
+        target: /usr/share/nginx/html/clients
+
+  server:
+    image: "ghcr.io/birklbauerjonas/franklyn_server:latest"
+    #build:
+    #  dockerfile: Dockerfile
+    #  context: ./docker/server
+    restart: unless-stopped
+    env_file: ./.env
+
+    volumes:
+      - /franklyn-data/production/server:/data
+      - /etc/localtime:/etc/localtime:ro
+      - type: bind
+        source: ./config
+        target: /opt/franklyn/config
+    depends_on:
+      - db
+    labels:
+      - traefik.enable=true
+      - traefik.backend=server
+      - traefik.frontend.rule=PathPrefix:/api;Host:franklyn2.htl-leonding.ac.at
+      - traefik.port=5005
+    networks:
+      - web
+
+  imagecompressor:
+    image: "ghcr.io/birklbauerjonas/franklyn_imagecompressor:latest"
+    #build:
+    #  dockerfile: Dockerfile
+    #  context: ./docker/imagecompressor
+    restart: unless-stopped
+    env_file: ./.env
+    volumes:
+      - /franklyn-data/production/server:/data
+    depends_on:
+      - server
+    networks:
+      - web
+
+  db:
+    image: mongo:3.2-jessie
+    restart: unless-stopped
+    ports:
+      - "8898:27017"
+    environment:
+      MONGO_DATA_DIR: /data/db
+      MONGO_LOG_DIR: /dev/null
+    volumes:
+      - ./data/production/db:/data/db
+    networks:
+      - web
+
+networks:
+  web:
+    external: true

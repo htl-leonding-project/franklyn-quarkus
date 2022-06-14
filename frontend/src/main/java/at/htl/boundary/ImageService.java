@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
