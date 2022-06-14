@@ -1,0 +1,14 @@
+@startwbs
+* Franklyn-Quarkus
+** Sprint 01
+***[#green] Screenshots des Bildschirms machen
+***[#green] Screenshots abschicken
+***[#green] Screenshots empfangen
+** Sprint 02
+***[#yellow] testen des Backends mit gattling
+***[#red] Entitäten testen
+***[#red] generieren der PINs
+** Sprint 03
+***[#red] testen mit Frontend von Franklyn2
+***[#red] deployen
+@endwbs

@@ -28,3 +28,10 @@ https://htl-leonding-project.github.io/franklyn-quarkus/asciidocs/
 
 * after that open http://localhost:8090/client/login and log yourself in
 
+=======
+
+2. start the frontend
+
+* open a terminal in `frontend`-project and execute:
+
+`./mvnw clean quarkus:dev`

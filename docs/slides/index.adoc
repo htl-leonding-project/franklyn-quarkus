@@ -1,0 +1,44 @@
+= Franklyn-Quarkus: Franklyn 2 reimplementiert in Quarkus
+Melcher Tamara, Tran Michael
+1.0, 2022-04-14
+ifndef::sourcedir[:sourcedir: ../src/main/java]
+ifndef::imagesdir[:imagesdir: images]
+ifndef::backend[:backend: html5]
+:stylesheet: styles.css
+:icons: font
+
+== Ausgangslage
+
+Franklyn2 ist eine Applikation, die die Bildschirme der SchülerInnen "überwacht", sogleich können die SchülerInnen aufzeigen.
+
+Die ProfessorInnen können somit sehen, wenn jemand Hilfe braucht bzw. für Chancengleichheit sorgen, indem sie die Bildschirme
+der SchülerInnen überwachen.
+
+=== Use-Case
+
+[plantuml,cld,svg]
+----
+include::plantuml/ucd.puml[]
+----
+
+
+=== Problemstellung
+
+* In Node.js implementiert
+* MongoDB (nicht relationale DB)
+
+-> Erschwert Fehlersuche immens
+
+
+[.lightbg,background-image="todo.jpg", background-opacity="0.7"]
+== Aufgabenstellung
+
+* Erhaltung/Wartung des derzeitigen Franklyns
+* Reimplementierung des derzeitigen Franklyns
+
+=== Datenmodell
+
+[plantuml,cd,png]
+----
+include::plantuml/classDiagram.puml[]
+----

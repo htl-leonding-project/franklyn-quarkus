@@ -1,0 +1,20 @@
+= AsciiDoc Article Title
+Melcher Tamara und Tran Michael - Franklyn maintenance
+3.0, July 29, 2022: AsciiDoc article template
+:toc:
+:icons: font
+:url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
+== Stop and Restart Franklyn
+```bash
+# Connect to the VM
+ssh fradmin@franklyn2.htl-leonding.ac.at
+
+# Enter password, which is on Discord
+
+# Go to directory
+cd /franklyn2/franklyn2/src/server
+
+# Execute the sh-file
+./clean-build.sh
+```
+

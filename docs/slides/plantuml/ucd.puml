@@ -1,19 +1,20 @@
 @startuml
+left to right direction
 
 :Student: as student
 :Teacher: as teacher
 
 rectangle "Franklyn" {
     rectangle Client {
-        usecase "Sends screenshots" as uc_sendsScreenshots
+        usecase "send Screenshots to Server" as uc_sendScreenshots
     }
     rectangle Examiner {
             usecase "Creates virtual classroom" as uc_createLobby
-            usecase "Observes desktops of all participants" as uc_seeScreenshots
+            usecase "Can call up screenshots of all participants" as uc_seeScreenshots
         }
 }
 
-student -- uc_sendsScreenshots
+student -- uc_sendScreenshots
 teacher -- uc_createLobby
 teacher -- uc_seeScreenshots
 @enduml

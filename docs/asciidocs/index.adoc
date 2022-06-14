@@ -13,12 +13,20 @@ ifdef::backend-html5[]
 // print the toc here (not at the default position)
 //toc::[]
 
-== Presentation
+== System Specification
 
 <<system-specification.adoc#, System Specification>>
 
 == Protocol
 
-<<minutes-of-meeting.adoc#, Protocol>>
+<<minutes-of-meeting.adoc#, Minutes of Meeting>>
+
+== Franklyn maintenance
+
+<<stop-restart-franklyn.adoc#, How to stop and restart Franklyn>>
+
+== Slides
+
+https://htl-leonding-project.github.io/franklyn-quarkus/slides/#/
 
 
