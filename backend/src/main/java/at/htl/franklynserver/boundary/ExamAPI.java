@@ -35,19 +35,25 @@ public class ExamAPI {
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<List<Exam>> getAll(){
-        Uni<List<Exam>> exams = examRepository.listAll();
-        return exams;
+        return Exam.list("order by date");
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
-    public Response saveExam(Exam exam){
+    public Uni<Exam> saveExam(Exam exam){
         if(exam != null)
             examRepository.persist(exam);
         String pin = examRepository.createPIN(exam.date);
-        return Response.ok(pin).build();
+        return Panache
+                .withTransaction(() -> examRepository.findById(exam.id)
+                        .onItem().ifNotNull()
+                        .transform(entity -> {
+                            entity.pin = pin;
+                            return entity;
+                        })
+                        .onFailure().recoverWithNull());
     }
 
     @GET
