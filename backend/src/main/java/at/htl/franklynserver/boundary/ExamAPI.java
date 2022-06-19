@@ -130,6 +130,7 @@ public class ExamAPI {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Uni<Exam> enrollStudentForExam(@FormParam("id") Long id, Examinee examinee){
+        //show if already exists with first and last name
         return Panache
                 .withTransaction(() -> examRepository.findById(id)
                         .onItem().ifNotNull()
@@ -155,6 +156,7 @@ public class ExamAPI {
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Exam> deleteExam(Exam exam){
+        //can only be deleted if there are no more exaxminers in it
         Uni<Exam> examToDelete = examRepository.findById(exam.id);
         if(examToDelete != null)
             examRepository.deleteById(exam.id);

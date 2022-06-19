@@ -26,6 +26,7 @@ public class ExaminerAPI {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Examiner> postExaminer(Examiner examiner) {
+        //webuntis verification
         examinerRepository.persist(examiner);
         return examinerRepository.findById(examiner.id);
     }
@@ -34,6 +35,7 @@ public class ExaminerAPI {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Examiner> deleteExaminer(@PathParam("id") Long id) {
+        //only possible for admin
         Uni<Examiner> examiner = examinerRepository.findById(id);
         if(examiner != null) {
             examinerRepository.deleteById(id);
