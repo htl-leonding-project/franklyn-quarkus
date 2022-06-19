@@ -6,6 +6,12 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+
+@NamedQueries({
+        @NamedQuery(
+                name = "ExamineeDetails.getExamineeDetailsByExamID",
+                query = "select ed from ExamineeDetails ed where ed.examId = ?1"),
+})
 @Entity
 @Table(name = "F_EXAMINEE_DETAILS")
 public class ExamineeDetails extends PanacheEntity {

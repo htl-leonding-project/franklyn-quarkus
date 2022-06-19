@@ -1,6 +1,7 @@
 package at.htl.franklynserver.entity;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+import jdk.jfr.Name;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.persistence.*;
@@ -8,6 +9,17 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
+@NamedQueries({
+        @NamedQuery(
+                name = "Exam.findExamWithSameDateAndPIN",
+                query = "select e from Exam e where e.date = :DATE and e.pin LIKE :PIN"
+        ),
+        @NamedQuery(
+                name = "Exam.getAllExamineesByExamId",
+                query = "select e.examineeIds from Exam e where e.id = :ID"
+        )
+})
 
 @Entity
 @Table(name = "F_EXAM")
