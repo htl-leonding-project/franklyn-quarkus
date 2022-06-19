@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 // https://stackoverflow.com/questions/66347707/send-a-simple-post-request-from-quarkus-java
 
@@ -44,7 +45,7 @@ public class InitBean {
             try {
                 Robot robot = new Robot();
                 String format = "png";
-                String localDateTime = LocalDateTime.now().toString().replace(':', '_');
+                Long localDateTime = Timestamp.valueOf(LocalDateTime.now()).getTime();
                 String fileName = localDateTime+"_"+lastName+"_"+firstName+"." + format;
 
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());

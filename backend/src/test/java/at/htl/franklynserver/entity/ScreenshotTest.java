@@ -19,7 +19,7 @@ class ScreenshotTest {
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
 
         Screenshot screenshot = new Screenshot(timestamp, 1L,
-                1L, 1L, Resolution.HD, 30, IsCompressed.CURRENTLY_COMPRESSED);
+                1L, 1L, Resolution.HD, 30);
 
         assertEquals(timestamp, screenshot.timestamp);
         assertEquals(1L, screenshot.screenshotNumber);
@@ -27,7 +27,6 @@ class ScreenshotTest {
         assertEquals(1L, screenshot.examineeId);
         assertEquals(Resolution.HD, screenshot.resolution);
         assertEquals(30, screenshot.compression);
-        assertEquals(IsCompressed.CURRENTLY_COMPRESSED, screenshot.isCompressed);
 
         screenshot.compression = 50;
 

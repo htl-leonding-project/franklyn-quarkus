@@ -3,11 +3,25 @@ package at.htl.franklynserver.entity;
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+
+@NamedQueries({
+
+        @NamedQuery(
+                name = "Screenshot.findScreenshot",
+                query = "select s from Screenshot s where s.examineeId = ?1 " +
+                        "and s.screenshotNumber = ?2"),
+        @NamedQuery(
+                name = "Screenshot.findLatestScreenshot",
+                query = "select s from Screenshot s where s.examineeId = ?1 " +
+                        "order by s.timestamp desc"
+        )
+})
 
 @Entity
 @Table(name = "F_SCREENSHOT")
@@ -51,13 +65,12 @@ public class Screenshot extends PanacheEntity {
     }
 
     public Screenshot(Timestamp timestamp, Long screenshotNumber, Long examId, Long examineeId,
-                      Resolution resolution, int compression, IsCompressed isCompressed) {
+                      Resolution resolution, int compression) {
         this.timestamp = timestamp;
         this.screenshotNumber = screenshotNumber;
         this.examId = examId;
         this.examineeId = examineeId;
         this.resolution = resolution;
         this.compression = compression;
-        this.isCompressed = isCompressed;
     }
 }
