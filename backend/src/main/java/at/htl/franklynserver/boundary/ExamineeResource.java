@@ -1,7 +1,6 @@
 package at.htl.franklynserver.boundary;
 
 import at.htl.franklynserver.control.ExamineeRepository;
-import at.htl.franklynserver.entity.Exam;
 import at.htl.franklynserver.entity.Examinee;
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.smallrye.mutiny.Uni;
@@ -9,11 +8,10 @@ import io.smallrye.mutiny.Uni;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("api/examinees")
-public class ExamineeAPI {
+public class ExamineeResource {
 
     @Inject
     ExamineeRepository examineeRepository;

@@ -6,20 +6,17 @@ import at.htl.franklynserver.control.ExamineeRepository;
 import at.htl.franklynserver.entity.Exam;
 import at.htl.franklynserver.entity.Examinee;
 import at.htl.franklynserver.entity.ExamineeDetails;
-import at.htl.franklynserver.entity.Examiner;
 import io.quarkus.hibernate.reactive.panache.Panache;
-import io.quarkus.hibernate.reactive.panache.PanacheQuery;
 import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("api/exams")
-public class ExamAPI {
+public class ExamResource {
 
     @Inject
     ExamRepository examRepository;
