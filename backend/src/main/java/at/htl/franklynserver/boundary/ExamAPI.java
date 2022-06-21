@@ -35,7 +35,7 @@ public class ExamAPI {
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<List<Exam>> getAll(){
-        return Exam.list("order by date");
+        return examRepository.listAll();
     }
 
     @POST
@@ -99,7 +99,7 @@ public class ExamAPI {
     }
 
     @PUT
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Uni<Exam> updateExam(Exam exam){
@@ -128,7 +128,7 @@ public class ExamAPI {
     @Path("enroll")
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Uni<Exam> enrollStudentForExam(@FormParam("id") Long id, Examinee examinee){
         //show if already exists with first and last name
         return Panache
@@ -147,7 +147,7 @@ public class ExamAPI {
     @Transactional
     @Path("examinee/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Uni<ExamineeDetails> removeExamineeFromExam(@PathParam("id") Long id, Long examineeId){
         return null;
     }

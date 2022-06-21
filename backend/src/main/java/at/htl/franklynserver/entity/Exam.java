@@ -43,7 +43,6 @@ public class Exam extends PanacheEntity {
 
     @OneToMany()
     @NotNull
-    @Size(min = 1)
     @JoinColumn(name = "E_FORM_IDS")
     public List<SchoolClass> formIds;
 
