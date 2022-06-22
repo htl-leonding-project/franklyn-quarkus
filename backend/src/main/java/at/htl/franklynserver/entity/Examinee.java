@@ -19,15 +19,10 @@ public class Examinee extends PanacheEntityBase {
     @Column(name = "E_LAST_NAME")
     public String lastName;
 
-    @ManyToOne
-    @JoinColumn(name = "E_EXAM_ID")
-    public Exam exam;
-
     public Examinee(){}
 
-    public Examinee(String firstName, String lastName, Exam exam) {
+    public Examinee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.exam = exam;
     }
 }

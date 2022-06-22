@@ -143,7 +143,7 @@ public class ExamResource
                         .transform(entity -> {
                             //List<Examinee> examinees = entity.examineeIds;
                             //examinees.add(examineeToPersist);
-                            Examinee examineeToPersist = new Examinee(examinee.firstName, examinee.lastName, entity);
+                            Examinee examineeToPersist = new Examinee(examinee.firstName, examinee.lastName);
                             examineeRepository.persist(examineeToPersist);
                             return entity;
                         }));

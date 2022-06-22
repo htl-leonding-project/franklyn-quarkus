@@ -39,7 +39,7 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_ONGOING")
     public boolean ongoing = false;
 
-    @ManyToMany
+    @OneToMany
     @Size(min = 1)
     @JoinColumn(name = "E_FORM_IDS")
     public List<SchoolClass> formIds;
@@ -56,7 +56,12 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_END_TIME")
     public LocalDateTime endTime;
 
-    @ManyToMany
+    @OneToMany
+    @Size(min = 1)
+    @JoinColumn(name = "E_EXAMINEE_IDS")
+    public List<Examinee> examineeIds;
+
+    @OneToMany
     @Size(min = 1)
     @JoinColumn(name = "E_EXAMINER_IDS")
     public List<Examiner> examinerIds;
@@ -106,6 +111,7 @@ public class Exam extends PanacheEntityBase {
                 LocalDate date,
                 LocalDateTime startTime,
                 LocalDateTime endTime,
+                List<Examinee> examineeIds,
                 List<Examiner> examinerIds,
                 int interval,
                 Resolution resolution,

@@ -37,7 +37,7 @@ public class ScreenshotResource {
     }
 
     @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @ReactiveTransactional
     public Uni<Screenshot> postScreenshot(Screenshot screenshot) {
