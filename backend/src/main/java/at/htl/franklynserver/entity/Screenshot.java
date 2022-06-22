@@ -1,6 +1,8 @@
 package at.htl.franklynserver.entity;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -12,11 +14,11 @@ import java.sql.Timestamp;
 
         @NamedQuery(
                 name = "Screenshot.findScreenshot",
-                query = "select s from Screenshot s where s.examinee = ?1 " +
+                query = "select s from Screenshot s where s.examinee.id = ?1 " +
                         "and s.runningNo = ?2"),
         @NamedQuery(
                 name = "Screenshot.findLatestScreenshot",
-                query = "select s from Screenshot s where s.examinee = ?1 " +
+                query = "select s from Screenshot s where s.examinee.id = ?1 " +
                         "order by s.timestamp desc"
         )
 })
@@ -38,13 +40,15 @@ public class Screenshot extends PanacheEntityBase {
     public Long runningNo;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "S_EXAM_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public Exam exam;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "S_EXAMINEE_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public Examinee examinee;
 
     @NotNull

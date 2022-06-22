@@ -6,7 +6,7 @@
 ***[#green] Screenshots empfangen
 ** Sprint 02
 ***[#green] testen des Backends mit gattling
-***[#red] Entitäten testen
+***[#green] Entitäten testen
 ***[#green] generieren der PINs
 ** Sprint 03
 ***[#yellow] Endpoints erstellen
@@ -14,28 +14,26 @@
 *****[#green] GET
 *****[#green] PUT
 *****[#green] DELETE
-****[#yellow] Examiner
+****[#green] Examiner
 *****[#green] GET
-*****[#red] DELETE
-*****[#red] POST
-****[#red] Exam
+*****[#green] DELETE
+*****[#green] POST
+****[#yellow] Exam
 *****[#green] GET
-*****[#red] PUT
-*****[#red] DELETE
-*****[#red] POST
-****[#red] SchoolClass
+*****[#yellow] PUT
+*****[#green] DELETE
+*****[#skyblue] POST
+****[#green] SchoolClass
 *****[#green] GET
-*****[#red] PUT
-*****[#red] DELETE
-*****[#red] POST
-****[#green] Screenshot
+*****[#green] DELETE
+*****[#green] POST
+****[#yellow] Screenshot
 *****[#green] GET
-*****[#red] PUT
-*****[#red] DELETE
-*****[#red] POST
+*****[#yellow] POST
 ***[#red] Endpoints testen
-***[#green] generieren der PINs
 ** Sprint 04
+***[#red] WebUntis authentifizierung
 ***[#red] testen mit Frontend von Franklyn2
+** Sprint 05
 ***[#red] deployen
 @endwbs

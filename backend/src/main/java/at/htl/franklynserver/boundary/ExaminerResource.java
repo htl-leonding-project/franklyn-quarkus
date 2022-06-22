@@ -29,11 +29,9 @@ public class ExaminerResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ReactiveTransactional
     public Uni<Examiner> postExaminer(Examiner examiner) {
-        //webuntis verification
         Examiner e = new Examiner(examiner.userName, examiner.firstName, examiner.lastName, examiner.isAdmin);
-        Log.info(e.lastName);
         examinerRepository.persist(e).subscribe().with(examiner1 -> Log.info(examiner1.lastName));
-        return examinerRepository.findById(examiner.id);
+        return examinerRepository.find("lastName", e.lastName).firstResult();
     }
 
     @DELETE

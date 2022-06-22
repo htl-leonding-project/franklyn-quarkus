@@ -4,6 +4,10 @@ import io.quarkus.hibernate.reactive.panache.PanacheEntity;
 import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jdk.jfr.Name;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -14,10 +18,9 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(
                 name = "Exam.findExamWithSameDateAndPIN",
-                query = "select e from Exam e where e.date = :DATE and e.pin LIKE :PIN"),
-        @NamedQuery(
-                name = "Exam.getAllExamineesByExamId",
-                query = "select ex from Exam e join Examinee ex where ex.exam.id = :ID")})
+                query = "select e from Exam e where e.date = :DATE and e.pin LIKE :PIN")
+
+})
 
 @Entity
 @Table(name = "F_EXAM")
@@ -39,9 +42,11 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_ONGOING")
     public boolean ongoing = false;
 
-    @OneToMany
+    @OneToMany( cascade = CascadeType.ALL)
     @Size(min = 1)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "E_FORM_IDS")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public List<SchoolClass> formIds;
 
     @NotNull
@@ -56,13 +61,15 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_END_TIME")
     public LocalDateTime endTime;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @Size(min = 1)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "E_EXAMINEE_IDS")
     public List<Examinee> examineeIds;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @Size(min = 1)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "E_EXAMINER_IDS")
     public List<Examiner> examinerIds;
 
@@ -123,6 +130,7 @@ public class Exam extends PanacheEntityBase {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.examineeIds = examineeIds;
         this.examinerIds = examinerIds;
         this.interval = interval;
         this.resolution = resolution;
