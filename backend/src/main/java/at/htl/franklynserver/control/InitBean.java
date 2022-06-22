@@ -2,6 +2,7 @@ package at.htl.franklynserver.control;
 
 import at.htl.franklynserver.entity.Examinee;
 import at.htl.franklynserver.entity.Examiner;
+import at.htl.franklynserver.entity.SchoolClass;
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
 import io.quarkus.logging.Log;
@@ -28,10 +29,22 @@ public class InitBean {
     @Inject
     ExaminerRepository examinerRepository;
 
+    @Inject
+    SchoolClassRepository schoolClassRepository;
+
     @ReactiveTransactional
     public void init(@Observes StartupEvent event){
         Examinee examinee = new Examinee("Jakob", "Unterberger");
         Examiner examiner = new Examiner("chahn", "Christine", "Hahn", false);
+
+        schoolClassRepository.persist(
+                new SchoolClass("Franklyn", "2022")
+        ).subscribe().with(sc -> Log.info(sc.title));
+
+        schoolClassRepository.persist(
+                new SchoolClass("3AHIF", "2021")
+        ).subscribe().with(sc -> Log.info(sc.title));
+
         examineeRepository.persist(examinee).subscribe().with(examinee1 -> Log.info(examinee1.firstName));
         //examinerRepository.persist(examiner).subscribe().with(examiner1 -> Log.info(examiner1.lastName));
         Panache.withTransaction(examiner::persist).subscribe().with(examiner1 -> Log.info(examiner1));

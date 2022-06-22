@@ -7,9 +7,6 @@ insert into f_examinee (e_first_name, e_last_name) values ('Maxine', 'Musterfrau
 
 insert into f_exam (e_pin, e_ongoing, e_compression, e_date, e_start_time, e_end_time, e_interval, e_resolution, e_title) values ('1234', false, 100, TO_DATE('03/05/2022','DD/MM/YY'), TO_DATE('03/05/2022 8:30:00AM','DD/MM/YY HH:MI:SS AM'), TO_DATE('03/05/2022 10:30:00AM','DD/MM/YY HH:MI:SS AM'), 5, 1, 'Franklyn');
 
-insert into f_school_class (sc_id, sc_title, sc_year) values (1, 'Franklyn', '2022');
-insert into f_school_class (sc_id, sc_title, sc_year) values (2, '3AHIF', '2021');
-
 insert into f_exam_f_examinee (exam_e_id, examineeids_e_id)
     values (1, 1);
 insert into f_exam_f_examinee (exam_e_id, examineeids_e_id)

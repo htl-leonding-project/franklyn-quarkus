@@ -55,8 +55,8 @@ public class SchoolClassResource {
     @ReactiveTransactional
     public Uni<SchoolClass> postSchoolClass(SchoolClass schoolClass){
         SchoolClass schoolClassToPersist = new SchoolClass(schoolClass.title, schoolClass.year);
-        schoolClassRepository.persist(schoolClassToPersist).subscribe().with(sc -> Log.info(schoolClass.title));
-        return schoolClassRepository.findById(schoolClass.id);
+        Log.info(schoolClass.title);
+        return schoolClassRepository.persist(schoolClassToPersist);
     }
 
     @DELETE

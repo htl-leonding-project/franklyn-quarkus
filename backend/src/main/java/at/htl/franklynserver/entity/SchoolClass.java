@@ -10,14 +10,11 @@ import java.util.List;
 
 @NamedQueries({
         @NamedQuery(
-                name = "SchoolClass.getAllSchoolClasses",
-                query = "select sc from SchoolClass sc order by sc.year,sc.title"
-        ),
-        @NamedQuery(
                 name = "SchoolClass.getStats",
-                query = "select new at.htl.franklynserver.entity.SchoolClassDTO(sc.id, sc.title, count(sc.year)) " +
+                query = "select new at.htl.franklynserver.entity.SchoolClassDTO(sc.id, sc.title, count(sc.title)) " +
                         "from SchoolClass sc " +
-                        "where sc.year = ?1"
+                        "where sc.year = ?1 " +
+                        "group by sc.id, sc.title"
         ),
         @NamedQuery(
                 name = "SchoolClass.getByTitleAndYear",
@@ -33,13 +30,9 @@ public class SchoolClass extends PanacheEntityBase {
     @Column(name = "SC_ID")
     public Long id;
 
-    @NotNull
-    @Size(min = 1, max = 15)
     @Column(name = "SC_TITLE")
     public String title;
 
-    @NotNull
-    @Size(min = 4, max = 4)
     @Column(name = "SC_YEAR")
     public String year;
 
