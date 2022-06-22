@@ -1,7 +1,10 @@
 package at.htl.franklynserver.boundary;
 
+import at.htl.franklynserver.control.ScreenshotRepository;
 import at.htl.franklynserver.entity.Resolution;
 import at.htl.franklynserver.entity.Screenshot;
+import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import org.jboss.logging.Logger;
 
@@ -24,7 +27,7 @@ public class ImageResource {
     Logger LOG;
 
     @Inject
-    ScreenshotResource screenshotResource;
+    ScreenshotRepository screenshotRepository;
 
     Long cnt = 0L;
 
@@ -54,8 +57,8 @@ public class ImageResource {
                     Timestamp.valueOf(LocalDateTime.now()),
                     cnt, 1L, 1L, Resolution.HD, 30);
             cnt++;
-
-            screenshotResource.postScreenshot(newScreenshot);
+            Log.info(newScreenshot.screenshotNumber);
+            //screenshotRepository.postScreenshot(newScreenshot);
         }
 
         return null;

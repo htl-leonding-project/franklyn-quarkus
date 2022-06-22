@@ -9,6 +9,7 @@ import at.htl.franklynserver.entity.ExamineeDetails;
 import at.htl.franklynserver.entity.Examiner;
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.hibernate.reactive.panache.PanacheQuery;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
@@ -19,7 +20,8 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("api/exams")
-public class ExamAPI {
+public class ExamResource
+{
 
     @Inject
     ExamRepository examRepository;
@@ -43,17 +45,11 @@ public class ExamAPI {
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Exam> saveExam(Exam exam){
-        if(exam != null)
-            examRepository.persist(exam);
-        String pin = examRepository.createPIN(exam.date);
-        return Panache
-                .withTransaction(() -> examRepository.findById(exam.id)
-                        .onItem().ifNotNull()
-                        .transform(entity -> {
-                            entity.pin = pin;
-                            return entity;
-                        })
-                        .onFailure().recoverWithNull());
+        Exam e = new Exam();
+        e = exam;
+
+        examRepository.persist(e).subscribe().with(exam1 -> Log.info(exam1.title));
+        return examRepository.findById(exam.id);
     }
 
     @GET

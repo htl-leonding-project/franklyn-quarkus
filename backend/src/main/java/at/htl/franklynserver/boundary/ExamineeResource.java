@@ -3,6 +3,8 @@ package at.htl.franklynserver.boundary;
 import at.htl.franklynserver.control.ExamineeRepository;
 import at.htl.franklynserver.entity.Examinee;
 import io.quarkus.hibernate.reactive.panache.Panache;
+import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
@@ -32,9 +34,8 @@ public class ExamineeResource {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Uni<Examinee> updateExaminee(@PathParam("id") Long id,Examinee examinee) {
-
         return Panache
                 .withTransaction(() -> examineeRepository.findById(id)
                         .onItem().ifNotNull()
@@ -48,11 +49,11 @@ public class ExamineeResource {
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
+    @ReactiveTransactional
     public Uni<Examinee> deleteExaminee(Examinee examinee) {
         Uni<Examinee> examineeUni = examineeRepository.findById(examinee.id);
-        if (examineeUni != null) {
-            examineeRepository.delete(examinee);
-        }
+        examineeRepository.deleteById(examinee.id)
+                .subscribe().with(e ->{Log.info(examinee.lastName);});
         return examineeUni;
     }
 

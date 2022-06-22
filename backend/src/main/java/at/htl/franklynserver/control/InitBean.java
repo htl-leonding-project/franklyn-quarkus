@@ -25,10 +25,19 @@ public class InitBean {
     @Inject
     ExamineeRepository examineeRepository;
 
+    @Inject
+    ExaminerRepository examinerRepository;
+
     @ReactiveTransactional
     public void init(@Observes StartupEvent event){
         Examinee examinee = new Examinee("Jakob", "Unterberger");
+        Examiner examiner = new Examiner("chahn", "Christine", "Hahn", false);
         examineeRepository.persist(examinee).subscribe().with(examinee1 -> Log.info(examinee1.firstName));
+        //examinerRepository.persist(examiner).subscribe().with(examiner1 -> Log.info(examiner1.lastName));
+        Panache.withTransaction(examiner::persist).subscribe().with(examiner1 -> Log.info(examiner1));
+        if (examinerRepository.isPersistent(examiner)) {
+            Log.info("Yes examiner");
+        }
 
         if (examineeRepository.isPersistent(examinee)) {
             Log.info("Yes");

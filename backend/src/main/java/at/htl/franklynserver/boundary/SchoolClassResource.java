@@ -1,8 +1,11 @@
 package at.htl.franklynserver.boundary;
 
 import at.htl.franklynserver.control.SchoolClassRepository;
+import at.htl.franklynserver.entity.Examiner;
 import at.htl.franklynserver.entity.SchoolClass;
 import at.htl.franklynserver.entity.SchoolClassDTO;
+import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
@@ -47,17 +50,24 @@ public class SchoolClassResource {
     }
 
     @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @ReactiveTransactional
     public Uni<SchoolClass> postSchoolClass(SchoolClass schoolClass){
-        return schoolClassRepository.postSchoolClass(schoolClass);
+        SchoolClass schoolClassToPersist = new SchoolClass(schoolClass.title, schoolClass.year);
+        schoolClassRepository.persist(schoolClassToPersist).subscribe().with(sc -> Log.info(schoolClass.title));
+        return schoolClassRepository.findById(schoolClass.id);
     }
 
     @DELETE
     @Path("{id}")
-    public Uni<Boolean> deleteSchoolClass(
+    @ReactiveTransactional
+    public Uni<SchoolClass> deleteSchoolClass(
             @PathParam("id") Long id
     ){
-        return schoolClassRepository.deleteById(id);
+        Uni<SchoolClass> schoolClass = schoolClassRepository.findById(id);
+        schoolClassRepository.deleteById(id)
+                .subscribe().with(e ->{Log.info(id);});
+        return schoolClass;
     }
 }

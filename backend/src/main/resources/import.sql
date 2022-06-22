@@ -11,7 +11,7 @@ insert into f_screenshot (s_screenshot_number, s_exam_id, s_examinee_id, s_is_co
 
 insert into f_examinee_details (ed_exam_id, ed_examinee_id, ed_is_online, ed_last_online, ed_latest_timestamp, ed_latest_screenshot_number)
     values (1, 2, false, TO_DATE('03/05/2022 10:30:00AM','DD/MM/YY HH:MI:SS AM'), CURRENT_TIMESTAMP , 1);
-insert into f_school_class (f_title, f_year) values ('Franklyn', 2022);
+insert into f_school_class (f_title, f_year) values ('4AHIF', 2022);
 
 insert into f_screenshot (s_screenshot_number, s_exam_id, s_examinee_id, s_is_compressed, e_compression, s_resolution, s_timestamp) values (1, 1, 2, 1, 1, 1, CURRENT_TIMESTAMP );
 

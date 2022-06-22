@@ -2,6 +2,8 @@ package at.htl.franklynserver.control;
 
 import at.htl.franklynserver.entity.Screenshot;
 import io.quarkus.hibernate.reactive.panache.PanacheRepository;
+import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -28,9 +30,10 @@ public class ScreenshotRepository implements PanacheRepository<Screenshot> {
     /*
      * post a new screenshot
      */
-    public Uni<Screenshot> postScreenshot(Screenshot screenshot){
-        return persist(screenshot);
-    }
+    /*@ReactiveTransactional
+    public void postScreenshot(Screenshot screenshot){
+        this.persist(screenshot).subscribe().with(screenshot1 -> Log.info(screenshot.screenshotNumber));
+    }*/
 
 
 }

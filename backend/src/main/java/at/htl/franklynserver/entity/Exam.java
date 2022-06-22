@@ -1,6 +1,7 @@
 package at.htl.franklynserver.entity;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jdk.jfr.Name;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -23,11 +24,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "F_EXAM")
-public class Exam extends PanacheEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "E_ID")
-//    public Long id;
+public class Exam extends PanacheEntityBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "E_ID")
+    public Long id;
 
     @Column(name = "E_PIN")
     @NotNull
