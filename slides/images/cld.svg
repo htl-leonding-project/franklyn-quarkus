@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg contentScriptType='application/ecmascript' contentStyleType='text/css' height='852px' preserveAspectRatio='none'
+     style='width:535px;height:852px;background:#FFFFFF;' version='1.1' viewBox='0 0 535 852' width='535px'
+     xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' zoomAndPan='magnify'>
+    <defs>
+        <filter height='300%' id='f1098t56ya8jvt' width='300%' x='-1' y='-1'>
+            <feGaussianBlur result='blurOut' stdDeviation='2.0'/>
+            <feColorMatrix in='blurOut' result='blurOut2' type='matrix'
+                           values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0'/>
+            <feOffset dx='4.0' dy='4.0' in='blurOut2' result='blurOut3'/>
+            <feBlend in='SourceGraphic' in2='blurOut3' mode='normal'/>
+        </filter>
+    </defs>
+    <g>
+        <rect fill='#FFFFFF' filter='url(#f1098t56ya8jvt)' height='833' style='stroke:#000000;stroke-width:1.5;'
+              width='438' x='85' y='7'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' font-weight='bold' lengthAdjust='spacing'
+              textLength='69' x='269.5' y='21.9951'>Franklyn
+        </text>
+        <rect fill='#FFFFFF' filter='url(#f1098t56ya8jvt)' height='172' style='stroke:#000000;stroke-width:1.5;'
+              width='258' x='175' y='50'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' font-weight='bold' lengthAdjust='spacing'
+              textLength='47' x='280.5' y='64.9951'>Client
+        </text>
+        <rect fill='#FFFFFF' filter='url(#f1098t56ya8jvt)' height='204' style='stroke:#000000;stroke-width:1.5;'
+              width='356' x='126' y='246'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' font-weight='bold' lengthAdjust='spacing'
+              textLength='75' x='266.5' y='260.9951'>Examiner
+        </text>
+        <rect fill='#FFFFFF' filter='url(#f1098t56ya8jvt)' height='342' style='stroke:#000000;stroke-width:1.5;'
+              width='390' x='109' y='474'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' font-weight='bold' lengthAdjust='spacing'
+              textLength='53' x='277.5' y='488.9951'>Server
+        </text>
+        <ellipse cx='303.9563' cy='102.7913' fill='#FEFECE' filter='url(#f1098t56ya8jvt)' rx='76.9563' ry='17.7913'
+                 style='stroke:#A80036;stroke-width:1.5;'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='111'
+              x='245.5675' y='106.5101'>Starts the client
+        </text>
+        <ellipse cx='303.8359' cy='180.9672' fill='#FEFECE' filter='url(#f1098t56ya8jvt)' rx='112.8359' ry='24.9672'
+                 style='stroke:#A80036;stroke-width:1.5;'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='192'
+              x='207.8359' y='183.8139'>Can raise his hand virtually
+        </text>
+        <ellipse cx='304.2482' cy='304.9496' fill='#FEFECE' filter='url(#f1098t56ya8jvt)' rx='107.7482' ry='23.9496'
+                 style='stroke:#A80036;stroke-width:1.5;'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='181'
+              x='213.7482' y='307.7963'>Creates virtual classroom
+        </text>
+        <ellipse cx='303.8149' cy='398.763' fill='#FEFECE' filter='url(#f1098t56ya8jvt)' rx='161.8149' ry='34.763'
+                 style='stroke:#A80036;stroke-width:1.5;'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='295'
+              x='156.3149' y='401.6097'>Can call up screenshots of all participants
+        </text>
+        <ellipse cx='303.9636' cy='545.9927' fill='#FEFECE' filter='url(#f1098t56ya8jvt)' rx='175.4636' ry='37.4927'
+                 style='stroke:#A80036;stroke-width:1.5;'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='288'
+              x='157.9636' y='540.691'>Communication between student (client)
+        </text>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='168'
+              x='219.9636' y='556.9878'>and teacher (examiner)
+        </text>
+        <ellipse cx='303.9992' cy='657.1998' fill='#FEFECE' filter='url(#f1098t56ya8jvt)' rx='178.9992' ry='38.1998'
+                 style='stroke:#A80036;stroke-width:1.5;'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='180'
+              x='213.9992' y='651.8981'>Image compressor stores
+        </text>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='300'
+              x='153.9992' y='668.1949'>(compressed) screenshots in the database
+        </text>
+        <ellipse cx='303.8999' cy='764.78' fill='#FEFECE' filter='url(#f1098t56ya8jvt)' rx='159.3999' ry='34.28'
+                 style='stroke:#A80036;stroke-width:1.5;'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='290'
+              x='158.8999' y='767.6267'>Sends pictures to the teacher (examiner)
+        </text>
+        <ellipse cx='35.5' cy='111' fill='#FEFECE' filter='url(#f1098t56ya8jvt)' rx='8' ry='8'
+                 style='stroke:#A80036;stroke-width:1.5;'/>
+        <path d='M35.5,119 L35.5,146 M22.5,127 L48.5,127 M35.5,146 L22.5,161 M35.5,146 L48.5,161 ' fill='none'
+              filter='url(#f1098t56ya8jvt)' style='stroke:#A80036;stroke-width:1.5;'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='55' x='8'
+              y='179.4951'>Student
+        </text>
+        <ellipse cx='35.5' cy='321' fill='#FEFECE' filter='url(#f1098t56ya8jvt)' rx='8' ry='8'
+                 style='stroke:#A80036;stroke-width:1.5;'/>
+        <path d='M35.5,329 L35.5,356 M22.5,337 L48.5,337 M35.5,356 L22.5,371 M35.5,356 L48.5,371 ' fill='none'
+              filter='url(#f1098t56ya8jvt)' style='stroke:#A80036;stroke-width:1.5;'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='59' x='6'
+              y='389.4951'>Teacher
+        </text>
+        <ellipse cx='35.5' cy='626' fill='#FEFECE' filter='url(#f1098t56ya8jvt)' rx='8' ry='8'
+                 style='stroke:#A80036;stroke-width:1.5;'/>
+        <path d='M35.5,634 L35.5,661 M22.5,642 L48.5,642 M35.5,661 L22.5,676 M35.5,661 L48.5,676 ' fill='none'
+              filter='url(#f1098t56ya8jvt)' style='stroke:#A80036;stroke-width:1.5;'/>
+        <text fill='#000000' font-family='sans-serif' font-size='14' lengthAdjust='spacing' textLength='47' x='12'
+              y='694.4951'>Server
+        </text>
+        <path d='M63.03,138.12 C103.58,132.18 182.18,120.68 238.38,112.46 ' fill='none' id='student-uc_startClient'
+              style='stroke:#A80036;stroke-width:1.0;'/>
+        <path d='M63.03,145.88 C96.93,150.84 157.43,159.7 209.2,167.27 ' fill='none' id='student-uc_raiseHand'
+              style='stroke:#A80036;stroke-width:1.0;'/>
+        <path d='M65.02,346.97 C101.54,340.53 166.42,329.09 219.23,319.77 ' fill='none' id='teacher-uc_createLobby'
+              style='stroke:#A80036;stroke-width:1.0;'/>
+        <path d='M65.02,357.03 C92.41,361.86 135.76,369.5 177.99,376.95 ' fill='none' id='teacher-uc_seeScreenshots'
+              style='stroke:#A80036;stroke-width:1.0;'/>
+        <path d='M59.22,617.83 C64.37,611.46 70.33,605.48 77,601 C100.38,585.29 127.79,574.06 155.31,566.03 '
+              fill='none' id='server-uc_serverInterface' style='stroke:#A80036;stroke-width:1.0;'/>
+        <path d='M59.22,657 C75.4,657 98.81,657 124.8,657 ' fill='none' id='server-uc_imageCompressor'
+              style='stroke:#A80036;stroke-width:1.0;'/>
+        <path d='M59.06,695.24 C64.26,701.6 70.27,707.56 77,712 C102.82,729.03 133.47,740.62 163.73,748.49 ' fill='none'
+              id='server-uc_sendScreenshots' style='stroke:#A80036;stroke-width:1.0;'/>
+    </g>
+</svg>

@@ -1,0 +1,73 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+entity Exam{
+    pin: String
+    title: String
+    ongoing: boolean
+    formIDs:?
+    date: LocalDate
+    examineIds:
+    examinerIds:
+    startTime: LocalDate
+    endTime: LocalDate
+    registrationMode: String
+    modules: ?
+}
+
+entity Examinee{
+    enrolementNr: String
+    catalogNr: Number
+    firstName: String
+    lastName: String
+}
+
+entity Examiner{
+    userName: String
+    firstName: String
+    lastName: String
+    password: String
+    isAdmin: boolean
+    isOnline: boolean
+    lastOnline: Number
+    modules: ?
+}
+
+entity Screenshot{
+    timestamp: Number
+    screenshotNr: Number
+    examineeId:
+    resolution: String
+    compression: Number (?)
+    isCompressed: Number (?)
+}
+
+class requestSummary{
+    duration: Number
+    endpoint: String (?)
+    date: LocalDate
+}
+
+class Form{
+    title: String
+    year: String
+}
+
+class config{
+    configVersion: Number
+    examinerLoginType: String
+    storage: ?
+    storageUtilizationCheck: ?
+    heartbeat: ?
+    examsToDelete:
+    pinLength: Number
+    webUntis:
+    endOfSchoolYear: String
+    maintenance: boolean
+}
+
+Examinee <-- Exam
+Examiner <-- Exam
+Exam <-- Screenshot
+
+@enduml
