@@ -46,8 +46,8 @@ class Examiner{
 class Screenshot{
     timestamp: Number
     screenshotNr: Number
-    examId: Long
-    examineId: Long
+    examId: Exam
+    examineId: Examinee
     resolution: String
     compression: Number (?)
     isCompressed: Number (?)
