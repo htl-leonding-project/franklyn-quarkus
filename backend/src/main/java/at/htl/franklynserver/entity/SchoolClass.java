@@ -38,10 +38,6 @@ public class SchoolClass extends PanacheEntityBase {
     @Column(name = "SC_TITLE")
     public String title;
 
-    @ManyToMany
-    @JoinColumn(name = "SC_EXAMS")
-    public List<Exam> exams;
-
     @NotNull
     @Size(min = 4, max = 4)
     @Column(name = "SC_YEAR")
