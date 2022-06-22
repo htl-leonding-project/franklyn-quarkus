@@ -57,10 +57,6 @@ public class Exam extends PanacheEntityBase {
     public LocalDateTime endTime;
 
     @ManyToMany
-    @JoinColumn(name = "E_EXAMINEE_IDS")
-    public List<Examinee> examineeIds;
-
-    @ManyToMany
     @Size(min = 1)
     @JoinColumn(name = "E_EXAMINER_IDS")
     public List<Examiner> examinerIds;
@@ -110,7 +106,6 @@ public class Exam extends PanacheEntityBase {
                 LocalDate date,
                 LocalDateTime startTime,
                 LocalDateTime endTime,
-                List<Examinee> examineeIds,
                 List<Examiner> examinerIds,
                 int interval,
                 Resolution resolution,
@@ -122,7 +117,6 @@ public class Exam extends PanacheEntityBase {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.examineeIds = examineeIds;
         this.examinerIds = examinerIds;
         this.interval = interval;
         this.resolution = resolution;

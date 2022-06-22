@@ -2,20 +2,12 @@ package at.htl.franklynserver.control;
 
 import at.htl.franklynserver.entity.Exam;
 import at.htl.franklynserver.entity.Examinee;
-import at.htl.franklynserver.entity.ExamineeDetails;
-import at.htl.franklynserver.entity.SchoolClassDTO;
-import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.hibernate.reactive.panache.PanacheRepository;
 import io.smallrye.mutiny.Uni;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.NoResultException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @ApplicationScoped
 public class ExamRepository implements PanacheRepository<Exam> {

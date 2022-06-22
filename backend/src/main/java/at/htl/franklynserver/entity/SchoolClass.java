@@ -11,7 +11,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(
                 name = "SchoolClass.getStats",
-                query = "select new at.htl.franklynserver.entity.SchoolClassDTO(sc.id, sc.title, count(sc.title)) " +
+                query = "select new at.htl.franklynserver.entity.dto.SchoolClassDto(sc.id, sc.title, count(sc.title)) " +
                         "from SchoolClass sc " +
                         "where sc.year = ?1 " +
                         "group by sc.id, sc.title"

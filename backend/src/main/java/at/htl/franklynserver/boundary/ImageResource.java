@@ -3,7 +3,6 @@ package at.htl.franklynserver.boundary;
 import at.htl.franklynserver.control.ScreenshotRepository;
 import at.htl.franklynserver.entity.Resolution;
 import at.htl.franklynserver.entity.Screenshot;
-import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import org.jboss.logging.Logger;
@@ -18,7 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Path("upload")
@@ -49,15 +47,15 @@ public class ImageResource {
                     StandardCopyOption.REPLACE_EXISTING
             );
 
-            String[] screenshot = filename
-                    .split("\\.")[0]
-                    .split("-");
-
-            Screenshot newScreenshot = new Screenshot(
-                    Timestamp.valueOf(LocalDateTime.now()),
-                    cnt, 1L, 1L, Resolution.HD, 30);
-            cnt++;
-            Log.info(newScreenshot.screenshotNumber);
+//            String[] screenshot = filename
+//                    .split("\\.")[0]
+//                    .split("-");
+//
+//            Screenshot newScreenshot = new Screenshot(
+//                    Timestamp.valueOf(LocalDateTime.now()),
+//                    cnt, 1L, 1L, Resolution.HD, 30);
+//            cnt++;
+//            Log.info(newScreenshot.runningNo);
             //screenshotRepository.postScreenshot(newScreenshot);
         }
 

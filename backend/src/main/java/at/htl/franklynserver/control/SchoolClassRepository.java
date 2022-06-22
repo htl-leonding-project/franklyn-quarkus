@@ -1,10 +1,7 @@
 package at.htl.franklynserver.control;
 
 import at.htl.franklynserver.entity.SchoolClass;
-import at.htl.franklynserver.entity.SchoolClassDTO;
-import io.quarkus.hibernate.reactive.panache.PanacheQuery;
 import io.quarkus.hibernate.reactive.panache.PanacheRepository;
-import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
 import io.smallrye.mutiny.Uni;
 
 import javax.enterprise.context.ApplicationScoped;

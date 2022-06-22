@@ -1,9 +1,7 @@
 package at.htl.franklynserver.boundary;
 
 import at.htl.franklynserver.control.SchoolClassRepository;
-import at.htl.franklynserver.entity.Examiner;
 import at.htl.franklynserver.entity.SchoolClass;
-import at.htl.franklynserver.entity.SchoolClassDTO;
 import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;

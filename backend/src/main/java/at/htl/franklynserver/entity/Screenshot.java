@@ -1,10 +1,7 @@
 package at.htl.franklynserver.entity;
 
-import io.quarkus.hibernate.reactive.panache.PanacheEntity;
 import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -15,11 +12,11 @@ import java.sql.Timestamp;
 
         @NamedQuery(
                 name = "Screenshot.findScreenshot",
-                query = "select s from Screenshot s where s.examineeId = ?1 " +
-                        "and s.screenshotNumber = ?2"),
+                query = "select s from Screenshot s where s.examinee = ?1 " +
+                        "and s.runningNo = ?2"),
         @NamedQuery(
                 name = "Screenshot.findLatestScreenshot",
-                query = "select s from Screenshot s where s.examineeId = ?1 " +
+                query = "select s from Screenshot s where s.examinee = ?1 " +
                         "order by s.timestamp desc"
         )
 })
@@ -38,15 +35,17 @@ public class Screenshot extends PanacheEntityBase {
 
     @NotNull
     @Column(name = "S_SCREENSHOT_NUMBER")
-    public Long screenshotNumber;
+    public Long runningNo;
 
     @NotNull
-    @Column(name = "S_EXAM_ID")
-    public Long examId;
+    @ManyToOne
+    @JoinColumn(name = "S_EXAM_ID")
+    public Exam exam;
 
     @NotNull
-    @Column(name = "S_EXAMINEE_ID")
-    public Long examineeId;
+    @ManyToOne
+    @JoinColumn(name = "S_EXAMINEE_ID")
+    public Examinee examinee;
 
     @NotNull
     @Column(name = "S_RESOLUTION")
@@ -64,12 +63,12 @@ public class Screenshot extends PanacheEntityBase {
     public Screenshot() {
     }
 
-    public Screenshot(Timestamp timestamp, Long screenshotNumber, Long examId, Long examineeId,
+    public Screenshot(Timestamp timestamp, Long runningNo, Exam exam, Examinee examinee,
                       Resolution resolution, int compression) {
         this.timestamp = timestamp;
-        this.screenshotNumber = screenshotNumber;
-        this.examId = examId;
-        this.examineeId = examineeId;
+        this.runningNo = runningNo;
+        this.exam = exam;
+        this.examinee = examinee;
         this.resolution = resolution;
         this.compression = compression;
     }
