@@ -3,11 +3,12 @@ package at.htl.franklynserver.boundary;
 import at.htl.franklynserver.control.ExamRepository;
 import at.htl.franklynserver.control.ExamineeDetailsRepository;
 import at.htl.franklynserver.control.ExamineeRepository;
-import at.htl.franklynserver.entity.*;
+import at.htl.franklynserver.entity.Exam;
+import at.htl.franklynserver.entity.Examinee;
+import at.htl.franklynserver.entity.ExamineeDetails;
+import at.htl.franklynserver.entity.Examiner;
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.hibernate.reactive.panache.PanacheQuery;
-import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
-import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
@@ -34,19 +35,25 @@ public class ExamAPI {
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<List<Exam>> getAll(){
-        return examRepository.listAll();
+        return Exam.list("order by date");
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @ReactiveTransactional
+    @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Exam> saveExam(Exam exam){
-        exam.pin = examRepository.createPIN(exam.date);
-
-        Log.info(exam.title);
-
-        return examRepository.persist(exam);
+        if(exam != null)
+            examRepository.persist(exam);
+        String pin = examRepository.createPIN(exam.date);
+        return Panache
+                .withTransaction(() -> examRepository.findById(exam.id)
+                        .onItem().ifNotNull()
+                        .transform(entity -> {
+                            entity.pin = pin;
+                            return entity;
+                        })
+                        .onFailure().recoverWithNull());
     }
 
     @GET
@@ -92,7 +99,7 @@ public class ExamAPI {
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Uni<Exam> updateExam(Exam exam){
@@ -121,7 +128,7 @@ public class ExamAPI {
     @Path("enroll")
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Uni<Exam> enrollStudentForExam(@FormParam("id") Long id, Examinee examinee){
         //show if already exists with first and last name
         return Panache
@@ -140,7 +147,7 @@ public class ExamAPI {
     @Transactional
     @Path("examinee/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Uni<ExamineeDetails> removeExamineeFromExam(@PathParam("id") Long id, Long examineeId){
         return null;
     }

@@ -1,7 +1,6 @@
 package at.htl.franklynserver.boundary;
 
 import at.htl.franklynserver.control.ExaminerRepository;
-import at.htl.franklynserver.entity.Exam;
 import at.htl.franklynserver.entity.Examiner;
 import io.smallrye.mutiny.Uni;
 
@@ -11,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("api/examiners")
-public class ExaminerAPI {
+public class ExaminerResource {
 
     @Inject
     ExaminerRepository examinerRepository;

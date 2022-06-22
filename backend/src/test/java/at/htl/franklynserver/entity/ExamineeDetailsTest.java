@@ -9,13 +9,16 @@ class ExamineeDetailsTest {
     @Test
     void add_examinee_details_simple_success() {
         ExamineeDetails examineeDetails = new ExamineeDetails();
-        examineeDetails.examineeId = 1L;
-        examineeDetails.examId = 4L;
+        examineeDetails.exam.id = 4L;
         examineeDetails.isOnline=false;
         examineeDetails.latestScreenshotNumber=1;
 
-        assertEquals(1L, examineeDetails.examineeId);
-        assertNotEquals(1L, examineeDetails.examId);
+        Examinee examinee = new Examinee("Michael", "Tran");
+
+        examineeDetails.examinee = examinee;
+
+        assertEquals(1L, examineeDetails.examinee.id);
+        assertNotEquals(1L, examineeDetails.exam.id);
         assertFalse(examineeDetails.isOnline);
         assertEquals(1,examineeDetails.latestScreenshotNumber);
     }
