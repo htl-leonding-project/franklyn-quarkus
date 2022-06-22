@@ -12,10 +12,6 @@ import javax.validation.constraints.Size;
                 query = "select sc from SchoolClass sc order by sc.year,sc.title"
         ),
         @NamedQuery(
-                name="SchoolClass.getCurrentSchoolClass",
-                query = "select sc from SchoolClass sc where sc.year = ?1 order by sc.title"
-        ),
-        @NamedQuery(
                 name = "SchoolClass.getStats",
                 query = "select new at.htl.franklynserver.entity.SchoolClassDTO(sc.id, sc.title, count(sc.year)) " +
                         "from SchoolClass sc " +

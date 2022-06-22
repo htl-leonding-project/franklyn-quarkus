@@ -23,9 +23,6 @@ public class ExamineeDetails extends PanacheEntity {
     @Column(name = "ED_EXAM_ID")
     public Long examId;
 
-    @Column(name = "ED_EXAMINEE_ID")
-    public Long examineeId;
-
     @Column(name = "ED_IS_ONLINE")
     public boolean isOnline;
 
@@ -38,14 +35,24 @@ public class ExamineeDetails extends PanacheEntity {
     @Column(name = "ED_LATEST_SCREENSHOT_NUMBER")
     public int latestScreenshotNumber;
 
+    @ManyToOne
+    @JoinColumn(name = "ED_EXAMINEE_ID")
+    public Examinee examinee;
+
     public ExamineeDetails(){}
 
-    public ExamineeDetails(Long examId, Long examineeId, boolean isOnline, LocalDateTime lastOnline, Timestamp latestTimestamp, int latestScreenshotNumber) {
+    public ExamineeDetails(Long examId,
+                           boolean isOnline,
+                           LocalDateTime lastOnline,
+                           Timestamp latestTimestamp,
+                           int latestScreenshotNumber,
+                           Examinee examinee
+    ) {
         this.examId = examId;
-        this.examineeId = examineeId;
         this.isOnline = isOnline;
         this.lastOnline = lastOnline;
         this.latestTimestamp = latestTimestamp;
         this.latestScreenshotNumber = latestScreenshotNumber;
+        this.examinee = examinee;
     }
 }

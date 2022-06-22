@@ -1,7 +1,6 @@
 package at.htl.franklynserver.entity;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
-import jdk.jfr.Name;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.persistence.*;
@@ -41,11 +40,10 @@ public class Exam extends PanacheEntity {
     @Column(name = "E_ONGOING")
     public boolean ongoing = false;
 
-    @OneToMany()
+    @ManyToOne
     @NotNull
-    @Size(min = 1)
-    @JoinColumn(name = "E_FORM_IDS")
-    public List<SchoolClass> formIds;
+    @JoinColumn(name = "E_FORM_ID")
+    public SchoolClass form;
 
     @NotNull
     @Column(name = "E_DATE")
@@ -59,16 +57,16 @@ public class Exam extends PanacheEntity {
     @Column(name = "E_END_TIME")
     public LocalDateTime endTime;
 
-    @OneToMany()
+    @OneToMany
     @Null
-    @JoinColumn(name = "E_EXAMINEE_IDS")
+    @JoinColumn(name = "E_EXAM_ID")
     public List<Examinee> examineeIds;
 
-    @OneToMany()
+    @ManyToOne
     @NotNull
     @Size(min = 1)
-    @JoinColumn(name = "E_EXAMINER_IDS")
-    public List<Examiner> examinerIds;
+    @JoinColumn(name = "E_EXAMINER_ID")
+    public Examiner examiner;
 
     @NotNull
     @ConfigProperty(defaultValue = "5")
@@ -87,16 +85,27 @@ public class Exam extends PanacheEntity {
 
     public Exam(){}
 
-    public Exam(String pin, String title, boolean ongoing, List<SchoolClass> formIds, LocalDate date, LocalDateTime startTime, LocalDateTime endTime, List<Examinee> examineeIds, List<Examiner> examinerIds, int interval, Resolution resolution, int compression) {
+    public Exam(String pin,
+                String title,
+                boolean ongoing,
+                SchoolClass form,
+                LocalDate date,
+                LocalDateTime startTime,
+                LocalDateTime endTime,
+                List<Examinee> examineeIds,
+                Examiner examiner,
+                int interval,
+                Resolution resolution,
+                int compression) {
         this.pin = pin;
         this.title = title;
         this.ongoing = ongoing;
-        this.formIds = formIds;
+        this.form = form;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.examineeIds = examineeIds;
-        this.examinerIds = examinerIds;
+        this.examiner = examiner;
         this.interval = interval;
         this.resolution = resolution;
         this.compression = compression;
