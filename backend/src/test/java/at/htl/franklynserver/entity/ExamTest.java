@@ -28,12 +28,10 @@ class ExamTest {
         examinees.add(new Examinee("Michael", "Tran"));
         examinees.add(new Examinee("Tamara", "Melcher"));
         Examiner examiners = new Examiner("stuetz", "Thomas", "Stuetz", true);
-        List<SchoolClass> forms = new ArrayList<SchoolClass>();
-        forms.add(new SchoolClass("4AHIF", "2022"));
-        forms.add(new SchoolClass("3AHIF", "2021"));
+        SchoolClass form = new SchoolClass("4AHIF", "2022");
         exam.examineeIds = examinees;
         exam.examiner = examiners;
-        exam.form = forms;
+        exam.form = form;
 
         assertEquals(1L, exam.id);
         assertNotEquals(2, exam.compression);
@@ -43,7 +41,7 @@ class ExamTest {
         assertTrue(exam.examiner.isAdmin);
         assertEquals(LocalDateTime.of(2022, 3, 26, 11, 45), exam.startTime);
         assertEquals(LocalDateTime.of(2022, 3, 26, 13, 45), exam.endTime);
-        assertEquals("4AHIF", exam.form.get(0).title);
+        assertEquals("4AHIF", exam.form.title);
         assertFalse(exam.ongoing);
 
     }
