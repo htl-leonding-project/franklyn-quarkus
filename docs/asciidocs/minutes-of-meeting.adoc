@@ -462,11 +462,7 @@ backend -right- screenshots
 
 .Teilnehmer
 |===
-|anwesend | |
-
-|Vorname
-|Nachname
-|Klasse
+|Vorname |Nachname |Klasse
 
 
 | Jonas
@@ -533,11 +529,7 @@ Anwesend Prof. Stuetz, Prof. Bucek, Tamara Melcher, Michael Tran
 
 .Teilnehmer
 |===
-|anwesend | |
-
-|Vorname
-|Nachname
-|Klasse
+|Vorname |Nachname |Klasse
 
 |
 | Prof. Stuetz
@@ -575,4 +567,39 @@ Anwesend Prof. Stuetz, Prof. Bucek, Tamara Melcher, Michael Tran
 * Datenmodell erstellen
 * reaktiv machen (jdbc der nicht blockiert, ...)
 
+
+== 2022-06-20
+
+
+.Teilnehmer
+|===
+|Vorname |Nachname |Klasse
+
+|
+| Prof. Stuetz
+|
+
+|
+| Prof. Bucek
+|
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+
+|===
+
+=== Was wurde besprochen?
+
+* Was wir gemacht haben
+
+=== Vereinbarung
+* GitHub-Repository in Ordnung bringen
+* Funktionierende Endpoints
+* Sachstandsbericht
+* Projekt an sich aufräumen (zb unbrauchbare Dependencies entfernen)
 

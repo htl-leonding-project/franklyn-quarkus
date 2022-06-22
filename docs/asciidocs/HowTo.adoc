@@ -11,7 +11,7 @@ Melcher Tamara, Tran Michael
 
 `./mvnw clean quarkus:dev`
 
-2. start the frontend
+== Start the frontend
 
 * open a terminal in `frontend`-project and execute:
 
@@ -19,9 +19,3 @@ Melcher Tamara, Tran Michael
 
 * after that open http://localhost:8090/client/login and log yourself in
 
-
-== Start the frontend
-
-* open a terminal in `frontend`-project and execute:
-
-`./mvnw clean quarkus:dev`

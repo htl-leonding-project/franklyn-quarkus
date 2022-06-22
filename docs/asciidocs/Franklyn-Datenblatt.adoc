@@ -1,0 +1,38 @@
+= Franklyn-Datenblatt
+Melcher Tamara, Tran Michael
+23.Juni 2022: franklyn-quarkus
+:toc:
+:icons: font
+:url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
+
+== Wer ist dabei?
+
+.Programmierer
+|===
+|Vorname |Nachname |Klasse
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+|===
+
+
+== Github-Repository
+
+link:https://github.com/htl-leonding-project/franklyn-quarkus[Github-Repository]
+
+== Dokumentation
+
+link:https://htl-leonding-project.github.io/franklyn-quarkus/[Dokumentation]
+
+== VM von Franklyn2 (auf Nachfrage)
+
+
+
+
+
+
