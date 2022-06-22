@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NamedQueries({
         @NamedQuery(
                 name = "ExamineeDetails.getExamineeDetailsByExamID",
-                query = "select ed from ExamineeDetails ed where ed.examId = ?1"),
+                query = "select ed from ExamineeDetails ed where ed.exam.id = ?1"),
 })
 @Entity
 @Table(name = "F_EXAMINEE_DETAILS")
@@ -20,8 +20,9 @@ public class ExamineeDetails extends PanacheEntity {
 //    @Column(name = "ED_ID")
 //    public Long id;
 
-    @Column(name = "ED_EXAM_ID")
-    public Long examId;
+    @ManyToOne
+    @JoinColumn(name = "ED_EXAM_ID")
+    public Exam exam;
 
     @Column(name = "ED_IS_ONLINE")
     public boolean isOnline;
@@ -41,14 +42,14 @@ public class ExamineeDetails extends PanacheEntity {
 
     public ExamineeDetails(){}
 
-    public ExamineeDetails(Long examId,
+    public ExamineeDetails(Exam exam,
                            boolean isOnline,
                            LocalDateTime lastOnline,
                            Timestamp latestTimestamp,
                            int latestScreenshotNumber,
                            Examinee examinee
     ) {
-        this.examId = examId;
+        this.exam = exam;
         this.isOnline = isOnline;
         this.lastOnline = lastOnline;
         this.latestTimestamp = latestTimestamp;

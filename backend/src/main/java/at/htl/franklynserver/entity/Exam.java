@@ -40,8 +40,9 @@ public class Exam extends PanacheEntity {
     @Column(name = "E_ONGOING")
     public boolean ongoing = false;
 
-    @ManyToOne
+    @ManyToOne()
     @NotNull
+    @Size(min = 1)
     @JoinColumn(name = "E_FORM_ID")
     public SchoolClass form;
 
@@ -57,9 +58,9 @@ public class Exam extends PanacheEntity {
     @Column(name = "E_END_TIME")
     public LocalDateTime endTime;
 
-    @OneToMany
+    @ManyToMany()
     @Null
-    @JoinColumn(name = "E_EXAM_ID")
+    @JoinColumn(name = "E_EXAMINEE_IDS")
     public List<Examinee> examineeIds;
 
     @ManyToOne
@@ -92,11 +93,12 @@ public class Exam extends PanacheEntity {
                 LocalDate date,
                 LocalDateTime startTime,
                 LocalDateTime endTime,
-                List<Examinee> examineeIds,
+                List<Examinee> examinees,
                 Examiner examiner,
                 int interval,
                 Resolution resolution,
-                int compression) {
+                int compression)
+    {
         this.pin = pin;
         this.title = title;
         this.ongoing = ongoing;
@@ -104,7 +106,7 @@ public class Exam extends PanacheEntity {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.examineeIds = examineeIds;
+        this.examineeIds = examinees;
         this.examiner = examiner;
         this.interval = interval;
         this.resolution = resolution;

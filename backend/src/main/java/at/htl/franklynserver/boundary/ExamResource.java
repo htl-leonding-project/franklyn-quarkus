@@ -107,9 +107,9 @@ public class ExamResource {
                             entity.pin = exam.pin;
                             entity.title = exam.title;
                             entity.date = exam.date;
-                            entity.formIds = exam.formIds;
+                            entity.form = exam.form;
                             entity.examineeIds = exam.examineeIds;
-                            entity.examinerIds = exam.examinerIds;
+                            entity.examiner = exam.examiner;
                             entity.startTime = exam.startTime;
                             entity.endTime = exam.endTime;
                             entity.ongoing = exam.ongoing;
