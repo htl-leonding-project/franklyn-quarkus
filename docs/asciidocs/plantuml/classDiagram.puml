@@ -77,10 +77,6 @@ class config{
     maintenance: boolean
 }
 
-class ExamForm{
-    Exam: exam
-    Form: form
-}
 
 enum Resolution{
     HD,
@@ -93,7 +89,6 @@ Examinee <-- Exam
 Examiner <-- Exam
 Exam <-- Screenshot
 ExamineeDetails --> Examinee
-Exam --> ExamForm
-Form --> ExamForm
+Exam --> Form
 
 @enduml
