@@ -17,7 +17,7 @@ import java.util.List;
                 query = "select e from Exam e where e.date = :DATE and e.pin LIKE :PIN"),
         @NamedQuery(
                 name = "Exam.getAllExamineesByExamId",
-                query = "select e.examineeIds from Exam e where e.id = :ID")})
+                query = "select ex from Exam e join Examinee ex where ex.exam.id = :ID")})
 
 @Entity
 @Table(name = "F_EXAM")

@@ -74,15 +74,15 @@ public class ExamResource
     @Path("addExaminer/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public Uni<Exam> addExaminerToExam(@FormParam("id") Long id, Examinee examinee){
+    public Uni<Exam> addExaminerToExam(@FormParam("id") Long id, Examiner examiner){
 
         //validation for duplicate examiners
         return examRepository.findById(id)
                 .onItem().ifNotNull()
                 .transform(entity -> {
-                    List<Examinee> examinees = entity.examineeIds;
-                    examinees.add(examinee);
-                    entity.examineeIds = examinees;
+                    List<Examiner> examiners = entity.examinerIds;
+                    examiners.add(examiner);
+                    entity.examinerIds = examiners;
                     return entity;
                 });
     }
@@ -118,7 +118,6 @@ public class ExamResource
                             entity.title = exam.title;
                             entity.date = exam.date;
                             entity.formIds = exam.formIds;
-                            entity.examineeIds = exam.examineeIds;
                             entity.examinerIds = exam.examinerIds;
                             entity.startTime = exam.startTime;
                             entity.endTime = exam.endTime;
@@ -138,14 +137,14 @@ public class ExamResource
     @Consumes(MediaType.APPLICATION_JSON)
     public Uni<Exam> enrollStudentForExam(@PathParam("id") Long id, Examinee examinee){
         //show if already exists with first and last name
-        Examinee examineeToPersist = new Examinee(examinee.firstName, examinee.lastName);
         return Panache
                 .withTransaction(() -> examRepository.findById(id)
                         .onItem().ifNotNull()
                         .transform(entity -> {
                             //List<Examinee> examinees = entity.examineeIds;
                             //examinees.add(examineeToPersist);
-                            entity.examineeIds.add(examineeToPersist);
+                            Examinee examineeToPersist = new Examinee(examinee.firstName, examinee.lastName, entity);
+                            examineeRepository.persist(examineeToPersist);
                             return entity;
                         }));
     }
