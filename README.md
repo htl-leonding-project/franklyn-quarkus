@@ -1,16 +1,29 @@
-# franklyn-quarkus
+# Franklyn
 
-Franklyn is an exam support system.
+Franklyn ist ein Prüfungsunterstützungssystem.
 
-Franklyn Examiner is the user interface for examiners. Franklyn Client is the client for the examinees.
+Franklyn Examiner ist die Benutzeroberfläche für Prüfer. Franklyn Client ist der Client für die Prüflinge.
 
-Franklyn can be used by teachers to view at the student's computer screens. 
-It is an easy way to prevent cheating and to help students on the other hand.
-The teacher can look at the students' screens and see if one or more students need help with a problem.
+Franklyn kann von Lehrern verwendet werden, um auf den Computerbildschirmen der Schüler zu sehen.
+Es ist eine einfache Möglichkeit, Betrug zu verhindern und andererseits den Schülern zu helfen.
+Der Lehrer kann auf die Bildschirme der Schüler schauen und sehen, ob ein oder mehrere Schüler Hilfe bei einem Problem benötigen.
 
 
-# gh-Pages
-https://htl-leonding-project.github.io/franklyn-quarkus/asciidocs/
+## Dokumentation
+[Zur Dokumentation] (https://htl-leonding-project.github.io/franklyn-quarkus/asciidocs/)
+
+## Mitwirkende
+
+### 4AHIF 2122
+
+* Melcher Tamara
+* Tran Michael
+
+### 5AHIF 2122
+* Birklbauer Jonas
+* Bojer Nico
+* Gahleitner Lorenz
+* Hosic Tarik
 
 # How to start the application
 

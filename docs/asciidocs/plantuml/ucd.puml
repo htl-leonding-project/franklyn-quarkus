@@ -1,7 +1,11 @@
 @startuml
 
+left to right direction
+
 :Student: as student
 :Teacher: as teacher
+
+
 
 rectangle "Franklyn" {
     rectangle Client {

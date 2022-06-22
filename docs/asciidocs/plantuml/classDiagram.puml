@@ -1,21 +1,24 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+
 class Exam{
     pin: String
     title: String
     ongoing: boolean
-    formIDs:?
+    formIDs:List<Form>
     date: LocalDate
-    examineIds:
-    examinerIds:
+    examineIds: List<Examinee>
+    examinerIds: List<Examiner>
     startTime: LocalDate
     endTime: LocalDate
     registrationMode: String
-    modules: ?
+    resolution: Resolution
+    interval: Integer
+    compression: Integer
 }
 
-class Examine{
+class Examinee{
     enrolementNr: String
     catalogNr: Number
     firstName: String
@@ -23,12 +26,13 @@ class Examine{
 }
 
 
-class ExamineDetails{
-    examId:
-    examineId:
+class ExamineeDetails{
+    examId: Long
+    examineId: Long id
     isOnline: boolean
     lastOnline: Number
-    modules: ?
+    latestTimeStamp: TimeStamp (?)
+    latestScreenshotNumber: BigInt (?)
 }
 
 class Examiner{
@@ -42,8 +46,8 @@ class Examiner{
 class Screenshot{
     timestamp: Number
     screenshotNr: Number
-    examId:
-    examineId:
+    examId: Long
+    examineId: Long
     resolution: String
     compression: Number (?)
     isCompressed: Number (?)
@@ -73,9 +77,23 @@ class config{
     maintenance: boolean
 }
 
-Examine <-- Exam
+class ExamForm{
+    Exam: exam
+    Form: form
+}
+
+enum Resolution{
+    HD,
+    NATIVE,
+    FHD
+}
+
+
+Examinee <-- Exam
 Examiner <-- Exam
 Exam <-- Screenshot
-ExamineDetails --> Examine
+ExamineeDetails --> Examinee
+Exam --> ExamForm
+Form --> ExamForm
 
 @enduml

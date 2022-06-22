@@ -1,14 +1,39 @@
 @startwbs
-* Franklyn-Quarkus
+* Franklyn-Quarkus-Backend
 ** Sprint 01
 ***[#green] Screenshots des Bildschirms machen
 ***[#green] Screenshots abschicken
 ***[#green] Screenshots empfangen
 ** Sprint 02
-***[#yellow] testen des Backends mit gattling
-***[#red] Entitäten testen
-***[#red] generieren der PINs
+***[#green] Testen des Backends mit gattling
+***[#green] Entitäten testen
+***[#green] Generieren der PINs
 ** Sprint 03
-***[#red] testen mit Frontend von Franklyn2
-***[#red] deployen
+***[#yellow] Endpoints erstellen
+****[#green] Examinee
+*****[#green] GET
+*****[#green] PUT
+*****[#green] DELETE
+****[#green] Examiner
+*****[#green] GET
+*****[#green] DELETE
+*****[#green] POST
+****[#yellow] Exam
+*****[#green] GET
+*****[#yellow] PUT
+*****[#green] DELETE
+*****[#skyblue] POST
+****[#yellow] SchoolClass
+*****[#green] GET
+*****[#yellow] DELETE
+*****[#yellow] POST
+****[#yellow] Screenshot
+*****[#green] GET
+*****[#yellow] POST
+***[#red] Endpoints testen
+** Sprint 04
+***[#red] WebUntis-Authentifizierung
+***[#red] Testen mit Frontend von Franklyn2
+** Sprint 05
+***[#red] Deployen
 @endwbs

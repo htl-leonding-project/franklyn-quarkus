@@ -13,6 +13,11 @@ ifdef::backend-html5[]
 // print the toc here (not at the default position)
 //toc::[]
 
+== How-To
+
+<<HowTo.adoc#, How-To>>
+
+
 == System Specification
 
 <<system-specification.adoc#, System Specification>>
