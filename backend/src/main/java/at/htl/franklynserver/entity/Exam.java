@@ -40,7 +40,6 @@ public class Exam extends PanacheEntityBase {
     public boolean ongoing = false;
 
     @ManyToMany
-    @NotNull
     @Size(min = 1)
     @JoinColumn(name = "E_FORM_IDS")
     public List<SchoolClass> formIds;
@@ -58,12 +57,10 @@ public class Exam extends PanacheEntityBase {
     public LocalDateTime endTime;
 
     @ManyToMany
-    @Null
     @JoinColumn(name = "E_EXAMINEE_IDS")
     public List<Examinee> examineeIds;
 
     @ManyToMany
-    @NotNull
     @Size(min = 1)
     @JoinColumn(name = "E_EXAMINER_IDS")
     public List<Examiner> examinerIds;
@@ -84,6 +81,26 @@ public class Exam extends PanacheEntityBase {
     public int compression;
 
     public Exam() {
+    }
+
+    public Exam(String pin,
+                String title,
+                boolean ongoing,
+                LocalDate date,
+                LocalDateTime startTime,
+                LocalDateTime endTime,
+                int interval,
+                Resolution resolution,
+                int compression) {
+        this.pin = pin;
+        this.title = title;
+        this.ongoing = ongoing;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.interval = interval;
+        this.resolution = resolution;
+        this.compression = compression;
     }
 
     public Exam(String pin,
@@ -111,4 +128,6 @@ public class Exam extends PanacheEntityBase {
         this.resolution = resolution;
         this.compression = compression;
     }
+
+
 }

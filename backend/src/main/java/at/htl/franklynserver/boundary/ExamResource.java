@@ -3,12 +3,11 @@ package at.htl.franklynserver.boundary;
 import at.htl.franklynserver.control.ExamRepository;
 import at.htl.franklynserver.control.ExamineeDetailsRepository;
 import at.htl.franklynserver.control.ExamineeRepository;
-import at.htl.franklynserver.entity.Exam;
-import at.htl.franklynserver.entity.Examinee;
-import at.htl.franklynserver.entity.ExamineeDetails;
-import at.htl.franklynserver.entity.Examiner;
+import at.htl.franklynserver.entity.*;
+import at.htl.franklynserver.entity.dto.ExamDto;
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.hibernate.reactive.panache.PanacheQuery;
+import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 
@@ -17,6 +16,8 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Path("api/exams")
@@ -42,14 +43,24 @@ public class ExamResource
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Transactional
+    @ReactiveTransactional
     @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Exam> saveExam(Exam exam){
-        Exam e = new Exam();
-        e = exam;
+    public Uni<Exam> saveExam(ExamDto exam){
+        String pin = examRepository.createPIN(LocalDate.now());
+        Exam e = new Exam(
+                pin,
+                exam.title(),
+                true,
+                LocalDate.parse(exam.date()),
+                LocalDateTime.parse(exam.startTime()),
+                LocalDateTime.parse(exam.endTime()),
+                5,
+                Resolution.HD,
+                1
+        );
 
         examRepository.persist(e).subscribe().with(exam1 -> Log.info(exam1.title));
-        return examRepository.findById(exam.id);
+        return examRepository.findById(e.id);
     }
 
     @GET
@@ -81,10 +92,10 @@ public class ExamResource
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     public Uni<Exam> deleteExam(@FormParam("id") Long id){
-        Uni<Exam> exam = examRepository.findById(id);
-        if(exam != null)
-            examRepository.deleteById(id);
-        return exam;
+        examRepository.deleteById(id)
+                .subscribe().with(e ->{Log.info(id);});
+        //can only be deleted if there are no more exaxminers in it
+        return examRepository.findById(id);
     }
 
     @GET
@@ -96,14 +107,14 @@ public class ExamResource
 
     @PUT
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
-    public Uni<Exam> updateExam(Exam exam){
+    @ReactiveTransactional
+    public Uni<Exam> updateExam(@PathParam("id")Long id, Exam exam){
         return Panache
-                .withTransaction(() -> examRepository.findById(exam.id)
+                .withTransaction(() -> examRepository.findById(id)
                         .onItem().ifNotNull()
                         .transform(entity -> {
-                            entity.pin = exam.pin;
                             entity.title = exam.title;
                             entity.date = exam.date;
                             entity.formIds = exam.formIds;
@@ -121,19 +132,20 @@ public class ExamResource
     }
 
     @PUT
-    @Path("enroll")
-    @Transactional
+    @Path("enroll/{id}")
+    @ReactiveTransactional
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Uni<Exam> enrollStudentForExam(@FormParam("id") Long id, Examinee examinee){
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Uni<Exam> enrollStudentForExam(@PathParam("id") Long id, Examinee examinee){
         //show if already exists with first and last name
+        Examinee examineeToPersist = new Examinee(examinee.firstName, examinee.lastName);
         return Panache
                 .withTransaction(() -> examRepository.findById(id)
                         .onItem().ifNotNull()
                         .transform(entity -> {
-                            List<Examinee> examinees = entity.examineeIds;
-                            examinees.add(examinee);
-                            entity.examineeIds = examinees;
+                            //List<Examinee> examinees = entity.examineeIds;
+                            //examinees.add(examineeToPersist);
+                            entity.examineeIds.add(examineeToPersist);
                             return entity;
                         }));
     }
@@ -146,17 +158,6 @@ public class ExamResource
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Uni<ExamineeDetails> removeExamineeFromExam(@PathParam("id") Long id, Long examineeId){
         return null;
-    }
-
-    @DELETE
-    @Transactional
-    @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Exam> deleteExam(Exam exam){
-        //can only be deleted if there are no more exaxminers in it
-        Uni<Exam> examToDelete = examRepository.findById(exam.id);
-        if(examToDelete != null)
-            examRepository.deleteById(exam.id);
-        return examToDelete;
     }
 
 }
