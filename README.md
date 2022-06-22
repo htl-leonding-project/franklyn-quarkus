@@ -10,7 +10,7 @@ Der Lehrer kann auf die Bildschirme der Schüler schauen und sehen, ob ein oder 
 
 
 ## Dokumentation
-[Zur Dokumentation] (https://htl-leonding-project.github.io/franklyn-quarkus/asciidocs/)
+https://htl-leonding-project.github.io/franklyn-quarkus/asciidocs/
 
 ## Mitwirkende
 
@@ -24,27 +24,3 @@ Der Lehrer kann auf die Bildschirme der Schüler schauen und sehen, ob ein oder 
 * Bojer Nico
 * Gahleitner Lorenz
 * Hosic Tarik
-
-# How to start the application
-
-1. start the server(backend) first
-
-* open a terminal in `backend`-project and execute:
-
-`./mvnw clean quarkus:dev`
-
-2. start the frontend
-
-* open a terminal in `frontend`-project and execute:
-
-`./mvnw clean quarkus:dev`
-
-* after that open http://localhost:8090/client/login and log yourself in
-
-=======
-
-2. start the frontend
-
-* open a terminal in `frontend`-project and execute:
-
-`./mvnw clean quarkus:dev`
