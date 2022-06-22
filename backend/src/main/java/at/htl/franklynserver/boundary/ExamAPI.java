@@ -3,12 +3,11 @@ package at.htl.franklynserver.boundary;
 import at.htl.franklynserver.control.ExamRepository;
 import at.htl.franklynserver.control.ExamineeDetailsRepository;
 import at.htl.franklynserver.control.ExamineeRepository;
-import at.htl.franklynserver.entity.Exam;
-import at.htl.franklynserver.entity.Examinee;
-import at.htl.franklynserver.entity.ExamineeDetails;
-import at.htl.franklynserver.entity.Examiner;
+import at.htl.franklynserver.entity.*;
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.hibernate.reactive.panache.PanacheQuery;
+import io.quarkus.hibernate.reactive.panache.common.runtime.ReactiveTransactional;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
@@ -40,20 +39,14 @@ public class ExamAPI {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Transactional
+    @ReactiveTransactional
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Exam> saveExam(Exam exam){
-        if(exam != null)
-            examRepository.persist(exam);
-        String pin = examRepository.createPIN(exam.date);
-        return Panache
-                .withTransaction(() -> examRepository.findById(exam.id)
-                        .onItem().ifNotNull()
-                        .transform(entity -> {
-                            entity.pin = pin;
-                            return entity;
-                        })
-                        .onFailure().recoverWithNull());
+        exam.pin = examRepository.createPIN(exam.date);
+
+        Log.info(exam.title);
+
+        return examRepository.persist(exam);
     }
 
     @GET

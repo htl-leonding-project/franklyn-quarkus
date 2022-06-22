@@ -1,7 +1,6 @@
 package at.htl.franklynserver.entity;
 
-import io.quarkus.hibernate.reactive.panache.PanacheEntity;
-import jdk.jfr.Name;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.persistence.*;
@@ -23,11 +22,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "F_EXAM")
-public class Exam extends PanacheEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "E_ID")
-//    public Long id;
+public class Exam extends PanacheEntityBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "E_ID")
+    public Long id;
 
     @Column(name = "E_PIN")
     @NotNull
@@ -41,7 +40,7 @@ public class Exam extends PanacheEntity {
     @Column(name = "E_ONGOING")
     public boolean ongoing = false;
 
-    @OneToMany()
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @NotNull
     @JoinColumn(name = "E_FORM_IDS")
     public List<SchoolClass> formIds;
@@ -58,12 +57,12 @@ public class Exam extends PanacheEntity {
     @Column(name = "E_END_TIME")
     public LocalDateTime endTime;
 
-    @OneToMany()
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @Null
     @JoinColumn(name = "E_EXAMINEE_IDS")
     public List<Examinee> examineeIds;
 
-    @OneToMany()
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @NotNull
     @Size(min = 1)
     @JoinColumn(name = "E_EXAMINER_IDS")

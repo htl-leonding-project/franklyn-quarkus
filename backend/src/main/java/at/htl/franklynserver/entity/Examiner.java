@@ -1,16 +1,17 @@
 package at.htl.franklynserver.entity;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "F_EXAMINER")
-public class Examiner extends PanacheEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "E_ID")
-//    public Long id;
+public class Examiner extends PanacheEntityBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "E_ID")
+    public Long id;
 
     @Column(name = "E_USER_Name")
     public String userName;

@@ -1,6 +1,7 @@
 package at.htl.franklynserver.entity;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -14,11 +15,11 @@ import java.time.LocalDateTime;
 })
 @Entity
 @Table(name = "F_EXAMINEE_DETAILS")
-public class ExamineeDetails extends PanacheEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "ED_ID")
-//    public Long id;
+public class ExamineeDetails extends PanacheEntityBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ED_ID")
+    public Long id;
 
     @Column(name = "ED_EXAM_ID")
     public Long examId;

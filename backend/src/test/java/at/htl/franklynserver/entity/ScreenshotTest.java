@@ -23,8 +23,6 @@ class ScreenshotTest {
 
         assertEquals(timestamp, screenshot.timestamp);
         assertEquals(1L, screenshot.screenshotNumber);
-        assertEquals(1L, screenshot.examId);
-        assertEquals(1L, screenshot.examineeId);
         assertEquals(Resolution.HD, screenshot.resolution);
         assertEquals(30, screenshot.compression);
 

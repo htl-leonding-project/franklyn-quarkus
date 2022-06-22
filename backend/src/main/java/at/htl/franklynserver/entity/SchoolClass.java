@@ -1,10 +1,12 @@
 package at.htl.franklynserver.entity;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @NamedQueries({
         @NamedQuery(
@@ -29,20 +31,24 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "F_SCHOOL_CLASS")
-public class SchoolClass extends PanacheEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "E_ID")
-//    public Long id;
+public class SchoolClass extends PanacheEntityBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "SC_ID")
+    public Long id;
 
     @NotNull
     @Size(min = 1, max = 15)
-    @Column(name = "F_TITLE")
+    @Column(name = "SC_TITLE")
     public String title;
+
+    @ManyToMany
+    @JoinColumn(name = "SC_EXAMS")
+    public List<Exam> exams;
 
     @NotNull
     @Size(min = 4, max = 4)
-    @Column(name = "F_YEAR")
+    @Column(name = "SC_YEAR")
     public String year;
 
     public SchoolClass() {

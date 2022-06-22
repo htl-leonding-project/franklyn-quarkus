@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @RequestScoped
-@Path("client")
+@Path("api/exams")
 public class ClientResource {
 
     @CheckedTemplate
@@ -20,7 +20,7 @@ public class ClientResource {
         public static native TemplateInstance enterPin();
     }
 
-    @Path("pin")
+    @Path("enterPin")
     @GET
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance enterPin() {

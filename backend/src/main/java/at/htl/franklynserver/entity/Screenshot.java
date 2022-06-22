@@ -1,6 +1,7 @@
 package at.htl.franklynserver.entity;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.inject.Named;
@@ -25,11 +26,11 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "F_SCREENSHOT")
-public class Screenshot extends PanacheEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "ED_ID")
-//    public Long id;
+public class Screenshot extends PanacheEntityBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ED_ID")
+    public Long id;
 
     @NotNull
     @Column(name = "S_TIMESTAMP")
@@ -58,7 +59,6 @@ public class Screenshot extends PanacheEntity {
     public int compression;
 
     @Column(name = "S_IS_COMPRESSED")
-    @ConfigProperty(defaultValue = "NOT_COMPRESSED")
     public IsCompressed isCompressed;
 
     public Screenshot() {
