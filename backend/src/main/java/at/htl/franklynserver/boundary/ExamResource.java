@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("api/exams")
-public class ExamAPI {
+public class ExamResource {
 
     @Inject
     ExamRepository examRepository;

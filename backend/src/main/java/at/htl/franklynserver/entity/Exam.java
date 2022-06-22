@@ -1,6 +1,7 @@
 package at.htl.franklynserver.entity;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jdk.jfr.Name;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -13,21 +14,18 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(
                 name = "Exam.findExamWithSameDateAndPIN",
-                query = "select e from Exam e where e.date = :DATE and e.pin LIKE :PIN"
-        ),
+                query = "select e from Exam e where e.date = :DATE and e.pin LIKE :PIN"),
         @NamedQuery(
                 name = "Exam.getAllExamineesByExamId",
-                query = "select e.examineeIds from Exam e where e.id = :ID"
-        )
-})
+                query = "select e.examineeIds from Exam e where e.id = :ID")})
 
 @Entity
 @Table(name = "F_EXAM")
-public class Exam extends PanacheEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "E_ID")
-//    public Long id;
+public class Exam extends PanacheEntityBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "E_ID")
+    public Long id;
 
     @Column(name = "E_PIN")
     @NotNull
@@ -41,7 +39,7 @@ public class Exam extends PanacheEntity {
     @Column(name = "E_ONGOING")
     public boolean ongoing = false;
 
-    @OneToMany()
+    @ManyToMany
     @NotNull
     @Size(min = 1)
     @JoinColumn(name = "E_FORM_IDS")
@@ -59,12 +57,12 @@ public class Exam extends PanacheEntity {
     @Column(name = "E_END_TIME")
     public LocalDateTime endTime;
 
-    @OneToMany()
+    @ManyToMany
     @Null
     @JoinColumn(name = "E_EXAMINEE_IDS")
     public List<Examinee> examineeIds;
 
-    @OneToMany()
+    @ManyToMany
     @NotNull
     @Size(min = 1)
     @JoinColumn(name = "E_EXAMINER_IDS")
@@ -85,9 +83,21 @@ public class Exam extends PanacheEntity {
     @Column(name = "E_COMPRESSION")
     public int compression;
 
-    public Exam(){}
+    public Exam() {
+    }
 
-    public Exam(String pin, String title, boolean ongoing, List<SchoolClass> formIds, LocalDate date, LocalDateTime startTime, LocalDateTime endTime, List<Examinee> examineeIds, List<Examiner> examinerIds, int interval, Resolution resolution, int compression) {
+    public Exam(String pin,
+                String title,
+                boolean ongoing,
+                List<SchoolClass> formIds,
+                LocalDate date,
+                LocalDateTime startTime,
+                LocalDateTime endTime,
+                List<Examinee> examineeIds,
+                List<Examiner> examinerIds,
+                int interval,
+                Resolution resolution,
+                int compression) {
         this.pin = pin;
         this.title = title;
         this.ongoing = ongoing;
