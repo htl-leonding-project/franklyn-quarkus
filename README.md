@@ -10,7 +10,7 @@ Der Lehrer kann auf die Bildschirme der Schüler schauen und sehen, ob ein oder 
 
 
 ## Dokumentation
-https://htl-leonding-project.github.io/franklyn-quarkus/
+https://htl-leonding-project.github.io/franklyn-quarkus/asciidocs
 
 ## Mitwirkende
 
