@@ -672,7 +672,9 @@ _.Teilnehmer
 ** Sondern postgres-create-db.sh und postgres-start-db.sh
 * Reaktives Programmieren
 ** Objekt von der Datenbank bekommen
-
+* Konfigurationen im .env-file
+** WebUntis credentials
+** Pfad der Screenshots
 
 === Fragen
 
@@ -686,6 +688,11 @@ _.Teilnehmer
 * Anwendung des Datenmodells auf die Entitäten
 * Speichern des neuen Screenshots in die DB
 * Beim Schicken des Screenshots muss die ID des Clients mitgeschickt werden
+
+=== Wartung des Franklyn-Servers
+
+* Franklyn-Server wartet sich selber
++* Löscht Examen von letztem Jahr
 
 === Datenmodelle
 
