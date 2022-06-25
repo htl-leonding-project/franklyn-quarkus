@@ -61,17 +61,11 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_END_TIME")
     public LocalDateTime endTime;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "E_EXAMINER_IDS")
+    @ManyToMany(cascade = CascadeType.ALL)
     @Size(min = 1)
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "E_EXAMINEE_IDS")
-    public List<Examinee> examineeIds;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @Size(min = 1)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "E_EXAMINER_IDS")
-    public List<Examiner> examinerIds;
+    public List<Examiner> examiners;
 
     @NotNull
     @ConfigProperty(defaultValue = "5")
@@ -119,7 +113,7 @@ public class Exam extends PanacheEntityBase {
                 LocalDateTime startTime,
                 LocalDateTime endTime,
                 List<Examinee> examineeIds,
-                List<Examiner> examinerIds,
+                List<Examiner> examiners,
                 int interval,
                 Resolution resolution,
                 int compression) {
@@ -130,8 +124,8 @@ public class Exam extends PanacheEntityBase {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.examineeIds = examineeIds;
-        this.examinerIds = examinerIds;
+        //this.examineeIds = examineeIds;
+        this.examiners = examiners;
         this.interval = interval;
         this.resolution = resolution;
         this.compression = compression;
