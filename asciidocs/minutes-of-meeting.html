@@ -524,6 +524,14 @@ pre.rouge .hll * {
 <li><a href="#_vereinbarung_2">11.2. Vereinbarung</a></li>
 </ul>
 </li>
+<li><a href="#_2022_06_24">12. 2022-06-24</a>
+<ul class="sectlevel2">
+<li><a href="#_was_wurde_besprochen_3">12.1. Was wurde besprochen?</a></li>
+<li><a href="#_fragen_4">12.2. Fragen</a></li>
+<li><a href="#_vereinbarung_3">12.3. Vereinbarung</a></li>
+<li><a href="#_datenmodelle">12.4. Datenmodelle</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -1756,8 +1764,10 @@ pre.rouge .hll * {
 <div class="sect1">
 <h2 id="_2022_06_20"><a class="anchor" href="#_2022_06_20"></a>11. 2022-06-20</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>_.Teilnehmer</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 19. Teilnehmer</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1777,8 +1787,107 @@ pre.rouge .hll * {
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tamara</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Melcher</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4AHIF</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Michael</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tran</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4AHIF</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>|Vorname |Nachname |Klasse</p>
+</div>
+<div class="paragraph">
+<p>|
+| Prof. Stuetz
+|</p>
+</div>
+<div class="paragraph">
+<p>|
+| Prof. Bucek
+|</p>
+</div>
+<div class="paragraph">
+<p>| Tamara
+| Melcher
+| 4AHIF</p>
+</div>
+<div class="paragraph">
+<p>| Michael
+| Tran
+| 4AHIF</p>
+</div>
+<div class="paragraph">
+<p>|===_</p>
+</div>
+<div class="sect2">
+<h3 id="_was_wurde_besprochen_2"><a class="anchor" href="#_was_wurde_besprochen_2"></a>11.1. Was wurde besprochen?</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Was wir seit Montag (20.06.22) gemacht haben</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Endpoints funktionsfähig</p>
+</li>
+<li>
+<p>Client Website "aufgehübscht"</p>
+</li>
+<li>
+<p>Projekt aufgeräumt</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vereinbarung_2"><a class="anchor" href="#_vereinbarung_2"></a>11.2. Vereinbarung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Quarkus-Projekt updaten</p>
+</li>
+<li>
+<p>Richtiges Datenmodell</p>
+</li>
+<li>
+<p>Speicherung eines neuen Screenshots in der DB</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2022_06_24"><a class="anchor" href="#_2022_06_24"></a>12. 2022-06-24</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>_.Teilnehmer</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Vorname</th>
+<th class="tableblock halign-left valign-top">Nachname</th>
+<th class="tableblock halign-left valign-top">Klasse</th>
+</tr>
+</thead>
+<tbody>
+<tr>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Prof. Bucek</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prof. Stuetz</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -1794,32 +1903,130 @@ pre.rouge .hll * {
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="_was_wurde_besprochen_2"><a class="anchor" href="#_was_wurde_besprochen_2"></a>11.1. Was wurde besprochen?</h3>
+<h3 id="_was_wurde_besprochen_3"><a class="anchor" href="#_was_wurde_besprochen_3"></a>12.1. Was wurde besprochen?</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Was wir gemacht haben</p>
+<p>Datenmodell</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Id hinzufügen</p>
+</li>
+<li>
+<p>ExamineeDetails weg und zu Examinee hinzufügen</p>
+</li>
+<li>
+<p>Examiner und Exam (ManyToMany) &#8594; Assoziationstabelle</p>
+</li>
+<li>
+<p>Statt Number Integer</p>
+</li>
+<li>
+<p>Keine Liste speichern &#8594; nicht möglich</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Wird durch WebUntis-Username authentifiziert</p>
+</li>
+<li>
+<p>Beim Erstellen eines Exams werden alle Examiner aus WebUntis geholt</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Erstellung der Datenbank</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Nicht mit postgres-run-in-docker.sh</p>
+</li>
+<li>
+<p>Sondern postgres-create-db.sh und postgres-start-db.sh</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Reaktives Programmieren</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Objekt von der Datenbank bekommen</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_vereinbarung_2"><a class="anchor" href="#_vereinbarung_2"></a>11.2. Vereinbarung</h3>
+<h3 id="_fragen_4"><a class="anchor" href="#_fragen_4"></a>12.2. Fragen</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>GitHub-Repository in Ordnung bringen</p>
-</li>
+<p>Was bedeutet Enumeration Resolution &#8594; HD, NATIVE, FHD</p>
+<div class="ulist">
+<ul>
 <li>
-<p>Funktionierende Endpoints</p>
-</li>
-<li>
-<p>Sachstandsbericht</p>
-</li>
-<li>
-<p>Projekt an sich aufräumen (zb unbrauchbare Dependencies entfernen)</p>
+<p>Wie groß die Auflösung sein soll &#8594; Standard: HD</p>
 </li>
 </ul>
+</div>
+</li>
+<li>
+<p>Welche Rechte hat der Examiner, wenn er Admin ist?</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Einen Examiner löschen</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vereinbarung_3"><a class="anchor" href="#_vereinbarung_3"></a>12.3. Vereinbarung</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Ändern des Datenmodells</p>
+</li>
+<li>
+<p>Anwendung des Datenmodells auf die Entitäten</p>
+</li>
+<li>
+<p>Speichern des neuen Screenshots in die DB</p>
+</li>
+<li>
+<p>Beim Schicken des Screenshots muss die ID des Clients mitgeschickt werden</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_datenmodelle"><a class="anchor" href="#_datenmodelle"></a>12.4. Datenmodelle</h3>
+<div class="sect3">
+<h4 id="_vor_der_besprechung"><a class="anchor" href="#_vor_der_besprechung"></a>12.4.1. Vor der Besprechung</h4>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-dfc69420d1b4b473ad90cf55265541ad.png" alt="Diagram" width="835" height="743">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_nach_der_besprechung"><a class="anchor" href="#_nach_der_besprechung"></a>12.4.2. Nach der Besprechung</h4>
+<div class="imageblock">
+<div class="content">
+<img src="../images/diag-a3fc04e84313dd9aa05b686065727293.png" alt="Diagram" width="982" height="586">
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1827,7 +2034,7 @@ pre.rouge .hll * {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-23 06:01:03 UTC
+Last updated 2022-06-25 19:56:33 UTC
 </div>
 </div>
 </body>
