@@ -5,13 +5,18 @@ Melcher Tamara und Tran Michael
 :icons: font
 
 == Was ist Franklyn?
-Franklyn ist eine Applikation, die die Bildschirme der SchülerInnen "überwacht", sogleich können die SchülerInnen aufzeigen.
+Franklyn wurde bereits von Schülern programmiert.
 
-Die ProfessorInnen können somit sehen, wenn jemand Hilfe braucht bzw. für Chancengleichheit sorgen, indem sie die Bildschirme
-der SchülerInnen überwachen.
+Franklyn ist eine Applikation, welche Schülern eine der Berufswelt entsprechende Arbeitsumgebung während Leistungsfeststellungen bietet.
 
-== Was war?
-Franklyn in Node.js. Wir sollen es nun in Quarkus umschreiben, da somit die Fehlersuche optimiert werden kann.
+Lehrkräfte bekommen die Möglichkeit, Testsitzungen zu erstellen. Schüler können sich zu einer Sitzung mit einem PIN und dem Vor- und Nachnamen anmelden.
+Der Schülerclient sendet dabei in einem regelmäßigen Intervall Screenshots, welche sich die Lehrkraft ansehen können.
+Für die Ansicht der Screenshots wird noch das Patroulierintervall angeboten, welches einem ermöglicht, automatisch durch die Screenshots der Schüler und Schülerinnen zu iterieren.
+
+== Problemstellung
+Franklyn2 wurde mit Node.js geschrieben.
+
+Da sich bei Node.js die Libraries ständig ändert, muss ständig upgedated werden, um den Code funktionstüchtig zu halten.
 
 == Use Case Diagram
 

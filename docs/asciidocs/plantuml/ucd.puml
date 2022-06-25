@@ -3,7 +3,7 @@
 left to right direction
 
 :Student: as student
-:Teacher: as teacher
+:Examiner: as examiner
 
 
 
@@ -18,6 +18,6 @@ rectangle "Franklyn" {
 }
 
 student -- uc_sendsScreenshots
-teacher -- uc_createLobby
-teacher -- uc_seeScreenshots
+examiner -- uc_createLobby
+examiner -- uc_seeScreenshots
 @enduml

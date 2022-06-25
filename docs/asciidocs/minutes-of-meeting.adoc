@@ -571,7 +571,38 @@ Anwesend Prof. Stuetz, Prof. Bucek, Tamara Melcher, Michael Tran
 == 2022-06-20
 
 
-.Teilnehmer
+_.Teilnehmer
+|===
+|Vorname |Nachname |Klasse
+
+|
+| Prof. Stuetz
+|
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+
+|===_
+
+=== Was wurde besprochen?
+
+* Was wir gemacht haben
+
+=== Vereinbarung
+* GitHub-Repository in Ordnung bringen
+* Funktionierende Endpoints
+* Sachstandsbericht
+* Projekt an sich aufräumen (zb unbrauchbare Dependencies entfernen)
+
+
+== 2022-06-20
+
+_.Teilnehmer
 |===
 |Vorname |Nachname |Klasse
 
@@ -591,15 +622,87 @@ Anwesend Prof. Stuetz, Prof. Bucek, Tamara Melcher, Michael Tran
 | Tran
 | 4AHIF
 
+|===_
+
+=== Was wurde besprochen?
+
+* Was wir seit Montag (20.06.22) gemacht haben
+** Endpoints funktionsfähig
+** Client Website "aufgehübscht"
+** Projekt aufgeräumt
+
+=== Vereinbarung
+* Quarkus-Projekt updaten
+* Richtiges Datenmodell
+* Speicherung eines neuen Screenshots in der DB
+
+
+== 2022-06-24
+
+_.Teilnehmer
+|===
+|Vorname |Nachname |Klasse
+
+|
+| Prof. Stuetz
+|
+
+| Tamara
+| Melcher
+| 4AHIF
+
+| Michael
+| Tran
+| 4AHIF
+
 |===
 
 === Was wurde besprochen?
 
-* Was wir gemacht haben
+* Datenmodell
+** Id hinzufügen
+** ExamineeDetails weg und zu Examinee hinzufügen
+** Examiner und Exam (ManyToMany) -> Assoziationstabelle
+** Statt Number Integer
+** Keine Liste speichern -> nicht möglich
+*** Wird durch WebUntis-Username authentifiziert
+*** Beim Erstellen eines Exams werden alle Examiner aus WebUntis geholt
+* Erstellung der Datenbank
+** Nicht mit postgres-run-in-docker.sh
+** Sondern postgres-create-db.sh und postgres-start-db.sh
+* Reaktives Programmieren
+** Objekt von der Datenbank bekommen
+
+
+=== Fragen
+
+* Was bedeutet Enumeration Resolution -> HD, NATIVE, FHD
+** Wie groß die Auflösung sein soll -> Standard: HD
+* Welche Rechte hat der Examiner, wenn er Admin ist?
+** Einen Examiner löschen
 
 === Vereinbarung
-* GitHub-Repository in Ordnung bringen
-* Funktionierende Endpoints
-* Sachstandsbericht
-* Projekt an sich aufräumen (zb unbrauchbare Dependencies entfernen)
+* Ändern des Datenmodells
+* Anwendung des Datenmodells auf die Entitäten
+* Speichern des neuen Screenshots in die DB
+* Beim Schicken des Screenshots muss die ID des Clients mitgeschickt werden
+
+=== Datenmodelle
+
+==== Vor der Besprechung
+
+[plantuml]
+----
+include::plantuml/classDiagram_before.puml[]
+----
+
+==== Nach der Besprechung
+
+[plantuml]
+----
+include::plantuml/classDiagram.puml[]
+----
+
+
+
 
