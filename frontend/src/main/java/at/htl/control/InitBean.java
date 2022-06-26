@@ -51,6 +51,7 @@ public class InitBean {
                 Robot robot = new Robot();
                 String format = "png";
                 String fileName = id+"_"+lastName+"_"+firstName+"_"+cnt+"." + format;
+                cnt++;
 
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
                 BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
