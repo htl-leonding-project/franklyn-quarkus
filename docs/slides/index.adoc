@@ -16,7 +16,7 @@ der SchülerInnen überwachen.
 
 === Use-Case
 
-image::cld.png[]
+image::useCase.jpg[]
 
 === Problemstellung
 
@@ -34,4 +34,4 @@ image::cld.png[]
 
 === Datenmodell
 
-image::cd.png[]
+image::cld.jpg[]
