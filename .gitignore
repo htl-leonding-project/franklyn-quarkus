@@ -41,3 +41,5 @@ docs/.env
 
 dist
 /docs/slides/revealjs/
+
+*.jar

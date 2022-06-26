@@ -24,23 +24,18 @@ class ExamTest {
         exam.resolution=Resolution.HD;
         exam.startTime = LocalDateTime.of(2022, 3, 26, 11, 45);
         exam.endTime = LocalDateTime.of(2022, 3, 26, 13, 45);
-        List<Examinee> examinees = new ArrayList<>();
-        examinees.add(new Examinee("Michael", "Tran"));
-        examinees.add(new Examinee("Tamara", "Melcher"));
-        List<Examiner> examiners = new ArrayList<>();
+        List<Examiner> examiners = new ArrayList<Examiner>();
         examiners.add(new Examiner("stuetz", "Thomas", "Stuetz", true));
-        List<SchoolClass> forms = new ArrayList<>();
+        List<SchoolClass> forms = new ArrayList<SchoolClass>();
         forms.add(new SchoolClass("4AHIF", "2022"));
-        exam.examineeIds = examinees;
-        exam.examinerIds = examiners;
+        forms.add(new SchoolClass("3AHIF", "2021"));
+        exam.examiners = examiners;
         exam.formIds = forms;
 
         assertEquals(1L, exam.id);
         assertNotEquals(2, exam.compression);
-        assertEquals(2,exam.examineeIds.size());
-        assertEquals(1, exam.examinerIds.size());
         assertEquals("12345", exam.pin);
-        assertTrue(exam.examinerIds.get(0).isAdmin);
+        assertTrue(exam.examiners.get(0).isAdmin);
         assertEquals(LocalDateTime.of(2022, 3, 26, 11, 45), exam.startTime);
         assertEquals(LocalDateTime.of(2022, 3, 26, 13, 45), exam.endTime);
         assertEquals("4AHIF", exam.formIds.get(0).title);
