@@ -1,5 +1,6 @@
 :customcss: styles.css
 ifndef::imagesdir[:imagesdir: ./images]
+ifndef::backend[:backend: html5]
 
 == Franklyn-Quarkus: Franklyn 2 reimplementiert in Quarkus
 Melcher Tamara, Tran Michael
