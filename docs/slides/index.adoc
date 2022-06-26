@@ -2,10 +2,7 @@
 
 = Franklyn-Quarkus: Franklyn 2 reimplementiert in Quarkus
 Melcher Tamara, Tran Michael
-ifndef::sourcedir[:sourcedir: ../src/main/java]
 ifndef::imagesdir[:imagesdir: ../images]
-ifndef::backend[:backend: html5]
-:icons: font
 
 == Ausgangslage
 
@@ -34,4 +31,4 @@ image::useCase.jpg[]
 
 === Datenmodell
 
-image::cld.jpg[]
+image::./cld.jpg[]
