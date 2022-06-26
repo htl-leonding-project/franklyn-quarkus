@@ -4,7 +4,7 @@ Melcher Tamara, Tran Michael
 ifndef::sourcedir[:sourcedir: ../src/main/java]
 ifndef::imagesdir[:imagesdir: images]
 ifndef::backend[:backend: html5]
-:stylesheet: styles.css
+:customcss: styles.css
 :icons: font
 
 == Ausgangslage
@@ -16,11 +16,7 @@ der SchülerInnen überwachen.
 
 === Use-Case
 
-[plantuml,cld,svg]
-----
-include::plantuml/ucd.puml[]
-----
-
+image::cld.png[]
 
 === Problemstellung
 
@@ -38,7 +34,4 @@ include::plantuml/ucd.puml[]
 
 === Datenmodell
 
-[plantuml,cd,png]
-----
-include::plantuml/classDiagram.puml[]
-----
+image::cd.png[]
