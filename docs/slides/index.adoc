@@ -2,7 +2,7 @@
 
 = Franklyn-Quarkus: Franklyn 2 reimplementiert in Quarkus
 Melcher Tamara, Tran Michael
-ifndef::imagesdir[:imagesdir: ../images]
+ifndef::imagesdir[:imagesdir: ./images]
 
 == Ausgangslage
 
@@ -31,4 +31,4 @@ image::useCase.jpg[]
 
 === Datenmodell
 
-image::./cld.jpg[]
+image::cld.jpg[]
