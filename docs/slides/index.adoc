@@ -1,8 +1,8 @@
 :customcss: styles.css
-
-= Franklyn-Quarkus: Franklyn 2 reimplementiert in Quarkus
-Melcher Tamara, Tran Michael
 ifndef::imagesdir[:imagesdir: ./images]
+
+== Franklyn-Quarkus: Franklyn 2 reimplementiert in Quarkus
+Melcher Tamara, Tran Michael
 
 == Ausgangslage
 
