@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <link rel="stylesheet"href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <title>Login</title>
 </head>
 <body>
-<form action="/api/client/login" method="post" enctype="application/x-www-form-urlencoded">
-    <label for="fname">Vorname</label><br>
-    <input type="text" id="fname" name="fname" required><br>
-    <br>
-    <label for="lname">Nachname</label><br>
-    <input type="text" id="lname" name="lname" required><br>
-    <br>
-    <br>
-    <br>
-    <button type="submit">Weiter</button>
-</form>
+<div class="container col-4">
+    <div style="text-align: center">
+        <h2>Login</h2>
+    </div>
+    <form action="/api/exams/login" method="post" enctype="application/x-www-form-urlencoded">
+        <div class="form-group">
+            <input class="form-control" type="text" id="fname" name="fname" placeholder="Vorname" required>
+        </div>
+        <div>
+            <input class="form-control" type="text" id="lname" name="lname" placeholder="Nachname" required>
+        </div>
+        <br>
+        <div style="text-align: center">
+            <input class="btn btn-primary" type="submit" value="Weiter">
+        </div>
+    </form>
+</div>
 </body>
 </html>

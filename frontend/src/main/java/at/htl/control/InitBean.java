@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 // https://stackoverflow.com/questions/66347707/send-a-simple-post-request-from-quarkus-java
 
@@ -32,8 +33,13 @@ public class InitBean {
 
     private String lastName = "";
 
-    public void init( String firstName, String lastName) {
+    private Long id;
 
+    private Long cnt = 1L;
+
+
+    public void init( String firstName, String lastName) {
+        this.id = 1L;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -44,8 +50,7 @@ public class InitBean {
             try {
                 Robot robot = new Robot();
                 String format = "png";
-                String localDateTime = LocalDateTime.now().toString().replace(':', '_');
-                String fileName = localDateTime+"_"+lastName+"_"+firstName+"." + format;
+                String fileName = id+"_"+lastName+"_"+firstName+"_"+cnt+"." + format;
 
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
                 BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
