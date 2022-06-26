@@ -72,6 +72,7 @@ public class Exam extends PanacheEntityBase {
 
     @NotNull
     @Column(name = "E_RESOLUTION")
+    @Enumerated(EnumType.STRING)
     public Resolution resolution;
 
     @NotNull

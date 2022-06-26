@@ -47,6 +47,7 @@ public class Screenshot extends PanacheEntityBase {
 
     @NotNull
     @Column(name = "S_RESOLUTION")
+    @Enumerated(EnumType.STRING)
     public Resolution resolution;
 
     @NotNull
@@ -56,6 +57,7 @@ public class Screenshot extends PanacheEntityBase {
     public int compression;
 
     @Column(name = "S_IS_COMPRESSED")
+    @Enumerated(EnumType.STRING)
     public IsCompressed isCompressed;
 
     @Column(name = "S_PATH_OF_SCREENSHOT")
