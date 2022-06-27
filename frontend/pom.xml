@@ -94,6 +94,11 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-hibernate-reactive-panache</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-scheduler</artifactId>
+      <version>2.6.3.Final</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

@@ -4,6 +4,7 @@ import at.htl.control.ExamRepository;
 import at.htl.control.ExamineeRepository;
 import at.htl.control.ScreenshotRepository;
 import at.htl.entity.Examinee;
+import at.htl.entity.Resolution;
 import at.htl.entity.Screenshot;
 import at.htl.entity.dto.ScreenshotDto;
 import io.quarkus.logging.Log;
@@ -20,6 +21,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Path("upload")
 public class ImageResource {
@@ -44,7 +47,7 @@ public class ImageResource {
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Screenshot upload(InputStream is, @QueryParam("filename") String filename) throws IOException {
+    public Screenshot upload(InputStream is, @QueryParam("filename") String filename, @QueryParam("examineeId") Long examineeId) throws IOException {
 
         Screenshot returnSc = null;
 
@@ -60,9 +63,13 @@ public class ImageResource {
                 new File(pathOfScreenshot).mkdir();
             }
 
+            String[] splittedFileName = filename.split("_");
+
+            String newFileName = String.valueOf(LocalDateTime.now()) + "_" + splittedFileName[1] + "_" + splittedFileName[2];
+
             Files.copy(
                     is,
-                    Paths.get(pathOfScreenshot, filename),
+                    Paths.get(pathOfScreenshot, newFileName),
                     StandardCopyOption.REPLACE_EXISTING
             );
 
@@ -72,26 +79,45 @@ public class ImageResource {
                     .split("\\.")[0]
                     .split("_");
 
-
-            Log.info("persist screenshot: "+ filename);
-
             Examinee examinee;
 
-            if(examineeRepository
-                    .find("id = ?1",Long.valueOf(screenshot[0])) != null){
+            if(true){
 
-                examinee = examineeRepository.findById(Long.valueOf(screenshot[0]));
+                examinee = examineeRepository.findById(examineeId);
 
                 Log.info("searched Examinee by id: " + Long.valueOf(examinee.id));
 
-                ScreenshotDto sc = new ScreenshotDto(
+/*                ScreenshotDto sc = new ScreenshotDto(
                         Long.valueOf(screenshot[3]),
                         examinee.exam,
                         examinee,
                         filename
+                );*/
+
+                String newPathOfScreenShot = pathOfScreenshot + "/"+ examinee.exam.id + "/" + examinee.lastName;
+                LocalDateTime now = LocalDateTime.now();
+                Timestamp timestamp = Timestamp.valueOf(now);
+                Screenshot screenshot1 = new Screenshot(
+                    timestamp,
+                    Long.valueOf(splittedFileName[0]),
+                    examinee,
+                    Resolution.HD,
+                    100,
+                    pathOfScreenshot+ "/" + newFileName
                 );
 
-                returnSc = screenshotRepository.postScreenshot(sc);
+                screenshotRepository.persist(screenshot1);
+
+/*                String newPathOfScreenShot = pathOfScreenshot + "/"+ examinee.exam.id + "/" + examinee.lastName;
+                if(!Files.isDirectory(Paths.get(pathOfScreenshot))){
+                    new File(pathOfScreenshot).mkdir();
+                }
+
+                Files.copy(
+                        is,
+                        Paths.get(pathOfScreenshot, newFileName),
+                        StandardCopyOption.REPLACE_EXISTING
+                );*/
 
                 Log.info("persistet Screenshot");
 

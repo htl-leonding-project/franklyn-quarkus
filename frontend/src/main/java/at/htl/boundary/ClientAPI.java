@@ -1,7 +1,6 @@
 package at.htl.boundary;
 
 import at.htl.control.InitBean;
-import at.htl.entity.Examinee;
 import io.quarkus.logging.Log;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
@@ -13,19 +12,22 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
-import java.time.LocalDate;
 
-@Path("api/exams")
+@Path("api/client")
 public class ClientAPI {
     String lastName;
     String firstName;
+
+    Long examId;
     @Inject
     ClientResource clientResource;
 
     @Inject
-    InitBean initBean;
+    @RestClient
+    ExamineeService examineeService;
 
-    Examinee examinee;
+    @Inject
+    InitBean initBean;
 
     @Path("login")
     @POST
@@ -37,22 +39,21 @@ public class ClientAPI {
             , @FormParam("lname") String lName){
         this.firstName = fName;
         this.lastName = lName;
-        examinee = new Examinee(firstName, lastName);
 
+        Long examineeId = examineeService.enrollStudentForExam(examId, firstName, lastName);
 
-        initBean.init(fName, lName);
+        initBean.init(firstName, lastName, examineeId);
+        return Response
+                .ok().build();
 
-        return Response.ok().build();
-
+        //user anlegen
+        //weiterleiten um pin einzugeben
         //wenn pin korrekt --> user in db
         //wenn falsch --> Fehlermeldung
-        /*initBean.init(firstName, lastName);
-        return Response
-                .ok().build();*/
 
     }
 
-    @Path("enterPin")
+    @Path("pin")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -61,20 +62,25 @@ public class ClientAPI {
             , @FormParam("pin") String pin){
 
         //verify pin
-        String date = String.valueOf(LocalDate.now());
-        //Boolean verified = clientService.verifyPin(pin, date);
-        /*if(verified){
-            return Response.status(301)
-                    .location(URI.create("api/exams/login"))
-                    .build();
-        }*/
-
-        return Response.status(301)
-                .location(URI.create("api/exams/enterPin"))
-                .build();
 
         //if pin correct --> go to the countdown and start screenshotting
         //if pin not correct --> display error messag "pin is not correct"
+        examId = examineeService.verifyPIN(pin);
+        if(examId == 0){
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(clientResource.enterPin())
+                    .type(MediaType.TEXT_HTML_TYPE)
+                    .build();
+        }
+
+        Log.info(examId);
+
+        return Response
+                .status(Response.Status.ACCEPTED)
+                .entity(clientResource.login())
+                .type(MediaType.TEXT_HTML_TYPE)
+                .build();
 
 
         //user anlegen

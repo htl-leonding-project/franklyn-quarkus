@@ -106,16 +106,37 @@ public class ExamResource {
         return ex;
     }
 
-    @PUT
-    @Path("enroll/{id}")
+    @GET
+    @Path("verifyPIN/{pin}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Long verifyPIN(@PathParam("pin") String pin){
+        Log.info(pin);
+        Exam exam = examRepository.getExamByPin(pin);
+        if (exam == null){
+            return 0L;
+        }
+        return exam.id;
+    }
+
+    @GET
+    @Path("enroll/{id}/{firstName}/{lastName}")
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Exam enrollStudentForExam(@PathParam("id") Long id, Examinee examinee) {
+    public Long enrollStudentForExam(@PathParam("id") Long id, @PathParam("firstName") String firstName,@PathParam("lastName") String lastName) {
         //show if already exists with first and last name
-        examineeRepository.persist(new Examinee(examinee.firstName, examinee.lastName));
 
-        return examinee.exam;
+        Log.info(firstName);
+        Log.info(lastName);
+
+        Exam exam = examRepository.findById(id);
+        Examinee examinee = new Examinee(firstName, lastName, exam, true, LocalDateTime.now());
+        Log.info(examinee.firstName);
+        examineeRepository.persist(examinee);
+        Examinee returnExaminee = examineeRepository.find("id", examinee.id).firstResult();
+        if(returnExaminee == null)
+            return 1L;
+        return returnExaminee.id;
     }
 
     //sends details back

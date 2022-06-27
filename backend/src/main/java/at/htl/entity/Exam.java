@@ -17,7 +17,6 @@ import java.util.List;
         @NamedQuery(
                 name = "Exam.findExamWithSameDateAndPIN",
                 query = "select e from Exam e where e.date = :DATE and e.pin LIKE :PIN")
-
 })
 
 @Entity
@@ -111,7 +110,6 @@ public class Exam extends PanacheEntityBase {
                 LocalDate date,
                 LocalDateTime startTime,
                 LocalDateTime endTime,
-                List<Examinee> examineeIds,
                 List<Examiner> examiners,
                 int interval,
                 Resolution resolution,
@@ -123,7 +121,6 @@ public class Exam extends PanacheEntityBase {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        //this.examineeIds = examineeIds;
         this.examiners = examiners;
         this.interval = interval;
         this.resolution = resolution;

@@ -34,4 +34,15 @@ public class Examinee extends PanacheEntityBase {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    public Examinee(String firstName, String lastName, Exam exam) {
+        this(firstName, lastName);
+        this.exam = exam;
+    }
+
+    public Examinee(String firstName, String lastName, Exam exam, boolean isOnline, LocalDateTime lastOnline) {
+        this(firstName, lastName, exam);
+        this.isOnline = isOnline;
+        this.lastOnline = lastOnline;
+    }
 }

@@ -39,7 +39,6 @@ public class ScreenshotRepository implements PanacheRepository<Screenshot> {
         Screenshot s = new Screenshot(
                 Timestamp.valueOf(LocalDateTime.now()),
                 screenshot.runningNo(),
-                screenshot.exam(),
                 screenshot.examinee(),
                 Resolution.HD,
                 1,

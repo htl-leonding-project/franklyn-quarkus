@@ -27,4 +27,20 @@ public class ExamRepository implements PanacheRepository<Exam> {
         return null;
 
     }
+
+    public Boolean verifyPIN(Long id, String pin) {
+        Exam exam = this.find("Exam.verifyPIN", id).firstResult();
+        return pin.equals(exam.pin);
+
+    }
+
+    public Exam getExamByPin(String pin) {
+        var query = this.getEntityManager().createQuery(
+                "select e from Exam e where e.pin = :PIN",
+                Exam.class
+        ).setParameter("PIN", pin);
+        Exam exam = query.getSingleResult();
+        return exam;
+
+    }
 }

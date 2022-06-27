@@ -45,7 +45,7 @@ class ScreenshotTest {
         examinees.add(new Examinee("Tamara", "Melcher"));
 
         Screenshot screenshot = new Screenshot(timestamp, 1L,
-                exam, examinees.get(0), Resolution.HD, 30, "here");
+                examinees.get(0), Resolution.HD, 30, "here");
 
         assertEquals(timestamp, screenshot.timestamp);
         assertEquals(1L, screenshot.runningNo);

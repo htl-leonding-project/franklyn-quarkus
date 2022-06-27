@@ -38,10 +38,12 @@ public class InitBean {
     private Long cnt = 1L;
 
 
-    public void init( String firstName, String lastName) {
-        this.id = 1L;
+    private Long examineeId =1L;
+
+    public void init( String firstName, String lastName, Long examineeId) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.examineeId = examineeId;
     }
 
     @Scheduled(every = "5s")
@@ -50,7 +52,7 @@ public class InitBean {
             try {
                 Robot robot = new Robot();
                 String format = "png";
-                String fileName = id+"_"+lastName+"_"+firstName+"_"+cnt+"." + format;
+                String fileName = cnt+"_"+lastName+"_"+firstName+"." + format;
                 cnt++;
 
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
@@ -58,7 +60,7 @@ public class InitBean {
                 File newFile = new File(fileName);
                 ImageIO.write(screenFullImage, format, newFile);
 
-                System.out.println(imageService.uploadFile(newFile, fileName));
+                System.out.println(imageService.uploadFile(newFile, fileName, examineeId).getEntity());
 
                 System.out.println("A full screenshot saved!");
             } catch (AWTException | IOException ex) {

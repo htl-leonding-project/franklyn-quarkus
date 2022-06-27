@@ -36,7 +36,7 @@ public class Screenshot extends PanacheEntityBase {
     public Timestamp timestamp;
 
     @NotNull
-    @Column(name = "S_SCREENSHOT_NUMBER")
+    @Column(name = "S_RUNNING_NUMBER")
     public Long runningNo;
 
     @NotNull
@@ -66,11 +66,10 @@ public class Screenshot extends PanacheEntityBase {
     public Screenshot() {
     }
 
-    public Screenshot(Timestamp timestamp, Long runningNo, Exam exam, Examinee examinee,
+    public Screenshot(Timestamp timestamp, Long runningNo, Examinee examinee,
                       Resolution resolution, int compression, String pathOfScreenshot) {
         this.timestamp = timestamp;
         this.runningNo = runningNo;
-        //this.exam = exam;
         this.examinee = examinee;
         this.resolution = resolution;
         this.compression = compression;

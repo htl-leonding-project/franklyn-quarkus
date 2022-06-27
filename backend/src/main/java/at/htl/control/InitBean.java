@@ -77,7 +77,6 @@ public class InitBean {
                 LocalDate.parse("2022-06-23"),
                 LocalDateTime.parse("2022-05-23T17:09:42.411"),
                 LocalDateTime.parse("2022-05-23T18:09:42.411"),
-                examinees,
                 examiners,
                 5,
                 Resolution.HD,
@@ -92,7 +91,6 @@ public class InitBean {
                 LocalDate.parse("2022-02-23"),
                 LocalDateTime.parse("2022-02-23T10:09:42.411"),
                 LocalDateTime.parse("2022-02-23T12:09:42.411"),
-                examinees,
                 examiners,
                 5,
                 Resolution.HD,
@@ -106,7 +104,6 @@ public class InitBean {
         Screenshot screenshot1 = new Screenshot(
                 Timestamp.valueOf(LocalDateTime.now()),
                 1L,
-                exam1,
                 examinee1,
                 Resolution.HD,
                 1,
@@ -118,7 +115,6 @@ public class InitBean {
         screenshot1 = new Screenshot(
                 Timestamp.valueOf(LocalDateTime.now()),
                 2L,
-                exam1,
                 examinee1,
                 Resolution.HD,
                 1,
@@ -130,7 +126,6 @@ public class InitBean {
         screenshot1 = new Screenshot(
                 Timestamp.valueOf(LocalDateTime.now()),
                 1L,
-                exam2,
                 examinee2,
                 Resolution.HD,
                 1,
@@ -142,7 +137,6 @@ public class InitBean {
         screenshot1 = new Screenshot(
                 Timestamp.valueOf(LocalDateTime.now()),
                 2L,
-                exam2,
                 examinee2,
                 Resolution.HD,
                 1,
