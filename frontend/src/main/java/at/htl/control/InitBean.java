@@ -2,6 +2,7 @@ package at.htl.control;
 
 import at.htl.boundary.ClientAPI;
 import at.htl.boundary.ImageService;
+import io.quarkus.logging.Log;
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.scheduler.Scheduled;
 import org.apache.james.mime4j.dom.datetime.DateTime;
@@ -60,9 +61,11 @@ public class InitBean {
                 File newFile = new File(fileName);
                 ImageIO.write(screenFullImage, format, newFile);
 
-                System.out.println(imageService.uploadFile(newFile, fileName, examineeId).getEntity());
+                Log.info(imageService.uploadFile(newFile, fileName, examineeId).getEntity());
 
-                System.out.println("A full screenshot saved!");
+                //System.out.println(imageService.uploadFile(newFile, fileName, examineeId).getEntity());
+                Log.info("A full screenshot saved!");
+                //System.out.println("A full screenshot saved!");
             } catch (AWTException | IOException ex) {
                 System.err.println(ex);
             }
