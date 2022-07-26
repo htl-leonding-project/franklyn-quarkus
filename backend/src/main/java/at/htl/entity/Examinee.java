@@ -45,4 +45,9 @@ public class Examinee extends PanacheEntityBase {
         this.isOnline = isOnline;
         this.lastOnline = lastOnline;
     }
+
+    @Override
+    public String toString() {
+        return String.format(this.firstName + " " + this.lastName + " " + this.isOnline);
+    }
 }

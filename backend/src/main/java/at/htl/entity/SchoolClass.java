@@ -38,4 +38,9 @@ public class SchoolClass extends PanacheEntityBase {
         this.title = title;
         this.year = year;
     }
+
+    @Override
+    public String toString() {
+        return String.format(this.title + " " + this.year);
+    }
 }

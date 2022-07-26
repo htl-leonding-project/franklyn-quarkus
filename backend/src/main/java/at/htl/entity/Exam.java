@@ -128,4 +128,8 @@ public class Exam extends PanacheEntityBase {
     }
 
 
+    @Override
+    public String toString() {
+        return String.format(this.title + " " + this.date + " " + this.ongoing);
+    }
 }

@@ -39,4 +39,9 @@ public class Examiner extends PanacheEntityBase {
         this.lastName = lastName;
         this.isAdmin = isAdmin;
     }
+
+    @Override
+    public String toString() {
+        return String.format(this.firstName + " " + this.lastName + " " + this.isAdmin);
+    }
 }

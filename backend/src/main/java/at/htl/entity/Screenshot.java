@@ -86,4 +86,9 @@ public class Screenshot extends PanacheEntityBase {
         this.isCompressed = isCompressed;
         this.pathOfScreenshot = pathOfScreenshot;
     }
+
+    @Override
+    public String toString() {
+        return String.format(this.examinee.lastName + ": " + this.runningNo + ", " + this.pathOfScreenshot);
+    }
 }
