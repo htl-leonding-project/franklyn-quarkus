@@ -36,13 +36,13 @@ public class ExamineeResource {
     @Transactional
     public Examinee updateExaminee(@PathParam("id") Long id,Examinee examinee) {
         Examinee ex = examineeRepository.findById(id);
-
-        ex.firstName = examinee.firstName;
-        ex.lastName = examinee.lastName;
-        ex.exam = examinee.exam;
-        ex.isOnline = examinee.isOnline;
-        ex.lastOnline = examinee.lastOnline;
-
+        if(ex != null){
+            ex.firstName = examinee.firstName;
+            ex.lastName = examinee.lastName;
+            ex.exam = examinee.exam;
+            ex.isOnline = examinee.isOnline;
+            ex.lastOnline = examinee.lastOnline;
+        }
         return ex;
     }
 
@@ -51,6 +51,8 @@ public class ExamineeResource {
     @Transactional
     public Examinee deleteExaminee(Examinee examinee) {
         Examinee examinee1 = examineeRepository.findById(examinee.id);
+        if(examinee1 == null)
+            return null;
         examineeRepository.deleteById(examinee.id);
         Log.info("Delete Examinee: " + examinee1);
         return examinee1;

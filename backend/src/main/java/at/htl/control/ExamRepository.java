@@ -17,7 +17,10 @@ public class ExamRepository implements PanacheRepository<Exam> {
         String pin;
         do{
             pin = String.valueOf((int) (Math.random()*(999-100))+100);
-            List<Exam> exams = this.find("Exam.findExamWithSameDateAndPIN", LocalDate.now(), pin).list();
+            List<Exam> exams = this.getEntityManager().createNamedQuery("Exam.findExamWithSameDateAndPIN", Exam.class)
+                    .setParameter("DATE", LocalDate.now())
+                    .setParameter("PIN", pin)
+                    .getResultList();
             if(exams == null)
                 pinIsValid = true;
         }while (pinIsValid);

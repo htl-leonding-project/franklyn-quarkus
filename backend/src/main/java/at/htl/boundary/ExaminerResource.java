@@ -40,6 +40,8 @@ public class ExaminerResource {
     public Examiner deleteExaminer(@PathParam("id") Long id) {
         //only possible for admin
         Examiner examiner = examinerRepository.findById(id);
+        if(examiner == null)
+            return null;
         examinerRepository.deleteById(id);
         Log.info("Delete Examiner: " + examiner.userName);
         return examiner;

@@ -77,6 +77,8 @@ public class ExamResource {
     public Exam deleteExam(@PathParam("id") Long id) {
         //can only be deleted if there are no more exaxminers in it
         Exam ex = examRepository.findById(id);
+        if(ex == null)
+            return null;
         examRepository.deleteById(id);
         Log.info("Delete Exam: " + ex.title);
 

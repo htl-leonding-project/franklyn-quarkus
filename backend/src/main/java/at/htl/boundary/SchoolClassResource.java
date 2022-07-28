@@ -63,6 +63,8 @@ public class SchoolClassResource {
             @PathParam("id") Long id
     ){
         SchoolClass schoolClass = schoolClassRepository.findById(id);
+        if(schoolClass == null)
+            return null;
         schoolClassRepository.deleteById(id);
         Log.info("Delete SchoolClass: " + schoolClass.title);
         return schoolClass;
