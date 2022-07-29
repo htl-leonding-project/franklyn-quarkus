@@ -7,6 +7,7 @@ import at.htl.entity.Examinee;
 import at.htl.entity.Examiner;
 import at.htl.entity.Resolution;
 import at.htl.entity.dto.ExamDto;
+import at.htl.entity.dto.ExamUpdateDto;
 import at.htl.entity.dto.ExaminerDto;
 import io.quarkus.logging.Log;
 
@@ -89,23 +90,18 @@ public class ExamResource {
 
 
     @PUT
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Exam updateExam(@PathParam("id") Long id, Exam exam) {
+    public Exam updateExam(@PathParam("id") Long id, ExamUpdateDto exam) {
         Exam ex = examRepository.findById(id);
 
-        ex.title = exam.title;
-        ex.date = exam.date;
-        ex.formIds = exam.formIds;
-        ex.examiners = exam.examiners;
-        ex.startTime = exam.startTime;
-        ex.endTime = exam.endTime;
-        ex.ongoing = exam.ongoing;
-        ex.interval = exam.interval;
-        ex.resolution = exam.resolution;
-        ex.compression = exam.compression;
+        ex.title = exam.title();
+        ex.date = LocalDate.parse(exam.date());
+        ex.startTime = LocalDateTime.parse(exam.startTime());
+        ex.endTime = LocalDateTime.parse(exam.endTime());
+        ex.ongoing = exam.ongoing();
 
         return ex;
     }
@@ -146,9 +142,9 @@ public class ExamResource {
     //sends details back
     @PUT
     @Transactional
-    @Path("examinee/{id}")
+    @Path("removeExaminee/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Examinee removeExamineeFromExam(@PathParam("id") Long id, Long examineeId) {
         Exam ex = examRepository.findById(id);
 
