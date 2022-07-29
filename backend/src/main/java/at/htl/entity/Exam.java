@@ -2,12 +2,14 @@ package at.htl.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -39,9 +41,10 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_ONGOING")
     public boolean ongoing = false;
 
-    @OneToMany( cascade = CascadeType.ALL)
+    @OneToMany( cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @Size(min = 1)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    //@LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "E_FORM_IDS")
     @OnDelete(action = OnDeleteAction.CASCADE)
     public List<SchoolClass> formIds;
@@ -58,10 +61,11 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_END_TIME")
     public LocalDateTime endTime;
 
-    //@JoinColumn(name = "E_EXAMINER_IDS")
-    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "E_EXAMINER_IDS")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @Size(min = 1)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    //@LazyCollection(LazyCollectionOption.FALSE)
     public List<Examiner> examiners;
 
     @NotNull

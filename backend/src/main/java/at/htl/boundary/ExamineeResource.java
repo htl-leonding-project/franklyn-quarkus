@@ -35,6 +35,7 @@ public class ExamineeResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public Examinee updateExaminee(@PathParam("id") Long id,Examinee examinee) {
+        Log.info(examinee.exam.title);
         Examinee ex = examineeRepository.findById(id);
         if(ex != null){
             ex.firstName = examinee.firstName;

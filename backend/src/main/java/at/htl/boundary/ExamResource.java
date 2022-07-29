@@ -7,6 +7,7 @@ import at.htl.entity.Examinee;
 import at.htl.entity.Examiner;
 import at.htl.entity.Resolution;
 import at.htl.entity.dto.ExamDto;
+import at.htl.entity.dto.ExaminerDto;
 import io.quarkus.logging.Log;
 
 import javax.inject.Inject;
@@ -61,12 +62,13 @@ public class ExamResource {
     @Path("addExaminer/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public Exam addExaminerToExam(@PathParam("id") Long id, Examiner examiner) {
+    public Exam addExaminerToExam(@PathParam("id") Long id, ExaminerDto examiner) {
 
         //validation for duplicate examiners
 
         Exam ex = examRepository.findById(id);
-        ex.examiners.add(examiner);
+        Examiner newExaminer = new Examiner(examiner.userName(), examiner.firstName(), examiner.lastName(), examiner.isAdmin());
+        ex.examiners.add(newExaminer);
         return ex;
     }
 
