@@ -2,6 +2,7 @@ package at.htl.boundary;
 
 import at.htl.control.ExaminerRepository;
 import at.htl.entity.Examiner;
+import at.htl.entity.dto.ExaminerDto;
 import io.quarkus.logging.Log;
 
 import javax.inject.Inject;
@@ -26,8 +27,8 @@ public class ExaminerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Examiner postExaminer(Examiner examiner) {
-        Examiner e = new Examiner(examiner.userName, examiner.firstName, examiner.lastName, examiner.isAdmin);
+    public Examiner postExaminer(ExaminerDto examiner) {
+        Examiner e = new Examiner(examiner.userName(), examiner.firstName(), examiner.lastName(), examiner.isAdmin());
         examinerRepository.persist(e);
         Log.info("Saved Examiner: " + e.lastName);
         return e;

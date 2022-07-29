@@ -51,8 +51,7 @@ public class SchoolClassResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public SchoolClass postSchoolClass(SchoolClass schoolClass){
-        schoolClassRepository.persist(schoolClass);
-        Log.info("Save Schoolclass: " + schoolClass.title);
+        schoolClassRepository.getEntityManager().merge(schoolClass);
         return schoolClass;
     }
 
@@ -66,7 +65,6 @@ public class SchoolClassResource {
         if(schoolClass == null)
             return null;
         schoolClassRepository.deleteById(id);
-        Log.info("Delete SchoolClass: " + schoolClass.title);
         return schoolClass;
     }
 }

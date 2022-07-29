@@ -44,7 +44,6 @@ public class Exam extends PanacheEntityBase {
     @OneToMany( cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @Size(min = 1)
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "E_FORM_IDS")
     @OnDelete(action = OnDeleteAction.CASCADE)
     public List<SchoolClass> formIds;

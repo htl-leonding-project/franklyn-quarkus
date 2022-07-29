@@ -2,6 +2,7 @@ package at.htl.boundary;
 
 import at.htl.control.ExamineeRepository;
 import at.htl.entity.Examinee;
+import at.htl.entity.dto.ExamineeDto;
 import io.quarkus.logging.Log;
 
 import javax.inject.Inject;
@@ -34,15 +35,12 @@ public class ExamineeResource {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public Examinee updateExaminee(@PathParam("id") Long id,Examinee examinee) {
-        Log.info(examinee.exam.title);
+    public Examinee updateExaminee(@PathParam("id") Long id, ExamineeDto examinee) {
         Examinee ex = examineeRepository.findById(id);
         if(ex != null){
-            ex.firstName = examinee.firstName;
-            ex.lastName = examinee.lastName;
-            ex.exam = examinee.exam;
-            ex.isOnline = examinee.isOnline;
-            ex.lastOnline = examinee.lastOnline;
+            ex.firstName = examinee.firstName();
+            ex.lastName = examinee.lastName();
+            ex.isOnline = examinee.isOnline();
         }
         return ex;
     }
@@ -50,11 +48,11 @@ public class ExamineeResource {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Examinee deleteExaminee(Examinee examinee) {
-        Examinee examinee1 = examineeRepository.findById(examinee.id);
+    public Examinee deleteExaminee(Long id) {
+        Examinee examinee1 = examineeRepository.findById(id);
         if(examinee1 == null)
             return null;
-        examineeRepository.deleteById(examinee.id);
+        examineeRepository.deleteById(id);
         Log.info("Delete Examinee: " + examinee1);
         return examinee1;
     }
