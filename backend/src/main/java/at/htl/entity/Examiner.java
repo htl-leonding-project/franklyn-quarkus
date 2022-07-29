@@ -1,6 +1,8 @@
 package at.htl.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,8 +27,10 @@ public class Examiner extends PanacheEntityBase {
     @Column(name = "ER_IS_ADMIN")
     public boolean isAdmin;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "ER_E_Examiner_exam")
+
     public List<Exam> exams;
 
     public Examiner() {
