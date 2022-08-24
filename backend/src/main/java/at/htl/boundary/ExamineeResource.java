@@ -17,12 +17,19 @@ public class ExamineeResource {
     @Inject
     ExamineeRepository examineeRepository;
 
+    /**
+     * @return list of examinees ordered by name
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Examinee> getAll(){
         return examineeRepository.listAll();
-    }
+    }   //todo ordering by name
 
+    /**
+     * Get Examinee by Id
+     * @return examinee (if found)
+     */
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -30,6 +37,10 @@ public class ExamineeResource {
         return examineeRepository.findById(id);
     }
 
+    /**
+     * Examinee will be updated
+     * @return Updated examinee
+     */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
@@ -45,6 +56,10 @@ public class ExamineeResource {
         return ex;
     }
 
+    /**
+     * Delete examinee by Id
+     * @return screenshot of examinee
+     */
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
@@ -53,7 +68,6 @@ public class ExamineeResource {
         if(examinee1 == null)
             return null;
         examineeRepository.deleteById(id);
-        Log.info("Delete Examinee: " + examinee1);
         return examinee1;
     }
 

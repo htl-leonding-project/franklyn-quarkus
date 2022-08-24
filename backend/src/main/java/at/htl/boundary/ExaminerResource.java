@@ -17,12 +17,19 @@ public class ExaminerResource {
     @Inject
     ExaminerRepository examinerRepository;
 
+    /**
+     * @return List of examinees ordereed by name(todo)
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Examiner> getAllExaminersOrderByName() {
+    public List<Examiner> getAllExaminersOrderByName() {        //todo ordering by name
         return examinerRepository.listAll();
     }
 
+    /**
+     * Posts new examiner
+     * @return new examiner
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -34,6 +41,10 @@ public class ExaminerResource {
         return e;
     }
 
+    /**
+     * Delete examiner by id
+     * @return deleted examiner
+     */
     @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)

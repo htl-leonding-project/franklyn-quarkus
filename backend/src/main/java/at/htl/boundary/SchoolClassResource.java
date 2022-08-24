@@ -22,6 +22,10 @@ public class SchoolClassResource {
         return schoolClassRepository.getAllSchoolClasses();
     }
 
+    /**
+     * Gets schoolclass of the current year
+     * @return schoolclass
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("current")
@@ -29,6 +33,10 @@ public class SchoolClassResource {
         return schoolClassRepository.getCurrentSchoolClass();
     }
 
+    /**
+     * Counts how many exams all schoolclasses had
+     * @return list of schoolclasses
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("stats")
@@ -36,6 +44,10 @@ public class SchoolClassResource {
         return schoolClassRepository.getStats();
     }
 
+    /**
+     * Looks for schoolclass by title and year
+     * @return schoolclass
+     */
     @GET
     @Path("{title}/{year}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,6 +58,10 @@ public class SchoolClassResource {
         return schoolClassRepository.getSchoolClassByTitleAndYear(title, year);
     }
 
+    /**
+     * Posts new schoolclass
+     * @return schoolclass
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -55,6 +71,10 @@ public class SchoolClassResource {
         return schoolClass;
     }
 
+    /**
+     * Deletes schoolclass by id
+     * @return deleted schoolclass
+     */
     @DELETE
     @Path("{id}")
     @Transactional

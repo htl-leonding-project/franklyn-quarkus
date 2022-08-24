@@ -28,7 +28,9 @@ public class ExamResource {
     @Inject
     ExamineeRepository examineeRepository;
 
-
+    /**
+     * @return list of all exams
+     */
     @GET
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
@@ -36,6 +38,10 @@ public class ExamResource {
         return examRepository.listAll();
     }
 
+    /**
+     * Posts new Exam
+     * @return new exam
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
@@ -55,10 +61,14 @@ public class ExamResource {
         );
 
         examRepository.persist(e);
-        Log.info("Saved Exam: " + e.title);
         return e;
     }
 
+    /**
+     * Adds an Examiner to Exam (id)
+     * Verifys if examiner already has been enrolled
+     * @return Exam
+     */
     @PUT
     @Path("addExaminer/{id}")
     @Transactional
@@ -72,13 +82,17 @@ public class ExamResource {
         ex.examiners.add(newExaminer);
         return ex;
     }
-
+    /**
+     * Deletes exam
+     * Remove all examiners from exam before deleting exam
+     * @return screenshot of examinee
+     */
     @DELETE
     @Path("delete/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public Exam deleteExam(@PathParam("id") Long id) {
-        //can only be deleted if there are no more exaxminers in it
+        //can only be deleted if there are no more examiners in it
         Exam ex = examRepository.findById(id);
         if(ex == null)
             return null;
@@ -88,7 +102,10 @@ public class ExamResource {
         return ex;
     }
 
-
+    /**
+     * Updates exam
+     * @return updated exam
+     */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
@@ -106,6 +123,10 @@ public class ExamResource {
         return ex;
     }
 
+    /**
+     * Looks for exam with pin (for enrolling as student)
+     * @return id of exam or 0 if not found
+     */
     @GET
     @Path("verifyPIN/{pin}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -118,6 +139,12 @@ public class ExamResource {
         return exam.id;
     }
 
+    /**
+     * Enroll student for
+     * Verify if already enrolled if not -> enroll
+     * if yes -> ask student if he/she wants to enroll again
+     * @return screenshot of examinee
+     */
     @GET
     @Path("enroll/{id}/{firstName}/{lastName}")
     @Transactional
@@ -125,9 +152,6 @@ public class ExamResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Long enrollStudentForExam(@PathParam("id") Long id, @PathParam("firstName") String firstName,@PathParam("lastName") String lastName) {
         //show if already exists with first and last name
-
-        Log.info(firstName);
-        Log.info(lastName);
 
         Exam exam = examRepository.findById(id);
         Examinee examinee = new Examinee(firstName, lastName, exam, true, LocalDateTime.now());
@@ -139,6 +163,11 @@ public class ExamResource {
         return returnExaminee.id;
     }
 
+
+    /**
+     * Removes examinee from exam
+     * @return examinee
+     */
     //sends details back
     @PUT
     @Transactional

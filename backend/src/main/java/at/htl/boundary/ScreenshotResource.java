@@ -20,6 +20,10 @@ public class ScreenshotResource {
     @ConfigProperty(name = "PATHOFSCREENSHOT")
     String pathOfScreenshot;
 
+    /**
+     * Looks for a specified Screenshot of an examinee
+     * @return screenshot of examinee
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("number/{examineeId}/{screenshotNumber}")
@@ -30,6 +34,10 @@ public class ScreenshotResource {
         return screenshotRepository.findScreenshot(examineeId,screenshotNumber);
     }
 
+    /**
+     * Gets latest screenshot of examinee
+     * @return screenshot of examinee
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("latest/{examineeId}")
@@ -39,6 +47,10 @@ public class ScreenshotResource {
         return screenshotRepository.findLatestScreenshot(examineeId);
     }
 
+    /**
+     * Posts a new screenshot
+     * @return new screenshot
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

@@ -43,6 +43,11 @@ public class ImageResource {
     @ConfigProperty(name = "PATHOFSCREENSHOT")
     String pathOfScreenshot;
 
+    /**
+     * Saves screenshot of desktop in filesystem (path in .env)
+     * Saves path, runningno, examineeid of screenshot in db
+     * @return screenshot of examinee
+     */
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Produces(MediaType.APPLICATION_JSON)
