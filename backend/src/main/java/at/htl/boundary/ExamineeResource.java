@@ -22,7 +22,7 @@ public class ExamineeResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Examinee> getAll(){
+    public List<Examinee> listAll(){
         return examineeRepository.listAll();
     }   //todo ordering by name
 
@@ -33,7 +33,7 @@ public class ExamineeResource {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Examinee getExaminee(@PathParam("id") Long id) {
+    public Examinee getExamineeById(@PathParam("id") Long id) {
         return examineeRepository.findById(id);
     }
 

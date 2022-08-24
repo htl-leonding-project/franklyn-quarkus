@@ -22,7 +22,7 @@ public class ExaminerResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Examiner> getAllExaminersOrderByName() {        //todo ordering by name
+    public List<Examiner> listAll() {        //todo ordering by name
         return examinerRepository.listAll();
     }
 
@@ -34,7 +34,7 @@ public class ExaminerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Examiner postExaminer(ExaminerDto examiner) {
+    public Examiner addExaminer(ExaminerDto examiner) {
         Examiner e = new Examiner(examiner.userName(), examiner.firstName(), examiner.lastName(), examiner.isAdmin());
         examinerRepository.persist(e);
         Log.info("Saved Examiner: " + e.lastName);

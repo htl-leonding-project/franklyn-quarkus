@@ -18,7 +18,7 @@ public class SchoolClassResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<SchoolClass> getAllSchoolClasses() {
+    public List<SchoolClass> listAll() {
         return schoolClassRepository.getAllSchoolClasses();
     }
 
@@ -66,7 +66,7 @@ public class SchoolClassResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public SchoolClass postSchoolClass(SchoolClass schoolClass){
+    public SchoolClass addSchoolClass(SchoolClass schoolClass){
         schoolClassRepository.getEntityManager().merge(schoolClass);
         return schoolClass;
     }

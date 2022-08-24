@@ -34,7 +34,7 @@ public class ExamResource {
     @GET
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Exam> getAll() {
+    public List<Exam> listAll() {
         return examRepository.listAll();
     }
 
@@ -46,7 +46,7 @@ public class ExamResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
-    public Exam saveExam(ExamDto exam) {
+    public Exam addExam(ExamDto exam) {
         String pin = examRepository.createPIN(LocalDate.now());
         Exam e = new Exam(
                 pin,
