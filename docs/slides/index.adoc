@@ -24,8 +24,8 @@ image::useCase.jpg[]
 -> Erschwert Fehlersuche immens
 
 
-[.lightbg,background-image="todo.jpg", background-opacity="0.7"]
 == Aufgabenstellung
+image::todo.jpg[background, size=cover]
 
 * Erhaltung/Wartung des derzeitigen Franklyns
 * Reimplementierung des derzeitigen Franklyns
