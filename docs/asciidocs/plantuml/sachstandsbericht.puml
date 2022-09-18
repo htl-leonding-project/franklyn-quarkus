@@ -9,7 +9,7 @@
 ***[#green] Entitäten testen
 ***[#green] Generieren der PINs
 ** Sprint 03
-***[#yellow] Endpoints erstellen
+***[#green] Endpoints erstellen
 ****[#green] Examinee
 *****[#green] GET
 *****[#green] PUT
@@ -18,18 +18,18 @@
 *****[#green] GET
 *****[#green] DELETE
 *****[#green] POST
-****[#yellow] Exam
+****[#green] Exam
 *****[#green] GET
-*****[#yellow] PUT
+*****[#green] PUT
 *****[#green] DELETE
-*****[#skyblue] POST
-****[#yellow] SchoolClass
+*****[#green] POST
+****[#green] SchoolClass
 *****[#green] GET
-*****[#yellow] DELETE
-*****[#yellow] POST
-****[#yellow] Screenshot
+*****[#green] DELETE
+*****[#green] POST
+****[#green] Screenshot
 *****[#green] GET
-*****[#yellow] POST
+*****[#green] POST
 ***[#red] Endpoints testen
 ** Sprint 04
 ***[#red] WebUntis-Authentifizierung

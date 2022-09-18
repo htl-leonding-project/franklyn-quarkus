@@ -1,8 +1,25 @@
-= Presentation
+= Systemspezifikation
 Melcher Tamara und Tran Michael
 31.01.2022
 :toc:
 :icons: font
+
+== Ausgangssituation
+
+Die HTL Leonding ist eine HTL im Zentralraum von Oberösterreich mit ca. 1200 Schülern und Schülerinnen und den Fachbereichen Medientechnik, Informatik, Elektronik und Medizintechnik.
+Ab der 3. Klasse werden die Informatik- und Medientechnik-Schüler in Gruppen von 3-4 Personen eingeteilt und arbeiten gemeinsam an einem Projekt.
+
+== Ist-Zustand
+
+Derzeit gibt es bereits eine Anwendung, welche Lehrkräfte bei der Durchführung von Tests hilft, indem sie in einem bestimmten Intervall einen Screenshot vom Bildschirm des Schülers/der Schülerin erstellt, auf welche die Lehrperson Zugriff hat.
+
+=== Use Case Diagramm
+
+[plantuml]
+----
+include::plantuml/ucd.puml[]
+----
+
 
 == Was ist Franklyn?
 Franklyn wurde bereits von Schülern programmiert.
@@ -14,29 +31,21 @@ Der Schülerclient sendet dabei in einem regelmäßigen Intervall Screenshots, w
 Für die Ansicht der Screenshots wird noch das Patroulierintervall angeboten, welches einem ermöglicht, automatisch durch die Screenshots der Schüler und Schülerinnen zu iterieren.
 
 == Problemstellung
-Franklyn2 wurde mit Node.js geschrieben.
-
+* Franklyn2 wurde mit Node.js geschrieben.
 Da sich bei Node.js die Libraries ständig ändert, muss ständig upgedated werden, um den Code funktionstüchtig zu halten.
 
-== Use Case Diagram
+* Die derzeitige Datenbank ist eine nicht-relationale DB (MongoBD) -> unstrukturierte Speicherung von Daten
 
-[plantuml]
-----
-include::plantuml/ucd.puml[]
-----
+* Wenn einE SchülerIn einen Fehler bei der Abgabe tätigt und den falschen Ordner abgibt, bleibt dem unterrichtenden Professor nichts anderes übrig, als ihm/ihr eine negative Note zu geben.
+
+* Bei einer großen Anzahl von SchülerInnen können Professoren bei einem Test schnell den Überblick verlieren bzgl. Unverständlichkeiten oder Problematiken die mehrere SchülerInnen betreffen
+
 
 == Datenmodell
 
 [plantuml]
 ----
 include::plantuml/classDiagram.puml[]
-----
-
-== Systemarchitektur
-
-[plantuml]
-----
-include::plantuml/system-architecture.puml[]
 ----
 
 == Sachbestandsbericht
@@ -77,8 +86,8 @@ include::plantuml/sachstandsbericht.puml[]
 
 == Was noch kommt
 
-* Datenmodellbesprechung mit Prof. Stütz
-* Login für Schüler
 * Tests
-* Lehrerfrontend
+* Lehrerfrontend (Website)
+* Client (Electron)
+* ImageCompressor
 
