@@ -3,14 +3,15 @@ package at.htl.client;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLOutput;
 import java.time.Duration;
 import java.util.Objects;
 import java.util.TimerTask;
@@ -42,6 +43,7 @@ public class Screenshot extends TimerTask {
                 BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
                 File newFile = new File(fileName);
                 ImageIO.write(screenFullImage, format, newFile);
+                FileInputStream inputStream = new FileInputStream(newFile);
 
                 client = HttpClient.newHttpClient();
 
@@ -50,7 +52,7 @@ public class Screenshot extends TimerTask {
                         .timeout(Duration.ofMinutes(5))
                         .header("accept", "application/json")
                         .header("Content-Type", "application/octet-stream")
-                        .POST(HttpRequest.BodyPublishers.ofFile(newFile.toPath()))
+                        .POST(HttpRequest.BodyPublishers.ofInputStream(() -> inputStream))
                         .build();
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 System.out.println(response);
@@ -74,6 +76,7 @@ public class Screenshot extends TimerTask {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+
         }
     }
 }

@@ -61,7 +61,7 @@ public class Exam extends PanacheEntityBase {
     public LocalDateTime endTime;
 
     @JoinColumn(name = "E_EXAMINER_IDS")
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @Size(min = 1)
     //@LazyCollection(LazyCollectionOption.FALSE)

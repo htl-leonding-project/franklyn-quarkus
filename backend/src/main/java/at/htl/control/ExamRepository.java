@@ -2,11 +2,14 @@ package at.htl.control;
 
 import at.htl.entity.Exam;
 import at.htl.entity.Examinee;
+import at.htl.entity.Examiner;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @ApplicationScoped
 public class ExamRepository implements PanacheRepository<Exam> {
@@ -45,5 +48,21 @@ public class ExamRepository implements PanacheRepository<Exam> {
         Exam exam = query.getSingleResult();
         return exam;
 
+    }
+
+    public void deleteExaminerFromExams(Long id) {
+        var query = this.getEntityManager().createQuery(
+                "select e from Exam e",
+                Exam.class
+        );
+        List<Exam> exams = query.getResultList();
+        //List<Examiner> examiners = new ArrayList<>();
+        for (Exam e : exams) {
+            for (Examiner ex : e.examiners) {
+                if (Objects.equals(ex.id, id)){
+                    this.getEntityManager().remove(ex);
+                }
+            }
+        }
     }
 }

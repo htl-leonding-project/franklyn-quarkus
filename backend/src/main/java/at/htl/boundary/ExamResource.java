@@ -2,6 +2,7 @@ package at.htl.boundary;
 
 import at.htl.control.ExamRepository;
 import at.htl.control.ExamineeRepository;
+import at.htl.control.ExaminerRepository;
 import at.htl.entity.Exam;
 import at.htl.entity.Examinee;
 import at.htl.entity.Examiner;
@@ -24,6 +25,9 @@ public class ExamResource {
 
     @Inject
     ExamRepository examRepository;
+
+    @Inject
+    ExaminerRepository examinerRepository;
 
     @Inject
     ExamineeRepository examineeRepository;
@@ -96,6 +100,8 @@ public class ExamResource {
         Exam ex = examRepository.findById(id);
         if(ex == null)
             return null;
+        examinerRepository.deleteExamFromExaminers(id);
+        Log.info("deleted exam from examiners");
         examRepository.deleteById(id);
         Log.info("Delete Exam: " + ex.title);
 

@@ -1,6 +1,8 @@
 package at.htl.boundary;
 
+import at.htl.control.ExamRepository;
 import at.htl.control.ExaminerRepository;
+import at.htl.entity.Exam;
 import at.htl.entity.Examiner;
 import at.htl.entity.dto.ExaminerDto;
 import io.quarkus.logging.Log;
@@ -16,6 +18,9 @@ public class ExaminerResource {
 
     @Inject
     ExaminerRepository examinerRepository;
+
+    @Inject
+    ExamRepository examRepository;
 
     /**
      * @return List of examinees ordereed by name(todo)
@@ -43,6 +48,7 @@ public class ExaminerResource {
 
     /**
      * Delete examiner by id
+     * Only possible for admin
      * @return deleted examiner
      */
     @DELETE
@@ -50,10 +56,10 @@ public class ExaminerResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Examiner deleteExaminer(@PathParam("id") Long id) {
-        //only possible for admin
         Examiner examiner = examinerRepository.findById(id);
         if(examiner == null)
             return null;
+        examRepository.deleteExaminerFromExams(id);
         examinerRepository.deleteById(id);
         Log.info("Delete Examiner: " + examiner.userName);
         return examiner;

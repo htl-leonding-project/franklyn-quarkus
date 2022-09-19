@@ -53,7 +53,10 @@ public class ImageResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Screenshot upload(InputStream is, @QueryParam("filename") String filename, @QueryParam("examineeId") Long examineeId) throws IOException {
-
+        System.out.println(is.toString());
+        System.out.println(is.readAllBytes().length);
+        System.out.println(filename);
+        System.out.println(examineeId);
         Screenshot returnSc = null;
 
         if (filename.isBlank()) {
@@ -71,7 +74,6 @@ public class ImageResource {
             String[] splittedFileName = filename.split("_");
 
             String newFileName = String.valueOf(LocalDateTime.now()) + "_" + splittedFileName[1] + "_" + splittedFileName[2];
-
             Files.copy(
                     is,
                     Paths.get(pathOfScreenshot, newFileName),
