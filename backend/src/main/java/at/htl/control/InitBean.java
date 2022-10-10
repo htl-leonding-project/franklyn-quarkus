@@ -46,7 +46,7 @@ public class InitBean {
         }
 
         List<SchoolClass> schoolClasses = new ArrayList<>();
-        SchoolClass schoolClass1 = new SchoolClass("Franklyn", "2022");
+        SchoolClass schoolClass1 = new SchoolClass("5AHIF", "2022");
         SchoolClass schoolClass2 = new SchoolClass("3AHIF", "2021");
         schoolClasses.add(schoolClass1);
         schoolClasses.add(schoolClass2);

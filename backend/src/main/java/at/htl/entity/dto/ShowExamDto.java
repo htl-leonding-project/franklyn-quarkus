@@ -7,7 +7,8 @@ public record ShowExamDto(
         String form,
         String startTime,
         String nrOfStudents,
-        boolean ongoing,
-        String pin
+        String ongoing,
+        String pin,
+        Long id
 ) {
 }

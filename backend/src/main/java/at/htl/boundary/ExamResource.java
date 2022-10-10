@@ -3,10 +3,8 @@ package at.htl.boundary;
 import at.htl.control.ExamRepository;
 import at.htl.control.ExamineeRepository;
 import at.htl.control.ExaminerRepository;
-import at.htl.entity.Exam;
-import at.htl.entity.Examinee;
-import at.htl.entity.Examiner;
-import at.htl.entity.Resolution;
+import at.htl.control.SchoolClassRepository;
+import at.htl.entity.*;
 import at.htl.entity.dto.ExamDto;
 import at.htl.entity.dto.ExamUpdateDto;
 import at.htl.entity.dto.ExaminerDto;
@@ -16,6 +14,7 @@ import io.quarkus.logging.Log;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,6 +33,9 @@ public class ExamResource {
     @Inject
     ExamineeRepository examineeRepository;
 
+    @Inject
+    SchoolClassRepository schoolClassRepository;
+
     /**
      * @return list of all exams
      */
@@ -49,10 +51,11 @@ public class ExamResource {
         String title = "";
         String date = "";
         String startTime = "";
+        String status = "";
 
         for (Exam exam : tempExams) {
             if(exam.examiners != null && exam.examiners.size() > 0) {
-                secondTeacher = exam.examiners.get(1).firstName + " " + exam.examiners.get(1).lastName;
+                secondTeacher = exam.examiners.get(0).firstName + " " + exam.examiners.get(0).lastName;
             }
             if(exam.formIds != null && exam.formIds.size() > 0) {
                 form = exam.formIds.get(0).title;
@@ -61,10 +64,36 @@ public class ExamResource {
             title = exam.title;
             date= exam.date.toString();
             startTime = exam.startTime.toString();
-            examSummary.add(new ShowExamDto(title, date, secondTeacher, form, startTime, Integer.toString(nrOfStudentsPerExam), exam.ongoing, exam.pin));
+            if(exam.ongoing){
+                status= "Läuft";
+            }
+            else{
+                status= "Beendet";
+            }
+            examSummary.add(new ShowExamDto(title, date, secondTeacher, form, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
+        }
+        for (int i = 0, j = examSummary.size() - 1; i < j; i++) {
+            examSummary.add(i, examSummary.remove(j));
         }
         return examSummary;
     }
+
+
+/*    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ShowExamDto getById(@PathParam("id") String id) {
+        Exam temp = examRepository.findById(Long.parseLong(id));
+        ShowExamDto examSummary;
+        String secondTeacher = temp.examiners.get(0).firstName + " " + temp.examiners.get(0).lastName;
+        String form = temp.formIds.get(0).title;
+        int nrOfStudentsPerExam = 0;
+
+        examSummary = new ShowExamDto(temp.title, temp.date.toString(), secondTeacher, form, temp.startTime.toString(), Integer.toString(nrOfStudentsPerExam), temp.ongoing, temp.pin, temp.id);
+        return examSummary;
+    }*/
+
+
 
     /**
      * Posts new Exam
@@ -89,7 +118,23 @@ public class ExamResource {
                 Resolution.HD,
                 1
         );
+        List<Examiner> examiners = new LinkedList<>();
+        if(exam.examinerIds() != null && exam.examinerIds().size() > 0) {
+            for (String examinerId : exam.examinerIds()) {
+                Examiner examiner = examinerRepository.findById(Long.parseLong(examinerId));
+                examiners.add(examiner);
+            }
+        }
+        List<SchoolClass> forms = new LinkedList<>();
+        if(exam.formIds() != null && exam.formIds().size() > 0) {
+            for (String formId : exam.formIds()) {
+                SchoolClass form = schoolClassRepository.findById(Long.parseLong(formId));
+                forms.add(form);
+            }
+        }
 
+        e.examiners = examiners;
+        e.formIds = forms;
         examRepository.persist(e);
         return e;
     }
