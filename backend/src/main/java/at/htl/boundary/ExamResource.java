@@ -10,6 +10,7 @@ import at.htl.entity.Resolution;
 import at.htl.entity.dto.ExamDto;
 import at.htl.entity.dto.ExamUpdateDto;
 import at.htl.entity.dto.ExaminerDto;
+import at.htl.entity.dto.ShowExamDto;
 import io.quarkus.logging.Log;
 
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 @Path("api/exams")
@@ -38,8 +40,30 @@ public class ExamResource {
     @GET
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Exam> listAll() {
-        return examRepository.listAll();
+    public List<ShowExamDto> listAll() {
+        List<Exam> tempExams = examRepository.listAll();
+        List<ShowExamDto> examSummary = new LinkedList<>();
+        String secondTeacher = "";
+        String form = "";
+        int nrOfStudentsPerExam = 0;
+        String title = "";
+        String date = "";
+        String startTime = "";
+
+        for (Exam exam : tempExams) {
+            if(exam.examiners != null && exam.examiners.size() > 0) {
+                secondTeacher = exam.examiners.get(1).firstName + " " + exam.examiners.get(1).lastName;
+            }
+            if(exam.formIds != null && exam.formIds.size() > 0) {
+                form = exam.formIds.get(0).title;
+            }
+            nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
+            title = exam.title;
+            date= exam.date.toString();
+            startTime = exam.startTime.toString();
+            examSummary.add(new ShowExamDto(title, date, secondTeacher, form, startTime, Integer.toString(nrOfStudentsPerExam), exam.ongoing));
+        }
+        return examSummary;
     }
 
     /**
@@ -52,11 +76,13 @@ public class ExamResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Exam addExam(ExamDto exam) {
         String pin = examRepository.createPIN(LocalDate.now());
+        String tempDate = exam.date().substring(0,10);
+        Log.info(exam.date());
         Exam e = new Exam(
                 pin,
                 exam.title(),
                 true,
-                LocalDate.parse(exam.date()),
+                LocalDate.parse(tempDate),
                 LocalDateTime.parse(exam.startTime()),
                 LocalDateTime.parse(exam.endTime()),
                 5,

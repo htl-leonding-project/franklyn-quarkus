@@ -10,7 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("schoolclass")
+@Path("api/schoolclass")
 public class SchoolClassResource {
 
     @Inject
