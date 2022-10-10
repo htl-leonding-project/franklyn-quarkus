@@ -61,7 +61,7 @@ public class ExamResource {
             title = exam.title;
             date= exam.date.toString();
             startTime = exam.startTime.toString();
-            examSummary.add(new ShowExamDto(title, date, secondTeacher, form, startTime, Integer.toString(nrOfStudentsPerExam), exam.ongoing));
+            examSummary.add(new ShowExamDto(title, date, secondTeacher, form, startTime, Integer.toString(nrOfStudentsPerExam), exam.ongoing, exam.pin));
         }
         return examSummary;
     }
