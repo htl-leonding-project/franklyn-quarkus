@@ -209,8 +209,16 @@ public class ExamResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Long verifyPIN(@PathParam("pin") String pin){
         Log.info(pin);
-        Exam exam = examRepository.getExamByPin(pin);
-        if (exam == null){
+        List<Exam> exams = examRepository.listAll();
+        Exam exam = null;
+        boolean check = false;
+        for (Exam e : exams) {
+            if(e.pin.equals(pin)){
+                exam = e;
+                check = true;
+            }
+        }
+        if (!check){
             return 0L;
         }
         return exam.id;
@@ -229,14 +237,14 @@ public class ExamResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Long enrollStudentForExam(@PathParam("id") Long id, @PathParam("firstName") String firstName,@PathParam("lastName") String lastName) {
         //show if already exists with first and last name
-
         Exam exam = examRepository.findById(id);
         Examinee examinee = new Examinee(firstName, lastName, exam, true, LocalDateTime.now());
         Log.info(examinee.firstName);
         examineeRepository.persist(examinee);
         Examinee returnExaminee = examineeRepository.find("id", examinee.id).firstResult();
         if(returnExaminee == null)
-            return 1L;
+            return 0L;
+        Log.info(returnExaminee.id);
         return returnExaminee.id;
     }
 
