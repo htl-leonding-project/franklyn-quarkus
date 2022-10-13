@@ -1,6 +1,7 @@
 package at.htl.control;
 
 import at.htl.entity.*;
+import at.htl.service.WebUntisService;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.StartupEvent;
 
@@ -29,6 +30,9 @@ public class InitBean {
 
     @Inject
     ScreenshotRepository screenshotRepository;
+
+    @Inject
+    WebUntisService webUntisService;
 
 
     @Transactional
@@ -72,7 +76,7 @@ public class InitBean {
         Exam exam1 = new Exam(
                 "234",
                 "Test",
-                true,
+                false,
                 schoolClasses,
                 LocalDate.parse("2022-06-23"),
                 LocalDateTime.parse("2022-05-23T17:09:42.411"),
@@ -144,5 +148,8 @@ public class InitBean {
         );
         screenshotRepository.persist(screenshot1);
         Log.info("Saved Screenshot");
+
+        String webUntisResult = webUntisService.initDB("NNRADIO", "PAuthlyn28");
+        Log.info("WebUntis Result: " + webUntisResult);
     }
 }
