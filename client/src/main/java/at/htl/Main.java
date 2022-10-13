@@ -28,22 +28,31 @@ public class Main{
     public static void enterName(String id) throws URISyntaxException, IOException {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter your first name: ");
-        String firstName = sc.next();
+        String responseString = "";
+        String firstName = "";
+        String lastName = "";
 
-        System.out.print("Enter your last name: ");
-        String lastName = sc.next();
+        do {
 
-        HttpClient httpclient = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet();
-        //int tempId = Integer.parseInt(id);
-        httpGet.setURI(new URI("http://localhost:8080/api/exams/enroll/"+id+"/"+firstName+"/"+lastName));
-        //httpGet.setURI(new URI("http://localhost:8080/api/exams/enroll/1/Tamara/Melcher"));
-        HttpResponse response = httpclient.execute(httpGet);
-        HttpEntity entity = response.getEntity();
-        String responseString = EntityUtils.toString(entity, "UTF-8");
+            System.out.print("Enter your first name: ");
+            firstName = sc.next();
+
+            System.out.print("Enter your last name: ");
+            lastName = sc.next();
+
+            HttpClient httpclient = HttpClients.createDefault();
+            HttpGet httpGet = new HttpGet();
+            httpGet.setURI(new URI("http://localhost:8080/api/exams/enroll/"+id+"/"+firstName+"/"+lastName));
+            HttpResponse response = httpclient.execute(httpGet);
+            HttpEntity entity = response.getEntity();
+            responseString = EntityUtils.toString(entity, "UTF-8");
+            if(responseString.equals("-1")){
+                System.out.println("You are alreadey enroled for this exam!");
+            }
+        }while(responseString.equals("-1"));
+
         System.out.println(responseString);
-        if(!responseString.equals("0")){
+        if (!responseString.equals("0")) {
             sendScreenshots(id, firstName, lastName);
         }
     }
@@ -53,18 +62,19 @@ public class Main{
 
         HttpClient httpclient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet();
+        String responseString = "";
 
-        System.out.print("Enter your pin: ");
-        String pin = sc.next();
+        do{
+            System.out.print("Enter your pin: ");
+            String pin = sc.next();
 
-        httpGet.setURI(new URI("http://localhost:8080/api/exams/verifyPIN/"+pin));
-        HttpResponse response = httpclient.execute(httpGet);
-        HttpEntity entity = response.getEntity();
-        String responseString = EntityUtils.toString(entity, "UTF-8");
-        System.out.println(responseString);
-        if(!responseString.equals("0")){
-            enterName(responseString);
-        }
+            httpGet.setURI(new URI("http://localhost:8080/api/exams/verifyPIN/"+pin));
+            HttpResponse response = httpclient.execute(httpGet);
+            HttpEntity entity = response.getEntity();
+            responseString = EntityUtils.toString(entity, "UTF-8");
+            System.out.println(responseString);
+        }while (responseString.equals("0"));
+        enterName(responseString);
     }
     public static void sendScreenshots(String firstName, String lastName, String id) throws IOException, URISyntaxException {
 

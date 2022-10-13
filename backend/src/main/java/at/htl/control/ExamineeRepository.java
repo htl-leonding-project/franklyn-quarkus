@@ -19,4 +19,15 @@ public class ExamineeRepository implements PanacheRepository<Examinee> {
         List<Examinee> examinees = query.getResultList();
         return examinees.size();
     }
+
+    public boolean checkIfAlreadyEnroled(String firstName, String lastName, Long id) {
+        var query = this.getEntityManager().createQuery(
+                "select e from Examinee e where e.exam.id = :id and e.firstName = :firstName and e.lastName = :lastName",
+                Examinee.class
+        ).setParameter("id", id)
+                .setParameter("firstName", firstName)
+                .setParameter("lastName", lastName);
+        List<Examinee> examinees = query.getResultList();
+        return examinees.size() > 0;
+    }
 }

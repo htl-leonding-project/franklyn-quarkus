@@ -18,6 +18,7 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -106,14 +107,18 @@ public class ExamResource {
     public Exam addExam(ExamDto exam) {
         String pin = examRepository.createPIN(LocalDate.now());
         String tempDate = exam.date().substring(0,10);
+        String tempStartTime= tempDate + "T" + exam.startTime()+":00";
+        String tempEndTime= tempDate + "T" + exam.endTime()+":00";
+
+
         Log.info(exam.date());
         Exam e = new Exam(
                 pin,
                 exam.title(),
                 true,
                 LocalDate.parse(tempDate),
-                LocalDateTime.parse(exam.startTime()),
-                LocalDateTime.parse(exam.endTime()),
+                LocalDateTime.parse(tempStartTime),
+                LocalDateTime.parse(tempEndTime),
                 5,
                 Resolution.HD,
                 1
@@ -240,6 +245,10 @@ public class ExamResource {
         Exam exam = examRepository.findById(id);
         Examinee examinee = new Examinee(firstName, lastName, exam, true, LocalDateTime.now());
         Log.info(examinee.firstName);
+        boolean examineeAlreadyExists = examineeRepository.checkIfAlreadyEnroled(examinee.firstName, examinee.lastName, exam.id);
+        if(examineeAlreadyExists){
+            return -1L;
+        }
         examineeRepository.persist(examinee);
         Examinee returnExaminee = examineeRepository.find("id", examinee.id).firstResult();
         if(returnExaminee == null)

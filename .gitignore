@@ -1,3 +1,6 @@
+/franklyn-frontend/node_modules
+/franklyn-frontend/.angular
+
 /db/
 #Maven
 target/
