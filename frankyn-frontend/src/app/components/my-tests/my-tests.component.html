@@ -1,0 +1,43 @@
+<app-sidebar></app-sidebar>
+
+<div class="container-fluid">
+    <div class="card">
+        <h1 class="header" >Alle Tests</h1>
+        <br>
+        <br>
+        <table class="table">
+            <thead [style.color] = "'grey'">
+                <td>&nbsp;Nr</td>
+                <td>&nbsp;Titel</td>
+                <td>&nbsp;Klassen</td>
+                <td>&nbsp;Begleitlehrer</td>
+                <td>&nbsp;PIN</td>
+                <td>&nbsp;Datum</td>
+                <td>&nbsp;Start</td>
+                <td>&nbsp;Schüleranzahl</td>
+                <td>&nbsp;Status</td>
+                <td></td>
+                <td></td>
+            </thead>
+            <tbody>
+                <tr *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="globalService.setExamId=exam.id" >
+                    <ng-container>
+                        <td>{{i+1}}</td>
+                        <td>{{exam.title}}</td>
+                        <td>{{exam.form}}</td>
+                        <td>{{exam.secondTeacher}}</td>
+                        <td>{{exam.pin}}</td>
+                        <td>{{exam.date | date: 'dd.MM.yyyy'}}</td>
+                        <td>{{exam.startTime |date: 'HH:MM'}}</td>
+                        <td>{{exam.nrOfStudents}}</td>
+                        <td>{{exam.ongoing}}</td>
+                        <td><a [style.color] = "'green'" >Bearbeiten</a></td>
+                        <td><a [style.color] = "'red'" >Löschen</a></td>
+                    </ng-container>
+                </tr>
+            </tbody>
+            <p>{{globalService.getExamId}}</p>
+        </table>
+    </div>
+</div>
+

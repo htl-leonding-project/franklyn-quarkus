@@ -1,0 +1,38 @@
+.form-control{
+    width: 400px;
+}
+
+.form-select{
+    width: 400px;
+}
+
+.card{
+    width: 1100px;
+}
+
+.btn-forward{
+    color: white;
+    margin-bottom: 20px;
+    background-color: #02c39a;
+    width: 200px;
+    float: right; 
+}
+
+.lonebtn{
+    margin-left: 880px;
+}
+
+.btn-forward:hover{
+    background-color: #02c39a;
+    color: white;
+}
+
+.btn-back{
+    float: left;
+}
+
+.inline{
+    margin-top: 50px;
+    display: inline-block; 
+    vertical-align: top;
+}
