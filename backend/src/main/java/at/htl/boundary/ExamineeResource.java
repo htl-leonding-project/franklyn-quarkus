@@ -1,6 +1,8 @@
 package at.htl.boundary;
 
+import at.htl.control.ExamRepository;
 import at.htl.control.ExamineeRepository;
+import at.htl.entity.Exam;
 import at.htl.entity.Examinee;
 import at.htl.entity.dto.ExamineeDto;
 import io.quarkus.logging.Log;
@@ -9,7 +11,9 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 @Path("api/examinees")
 public class ExamineeResource {
@@ -17,10 +21,14 @@ public class ExamineeResource {
     @Inject
     ExamineeRepository examineeRepository;
 
+    @Inject
+    ExamRepository examRepository;
+
     /**
      * @return list of examinees ordered by name
      */
     @GET
+    @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Examinee> listAll(){
         return examineeRepository.listAll();
@@ -36,6 +44,26 @@ public class ExamineeResource {
     public Examinee getExamineeById(@PathParam("id") Long id) {
         return examineeRepository.findById(id);
     }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ExamineeDto> getExamineesByExamId(@PathParam("id") Long id) {
+        Exam tempExam = examRepository.findById(id);
+        if(tempExam == null)
+            return null;
+        List<Examinee> tempExaminees = examineeRepository.listAll();
+        List<ExamineeDto> examinees = new LinkedList<>();
+        ExamineeDto tempExaminee;
+        for (Examinee examinee : tempExaminees) {
+            if (Objects.equals(examinee.exam.id, id)) {
+                tempExaminee = new ExamineeDto( examinee.firstName, examinee.lastName, examinee.isOnline, String.valueOf(examinee.id));
+                examinees.add(tempExaminee);
+            }
+        }
+        return examinees;
+    }
+
 
     /**
      * Examinee will be updated
