@@ -1,6 +1,6 @@
 <app-sidebar></app-sidebar>
 
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="hasAlreadyExams == true">
     <div class="card">
         <h1 class="header" >Alle Tests</h1>
         <br>
@@ -31,8 +31,8 @@
                         <td>{{exam.startTime |date: 'HH:MM'}}</td>
                         <td>{{exam.nrOfStudents}}</td>
                         <td>{{exam.ongoing}}</td>
-                        <td><a [style.color] = "'green'" >Bearbeiten</a></td>
-                        <td><a [style.color] = "'red'" >Löschen</a></td>
+                        <td><a role="button" [style.color] = "'green'" (click)="editExam(exam.id)" >Bearbeiten</a></td>
+                        <td><a role="button" [style.color] = "'red'" (click)="open(content)">Löschen</a></td>
                     </ng-container>
                 </tr>
             </tbody>
@@ -41,3 +41,30 @@
     </div>
 </div>
 
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Test löschen</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form>
+			<div class="mb-3">
+				<label>Test wirklich löschen?</label>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-danger" (click)="modal.close('Delete click')">Löschen</button>
+        <button type="button" class="btn" (click)="modal.dismiss('Cancel click')">Abbrechen</button>
+	</div>
+</ng-template>
+
+
+<div class="container-fluid" *ngIf="hasAlreadyExams == false">
+    <div class="card">
+        <h1 class="header">
+            Alle Tests
+        </h1>
+        <h3 class="header3">Noch keine Tests vorhanden!</h3>
+    </div>
+</div>

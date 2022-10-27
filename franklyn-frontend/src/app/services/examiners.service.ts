@@ -20,5 +20,9 @@ export class ExaminersService {
     return this.http.get<Examiner[]>("http://localhost:8080/api/examiners");
   }
 
+  getTeacher(userName: string){
+    return this.http.get<Examiner>("http://localhost:8080/api/examiners/" + userName);
+  }
+
 
 }

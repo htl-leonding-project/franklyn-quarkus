@@ -46,8 +46,11 @@ public class InitBean {
         examiners.add(examiner3);
         for (Examiner examiner : examiners) {
             examinerRepository.persist(examiner);
-            Log.info("Saved Eximiner: " + examiner.lastName);
+            Log.info("Saved Examiner: " + examiner.lastName);
         }
+
+        String webUntisResult = webUntisService.initDB("NNRADIO", "PAuthlyn28");
+        Log.info("WebUntis Result: " + webUntisResult);
 
         List<SchoolClass> schoolClasses = new ArrayList<>();
         SchoolClass schoolClass1 = new SchoolClass("5AHIF", "2022");
@@ -148,8 +151,5 @@ public class InitBean {
         );
         screenshotRepository.persist(screenshot1);
         Log.info("Saved Screenshot");
-
-        String webUntisResult = webUntisService.initDB("NNRADIO", "PAuthlyn28");
-        Log.info("WebUntis Result: " + webUntisResult);
     }
 }

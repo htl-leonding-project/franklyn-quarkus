@@ -17,6 +17,11 @@ table tr.even_col {
     padding-right: 20px;
 }
 
+.header3{
+    padding-left: 20px;
+    color: grey;
+}
+
 .header{
     padding-left: 20px;
 }

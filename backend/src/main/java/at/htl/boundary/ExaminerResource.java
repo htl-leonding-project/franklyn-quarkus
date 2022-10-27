@@ -64,4 +64,17 @@ public class ExaminerResource {
         Log.info("Delete Examiner: " + examiner.userName);
         return examiner;
     }
+
+    @GET
+    @Path("{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Examiner getExaminerByUsername(@PathParam("username") String username) {
+        Examiner examiner = examinerRepository.findByUsername(username);
+        if(examiner == null)
+            return null;
+        return examiner;
+    }
+
+
 }

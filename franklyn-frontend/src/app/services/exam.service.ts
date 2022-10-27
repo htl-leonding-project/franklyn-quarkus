@@ -31,4 +31,12 @@ export class ExamService {
     return this.http.get<Exam[]>("http://localhost:8080/api/exams/all");
   }
 
+  getExamsByExaminer(id: number){
+    return this.http.get<Exam[]>("http://localhost:8080/api/exams/examiner/"+id);
+  }
+
+  deleteById(examId: number) {
+    return this.http.delete("http://localhost:8080/api/exams/delete/"+examId, httpOptions);
+  }
+
 }

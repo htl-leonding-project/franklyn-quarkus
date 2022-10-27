@@ -79,6 +79,49 @@ public class ExamResource {
         return examSummary;
     }
 
+    @GET
+    @Path("/examiner/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ShowExamDto> getExamsByExaminerId(@PathParam("id") String id) {
+        List<Exam> tempExams = examRepository.listAll();
+        List<ShowExamDto> examSummary = new LinkedList<>();
+        String secondTeacher = "";
+        String form = "";
+        int nrOfStudentsPerExam = 0;
+        String title = "";
+        String date = "";
+        String startTime = "";
+        String status = "";
+
+        for (Exam exam : tempExams) {
+            for(Examiner examiner : exam.examiners){
+                if(examiner.id == Long.parseLong(id)){
+                    if(exam.examiners != null && exam.examiners.size() > 0) {
+                        secondTeacher = exam.examiners.get(0).firstName + " " + exam.examiners.get(0).lastName;
+                    }
+                    if(exam.formIds != null && exam.formIds.size() > 0) {
+                        form = exam.formIds.get(0).title;
+                    }
+                    nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
+                    title = exam.title;
+                    date= exam.date.toString();
+                    startTime = exam.startTime.toString();
+                    if(exam.ongoing){
+                        status= "Läuft";
+                    }
+                    else{
+                        status= "Beendet";
+                    }
+                    examSummary.add(new ShowExamDto(title, date, secondTeacher, form, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
+                }
+            }
+        }
+        for (int i = 0, j = examSummary.size() - 1; i < j; i++) {
+            examSummary.add(i, examSummary.remove(j));
+        }
+        return examSummary;
+    }
+
 
 /*    @GET
     @Path("{id}")
@@ -126,8 +169,12 @@ public class ExamResource {
         List<Examiner> examiners = new LinkedList<>();
         if(exam.examinerIds() != null && exam.examinerIds().size() > 0) {
             for (String examinerId : exam.examinerIds()) {
+                Log.info(examinerId);
                 Examiner examiner = examinerRepository.findById(Long.parseLong(examinerId));
-                examiners.add(examiner);
+                if(examiner != null) {
+                    examiners.add(examiner);
+                    Log.info(examiner.id);
+                }
             }
         }
         List<SchoolClass> forms = new LinkedList<>();
@@ -180,7 +227,6 @@ public class ExamResource {
         Log.info("deleted exam from examiners");
         examRepository.deleteById(id);
         Log.info("Delete Exam: " + ex.title);
-
         return ex;
     }
 
