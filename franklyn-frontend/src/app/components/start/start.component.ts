@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ExaminersService } from 'src/app/services/examiners.service';
 import { GlobalService } from 'src/app/services/global.service';
+import { LocalService } from 'src/app/services/local.service';
 import { WebuntisService } from 'src/app/services/webuntis.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { WebuntisService } from 'src/app/services/webuntis.service';
   styleUrls: ['./start.component.css']
 })
 export class StartComponent implements OnInit {
-  constructor(private router: Router, private webUntisService: WebuntisService, public globalService: GlobalService, private examinerService: ExaminersService) { }
+  constructor(private router: Router, private webUntisService: WebuntisService, public globalService: GlobalService, private examinerService: ExaminersService, private localService: LocalService) { }
 
   userName: string = "";
   passWord: string = "";
@@ -39,6 +40,7 @@ export class StartComponent implements OnInit {
     this.examinerService.getTeacher(this.userName).subscribe({
       next: data => {
         this.globalService.setExaminer = data
+        this.localService.saveData("examinerId", this.globalService.getExaminer.id+ '');
       }, 
       error: (error) => {alert("Fehler beim Laden des Examiner: "+error.message);}
     });
