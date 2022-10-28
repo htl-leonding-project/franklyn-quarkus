@@ -4,24 +4,42 @@
     <div class="card">
         <h1 class="header" >Exam Titel (todo)</h1>
         <div class="screenshot">
-            <div class="slideshow">
-                <img class="slideshow" src="../../../assets/img/temp.png" height="650" width="1050">
-             </div>
-            <div class="students">
-                <div class="card names text-black text-left" style="--bs-bg-opacity: .1;">
-                    <div class="card-body">Tamara Melcher</div>
-                  </div>
-                  <br>
-                  <div class="card names text-black text-left">
-                    <div class="card-body">Jakob Unterberger</div>
-                  </div>
-                  <br>
-                <ul>
-                    <ng-container *ngFor="let examinee of examinees">
-                        <li class="list-group-item list-group-item-info">{{examinee.firstName}} {{examinee.lastName}}</li>
-                    </ng-container>
-                </ul>
-            </div>
+            <div class="row">
+                <div class="col-9">
+                    <div class="slideshow">
+                        <img class="slideshow" src="../../../assets/img/temp.png" height="650" width="1050">
+                     </div>
+                </div>
+                <div class="col-3">
+                    <div class="students">
+                        <label>Schüleranzahl:</label>
+                        <br>
+                        <br>
+                        <div class="patroullie">
+                            <label>Patrouillier: </label>
+                            <select class="form-select">
+                                <option>Sequentiell</option>
+                                <option>Zufällig</option>
+                            </select>
+                            <br>
+                        </div>
+                        <br>
+                        <div class="card names text-black text-left" style="--bs-bg-opacity: .1;">
+                            <div class="card-body">Tamara Melcher</div>
+                        </div>
+                        <br>
+                          <div class="card names text-black text-left">
+                            <div class="card-body">Jakob Unterberger</div>
+                          </div>
+                          <br>
+                        <ul>
+                            <ng-container *ngFor="let examinee of examinees">
+                                <li class="list-group-item list-group-item-info">{{examinee.firstName}} {{examinee.lastName}}</li>
+                            </ng-container>
+                        </ul>
+                    </div>
+                </div>
+              </div>
         </div>
     </div>
 </div>
