@@ -46,7 +46,7 @@ public class ExamineeResource {
     }
 
     @GET
-    @Path("{id}")
+    @Path("exam/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<ExamineeDto> getExamineesByExamId(@PathParam("id") Long id) {
         Exam tempExam = examRepository.findById(id);

@@ -80,10 +80,6 @@
             <artifactId>quarkus-hibernate-orm-panache</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-jsonb</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.bytedream</groupId>
             <artifactId>untis4j</artifactId>
             <version>1.0.0</version>

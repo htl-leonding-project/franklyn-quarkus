@@ -44,13 +44,11 @@ public class InitBean {
         examiners.add(examiner1);
         examiners.add(examiner2);
         examiners.add(examiner3);
-        for (Examiner examiner : examiners) {
-            examinerRepository.persist(examiner);
-            Log.info("Saved Examiner: " + examiner.lastName);
-        }
 
         String webUntisResult = webUntisService.initDB("NNRADIO", "PAuthlyn28");
         Log.info("WebUntis Result: " + webUntisResult);
+        Examiner examinerWU = examinerRepository.findByUsername("NNRADIO");
+        examiners.add(examinerWU);
 
         List<SchoolClass> schoolClasses = new ArrayList<>();
         SchoolClass schoolClass1 = new SchoolClass("5AHIF", "2022");
@@ -60,20 +58,6 @@ public class InitBean {
         for (SchoolClass schoolClass : schoolClasses) {
             schoolClassRepository.persist(schoolClass);
             Log.info("Persist Schoolclass: " + schoolClass.title);
-        }
-
-        List<Examinee> examinees = new ArrayList<>();
-        Examinee examinee1 = new Examinee("Jakob", "Unterberger");
-        Examinee examinee2 = new Examinee("Jan", "Melcher");
-        Examinee examinee3 = new Examinee("Anna", "Wiesinger");
-        Examinee examinee4 = new Examinee("Alina", "Schuster");
-        examinees.add(examinee1);
-        examinees.add(examinee2);
-        examinees.add(examinee3);
-        examinees.add(examinee4);
-        for (Examinee examinee : examinees) {
-            examineeRepository.persist(examinee);
-        Log.info("Saved Examinee: " + examinee.lastName);
         }
 
         Exam exam1 = new Exam(
@@ -89,6 +73,7 @@ public class InitBean {
                 Resolution.HD,
                 1
                 );
+        exam1.examiners = examiners;
 
         Exam exam2 = new Exam(
                 "948",
@@ -103,10 +88,37 @@ public class InitBean {
                 Resolution.HD,
                 1
         );
+        exam2.examiners = examiners;
         examRepository.persist(exam1);
         examRepository.persist(exam2);
         Log.info("Persist: " + exam1.title);
         Log.info("Persist: " + exam2.title);
+
+        examiner1.exams = List.of(exam1, exam2);
+        examiner2.exams = List.of(exam1, exam2);
+        examiner3.exams= List.of(exam1, exam2);
+
+        List<Examinee> examinees = new ArrayList<>();
+        Examinee examinee1 = new Examinee("Jakob", "Unterberger");
+        examinee1.exam = exam1;
+        examinee1.isOnline = true;
+        Examinee examinee2 = new Examinee("Jan", "Melcher");
+        examinee2.exam = exam1;
+        examinee1.isOnline = false;
+        Examinee examinee3 = new Examinee("Anna", "Wiesinger");
+        examinee3.exam = exam2;
+        examinee1.isOnline = true;
+        Examinee examinee4 = new Examinee("Alina", "Schuster");
+        examinee4.exam = exam2;
+        examinee1.isOnline = false;
+        examinees.add(examinee1);
+        examinees.add(examinee2);
+        examinees.add(examinee3);
+        examinees.add(examinee4);
+        for (Examinee examinee : examinees) {
+            examineeRepository.persist(examinee);
+            Log.info("Saved Examinee: " + examinee.lastName);
+        }
 
         Screenshot screenshot1 = new Screenshot(
                 Timestamp.valueOf(LocalDateTime.now()),

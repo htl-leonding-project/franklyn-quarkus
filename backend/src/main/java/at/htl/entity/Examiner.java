@@ -1,5 +1,6 @@
 package at.htl.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -32,6 +33,7 @@ public class Examiner extends PanacheEntityBase {
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "ER_E_Examiner_exam")
+    @JsonIgnore
     public List<Exam> exams;
 
     public Examiner() {

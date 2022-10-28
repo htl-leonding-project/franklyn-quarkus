@@ -18,6 +18,6 @@ export class ExamineeService {
   constructor(private http: HttpClient) { }
 
   getExamineesByExamId(id: number){
-    return this.http.get<Examinee[]>("http://localhost:8080/api/exams/examinees/exam/"+id);
+    return this.http.get<Examinee[]>("http://localhost:8080/api/examinees/exam/"+id);
   }
 }

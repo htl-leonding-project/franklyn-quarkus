@@ -31,7 +31,7 @@ public class ExaminerRepository implements PanacheRepository<Examiner> {
     }
 
     public Examiner findByUsername(String username) {
-        List<Examiner> examiners =this.listAll();
+        List<Examiner> examiners = this.listAll();
 
         for (Examiner e : examiners) {
             if (e.userName.equals(username))

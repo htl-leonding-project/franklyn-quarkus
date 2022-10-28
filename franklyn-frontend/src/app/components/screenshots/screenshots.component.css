@@ -1,0 +1,52 @@
+table tr.odd_col {
+	background: none;
+}
+table tr.even_col {
+	background: #ddd;
+}
+
+.container-fluid{
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
+.header3{
+    padding-left: 20px;
+    color: grey;
+}
+
+.header{
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+.names{
+    background-color:rgb(166, 223, 242);
+}
+
+.names :active{
+    background-color: rgb(96, 215, 255);
+}
+
+.names :hover{
+    background-color: rgb(96, 215, 255);
+}
+
+.slideshow{
+    margin-left: 20px;
+    display: inline;
+    margin-bottom: 80px;
+}
+
+.screenshot{
+    display: inline;
+}
+
+.students{
+    display: inline;
+    width: 250px;
+    float: right;
+    margin-top: 200px;
+    margin-right: 50px;
+}
+
