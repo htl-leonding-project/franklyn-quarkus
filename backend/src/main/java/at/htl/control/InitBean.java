@@ -73,7 +73,7 @@ public class InitBean {
                 Resolution.HD,
                 1
                 );
-        exam1.examiners = List.of(examiner1, examiner2, examiner3);
+        exam1.examiners = List.of(examinerWU, examiner2, examiner3);
 
         Exam exam2 = new Exam(
                 "948",

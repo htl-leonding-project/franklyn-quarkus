@@ -110,14 +110,22 @@ public class ExamResource {
                     if(exam.examiners != null && exam.examiners.size() > 0) {
                         for(int i = 1; i < exam.examiners.size(); i++) {
                             if(exam.examiners.get(i) != null) {
-                                teachers.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
+                                if(i >= 2){
+                                    teachers.add(","+exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
+                                }else {
+                                    teachers.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
+                                }
                             }
                         }
                     }
                     if(exam.formIds != null && exam.formIds.size() > 0) {
                         for(int i = 1; i < exam.formIds.size(); i++) {
                             if(exam.formIds.get(i) != null) {
-                                forms.add(exam.formIds.get(i).title);
+                                if(i >= 2){
+                                    forms.add(","+exam.formIds.get(i).title);
+                                }else {
+                                    forms.add(exam.formIds.get(i).title);
+                                }
                             }
                         }
                     }
