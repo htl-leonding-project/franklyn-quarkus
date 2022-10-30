@@ -2,6 +2,7 @@ package at.htl.boundary;
 
 import at.htl.control.ScreenshotRepository;
 import at.htl.entity.Screenshot;
+import at.htl.entity.dto.ScreenshotAngularDto;
 import at.htl.entity.dto.ScreenshotDto;
 import io.quarkus.logging.Log;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -40,11 +41,13 @@ public class ScreenshotResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("latest/{examineeId}")
-    public Screenshot getLatestScreenshot(
+    @Path("latest/exam/{examId}/examinee/{examineeId}")
+    public ScreenshotAngularDto getLatestScreenshot(
+            @PathParam("examId") Long examId,
             @PathParam("examineeId") Long examineeId
     ){
-        return screenshotRepository.findLatestScreenshot(examineeId);
+        Screenshot temp = screenshotRepository.findLatestScreenshot(examineeId);
+        return null;
     }
 
     /**

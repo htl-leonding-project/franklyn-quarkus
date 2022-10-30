@@ -7,6 +7,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -42,7 +43,7 @@ public class ScreenshotRepository implements PanacheRepository<Screenshot> {
                 screenshot.examinee(),
                 Resolution.HD,
                 1,
-                pathOfScreenshot + "/" + screenshot.screenshotName()
+                pathOfScreenshot + "/exam/" + screenshot.exam().id + "/" + screenshot.examinee().id
         );
         this.persist(s);
         return s;
