@@ -53,13 +53,24 @@ public class ExamResource {
         String date = "";
         String startTime = "";
         String status = "";
+        List<String> teachers = new LinkedList<>();
+        List<String> forms = new LinkedList<>();
 
         for (Exam exam : tempExams) {
+
             if(exam.examiners != null && exam.examiners.size() > 0) {
-                secondTeacher = exam.examiners.get(0).firstName + " " + exam.examiners.get(0).lastName;
+                for(int i = 1; i < exam.examiners.size(); i++) {
+                    if(exam.examiners.get(i) != null) {
+                        teachers.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
+                    }
+                }
             }
             if(exam.formIds != null && exam.formIds.size() > 0) {
-                form = exam.formIds.get(0).title;
+                for(int i = 1; i < exam.formIds.size(); i++) {
+                    if(exam.formIds.get(i) != null) {
+                        forms.add(exam.formIds.get(i).title);
+                    }
+                }
             }
             nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
             title = exam.title;
@@ -71,7 +82,7 @@ public class ExamResource {
             else{
                 status= "Beendet";
             }
-            examSummary.add(new ShowExamDto(title, date, secondTeacher, form, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
+            examSummary.add(new ShowExamDto(title, date, teachers, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
         }
         for (int i = 0, j = examSummary.size() - 1; i < j; i++) {
             examSummary.add(i, examSummary.remove(j));
@@ -85,22 +96,30 @@ public class ExamResource {
     public List<ShowExamDto> getExamsByExaminerId(@PathParam("id") String id) {
         List<Exam> tempExams = examRepository.listAll();
         List<ShowExamDto> examSummary = new LinkedList<>();
-        String secondTeacher = "";
-        String form = "";
         int nrOfStudentsPerExam = 0;
         String title = "";
         String date = "";
         String startTime = "";
         String status = "";
+        List<String> teachers = new LinkedList<>();
+        List<String> forms = new LinkedList<>();
 
         for (Exam exam : tempExams) {
             for(Examiner examiner : exam.examiners){
                 if(examiner.id == Long.parseLong(id)){
                     if(exam.examiners != null && exam.examiners.size() > 0) {
-                        secondTeacher = exam.examiners.get(0).firstName + " " + exam.examiners.get(0).lastName;
+                        for(int i = 1; i < exam.examiners.size(); i++) {
+                            if(exam.examiners.get(i) != null) {
+                                teachers.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
+                            }
+                        }
                     }
                     if(exam.formIds != null && exam.formIds.size() > 0) {
-                        form = exam.formIds.get(0).title;
+                        for(int i = 1; i < exam.formIds.size(); i++) {
+                            if(exam.formIds.get(i) != null) {
+                                forms.add(exam.formIds.get(i).title);
+                            }
+                        }
                     }
                     nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
                     title = exam.title;
@@ -112,7 +131,7 @@ public class ExamResource {
                     else{
                         status= "Beendet";
                     }
-                    examSummary.add(new ShowExamDto(title, date, secondTeacher, form, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
+                    examSummary.add(new ShowExamDto(title, date, teachers, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
                 }
             }
         }
