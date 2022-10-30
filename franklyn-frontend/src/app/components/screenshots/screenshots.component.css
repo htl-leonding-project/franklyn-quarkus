@@ -54,3 +54,11 @@ table tr.even_col {
     width: 250px;
 }
 
+.selected {
+    background-color: rgb(96, 215, 255);
+  }
+  
+  .normal {
+    background-color:rgb(166, 223, 242);
+  }
+

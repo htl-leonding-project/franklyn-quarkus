@@ -23,20 +23,12 @@
                             </select>
                             <br>
                         </div>
-                        <br>
-                        <div class="card names text-black text-left" style="--bs-bg-opacity: .1;">
-                            <div class="card-body">Tamara Melcher</div>
-                        </div>
-                        <br>
-                          <div class="card names text-black text-left">
-                            <div class="card-body">Jakob Unterberger</div>
-                          </div>
-                          <br>
-                        <ul>
-                            <ng-container *ngFor="let examinee of examinees">
-                                <li class="list-group-item list-group-item-info">{{examinee.firstName}} {{examinee.lastName}}</li>
-                            </ng-container>
-                        </ul>
+                        <ng-container *ngFor="let examinee of examinees">
+                            <br>
+                            <div class="card names text-black text-left" style="--bs-bg-opacity: .1;">
+                                <div class="card-body" [ngClass]="{'selected' : toggle, 'normal': !toggle}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</div>
+                            </div>                        
+                        </ng-container>
                     </div>
                 </div>
               </div>

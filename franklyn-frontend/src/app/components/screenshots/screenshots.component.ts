@@ -10,6 +10,9 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class ScreenshotsComponent implements OnInit {
 
+  toggle = true;
+  status = "Not";
+
   constructor(private examineeService: ExamineeService, public globalService: GlobalService) { }
 
   examinees: Examinee[] = [];
@@ -24,6 +27,11 @@ export class ScreenshotsComponent implements OnInit {
       }, 
       error: (error) => {alert("Fehler beim Laden der Examinees: "+error.message);}
     });
+  }
+
+  SelectExaminee(examineeId: string) {
+    this.toggle = !this.toggle;
+    this.status = this.toggle ? "Selected" : "Not";
   }
 
 }
