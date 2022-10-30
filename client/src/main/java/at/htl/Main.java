@@ -89,7 +89,7 @@ public class Main{
                 String localDateTime = LocalDateTime.now().toString()
                         .replace(':', '-')
                         .replace(".","-");
-                String fileName = localDateTime+"_"+lastName+"_"+firstName+"." + format;
+                String fileName = localDateTime+"_"+id+"_"+lastName+"_"+firstName+"." + format;
 
                 System.out.println("send "+fileName);
 
