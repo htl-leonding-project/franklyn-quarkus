@@ -29,7 +29,7 @@ export class StartComponent implements OnInit {
       next: data => {
         this.response = data
       }, 
-      error: (error) => {alert("Fehler beim Login: "+error.message);}
+      error: (error) => {alert("Fehler beim Login!");}
     });
     if(this.response == "success"){
       this.loadExaminer();

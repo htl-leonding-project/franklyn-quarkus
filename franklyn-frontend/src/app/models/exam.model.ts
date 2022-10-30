@@ -4,8 +4,8 @@ export interface Exam {
     ongoing: string,
     date: string,
     startTime: Date,
-    form: string,
+    forms: string[],
     nrOfStudents: string,
-    secondTeacher: string,
+    teachers: string[],
     id: number
 }

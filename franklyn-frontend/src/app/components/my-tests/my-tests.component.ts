@@ -17,6 +17,8 @@ export class MyTestsComponent implements OnInit {
   closeResult = '';
   hasAlreadyExams: boolean = true;
   examinerId: string|null = "";
+  examiner: string[] = [];
+  forms: string[] = [];
 
   constructor(private router: Router, private examService:ExamService, public globalService: GlobalService, private modalService: NgbModal, private localService: LocalService) { }
 
