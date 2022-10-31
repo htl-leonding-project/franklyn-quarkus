@@ -24,8 +24,22 @@
                     <ng-container>
                         <td>{{i+1}}</td>
                         <td>{{exam.title}}</td>
-                        <td *ngFor="let form of exam.forms">{{form}} </td>
-                        <td *ngFor="let teacher of exam.teachers">{{teacher}}</td>
+                        <td>
+                            <div *ngIf="exam.formIds == ''">
+                                -
+                            </div>
+                            <div *ngIf="exam.formIds != ' '">
+                                {{exam.formIds}}
+                            </div>
+                        </td>
+                        <td>
+                            <div *ngIf="exam.examinerIds == ''">
+                                -
+                            </div>
+                            <div *ngIf="exam.formIds != ' '">
+                                {{exam.examinerIds}}
+                            </div>
+                        </td>
                         <td>{{exam.pin}}</td>
                         <td>{{exam.date | date: 'dd.MM.yyyy'}}</td>
                         <td>{{exam.startTime |date: 'HH:MM'}}</td>
@@ -39,6 +53,7 @@
         </table>
     </div>
 </div>
+
 
 <ng-template #content let-modal>
 	<div class="modal-header">

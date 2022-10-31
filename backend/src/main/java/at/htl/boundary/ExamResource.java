@@ -53,22 +53,22 @@ public class ExamResource {
         String date = "";
         String startTime = "";
         String status = "";
-        List<String> teachers = new LinkedList<>();
-        List<String> forms = new LinkedList<>();
+        String teachers = "";
+        String forms = "";
 
         for (Exam exam : tempExams) {
 
             if(exam.examiners != null && exam.examiners.size() > 0) {
                 for(int i = 1; i < exam.examiners.size(); i++) {
                     if(exam.examiners.get(i) != null) {
-                        teachers.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
+                        teachers += exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName;
                     }
                 }
             }
             if(exam.formIds != null && exam.formIds.size() > 0) {
                 for(int i = 1; i < exam.formIds.size(); i++) {
                     if(exam.formIds.get(i) != null) {
-                        forms.add(exam.formIds.get(i).title);
+                        forms+=exam.formIds.get(i).title;
                     }
                 }
             }
@@ -101,8 +101,8 @@ public class ExamResource {
         String date = "";
         String startTime = "";
         String status = "";
-        List<String> teachers = new LinkedList<>();
-        List<String> forms = new LinkedList<>();
+        String teachers = "";
+        String forms = "";
 
         for (Exam exam : tempExams) {
             for(Examiner examiner : exam.examiners){
@@ -110,21 +110,22 @@ public class ExamResource {
                     if(exam.examiners != null && exam.examiners.size() > 0) {
                         for(int i = 1; i < exam.examiners.size(); i++) {
                             if(exam.examiners.get(i) != null) {
-                                if(i >= 2){
-                                    teachers.add(","+exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
+                                if( i > 1){
+                                    teachers += ", "+exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName;
                                 }else {
-                                    teachers.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
+                                    teachers += exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName;
                                 }
                             }
                         }
                     }
                     if(exam.formIds != null && exam.formIds.size() > 0) {
-                        for(int i = 1; i < exam.formIds.size(); i++) {
+                        Log.info("FormIds: "+exam.formIds.size());
+                        for(int i = 0; i < exam.formIds.size(); i++) {
                             if(exam.formIds.get(i) != null) {
-                                if(i >= 2){
-                                    forms.add(","+exam.formIds.get(i).title);
+                                if(i > 0){
+                                    forms += ", "+exam.formIds.get(i).title;
                                 }else {
-                                    forms.add(exam.formIds.get(i).title);
+                                    forms += exam.formIds.get(i).title;
                                 }
                             }
                         }
@@ -140,6 +141,8 @@ public class ExamResource {
                         status= "Beendet";
                     }
                     examSummary.add(new ShowExamDto(title, date, teachers, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
+                    teachers = "";
+                    forms = "";
                 }
             }
         }
@@ -202,6 +205,7 @@ public class ExamResource {
                 Examiner examiner = examinerRepository.findById(Long.parseLong(examinerId));
                 if(examiner != null) {
                     examiners.add(examiner);
+                    //examinerRepository.addExam(examiner, e);
                     Log.info(examiner.id);
                 }
             }

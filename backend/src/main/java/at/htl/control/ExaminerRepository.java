@@ -39,4 +39,9 @@ public class ExaminerRepository implements PanacheRepository<Examiner> {
         }
         return null;
     }
+
+/*    public void addExam(Examiner examiner, Exam e) {
+        examiner.exams.add(e);
+        this.getEntityManager().merge(examiner);
+    }*/
 }

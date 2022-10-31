@@ -9,6 +9,7 @@ import { ExamService } from 'src/app/services/exam.service';
 import { ExaminersService } from 'src/app/services/examiners.service';
 import { FormsService } from 'src/app/services/forms.service';
 import { GlobalService } from 'src/app/services/global.service';
+import { LocalService } from 'src/app/services/local.service';
 
 @Component({
   selector: 'app-new-test',
@@ -44,7 +45,7 @@ export class NewTestComponent implements OnInit {
   examiners: Examiner[] = [];
   forms: Forms[] = [];
 
-  constructor(private examinersService: ExaminersService, private formService: FormsService, private examService: ExamService, private router: Router, public globalService: GlobalService) {
+  constructor(private examinersService: ExaminersService, private formService: FormsService, private examService: ExamService, private router: Router, public globalService: GlobalService, private localService: LocalService) {
     setInterval(() => {this.startTime = Date.now()}, 1);
    }
 
@@ -70,7 +71,7 @@ export class NewTestComponent implements OnInit {
     
     this.tempExaminerId = this.examiner_Id + '';
     this.tempFormId = this.form_Id + '';
-    this.newExam.examinerIds.push(this.globalService.getExaminer.id + '');
+    this.newExam.examinerIds.push(this.localService.getData("examinerId") + '');
     this.newExam.examinerIds.push(this.tempExaminerId);
     this.newExam.formIds.push(this.tempFormId);
 
