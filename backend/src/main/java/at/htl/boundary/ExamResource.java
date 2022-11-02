@@ -208,9 +208,6 @@ public class ExamResource {
         examSummary = new ShowExamDto(exam.title, exam.date.toString(), teachers.toString(), forms.toString(), exam.startTime.toString(), Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id);
         return examSummary;
     }
-
-
-
     /**
      * Posts new Exam
      * @return new exam
