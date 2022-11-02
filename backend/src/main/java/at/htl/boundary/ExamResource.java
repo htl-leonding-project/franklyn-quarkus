@@ -119,7 +119,6 @@ public class ExamResource {
                         }
                     }
                     if(exam.formIds != null && exam.formIds.size() > 0) {
-                        Log.info("FormIds: "+exam.formIds.size());
                         for(int i = 0; i < exam.formIds.size(); i++) {
                             if(exam.formIds.get(i) != null) {
                                 if(i > 0){
@@ -152,22 +151,63 @@ public class ExamResource {
         return examSummary;
     }
 
-
-/*    @GET
-    @Path("{id}")
+    @GET
+    @Path("/exam/examiner/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ShowExamDto getById(@PathParam("id") String id) {
-        Exam temp = examRepository.findById(Long.parseLong(id));
+    public ShowExamDto getLatestExamByExaminerId(@PathParam("id") String id) {
+        List<ShowExamDto> examSummary = getExamsByExaminerId(id);
+        if(examSummary.size() > 0){
+            return examSummary.get(0);
+        }
+        return null;
+    }
+
+    @GET
+    @Path("/exam/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ShowExamDto getExamById(@PathParam("id") String id) {
+        Exam exam = examRepository.findById(Long.parseLong(id));
         ShowExamDto examSummary;
-        String secondTeacher = temp.examiners.get(0).firstName + " " + temp.examiners.get(0).lastName;
-        String form = temp.formIds.get(0).title;
-        int nrOfStudentsPerExam = 0;
-
-        examSummary = new ShowExamDto(temp.title, temp.date.toString(), secondTeacher, form, temp.startTime.toString(), Integer.toString(nrOfStudentsPerExam), temp.ongoing, temp.pin, temp.id);
+        StringBuilder teachers = new StringBuilder();
+        StringBuilder forms = new StringBuilder();
+        for(Examiner examiner : exam.examiners){
+            if(examiner.id == Long.parseLong(id)) {
+                if (exam.examiners != null && exam.examiners.size() > 0) {
+                    for (int i = 1; i < exam.examiners.size(); i++) {
+                        if (exam.examiners.get(i) != null) {
+                            if (i > 1) {
+                                teachers.append(", ").append(exam.examiners.get(i).firstName).append(" ").append(exam.examiners.get(i).lastName);
+                            } else {
+                                teachers.append(exam.examiners.get(i).firstName).append(" ").append(exam.examiners.get(i).lastName);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(exam.formIds != null && exam.formIds.size() > 0) {
+            Log.info("FormIds: "+exam.formIds.size());
+            for(int i = 0; i < exam.formIds.size(); i++) {
+                if(exam.formIds.get(i) != null) {
+                    if(i > 0){
+                        forms.append(", ").append(exam.formIds.get(i).title);
+                    }else {
+                        forms.append(exam.formIds.get(i).title);
+                    }
+                }
+            }
+        }
+        int nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
+        String status = "";
+        if(exam.ongoing){
+            status= "Läuft";
+        }
+        else{
+            status= "Beendet";
+        }
+        examSummary = new ShowExamDto(exam.title, exam.date.toString(), teachers.toString(), forms.toString(), exam.startTime.toString(), Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id);
         return examSummary;
-    }*/
-
-
+    }
 
 
 

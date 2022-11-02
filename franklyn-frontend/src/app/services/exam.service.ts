@@ -28,7 +28,11 @@ export class ExamService {
   }
 
   getById(id: string){
-    return this.http.get<Exam[]>("http://localhost:8080/api/exams/all");
+    return this.http.get<Exam>("http://localhost:8080/api/exams/exam/examiner/"+id);
+  }
+
+  getExamById(id: string){
+    return this.http.get<Exam>("http://localhost:8080/api/exams/exam/"+id);
   }
 
   getExamsByExaminer(id: number){
