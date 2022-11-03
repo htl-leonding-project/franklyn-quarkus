@@ -33,20 +33,24 @@
 
 .inner{
   margin: 20px;
-  height: 100px;
+  height: 150px;
 }
 
 .text{
   margin-right: 20px;
   text-align: right;
   margin-top: -10px;
+  font-size: 35px;
 }
 
 .subheader{
   margin-right: 20px;
   text-align: right;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
+.card-footer{
+  background-color: white;
+}
 
   
