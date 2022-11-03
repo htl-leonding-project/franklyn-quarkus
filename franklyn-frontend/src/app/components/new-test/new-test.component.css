@@ -36,3 +36,8 @@
     display: inline-block; 
     vertical-align: top;
 }
+
+.container-fluid{
+    background-color: rgb(238, 235, 235) !important;
+    height: 100%;
+}

@@ -30,13 +30,26 @@ export class DashboardComponent implements OnInit {
   
   ngOnInit(): void {
     this.examinerId = this.localService.getData("examinerId")
-    if(this.localService.getData("selectedExamId") == null){
+    if(this.exam.id != Number(this.localService.getData("selectedExamId"))){
+      this.getExamById();
+    }
+    else{
       this.loadLatestExamOfExaminer(this.examinerId!);
     }
   }
+
+  getExamById() {
+    this.examService.getById(this.localService.getData("selectedExamId")!).subscribe({
+      next: data => {
+        this.exam = data;
+        this.localService.saveData("selectedExamId", this.exam.id+"");
+      }, 
+      error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
+    });
+  }
   
   loadLatestExamOfExaminer(examinerId: string) {
-    this.examService.getById(examinerId).subscribe({
+    this.examService.getLatestById(examinerId).subscribe({
       next: data => {
         this.exam = data
         this.localService.saveData("selectedExamId", this.exam.id+"");

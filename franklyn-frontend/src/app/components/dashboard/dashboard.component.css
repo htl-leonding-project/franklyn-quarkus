@@ -21,5 +21,32 @@
   .chartCard .footer {
     clear: none !important;
   }
+.body{
+  padding-top: 20px;
+  padding-right: 20px;
+  background-color: rgb(238, 235, 235) !important;
+  height: 100%;
+}
+.header{
+  padding-left: 20px;
+}
+
+.inner{
+  margin: 20px;
+  height: 100px;
+}
+
+.text{
+  margin-right: 20px;
+  text-align: right;
+  margin-top: -10px;
+}
+
+.subheader{
+  margin-right: 20px;
+  text-align: right;
+  margin-top: 5px;
+}
+
 
   

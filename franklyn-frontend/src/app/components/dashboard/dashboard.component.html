@@ -1,9 +1,46 @@
 <app-sidebar></app-sidebar>
 
-<div class="container content">
-    <h1>Dashboard</h1>
-    <p>{{globalService.getExaminer.id}}</p>
-    <p>{{globalService.getExamId}}</p>
-    <p>{{examinerId}}</p>
-    <p>{{exam.id}}</p>
+<div class="body">
+        <div class="row">
+            <div class="col-6">
+                <div class="card inner">
+                    <h3 class="subheader">Titel</h3>
+                    <h1 class="text">{{exam.title}}</h1>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card inner">
+                    <h3 class="subheader">Klassen</h3>
+                    <h1 class="text">{{exam.formIds}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card inner">
+                    <h3 class="subheader">PIN</h3>
+                    <h1 class="text">{{exam.pin}}</h1>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card inner">
+                    <h3 class="subheader">Eingeschriebene Schüler</h3>
+                    <h1 class="text">{{exam.nrOfStudents}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card inner">
+                    <h3 class="subheader">Datum</h3>
+                    <h1 class="text">{{exam.date | date: 'dd.MM.yyyy'}}</h1>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card inner">
+                    <h3 class="subheader">Zeit</h3>
+                    <h1 class="text">{{exam.startTime | date: 'HH:MM'}}</h1>
+                </div>
+            </div>
+        </div>
 </div>
