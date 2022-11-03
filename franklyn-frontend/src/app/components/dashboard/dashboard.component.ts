@@ -30,7 +30,9 @@ export class DashboardComponent implements OnInit {
   
   ngOnInit(): void {
     this.examinerId = this.localService.getData("examinerId")
-    this.loadLatestExamOfExaminer(this.examinerId!);
+    if(this.localService.getData("selectedExamId") == null){
+      this.loadLatestExamOfExaminer(this.examinerId!);
+    }
   }
   
   loadLatestExamOfExaminer(examinerId: string) {

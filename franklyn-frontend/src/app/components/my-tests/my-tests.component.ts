@@ -26,6 +26,12 @@ export class MyTestsComponent implements OnInit {
     this.examinerId = this.localService.getData("examinerId");
     this.loadExams();
   }
+
+  setExamId(examId: number) {
+    this.localService.removeData("selectedExamId");
+    this.localService.saveData("selectedExamId", examId +"");
+  }
+
   loadExams() {
     this.examService.getExamsByExaminer(Number(this.examinerId)).subscribe({
       next: data => {

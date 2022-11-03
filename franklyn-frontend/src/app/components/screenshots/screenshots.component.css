@@ -18,7 +18,6 @@ table tr.even_col {
 
 .header{
     padding-left: 20px;
-    padding-bottom: 20px;
 }
 
 .names{
@@ -58,7 +57,14 @@ table tr.even_col {
     background-color: rgb(96, 215, 255);
   }
   
-  .normal {
+.normal {
     background-color:rgb(166, 223, 242);
-  }
+}
 
+.names{
+    margin-top: 10px;
+}
+
+.d-block{
+    height: 700px;
+}

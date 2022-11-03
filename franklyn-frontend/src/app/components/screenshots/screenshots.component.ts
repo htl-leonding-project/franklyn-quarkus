@@ -7,10 +7,11 @@ import { ExamineeService } from 'src/app/services/examinee.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { LocalService } from 'src/app/services/local.service';
 
+
 @Component({
   selector: 'app-screenshots',
   templateUrl: './screenshots.component.html',
-  styleUrls: ['./screenshots.component.css']
+  styleUrls: ['./screenshots.component.css'],
 })
 export class ScreenshotsComponent implements OnInit {
 
@@ -18,6 +19,15 @@ export class ScreenshotsComponent implements OnInit {
 
   toggle = true;
   status = "Not";
+
+  currentScreenshot: Screenshot = {
+    pathOfScreenshot: '',
+    screenshotId: 0,
+    examineeId: 0,
+    examId: 0
+  }
+
+  currentIdx: number = 0;
 
   screenshots: Screenshot[] = [{
     pathOfScreenshot: "../../../assets/img/temp.png",
@@ -30,7 +40,7 @@ export class ScreenshotsComponent implements OnInit {
     examineeId: 1,
     examId: 1
   },{
-    pathOfScreenshot: "../../../assets/img/temp2.png",
+    pathOfScreenshot: "../../../assets/img/temp3.png",
     screenshotId: 1,
     examineeId: 1,
     examId: 1
@@ -52,6 +62,7 @@ export class ScreenshotsComponent implements OnInit {
   ngOnInit(): void {
     this.loadStudents();
     this.loadExam();
+    this.currentScreenshot = this.screenshots[0];
   }
 
   loadStudents() {
@@ -77,9 +88,15 @@ export class ScreenshotsComponent implements OnInit {
     });
   }
   goToNext() {
-    throw new Error('Method not implemented.');
+    if((this.screenshots.length -1) >= (this.currentIdx +1)){
+      this.currentIdx = this.currentIdx + 1;
+    }
+    this.currentScreenshot = this.screenshots[this.currentIdx];
   }
   goToPrevious() {
-    throw new Error('Method not implemented.');
+    if(0 <= (this.currentIdx -1)){
+      this.currentIdx = this.currentIdx - 1;
+    }
+    this.currentScreenshot = this.screenshots[this.currentIdx];
   }
 }

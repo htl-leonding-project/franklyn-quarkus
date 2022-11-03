@@ -20,7 +20,7 @@
                 <td></td>
             </thead>
             <tbody>
-                <tr *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="globalService.setExamId=exam.id" >
+                <tr *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="setExamId(exam.id)" >
                     <ng-container>
                         <td>{{i+1}}</td>
                         <td>{{exam.title}}</td>
