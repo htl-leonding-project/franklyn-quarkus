@@ -31,7 +31,7 @@ section h2 {
 
 .btn-xl {
     padding: 1rem 1.75rem;
-    font-size: 1.25rem;
+    font-size: 25px;
 }
 
 .btn-social {
@@ -311,6 +311,16 @@ a:hover {
     color: #05668d !important;
 }
 
+.lead{
+    font-size: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header-sm{
+    font-size: 35px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .text-secondary {
     color: #0C242C !important;
 }
@@ -327,6 +337,18 @@ a:hover {
     color: #F7F7F7;
 }
 
+.btn-download {
+    background-color: #05668d;
+    border-color: #F7F7F7;
+    color: #F7F7F7;
+}
+
+.btn-download:hover {
+    background-color: #F7F7F7;
+    border-color: #F7F7F7;
+    color: black;
+}
+
 .btn-secondary {
     background-color: #0C242C;
     border-color: #0C242C;
@@ -336,6 +358,8 @@ a:hover {
     background-color: #05668d;
     border-color: #05668d;
 }
+
+
 
   .mfp-bg {
     top: 0;
