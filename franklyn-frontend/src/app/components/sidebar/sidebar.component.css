@@ -3,7 +3,6 @@
   }
   .sidebar-slider {
     position: fixed;
-    top: 0;
     left: 0;
     bottom: 0;
     width: 300px;
@@ -25,10 +24,8 @@
     float: left;
     top: 0;
     bottom: 0;
-    width: 300px;
+    width: 17%;
     height:100%;
-    margin-right: 20px;
-
 }
 
 .sidebar-text:hover{

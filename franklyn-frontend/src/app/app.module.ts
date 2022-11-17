@@ -33,6 +33,7 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
     NewTestComponent,
     SidebarComponent,
     HowtoComponent,
-    ScreenshotsComponent
+    ScreenshotsComponent,
+    NavbarComponent
     ],
   imports: [
     BrowserModule,
