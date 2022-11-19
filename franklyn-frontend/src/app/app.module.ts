@@ -34,6 +34,7 @@ import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { EditTestComponent } from './components/edit-test/edit-test.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     SidebarComponent,
     HowtoComponent,
     ScreenshotsComponent,
-    NavbarComponent
+    NavbarComponent,
+    EditTestComponent
     ],
   imports: [
     BrowserModule,
