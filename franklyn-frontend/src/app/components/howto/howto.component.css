@@ -12,3 +12,7 @@
     background-color: rgb(245, 244, 244) !important;
     padding: 0px;
   }
+
+.bullet-list{
+    font-size: 18px;
+}
