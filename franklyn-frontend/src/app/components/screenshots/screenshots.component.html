@@ -4,7 +4,7 @@
     <div class="col-9">
         <div class="container-fluid">
             <div class="card">
-                <h1 class="header" >{{exam.title}}</h1>
+                <h1 class="header" >{{exam.date | date: 'yyyy'}} - {{exam.formIds}} - {{exam.title}}</h1>
                 <div class="screenshot">
                     <div class="row">
                         <div class="col-8">
