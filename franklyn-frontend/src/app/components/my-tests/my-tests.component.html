@@ -1,86 +1,94 @@
 <app-sidebar></app-sidebar>
 
-<div class="container-fluid" *ngIf="hasAlreadyExams == true">
-    <div class="card">
-        <h1 class="header" >Alle Tests</h1>
-        <br>
-        <br>
-        <table class="table">
-            <thead [style.color] = "'grey'">
-                <td>&nbsp;Nr</td>
-                <td>&nbsp;Titel</td>
-                <td>&nbsp;Klassen</td>
-                <td>&nbsp;Begleitlehrer</td>
-                <td>&nbsp;PIN</td>
-                <td>&nbsp;Datum</td>
-                <td>&nbsp;Start</td>
-                <td>&nbsp;Schüleranzahl</td>
-                <td>&nbsp;Status</td>
-                <td></td>
-                <td></td>
-            </thead>
-            <tbody>
-                <tr *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="setExamId(exam.id)" >
-                    <ng-container>
-                        <td>{{i+1}}</td>
-                        <td>{{exam.title}}</td>
-                        <td>
-                            <div *ngIf="exam.formIds == ''">
-                                -
-                            </div>
-                            <div *ngIf="exam.formIds != ' '">
-                                {{exam.formIds}}
-                            </div>
-                        </td>
-                        <td>
-                            <div *ngIf="exam.examinerIds == ''">
-                                -
-                            </div>
-                            <div *ngIf="exam.formIds != ' '">
-                                {{exam.examinerIds}}
-                            </div>
-                        </td>
-                        <td>{{exam.pin}}</td>
-                        <td>{{exam.date | date: 'dd.MM.yyyy'}}</td>
-                        <td>{{exam.startTime |date: 'HH:MM'}}</td>
-                        <td>{{exam.nrOfStudents}}</td>
-                        <td>{{exam.ongoing}}</td>
-                        <td><a role="button" [style.color] = "'green'" (click)="editExam(exam.id)" >Bearbeiten</a></td>
-                        <td><a role="button" [style.color] = "'red'" (click)="open(content)">Löschen</a></td>
-                    </ng-container>
-                </tr>
-            </tbody>
-        </table>
+<div class="row large">
+    <div class="col-9">
+        <div class="container-fluid" *ngIf="hasAlreadyExams == true">
+            <div class="card">
+                <h1 class="header" >Alle Tests</h1>
+                <br>
+                <table class="table">
+                    <thead [style.color] = "'grey'" class="tableheader">
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NR</td>
+                        <td>&nbsp;TITEL</td>
+                        <td>&nbsp;KLASSEN</td>
+                        <td>&nbsp;BEGLEITLEHRER</td>
+                        <td>&nbsp;PIN</td>
+                        <td>&nbsp;DATUM</td>
+                        <td>&nbsp;START</td>
+                        <td>&nbsp;SCHÜLERANZAHL</td>
+                        <td>&nbsp;STATUS</td>
+                        <td></td>
+                        <td></td>
+                    </thead>
+                    <div class="space"></div>
+                    <tbody>
+                        <tr class="tablerow" *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="setExamId(exam.id)" >
+                            <ng-container>
+                                <td class="txt" >&nbsp;&nbsp;&nbsp;&nbsp;{{i+1}}</td>
+                                <td class="txt" >{{exam.title}}</td>
+                                <td>
+                                    <div class="txt" *ngIf="exam.formIds == ''">
+                                        -
+                                    </div>
+                                    <div class="txt"  *ngIf="exam.formIds != ' '">
+                                        {{exam.formIds}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="txt"  *ngIf="exam.examinerIds == ''">
+                                        -
+                                    </div>
+                                    <div class="txt"  *ngIf="exam.formIds != ' '">
+                                        {{exam.examinerIds}}
+                                    </div>
+                                </td>
+                                <td class="txt" >{{exam.pin}}</td>
+                                <td class="txt" >{{exam.date | date: 'dd.MM.yyyy'}}</td>
+                                <td class="txt" >{{exam.startTime |date: 'HH:MM'}}</td>
+                                <td class="txt" >{{exam.nrOfStudents}}</td>
+                                <td class="txt" >{{exam.ongoing}}</td>
+                                <td><a class="txt"  role="button" [style.color] = "'green'" (click)="editExam(exam.id)" >Bearbeiten</a></td>
+                                <td><a class="txt"  role="button" [style.color] = "'red'" (click)="open(content)">Löschen</a></td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        
+        <ng-template #content let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Test löschen</h4>
+                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label>Test wirklich löschen?</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="modal.close('Delete click')">Löschen</button>
+                <button type="button" class="btn" (click)="modal.dismiss('Cancel click')">Abbrechen</button>
+            </div>
+        </ng-template>
+        
+        
+        <div class="container-fluid" *ngIf="hasAlreadyExams == false">
+            <div class="card">
+                <h1 class="header">
+                    Alle Tests
+                </h1>
+                <h3 class="header3">Noch keine Tests vorhanden!</h3>
+            </div>
+        </div>
+        
+        
+        
+
     </div>
+
 </div>
-
-
-<ng-template #content let-modal>
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Test löschen</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-	</div>
-	<div class="modal-body">
-		<form>
-			<div class="mb-3">
-				<label>Test wirklich löschen?</label>
-			</div>
-		</form>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-danger" (click)="modal.close('Delete click')">Löschen</button>
-        <button type="button" class="btn" (click)="modal.dismiss('Cancel click')">Abbrechen</button>
-	</div>
-</ng-template>
-
-
-<div class="container-fluid" *ngIf="hasAlreadyExams == false">
-    <div class="card">
-        <h1 class="header">
-            Alle Tests
-        </h1>
-        <h3 class="header3">Noch keine Tests vorhanden!</h3>
-    </div>
-</div>
-
 

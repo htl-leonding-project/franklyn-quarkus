@@ -1,7 +1,6 @@
 .table{
-    margin-left: 20px;
-    width: 1420px;
-    margin-right: 20px;
+    width: 100%;
+    margin-right: 200px;
     border-bottom: white;
 }
 
@@ -9,25 +8,63 @@ table tr.odd_col {
 	background: none;
 }
 table tr.even_col {
-	background: #ddd;
+	background: rgb(232, 231, 231);
+    border: #ddd;
+    border-top: #ddd;
+
 }
 
 .container-fluid{
-    padding-top: 20px;
-    padding-right: 20px;
+    padding-top: 30px;
+    padding-left: 20px;
     background-color: rgb(245, 244, 244) !important;
     height: 100%;
 }
 
 .header3{
-    padding-left: 20px;
+    padding-left: 10px;
     color: grey;
 }
 
 .header{
     padding-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .table tr.active td {
     background-color: grey;
+}
+
+.col-9{
+    width: 100%;
+    height: 100%;
+}
+.large{
+    height: 100%;
+    background-color: rgb(245, 244, 244) !important;
+    padding: 0px;
+}
+
+.txt{
+    font-size: 17px;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.tableheader{
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: rgb(227, 224, 224);
+}
+
+tr {
+    margin-top: 20px;
+    line-height: 35px;
+    min-height: 35px;
+    height: 35px;
+ }
+
+.space{
+    height: 5px;
 }
