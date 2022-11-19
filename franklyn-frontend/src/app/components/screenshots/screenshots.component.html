@@ -1,49 +1,56 @@
 <app-sidebar></app-sidebar>
 
-<div class="container-fluid">
-    <div class="card">
-        <h1 class="header" >{{exam.title}}</h1>
-        <div class="screenshot">
-            <div class="row">
-                <div class="col-9">
-                    <div class="slideshow">
-                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                              <div class="carousel-item active">
-                                <img class="d-block w-100" src="{{currentScreenshot.pathOfScreenshot}}" alt="Screenshot">
-                              </div>
-                            </div>
-                            <a class="carousel-control-prev" (click)="goToPrevious()" role="button" data-slide="prev">
-                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            </a>
-                            <a class="carousel-control-next" (click)="goToNext()" role="button" data-slide="next">
-                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            </a>
-                          </div>
-                     </div>
-                </div>
-                <div class="col-3">
-                    <div class="students">
-                        <label>Schüleranzahl:</label>
-                        <br>
-                        <br>
-                        <div class="patroullie">
-                            <label>Patrouillier: </label>
-                            <select class="form-select">
-                                <option>Sequentiell</option>
-                                <option>Zufällig</option>
-                            </select>
-                            <br>
+<div class="row large">
+    <div class="col-9">
+        <div class="container-fluid">
+            <div class="card">
+                <h1 class="header" >{{exam.title}}</h1>
+                <div class="screenshot">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="slideshow">
+                                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                      <div class="carousel-item active">
+                                        <img class="d-block" src="{{currentScreenshot.pathOfScreenshot}}" alt="Screenshot">
+                                      </div>
+                                    </div>
+                                    <a class="carousel-control-prev" (click)="goToPrevious()" role="button" data-slide="prev">
+                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="carousel-control-next" (click)="goToNext()" role="button" data-slide="next">
+                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    </a>
+                                  </div>
+                             </div>
                         </div>
-                            <br>
-                        <ng-container *ngFor="let examinee of examinees">
-                            <div class="card names text-black text-left" style="--bs-bg-opacity: .1;">
-                                <div class="card-body" [ngClass]="{'selected' : toggle, 'normal': !toggle}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</div>
-                            </div>                        
-                        </ng-container>
-                    </div>
+                        <div class="col-1">
+                            <div class="students txt">
+                                <label>Schüleranzahl:</label>
+                                <br>
+                                <br>
+                                <div class="patroullie">
+                                    <label>Patrouillier: </label>
+                                    <select class="form-select">
+                                        <option>Sequentiell</option>
+                                        <option>Zufällig</option>
+                                    </select>
+                                    <br>
+                                </div>
+                                    <br>
+                                <ng-container *ngFor="let examinee of examinees">
+                                    <div class="card names text-black text-left" style="--bs-bg-opacity: .1;">
+                                        <div class="card-body" [ngClass]="{'selected' : toggle, 'normal': !toggle}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</div>
+                                    </div>                        
+                                </ng-container>
+                            </div>
+                        </div>
+                      </div>
                 </div>
-              </div>
+            </div>
         </div>
+        
+
     </div>
+
 </div>
