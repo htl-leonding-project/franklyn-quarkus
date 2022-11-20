@@ -74,9 +74,6 @@ export class MyTestsComponent implements OnInit {
 	}
 
   editExam(examId: number) {
-    throw new Error('Method not implemented.');
+    this.router.navigate(['/editTest/'+this.localService.getData('selectedExamId')])
   }
-
-  
-
 }

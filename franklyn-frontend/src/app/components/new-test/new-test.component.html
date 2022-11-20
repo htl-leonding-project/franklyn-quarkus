@@ -13,9 +13,6 @@
                         <input [(ngModel)]="newExam.title" class="form-control" type="text" placeholder="Titel">
                         <br>
                         <label class="form-label">Klassen</label>
-<!--                         <select class="form-control" [(ngModel)]="form_Id" placeholder="Klasse" required>
-                            <option [ngValue]="form.id" *ngFor="let form of forms">{{form.title}}</option>
-                        </select> -->
                         <br>
                         <mat-form-field appearance="fill">
                             <mat-label>Auswahl</mat-label>
@@ -32,9 +29,6 @@
                               <mat-option *ngFor="let examiner of examiners" [value]="examiner.id">{{examiner.firstName}} {{examiner.lastName}}</mat-option>
                             </mat-select>
                           </mat-form-field>
-<!--                         <select class="form-control" [(ngModel)]="examiner_Id" placeholder="Begleitlehrer" required>
-                            <option [ngValue]="examiner.id" *ngFor="let examiner of examiners">{{examiner.firstName}} {{examiner.lastName}}</option>
-                        </select> -->
                         <br>
                         <label class="form-label">Datum</label>
                         <input [(ngModel)]="tempDate" class="form-control" type="date">
