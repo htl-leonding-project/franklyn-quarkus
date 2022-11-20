@@ -13,14 +13,28 @@
                         <input [(ngModel)]="newExam.title" class="form-control" type="text" placeholder="Titel">
                         <br>
                         <label class="form-label">Klassen</label>
-                        <select class="form-control" [(ngModel)]="form_Id" placeholder="Klasse" required>
+<!--                         <select class="form-control" [(ngModel)]="form_Id" placeholder="Klasse" required>
                             <option [ngValue]="form.id" *ngFor="let form of forms">{{form.title}}</option>
-                        </select>
+                        </select> -->
+                        <br>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Auswahl</mat-label>
+                            <mat-select [(ngModel)]="selectedForms" multiple>
+                              <mat-option *ngFor="let form of forms" [value]="form.id">{{form.title}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
                         <br>
                         <label class="form-label">Begleitlehrer</label>
-                        <select class="form-control" [(ngModel)]="examiner_Id" placeholder="Begleitlehrer" required>
+                        <br>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Auswahl</mat-label>
+                            <mat-select [(ngModel)]="selectedExaminers" multiple>
+                              <mat-option *ngFor="let examiner of examiners" [value]="examiner.id">{{examiner.firstName}} {{examiner.lastName}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+<!--                         <select class="form-control" [(ngModel)]="examiner_Id" placeholder="Begleitlehrer" required>
                             <option [ngValue]="examiner.id" *ngFor="let examiner of examiners">{{examiner.firstName}} {{examiner.lastName}}</option>
-                        </select>
+                        </select> -->
                         <br>
                         <label class="form-label">Datum</label>
                         <input [(ngModel)]="tempDate" class="form-control" type="date">

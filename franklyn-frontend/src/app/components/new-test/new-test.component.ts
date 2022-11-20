@@ -1,6 +1,6 @@
 import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Form } from '@angular/forms';
+import { Form, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Examiner } from 'src/app/models/examiner.model';
 import { Forms } from 'src/app/models/forms.model';
@@ -41,6 +41,9 @@ export class NewTestComponent implements OnInit {
   tempStartTime: Date = new Date("Fri Dec 08 2019 07:44:57");
   tempEndTime: Date = new Date("Fri Dec 08 2019 07:44:57");
 
+  selectedForms: number[] = [];
+  selectedExaminers: number[] = [];
+
 
   examiners: Examiner[] = [];
   forms: Forms[] = [];
@@ -69,12 +72,17 @@ export class NewTestComponent implements OnInit {
     this.showThirdCard = false;
 
     
-    this.tempExaminerId = this.examiner_Id + '';
-    this.tempFormId = this.form_Id + '';
+    //this.tempExaminerId = this.examiner_Id + '';
+    //this.tempFormId = this.form_Id + '';
     this.newExam.examinerIds.push(this.localService.getData("examinerId") + '');
-    this.newExam.examinerIds.push(this.tempExaminerId);
-    this.newExam.formIds.push(this.tempFormId);
-
+    for(let s of this.selectedForms){
+      this.tempExaminerId = s +'';
+      this.newExam.examinerIds.push(this.tempExaminerId);
+    }
+    for(let s of this.selectedForms){
+      this.tempFormId = s +'';
+      this.newExam.formIds.push(this.tempFormId);
+    }
     this.newExam.date = this.tempDate.toString();
     this.newExam.interval = this.tempInterval + '';
     this.newExam.startTime = this.tempStartTime + '';

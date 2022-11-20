@@ -33,7 +33,7 @@ table tr.even_col {
 }
 
 .table tr.active td {
-    background-color: grey;
+    background-color: rgb(145, 144, 144);
 }
 
 .col-9{

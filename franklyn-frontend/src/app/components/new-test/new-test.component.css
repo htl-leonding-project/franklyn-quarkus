@@ -1,13 +1,11 @@
 .form-control{
-    width: 400px;
+    width: 500px;
+    height: 40px;
 }
 
 .form-select{
-    width: 400px;
-}
-
-.card{
-    width: 1100px;
+    width: 500px;
+    height: 30px;
 }
 
 .btn-forward{
@@ -19,7 +17,7 @@
 }
 
 .lonebtn{
-    margin-left: 880px;
+    margin-left: 85%;
 }
 
 .btn-forward:hover{
@@ -58,4 +56,16 @@
 
 .form-label{
     font-size: 17px;
+}
+
+mat-form-field{
+    width: 500px;
+}
+
+.card{
+    width: 100%;
+}
+
+label{
+    color: rgb(145, 144, 144);
 }
