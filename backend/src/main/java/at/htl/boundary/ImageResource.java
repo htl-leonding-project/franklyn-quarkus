@@ -55,23 +55,30 @@ public class ImageResource {
         try (is) {
             String[] fullPath = filename.split("_|\\.");
 
-            File dir = new File(pathOfScreenshots);
-            dir.mkdir();
-            dir = new File(pathOfScreenshots+"/exam/"+fullPath[1]+"/"+fullPath[2]+"_"+fullPath[3]);
-            dir.mkdir();
+            File dir = new File(pathOfScreenshots+"/"+fullPath[0]+"/"+fullPath[1]+"_"+fullPath[2]);
+            LOG.info("0");
+            LOG.info("1");
+            java.nio.file.Path path = Paths.get(pathOfScreenshots+"/"+fullPath[0]+"/"+fullPath[1]+"_"+fullPath[2]);
+            Files.createDirectories(path);
+            //dir = new File();
+            LOG.info("2");
+            //dir.createNewFile();
+            LOG.info("3");
+            LOG.info(filename);
+            LOG.info(dir.getPath());
+            LOG.info("saved file");
 
             Files.copy(
                     is,
                     Paths.get(dir.getPath(), filename),
                     StandardCopyOption.REPLACE_EXISTING
             );
-            LOG.info("saved file");
             cnt++;
-            //LOG.info(filename);
-/*            String[] path = filename.split("_");
-            LOG.info(path[1]);
-            Exam exam = examRepository.findById(Long.valueOf(path[1]));
-            Examinee examinee = examineeRepository.findByName(exam.id, path[2], path[3]);
+            LOG.info(filename);
+            //String[] files = filename.split("_");
+            //LOG.info(files[1]);
+/*            Exam exam = examRepository.findById(Long.valueOf(files[3]));
+            Examinee examinee = examineeRepository.findByName(exam.id, files[1], files[2]);
             ScreenshotDto screenshotDto = new ScreenshotDto(cnt, exam, examinee, "");
             screenshotRepository.postScreenshot(screenshotDto);*/
         }catch (NullPointerException ignore) {
