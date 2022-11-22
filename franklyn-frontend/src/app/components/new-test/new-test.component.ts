@@ -20,6 +20,8 @@ export class NewTestComponent implements OnInit {
   showFirstCard: boolean= true;
   showSecondCard: boolean=false;
   showThirdCard: boolean=false;
+  showFourthCard: boolean=false;
+
   startTime: number = Date.now();
   rangeValue: number = 0;
   newExam: NewExam = {
@@ -90,7 +92,7 @@ export class NewTestComponent implements OnInit {
 
     this.examService.postNewTest(this.newExam).subscribe({
       next: data =>{
-        return this.router.navigate(['/dashboard']);
+        this.showFourthCard = true;
       }, 
       error: (error)=>{alert("Konnte nicht gespeichert werden!")}
     })

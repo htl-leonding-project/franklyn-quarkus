@@ -3,7 +3,13 @@
 <div class="row large">
     <div class="col-9">
         <div class="content">
-            <h1>Test erstellen </h1>
+            <div class="head">
+                <div class="nav-header">
+                    <h1 class="header-nav">Test erstellen</h1>
+                    <div class="logout">
+                    </div>
+                </div>
+            </div>
             <div class="container-fluid" *ngIf="showFirstCard == true">
                 <div class="card">
                     <div class="card-body">
@@ -65,6 +71,17 @@
             <!-- todo komprimierungsfaktor -->
                         <button class="btn btn-secondary btn-back inline" (click)="thirdCardBack()">Zurück</button>
                         <button (click)="thirdCardSubmit()" class="btn btn-forward inline">Test erstellen</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid" *ngIf="showFourthCard == true">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Test wurde erfolgreich erstellt!</h5>
+                        <br>
+                        <h1>PIN: todo</h1>
                     </div>
                 </div>
             </div>
