@@ -54,23 +54,17 @@ public class ImageResource {
         LOG.info("Trying to save the file");
         try (is) {
             String[] fullPath = filename.split("_|\\.");
-
-            File dir = new File(pathOfScreenshots+"/"+fullPath[0]+"/"+fullPath[1]+"_"+fullPath[2]);
-            LOG.info("0");
-            LOG.info("1");
-            java.nio.file.Path path = Paths.get(pathOfScreenshots+"/"+fullPath[0]+"/"+fullPath[1]+"_"+fullPath[2]);
+            Exam exam = examRepository.findById(Long.valueOf(fullPath[3]));
+            java.nio.file.Path path = Paths.get(pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]);
             Files.createDirectories(path);
-            //dir = new File();
-            LOG.info("2");
-            //dir.createNewFile();
-            LOG.info("3");
+
             LOG.info(filename);
-            LOG.info(dir.getPath());
+            Log.info(path.toString());
             LOG.info("saved file");
 
             Files.copy(
                     is,
-                    Paths.get(dir.getPath(), filename),
+                    Paths.get(path.toString(), filename),
                     StandardCopyOption.REPLACE_EXISTING
             );
             cnt++;
