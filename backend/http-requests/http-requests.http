@@ -1,0 +1,34 @@
+POST  https://mese.webuntis.com/WebUntis/jsonrpc.do?school=htbla linz leonding
+Content-Type: application/json
+
+{
+"id":"MyID",
+"method":"authenticate",
+"params":{"user":"if180160", "password":"houun432", "client":"CLIENT"},
+"jsonrpc":"2.0"
+}
+
+
+####
+
+POST  https://mese.webuntis.com/WebUntis/jsonrpc.do
+Content-Type: application/json
+
+{
+  "id": "MyID",
+  "method": "getTeachers",
+  "params": "{}",
+  "jsonrpc": "2.0"
+}
+
+###
+
+POST  https://mese.webuntis.com/WebUntis/jsonrpc.do?school=htbla linz leonding
+Content-Type: application/json
+
+{
+  "id":"MyID",
+  "method":"logout",
+  "params":{},
+  "jsonrpc":"2.0"
+}
