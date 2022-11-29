@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Path("upload")
 public class ImageResource {
@@ -44,7 +46,8 @@ public class ImageResource {
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Produces(MediaType.APPLICATION_JSON)
-    public Multi<Response> upload(InputStream is, @QueryParam("filename") String filename) throws IOException {
+    @Transactional
+    public Multi<Response> download(InputStream is, @QueryParam("filename") String filename) throws IOException {
 
         if (filename.isBlank()) {
             filename = "unknown.xxx";
@@ -55,6 +58,8 @@ public class ImageResource {
         try (is) {
             String[] fullPath = filename.split("_|\\.");
             Exam exam = examRepository.findById(Long.valueOf(fullPath[3]));
+            exam.ongoing = true;
+            exam.startTime = LocalDateTime.now();
             java.nio.file.Path path = Paths.get(pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]);
             Files.createDirectories(path);
 
@@ -71,10 +76,11 @@ public class ImageResource {
             LOG.info(filename);
             //String[] files = filename.split("_");
             //LOG.info(files[1]);
-/*            Exam exam = examRepository.findById(Long.valueOf(files[3]));
-            Examinee examinee = examineeRepository.findByName(exam.id, files[1], files[2]);
-            ScreenshotDto screenshotDto = new ScreenshotDto(cnt, exam, examinee, "");
-            screenshotRepository.postScreenshot(screenshotDto);*/
+            //Exam exam = examRepository.findById(Long.valueOf(files[3]));
+            examRepository.getEntityManager().merge(exam);
+            Examinee examinee = examineeRepository.findByName(exam.id, fullPath[1], fullPath[2]);
+            ScreenshotDto screenshotDto = new ScreenshotDto(cnt, exam, examinee, exam.date.toString());
+            screenshotRepository.postScreenshot(screenshotDto);
         }catch (NullPointerException ignore) {
             LOG.error("Error while saving the file");
         }
