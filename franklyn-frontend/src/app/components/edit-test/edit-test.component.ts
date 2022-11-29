@@ -21,9 +21,9 @@ export class EditTestComponent implements OnInit {
     ongoing: '',
     date: '',
     startTime: new Date(),
-    formIds: '',
+    forms: '',
     nrOfStudents: '',
-    examinerIds: '',
+    examiners: '',
     id: 0
   }
 

@@ -21,7 +21,15 @@
                         <div class="col-6">
                             <div class="card inner">
                                 <h3 class="subheader">Klassen</h3>
-                                <h1 class="text">{{exam.formIds}}</h1>
+                                <h1 class="text">
+                                    <span class="txt"  *ngIf="exam.forms.length == 0">
+                                        -
+                                    </span>
+                                    <span class="txt"  *ngFor="let form of exam.forms; let f = first; let l = last">
+                                        {{form}}
+                                        <span *ngIf="!(f && l) && !l"> ,</span>
+                                    </span>
+                                </h1>
                                 <div class="card-footer"></div>
                             </div>
                         </div>

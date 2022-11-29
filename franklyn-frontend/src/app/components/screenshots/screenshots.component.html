@@ -12,7 +12,16 @@
             </div>
             <div class="container-fluid">
                 <div class="card">
-                    <h1 class="header" >{{exam.date | date: 'yyyy'}} - {{exam.formIds}} - {{exam.title}}</h1>
+                    <h1 class="header" >
+                        {{exam.title}} - 
+                        <span *ngFor="let form of exam.forms; let f = first; let l = last">
+                                {{form}}
+                                <span *ngIf="!(f && l) && !l"> ,</span>
+                                <span *ngIf="l">-</span>
+                        </span>
+                        
+                         {{exam.title}}
+                    </h1>
                     <div class="screenshot">
                         <div class="row">
                             <div class="col-8">

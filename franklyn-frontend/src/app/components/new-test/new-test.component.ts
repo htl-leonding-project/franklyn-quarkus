@@ -61,7 +61,8 @@ export class NewTestComponent implements OnInit {
 
   firstCardSubmit() {
     this.showFirstCard=false;
-    this.showSecondCard = true;
+    //this.showSecondCard = true;
+    this.showThirdCard = true;
   }
 
   secondCardSubmit() {
@@ -105,8 +106,8 @@ export class NewTestComponent implements OnInit {
   }
 
   thirdCardBack(){
-    this.showFirstCard = false;
-    this.showSecondCard = true;
+    this.showFirstCard = true;
+    //this.showSecondCard = true;
     this.showThirdCard = false;
   }
 

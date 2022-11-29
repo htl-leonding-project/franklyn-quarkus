@@ -1,3 +1,6 @@
+
+
+
 <app-sidebar></app-sidebar>
 
 <div class="row large">
@@ -30,25 +33,27 @@
                         </thead>
                         <div class="space"></div>
                         <tbody>
-                            <tr class="tablerow" *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="setExamId(exam.id)" >
+                            <tr class="tablerow" *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="setExamId(exam.id)">
                                 <ng-container>
                                     <td class="txt" >&nbsp;&nbsp;&nbsp;&nbsp;{{i+1}}</td>
                                     <td class="txt" >{{exam.title}}</td>
                                     <td>
-                                        <div class="txt" *ngIf="exam.formIds == ''">
+                                        <span class="txt"  *ngIf="exam.forms.length == 0">
                                             -
-                                        </div>
-                                        <div class="txt"  *ngIf="exam.formIds != ' '">
-                                            {{exam.formIds}}
-                                        </div>
+                                        </span>
+                                        <span class="txt"  *ngFor="let form of exam.forms; let f = first; let l = last">
+                                            {{form}}
+                                            <span *ngIf="!(f && l) && !l"> ,</span>
+                                        </span>
                                     </td>
                                     <td>
-                                        <div class="txt"  *ngIf="exam.examinerIds == ''">
+                                        <span class="txt"  *ngIf="exam.examiners.length == 0">
                                             -
-                                        </div>
-                                        <div class="txt"  *ngIf="exam.formIds != ' '">
-                                            {{exam.examinerIds}}
-                                        </div>
+                                        </span>
+                                        <span class="txt"  *ngFor="let examiner of exam.examiners; let f = first; let l = last">
+                                            {{examiner}}
+                                            <span *ngIf="!(f && l) && !l">, </span>
+                                        </span>
                                     </td>
                                     <td class="txt" >{{exam.pin}}</td>
                                     <td class="txt" >{{exam.date | date: 'dd.MM.yyyy'}}</td>
