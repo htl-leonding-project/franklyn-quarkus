@@ -5,8 +5,8 @@ import java.util.List;
 public record ShowExamDto(
         String title,
         String date,
-        String examinerIds,
-        String formIds,
+        List<String> examiners,
+        List<String> forms,
         String startTime,
         String nrOfStudents,
         String ongoing,

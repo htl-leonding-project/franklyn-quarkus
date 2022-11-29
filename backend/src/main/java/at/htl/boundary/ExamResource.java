@@ -19,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,22 +54,22 @@ public class ExamResource {
         String date = "";
         String startTime = "";
         String status = "";
-        String teachers = "";
-        String forms = "";
+        List<String> examiners = new ArrayList<>();
+        List<String> forms = new ArrayList<>();
 
         for (Exam exam : tempExams) {
 
             if(exam.examiners != null && exam.examiners.size() > 0) {
                 for(int i = 1; i < exam.examiners.size(); i++) {
                     if(exam.examiners.get(i) != null) {
-                        teachers += exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName;
+                        examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
                     }
                 }
             }
             if(exam.formIds != null && exam.formIds.size() > 0) {
                 for(int i = 1; i < exam.formIds.size(); i++) {
                     if(exam.formIds.get(i) != null) {
-                        forms+=exam.formIds.get(i).title;
+                        forms.add(exam.formIds.get(i).title);
                     }
                 }
             }
@@ -82,7 +83,7 @@ public class ExamResource {
             else{
                 status= "Beendet";
             }
-            examSummary.add(new ShowExamDto(title, date, teachers, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
+            examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
         }
         for (int i = 0, j = examSummary.size() - 1; i < j; i++) {
             examSummary.add(i, examSummary.remove(j));
@@ -101,31 +102,24 @@ public class ExamResource {
         String date = "";
         String startTime = "";
         String status = "";
-        String teachers = "";
-        String forms = "";
+        List<String> examiners = new ArrayList<>();
+        List<String> forms = new ArrayList<>();
 
         for (Exam exam : tempExams) {
+
             for(Examiner examiner : exam.examiners){
                 if(examiner.id == Long.parseLong(id)){
                     if(exam.examiners != null && exam.examiners.size() > 0) {
                         for(int i = 1; i < exam.examiners.size(); i++) {
                             if(exam.examiners.get(i) != null) {
-                                if( i > 1){
-                                    teachers += ", "+exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName;
-                                }else {
-                                    teachers += exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName;
-                                }
+                                examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
                             }
                         }
                     }
                     if(exam.formIds != null && exam.formIds.size() > 0) {
                         for(int i = 0; i < exam.formIds.size(); i++) {
                             if(exam.formIds.get(i) != null) {
-                                if(i > 0){
-                                    forms += ", "+exam.formIds.get(i).title;
-                                }else {
-                                    forms += exam.formIds.get(i).title;
-                                }
+                                forms.add(exam.formIds.get(i).title);
                             }
                         }
                     }
@@ -139,9 +133,9 @@ public class ExamResource {
                     else{
                         status= "Beendet";
                     }
-                    examSummary.add(new ShowExamDto(title, date, teachers, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
-                    teachers = "";
-                    forms = "";
+                    examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
+                    examiners = new ArrayList<>();
+                    forms = new ArrayList<>();
                 }
             }
         }
@@ -168,18 +162,16 @@ public class ExamResource {
     public ShowExamDto getExamById(@PathParam("id") String id) {
         Exam exam = examRepository.findById(Long.parseLong(id));
         ShowExamDto examSummary;
-        StringBuilder teachers = new StringBuilder();
-        StringBuilder forms = new StringBuilder();
+        //StringBuilder teachers = new StringBuilder();
+        //StringBuilder forms = new StringBuilder();
+        List<String> examiners = new ArrayList<>();
+        List<String> forms = new ArrayList<>();
         for(Examiner examiner : exam.examiners){
             if(examiner.id == Long.parseLong(id)) {
                 if (exam.examiners != null && exam.examiners.size() > 0) {
                     for (int i = 1; i < exam.examiners.size(); i++) {
                         if (exam.examiners.get(i) != null) {
-                            if (i > 1) {
-                                teachers.append(", ").append(exam.examiners.get(i).firstName).append(" ").append(exam.examiners.get(i).lastName);
-                            } else {
-                                teachers.append(exam.examiners.get(i).firstName).append(" ").append(exam.examiners.get(i).lastName);
-                            }
+                            examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
                         }
                     }
                 }
@@ -189,11 +181,7 @@ public class ExamResource {
             Log.info("FormIds: "+exam.formIds.size());
             for(int i = 0; i < exam.formIds.size(); i++) {
                 if(exam.formIds.get(i) != null) {
-                    if(i > 0){
-                        forms.append(", ").append(exam.formIds.get(i).title);
-                    }else {
-                        forms.append(exam.formIds.get(i).title);
-                    }
+                    forms.add(exam.formIds.get(i).title);
                 }
             }
         }
@@ -205,7 +193,7 @@ public class ExamResource {
         else{
             status= "Beendet";
         }
-        examSummary = new ShowExamDto(exam.title, exam.date.toString(), teachers.toString(), forms.toString(), exam.startTime.toString(), Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id);
+        examSummary = new ShowExamDto(exam.title, exam.date.toString(), examiners, forms, exam.startTime.toString(), Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id);
         return examSummary;
     }
     /**
@@ -219,18 +207,16 @@ public class ExamResource {
     public Exam addExam(ExamDto exam) {
         String pin = examRepository.createPIN(LocalDate.now());
         String tempDate = exam.date().substring(0,10);
-        String tempStartTime= tempDate + "T" + exam.startTime()+":00";
-        String tempEndTime= tempDate + "T" + exam.endTime()+":00";
+        //String tempStartTime= tempDate + "T" + exam.startTime()+":00";
+        //String tempEndTime= tempDate + "T" + exam.endTime()+":00";
 
 
         Log.info(exam.date());
         Exam e = new Exam(
                 pin,
                 exam.title(),
-                true,
+                false,
                 LocalDate.parse(tempDate),
-                LocalDateTime.parse(tempStartTime),
-                LocalDateTime.parse(tempEndTime),
                 5,
                 Resolution.HD,
                 1

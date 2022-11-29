@@ -91,6 +91,22 @@ public class Exam extends PanacheEntityBase {
                 String title,
                 boolean ongoing,
                 LocalDate date,
+                int interval,
+                Resolution resolution,
+                int compression) {
+        this.pin = pin;
+        this.title = title;
+        this.ongoing = ongoing;
+        this.date = date;
+        this.interval = interval;
+        this.resolution = resolution;
+        this.compression = compression;
+    }
+
+    public Exam(String pin,
+                String title,
+                boolean ongoing,
+                LocalDate date,
                 LocalDateTime startTime,
                 LocalDateTime endTime,
                 int interval,
