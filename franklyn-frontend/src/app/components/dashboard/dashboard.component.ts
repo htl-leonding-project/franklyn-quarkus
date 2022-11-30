@@ -57,4 +57,8 @@ export class DashboardComponent implements OnInit {
       error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
     });
   }
+
+  logout(){
+    
+  }
 }
