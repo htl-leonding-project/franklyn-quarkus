@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit {
   
   ngOnInit(): void {
     this.examinerId = this.localService.getData("examinerId")
+    console.log(this.examinerId);
     if(this.exam.id != Number(this.localService.getData("selectedExamId"))){
       this.getExamById();
     }
@@ -59,6 +60,8 @@ export class DashboardComponent implements OnInit {
   }
 
   logout(){
-    
+
+    this.localService.clearData();
+    this.router.navigate(['/start']);
   }
 }

@@ -129,4 +129,10 @@ export class NewTestComponent implements OnInit {
     });
   }
 
+  logout(){
+
+    this.localService.clearData();
+    this.router.navigate(['/start']);
+  }
+
 }

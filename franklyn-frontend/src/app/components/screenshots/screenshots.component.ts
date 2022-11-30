@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Exam } from 'src/app/models/exam.model';
 import { Examinee } from 'src/app/models/examinee.model';
 import { Screenshot } from 'src/app/models/screenshot.model';
@@ -16,7 +17,7 @@ import { ScreenshotService } from 'src/app/services/screenshot.service';
 })
 export class ScreenshotsComponent implements OnInit {
 
-  constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService) { }
+  constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService, private router: Router) { }
 
   toggle = true;
   status = "Not";
@@ -109,5 +110,11 @@ export class ScreenshotsComponent implements OnInit {
       this.currentIdx = this.currentIdx - 1;
     }
     this.currentScreenshot = this.screenshots[this.currentIdx];
+  }
+
+  logout(){
+
+    this.localService.clearData();
+    this.router.navigate(['/start']);
   }
 }

@@ -20,6 +20,7 @@ export class StartComponent implements OnInit {
   response: string = "";
 
   ngOnInit(): void {
+    
   }
 
 

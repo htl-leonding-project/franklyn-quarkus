@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Exam } from 'src/app/models/exam.model';
 import { Examiner } from 'src/app/models/examiner.model';
 import { Forms } from 'src/app/models/forms.model';
@@ -13,7 +14,7 @@ import { LocalService } from 'src/app/services/local.service';
 })
 export class EditTestComponent implements OnInit {
 
-  constructor(private localService: LocalService, private examService: ExamService) { }
+  constructor(private localService: LocalService, private examService: ExamService, private router:Router) { }
 
   exam: Exam = {
     pin: '',
@@ -90,6 +91,12 @@ export class EditTestComponent implements OnInit {
 
   save() {
     throw new Error('Method not implemented.');
+  }
+
+  logout(){
+
+    this.localService.clearData();
+    this.router.navigate(['/start']);
   }
 
 }

@@ -101,4 +101,10 @@ export class MyTestsComponent implements OnInit {
   editExam(examId: number) {
     this.router.navigate(['/editTest/'+this.localService.getData('selectedExamId')])
   }
+
+  logout(){
+
+    this.localService.clearData();
+    this.router.navigate(['/start']);
+  }
 }

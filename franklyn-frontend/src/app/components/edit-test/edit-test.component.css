@@ -74,10 +74,6 @@ mat-form-field{
     height: 80px;
     background-color: white;
     border-bottom: 1px solid rgb(0 0 0 / 18%);
-    font-weight: 400;
-    margin: 5px 0;
-    padding: 22px;
-    font-size: 25px;
     color: #777;
   }
 
@@ -94,4 +90,18 @@ mat-form-field{
     font-size: 25px;
     text-align: right;
     color: #777;
+  }
+
+  .header-nav{
+    float: left;
+    display: inline-block;
+    font-weight: 400;
+    padding: 22px;
+    font-size: 25px;
+  }
+  
+  .logout{
+    float: right;
+    display: inline-block;
+    padding: 20px;
   }
