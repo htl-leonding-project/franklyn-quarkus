@@ -5,6 +5,8 @@ import at.htl.control.ExamineeRepository;
 import at.htl.control.ScreenshotRepository;
 import at.htl.entity.Exam;
 import at.htl.entity.Examinee;
+import at.htl.entity.Resolution;
+import at.htl.entity.Screenshot;
 import at.htl.entity.dto.ScreenshotDto;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
@@ -60,7 +62,7 @@ public class ImageResource {
             Exam exam = examRepository.findById(Long.valueOf(fullPath[3]));
             exam.ongoing = true;
             exam.startTime = LocalDateTime.now();
-            java.nio.file.Path path = Paths.get(pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]);
+            java.nio.file.Path path = Paths.get("../../"+pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]);
             Files.createDirectories(path);
 
             LOG.info(filename);
@@ -79,8 +81,16 @@ public class ImageResource {
             //Exam exam = examRepository.findById(Long.valueOf(files[3]));
             examRepository.getEntityManager().merge(exam);
             Examinee examinee = examineeRepository.findByName(exam.id, fullPath[1], fullPath[2]);
-            ScreenshotDto screenshotDto = new ScreenshotDto(cnt, exam, examinee, exam.date.toString());
-            screenshotRepository.postScreenshot(screenshotDto);
+            Screenshot screenshot = new Screenshot(
+                    Timestamp.valueOf(LocalDateTime.now()),
+                    cnt,
+                    examinee,
+                    Resolution.HD,
+                    1,
+                    "http://localhost:8082/"+pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]+"/"+filename,
+                    exam.id
+                    );
+            screenshotRepository.post(screenshot);
         }catch (NullPointerException ignore) {
             LOG.error("Error while saving the file");
         }

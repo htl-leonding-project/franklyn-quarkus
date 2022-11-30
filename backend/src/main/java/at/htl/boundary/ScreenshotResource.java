@@ -11,8 +11,10 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.LinkedList;
+import java.util.List;
 
-@Path("screenshot")
+@Path("api/screenshot")
 public class ScreenshotResource {
 
     @Inject
@@ -48,6 +50,21 @@ public class ScreenshotResource {
     ){
         Screenshot temp = screenshotRepository.findLatestScreenshot(examineeId);
         return null;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("exam/{examId}/examinee/{examineeId}")
+    public List<ScreenshotAngularDto> getScreenshotsOfExaminee(
+            @PathParam("examId") Long examId,
+            @PathParam("examineeId") Long examineeId
+    ){
+        List<Screenshot> screenshotsTemp = screenshotRepository.getScreenshotsOfExaminee(examId,examineeId);
+        List<ScreenshotAngularDto> screenshots = new LinkedList<>();
+        for (Screenshot s : screenshotsTemp) {
+            screenshots.add(new ScreenshotAngularDto(s.examId,s.examinee.id,s.pathOfScreenshot,s.id));
+        }
+        return screenshots;
     }
 
     /**

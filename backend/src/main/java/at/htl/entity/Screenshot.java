@@ -51,6 +51,10 @@ public class Screenshot extends PanacheEntityBase {
     public Resolution resolution;
 
     @NotNull
+    @Column(name = "S_EXAM_ID")
+    public Long examId;
+
+    @NotNull
     @Min(1)
     @Max(100)
     @Column(name = "S_COMPRESSION")
@@ -74,6 +78,17 @@ public class Screenshot extends PanacheEntityBase {
         this.resolution = resolution;
         this.compression = compression;
         this.pathOfScreenshot = pathOfScreenshot;
+    }
+
+    public Screenshot(Timestamp timestamp, Long runningNo, Examinee examinee,
+                      Resolution resolution, int compression, String pathOfScreenshot, Long examId) {
+        this.timestamp = timestamp;
+        this.runningNo = runningNo;
+        this.examinee = examinee;
+        this.resolution = resolution;
+        this.compression = compression;
+        this.pathOfScreenshot = pathOfScreenshot;
+        this.examId = examId;
     }
 
     public Screenshot(Timestamp timestamp, Long runningNo,

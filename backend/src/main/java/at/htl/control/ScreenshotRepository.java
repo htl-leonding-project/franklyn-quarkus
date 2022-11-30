@@ -1,5 +1,6 @@
 package at.htl.control;
 
+import at.htl.entity.Exam;
 import at.htl.entity.Resolution;
 import at.htl.entity.Screenshot;
 import at.htl.entity.dto.ScreenshotDto;
@@ -10,6 +11,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @ApplicationScoped
 public class ScreenshotRepository implements PanacheRepository<Screenshot> {
@@ -49,5 +51,17 @@ public class ScreenshotRepository implements PanacheRepository<Screenshot> {
         return s;
     }
 
+    public Screenshot post(Screenshot screenshot){
+        this.persist(screenshot);
+        return screenshot;
+    }
 
+
+    public List<Screenshot> getScreenshotsOfExaminee(Long examId, Long examineeId) {
+        var query = this.getEntityManager().createQuery(
+                "select s from Screenshot s where s.examId = :EXAMID and s.examinee.id = :EXAMINEEID",
+                Screenshot.class
+        ).setParameter("EXAMID", examId).setParameter("EXAMINEEID", examineeId);
+        return query.getResultList();
+    }
 }

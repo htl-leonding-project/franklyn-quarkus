@@ -126,7 +126,13 @@ public class ExamResource {
                     nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
                     title = exam.title;
                     date= exam.date.toString();
-                    startTime = exam.startTime.toString();
+                    if(exam.startTime != null) {
+                        startTime = exam.startTime.toString();
+                    }
+                    else
+                    {
+                        startTime = " ";
+                    }
                     if(exam.ongoing){
                         status= "Läuft";
                     }
@@ -193,7 +199,11 @@ public class ExamResource {
         else{
             status= "Beendet";
         }
-        examSummary = new ShowExamDto(exam.title, exam.date.toString(), examiners, forms, exam.startTime.toString(), Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id);
+        String startTime = "";
+        if(exam.startTime != null) {
+            startTime = exam.startTime.toString();
+        }
+        examSummary = new ShowExamDto(exam.title, exam.date.toString(), examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id);
         return examSummary;
     }
     /**
