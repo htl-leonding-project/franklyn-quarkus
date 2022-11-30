@@ -140,3 +140,17 @@ table tr.even_col {
     display: inline-block;
     padding: 20px;
   }
+
+  .examinee-viewport {
+    height: 400px;
+    width: 100%;
+    border: 3px solid rgb(196, 194, 194);
+    border-radius: 5px;
+  }
+  
+  .examinee-dt {
+    text-align: left;
+    height: 50px;
+    padding:15px;
+    border-bottom: 1px solid rgb(196, 194, 194);
+  }

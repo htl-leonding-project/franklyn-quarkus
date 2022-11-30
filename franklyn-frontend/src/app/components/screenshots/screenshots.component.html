@@ -45,19 +45,27 @@
                                     <br>
                                     <br>
                                     <div class="patroullie">
-                                        <label>Patrouillier: </label>
+                                        <label>Patrouillie: </label>
                                         <select class="form-select">
+                                            <option>Aus</option>
                                             <option>Sequentiell</option>
                                             <option>Zufällig</option>
                                         </select>
                                         <br>
                                     </div>
                                         <br>
-                                    <ng-container *ngFor="let examinee of examinees">
+                                        <cdk-virtual-scroll-viewport class="examinee-viewport" itemSize="60">
+                                            <dl class="examinee-dl">
+                                              <ng-container *cdkVirtualFor="let examinee of examinees">
+                                                <dt class="examinee-dt" [ngClass]="{'highlight' : examinee.id == selectedExamineeId}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</dt>
+                                              </ng-container>
+                                            </dl>
+                                          </cdk-virtual-scroll-viewport>
+<!--                                     <ng-container *ngFor="let examinee of examinees">
                                         <div class="card names text-black text-left normal" style="--bs-bg-opacity: .1;">
                                             <div class="card-body" [ngClass]="{'highlight' : examinee.id == selectedExamineeId}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</div>
                                         </div>                        
-                                    </ng-container>
+                                    </ng-container> -->
                                 </div>
                             </div>
                           </div>
