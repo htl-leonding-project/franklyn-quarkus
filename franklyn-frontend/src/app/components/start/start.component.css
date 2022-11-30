@@ -803,3 +803,12 @@ screen and (max-height: 300px) {
         padding-right: 6px;
     }
 }
+
+nav ul li.active {
+    background-color: #ffffff;
+    border-radius:25px;
+    transition: 0.3s;
+}
+nav ul li.active a {
+    color: #05668d;    
+}

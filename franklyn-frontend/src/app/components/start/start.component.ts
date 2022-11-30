@@ -1,3 +1,4 @@
+import { ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,7 +13,7 @@ import { WebuntisService } from 'src/app/services/webuntis.service';
   styleUrls: ['./start.component.css']
 })
 export class StartComponent implements OnInit {
-  constructor(private router: Router, private webUntisService: WebuntisService, public globalService: GlobalService, private examinerService: ExaminersService, private localService: LocalService) { }
+  constructor(private router: Router, private webUntisService: WebuntisService, public globalService: GlobalService, private examinerService: ExaminersService, private localService: LocalService, private scroller: ViewportScroller,) { }
 
   userName: string = "";
   passWord: string = "";
@@ -20,7 +21,7 @@ export class StartComponent implements OnInit {
   response: string = "";
 
   ngOnInit(): void {
-    
+
   }
 
 
@@ -46,5 +47,22 @@ export class StartComponent implements OnInit {
       error: (error) => {alert("Fehler beim Laden des Examiner: "+error.message);}
     });
   }
+
+  goToAbout(){
+    this.scroller.scrollToAnchor("about");
+  }
+
+  goToDownload(){
+    this.scroller.scrollToAnchor("download");
+  }
+
+  goToLogin(){
+    this.scroller.scrollToAnchor("login");
+  }
+
+  goToTop(){
+    this.scroller.scrollToAnchor("page-top");
+  }
+
 
 }
