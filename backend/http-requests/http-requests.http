@@ -1,10 +1,10 @@
-POST  https://mese.webuntis.com/WebUntis/jsonrpc.do?school=htbla linz leonding
+POST https://mese.webuntis.com/WebUntis/jsonrpc.do?school=htbla linz leonding
 Content-Type: application/json
 
 {
-"id":"MyID",
+"id":"OWNID",
 "method":"authenticate",
-"params":{"user":"if180160", "password":"houun432", "client":"CLIENT"},
+"params":{"user":"OWNUSER", "password":"OWNPASSWORD", "client":"CLIENT"},
 "jsonrpc":"2.0"
 }
 
@@ -15,7 +15,7 @@ POST  https://mese.webuntis.com/WebUntis/jsonrpc.do
 Content-Type: application/json
 
 {
-  "id": "MyID",
+  "id": "OWNID",
   "method": "getTeachers",
   "params": "{}",
   "jsonrpc": "2.0"
@@ -23,12 +23,24 @@ Content-Type: application/json
 
 ###
 
-POST  https://mese.webuntis.com/WebUntis/jsonrpc.do?school=htbla linz leonding
+POST http://localhost:8080/webuntis/authenticate
 Content-Type: application/json
 
 {
-  "id":"MyID",
-  "method":"logout",
-  "params":{},
+  "id":"OWNID",
+  "method":"authenticate",
+  "params":{"user":"OWNUSER", "password":"OWNPASSWORD", "client":"CLIENT"},
   "jsonrpc":"2.0"
+}
+
+###
+
+POST http://localhost:8080/webuntis/getteachers
+Content-Type: application/json
+
+{
+  "id": "OWNID",
+  "method": "getTeachers",
+  "params": "{}",
+  "jsonrpc": "2.0"
 }

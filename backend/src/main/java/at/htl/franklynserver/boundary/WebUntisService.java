@@ -1,33 +1,29 @@
 package at.htl.franklynserver.boundary;
 
+import io.vertx.core.json.JsonObject;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/webuntis")
-@RegisterRestClient(configKey = "webuntis")
+@RegisterRestClient()
 public interface WebUntisService {
 
-    @Path("authenticate")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response login(String body);
+    Response authenticate(@QueryParam("school") String school,
+                          JsonObject body);
 
-    @Path("getallteachers")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response getAllTeachers(String body);
+    Response getTeachers(@QueryParam("school") String school,
+                         JsonObject body);
 
-    @Path("logout")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    Response logout(String body);
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    Response logout(HTTPBody body);
 }
