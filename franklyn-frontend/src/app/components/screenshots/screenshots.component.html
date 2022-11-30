@@ -17,11 +17,8 @@
                         <span *ngFor="let form of exam.forms; let f = first; let l = last">
                                 {{form}}
                                 <span *ngIf="!(f && l) && !l"> ,</span>
-                                <span *ngIf="l">-</span>
                         </span>
-                        
-                         {{exam.title}}
-                    </h1>
+                        </h1>
                     <div class="screenshot">
                         <div class="row">
                             <div class="col-8">
@@ -56,8 +53,8 @@
                                     </div>
                                         <br>
                                     <ng-container *ngFor="let examinee of examinees">
-                                        <div class="card names text-black text-left" style="--bs-bg-opacity: .1;">
-                                            <div class="card-body" [ngClass]="{'selected' : toggle, 'normal': !toggle}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</div>
+                                        <div class="card names text-black text-left normal" style="--bs-bg-opacity: .1;">
+                                            <div class="card-body" [ngClass]="{'highlight' : examinee.id == selectedExamineeId}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</div>
                                         </div>                        
                                     </ng-container>
                                 </div>

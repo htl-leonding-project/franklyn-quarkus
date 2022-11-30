@@ -6,6 +6,7 @@ import { ExamService } from 'src/app/services/exam.service';
 import { ExamineeService } from 'src/app/services/examinee.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { LocalService } from 'src/app/services/local.service';
+import { ScreenshotService } from 'src/app/services/screenshot.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { LocalService } from 'src/app/services/local.service';
 })
 export class ScreenshotsComponent implements OnInit {
 
-  constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService) { }
+  constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService) { }
 
   toggle = true;
   status = "Not";
@@ -58,6 +59,8 @@ export class ScreenshotsComponent implements OnInit {
     id: 0
   };
   examinees: Examinee[] = [];
+  screenshotsOfExaminee: Screenshot[]=[];
+  selectedExamineeId: string = "";
 
   ngOnInit(): void {
     this.loadStudents();
@@ -77,6 +80,14 @@ export class ScreenshotsComponent implements OnInit {
   SelectExaminee(examineeId: string) {
     this.toggle = !this.toggle;
     this.status = this.toggle ? "Selected" : "Not";
+    this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, examineeId).subscribe({
+      next: data => {
+        this.screenshots = data;
+      }, 
+      error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
+    });
+    this.selectedExamineeId = examineeId;
+    
   }
 
   loadExam() {

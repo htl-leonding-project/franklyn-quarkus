@@ -80,3 +80,8 @@ tr {
     font-size: 20px;
     color: #777;
 }
+
+table tr.highlight {
+	background: rgb(170, 169, 169);
+
+}

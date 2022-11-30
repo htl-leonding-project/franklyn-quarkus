@@ -1,4 +1,11 @@
-
+<!-- <head>
+    <script>
+        function autoRefresh() {
+            window.location = window.location.href;
+        }
+        setInterval('autoRefresh()', 2000);
+    </script>
+</head> -->
 
 
 <app-sidebar></app-sidebar>
@@ -33,7 +40,8 @@
                         </thead>
                         <div class="space"></div>
                         <tbody>
-                            <tr class="tablerow" *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="setExamId(exam.id)">
+                            <!-- [ngClass]="{'highlight' : exam.id == selectedExam}" -->
+                            <tr class="tablerow" *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="setExamId(exam.id)" >
                                 <ng-container>
                                     <td class="txt" >&nbsp;&nbsp;&nbsp;&nbsp;{{i+1}}</td>
                                     <td class="txt" >{{exam.title}}</td>
@@ -56,7 +64,14 @@
                                         </span>
                                     </td>
                                     <td class="txt" >{{exam.pin}}</td>
-                                    <td class="txt" >{{exam.date | date: 'dd.MM.yyyy'}}</td>
+                                    <td class="txt" >
+                                        <div *ngIf="exam.date != ' '">
+                                            {{exam.date | date: 'dd.MM.yyyy'}}
+                                        </div>
+                                        <div *ngIf="exam.date == ' '">
+                                             
+                                        </div>
+                                    </td>
                                     <td class="txt" >{{exam.startTime |date: 'HH:MM'}}</td>
                                     <td class="txt" >{{exam.nrOfStudents}}</td>
                                     <td class="txt" >{{exam.ongoing}}</td>

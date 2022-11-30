@@ -5,6 +5,10 @@ import { ExamService } from 'src/app/services/exam.service';
 import { GlobalService } from 'src/app/services/global.service';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { LocalService } from 'src/app/services/local.service';
+import { Observable } from 'rxjs';
+import { PollingService } from 'src/app/services/polling.service';
+
+
 
 
 @Component({
@@ -13,29 +17,50 @@ import { LocalService } from 'src/app/services/local.service';
   styleUrls: ['./my-tests.component.css']
 })
 export class MyTestsComponent implements OnInit {
-  exams: Exam[] =[];
+  exams: Exam[] = [];
   closeResult = '';
   hasAlreadyExams: boolean = true;
   examinerId: string|null = "";
   examiner: string[] = [];
   forms: string[] = [];
+  selectedExam: number=0
 
-  constructor(private router: Router, private examService:ExamService, public globalService: GlobalService, private modalService: NgbModal, private localService: LocalService) { }
+  examToday!: Observable<Exam>;
+
+  constructor(private router: Router, private examService:ExamService, public globalService: GlobalService, private modalService: NgbModal, private localService: LocalService, private pollingService: PollingService) { 
+  }
 
   ngOnInit(): void {
     this.examinerId = this.localService.getData("examinerId");
     this.loadExams();
+    this.checkExamsIfToday();
+    console.log("test")
+    this.selectedExam = Number.parseInt(this.localService.getData("selectedExamId")!);
+  }
+
+  checkExamsIfToday(){
+    console.log(this.exams.length)
+    for(let exam of this.exams){
+      console.log(new Date(exam.date) );
+      console.log(new Date());
+      if(new Date(exam.date) == new Date()){
+        console.log("in if");
+        this.examToday = this.pollingService.getTestToday(exam.id);
+      }
+    }
   }
 
   setExamId(examId: number) {
     this.localService.removeData("selectedExamId");
     this.localService.saveData("selectedExamId", examId +"");
+    this.selectedExam = examId;
   }
 
-  loadExams() {
+  loadExams(){
     this.examService.getExamsByExaminer(Number(this.examinerId)).subscribe({
       next: data => {
         this.exams = data
+        console.log(this.exams.length)
         if(this.exams.length == 0){
           this.hasAlreadyExams = false;
         }

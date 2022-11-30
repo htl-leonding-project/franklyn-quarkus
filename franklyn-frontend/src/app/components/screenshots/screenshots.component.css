@@ -108,3 +108,8 @@ table tr.even_col {
     font-size: 20px;
     color: #777;
 }
+
+.highlight{
+    background-color: rgb(23, 175, 226);
+    border-radius: 1px;
+}
