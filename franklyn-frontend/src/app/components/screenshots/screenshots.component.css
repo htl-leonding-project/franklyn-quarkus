@@ -33,6 +33,7 @@ table tr.even_col {
 
 .names :hover{
     background-color: rgb(96, 215, 255);
+    border-radius: 5px;
 }
 
 .patroullie{ 
@@ -70,7 +71,7 @@ table tr.even_col {
 }
 
 .d-block{
-    height: 670px;
+    height: 65%;
     width: 100%;
 }
 
@@ -111,5 +112,6 @@ table tr.even_col {
 
 .highlight{
     background-color: rgb(23, 175, 226);
-    border-radius: 1px;
+    border-radius: 5px;
+    border:rgb(3, 124, 176);
 }
