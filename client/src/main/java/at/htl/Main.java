@@ -3,9 +3,11 @@ package at.htl;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.FileEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
@@ -33,7 +35,6 @@ public class Main{
         String lastName = "";
 
         do {
-
             System.out.print("Enter your first name: ");
             firstName = sc.next();
 
@@ -78,10 +79,10 @@ public class Main{
     }
     public static void sendScreenshots(String firstName, String lastName, String id) throws IOException, URISyntaxException {
 
-        HttpClient httpclient = HttpClients.createDefault();
-        HttpPost httppost = new HttpPost();
-
         while(true) {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            HttpPost httppost = new HttpPost();
+            CloseableHttpResponse httpresponse = null;
             try{
                 Robot robot = new Robot();
                 String format = "png";
@@ -100,12 +101,16 @@ public class Main{
 
                 httppost.setEntity(new FileEntity(newFile));
                 httppost.setURI(new URI("http://localhost:8080/upload?filename="+fileName));
-                httpclient.execute(httppost);
+                httpresponse= httpclient.execute(httppost);
 
                 TimeUnit.SECONDS.sleep(5);
 
             } catch (AWTException | IOException | InterruptedException | URISyntaxException e) {
                 throw new RuntimeException(e);
+            }finally {
+                assert httpresponse != null;
+                httpresponse.close();
+                httpclient.close();
             }
         }
     }
