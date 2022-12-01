@@ -1,6 +1,9 @@
 package at.htl.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -18,8 +21,9 @@ public class Examinee extends PanacheEntityBase {
     @Column(name = "EE_LAST_NAME")
     public String lastName;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "EE_EXAM")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public Exam exam;
 
     @Column(name = "EE_IS_ONLINE")
