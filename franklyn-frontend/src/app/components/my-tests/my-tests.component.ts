@@ -57,7 +57,8 @@ export class MyTestsComponent implements OnInit {
   }
 
   loadExams(){
-    this.examService.getExamsByExaminer(Number(this.examinerId)).subscribe({
+    console.log(this.localService.getData("examinerId"));
+    this.examService.getExamsByExaminer(Number(this.localService.getData("examinerId"))).subscribe({
       next: data => {
         this.exams = data
         console.log(this.exams.length)
@@ -109,7 +110,6 @@ export class MyTestsComponent implements OnInit {
 
   logout(){
 
-    this.localService.clearData();
     this.router.navigate(['/start']);
   }
 }

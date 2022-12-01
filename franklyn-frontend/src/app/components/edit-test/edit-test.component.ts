@@ -95,7 +95,6 @@ export class EditTestComponent implements OnInit {
 
   logout(){
 
-    this.localService.clearData();
     this.router.navigate(['/start']);
   }
 

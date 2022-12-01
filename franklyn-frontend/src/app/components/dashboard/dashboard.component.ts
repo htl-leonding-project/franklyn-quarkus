@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit {
 
   logout(){
 
-    this.localService.clearData();
+    //this.localService.clearData();
     this.router.navigate(['/start']);
   }
 }

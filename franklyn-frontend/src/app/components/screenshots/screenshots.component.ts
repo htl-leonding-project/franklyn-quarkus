@@ -1,5 +1,5 @@
 import { ThisReceiver } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval, Subscription, takeWhile } from 'rxjs';
 import { Exam } from 'src/app/models/exam.model';
@@ -17,9 +17,12 @@ import { ScreenshotService } from 'src/app/services/screenshot.service';
   templateUrl: './screenshots.component.html',
   styleUrls: ['./screenshots.component.css'],
 })
-export class ScreenshotsComponent implements OnInit {
+export class ScreenshotsComponent implements OnInit, OnDestroy {
 
   constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService, private router: Router) { }
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
   currentScreenshot: Screenshot = {
     pathOfScreenshot: '',
     screenshotId: 0,
@@ -145,7 +148,6 @@ export class ScreenshotsComponent implements OnInit {
 
   logout(){
 
-    this.localService.clearData();
     this.router.navigate(['/start']);
   }
 }
