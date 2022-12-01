@@ -48,7 +48,7 @@ public class Main{
             HttpEntity entity = response.getEntity();
             responseString = EntityUtils.toString(entity, "UTF-8");
             if(responseString.equals("-1")){
-                System.out.println("You are alreadey enroled for this exam!");
+                System.out.println("You are already enroled for this exam!");
             }
         }while(responseString.equals("-1"));
 
@@ -73,7 +73,6 @@ public class Main{
             HttpResponse response = httpclient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             responseString = EntityUtils.toString(entity, "UTF-8");
-            System.out.println(responseString);
         }while (responseString.equals("0"));
         enterName(responseString);
     }
