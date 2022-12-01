@@ -52,7 +52,6 @@ public class Main{
             }
         }while(responseString.equals("-1"));
 
-        System.out.println(responseString);
         if (!responseString.equals("0")) {
             sendScreenshots(id, firstName, lastName);
         }
