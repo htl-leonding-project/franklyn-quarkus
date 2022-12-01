@@ -1,5 +1,7 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { interval, Subscription, takeWhile } from 'rxjs';
 import { Exam } from 'src/app/models/exam.model';
 import { Examinee } from 'src/app/models/examinee.model';
 import { Screenshot } from 'src/app/models/screenshot.model';
@@ -18,10 +20,6 @@ import { ScreenshotService } from 'src/app/services/screenshot.service';
 export class ScreenshotsComponent implements OnInit {
 
   constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService, private router: Router) { }
-
-  toggle = true;
-  status = "Not";
-
   currentScreenshot: Screenshot = {
     pathOfScreenshot: '',
     screenshotId: 0,
@@ -62,25 +60,32 @@ export class ScreenshotsComponent implements OnInit {
   examinees: Examinee[] = [];
   screenshotsOfExaminee: Screenshot[]=[];
   selectedExamineeId: string = "";
+  currentSelectedExamIsToday: boolean = true;
+  subscription: Subscription = new Subscription;
+  isSubscriped: boolean = true;
+
 
   ngOnInit(): void {
     this.loadStudents();
     this.loadExam();
     this.currentScreenshot = this.screenshots[0];
+
   }
 
   loadStudents() {
     this.examineeService.getExamineesByExamId(Number(this.localService.getData("selectedExamId"))).subscribe({
       next: data => {
         this.examinees = data;
+        if(this.examinees.length > 0){
+          this.selectedExamineeId = this.examinees[0].id;
+        }
       }, 
       error: (error) => {alert("Fehler beim Laden der Examinees: "+error.message);}
     });
   }
 
   SelectExaminee(examineeId: string) {
-    this.toggle = !this.toggle;
-    this.status = this.toggle ? "Selected" : "Not";
+    this.isSubscriped = false
     this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, examineeId).subscribe({
       next: data => {
         this.screenshots = data;
@@ -88,7 +93,33 @@ export class ScreenshotsComponent implements OnInit {
       error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
     });
     this.selectedExamineeId = examineeId;
-    
+    if(this.currentSelectedExamIsToday){
+      this.subscription = interval(5000)
+      .pipe(
+        takeWhile(() => this.isSubscriped)
+      )
+      .subscribe((x) => {
+        this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
+          next: data => {
+            this.screenshots = data;
+          }, 
+          error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
+        });
+      });
+      this.isSubscriped = true;
+      this.subscription = interval(5000)
+      .pipe(
+        takeWhile(() => this.isSubscriped)
+      )
+      .subscribe((x) => {
+        this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
+          next: data => {
+            this.screenshots = data;
+          }, 
+          error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
+        });
+      });
+    }
   }
 
   loadExam() {

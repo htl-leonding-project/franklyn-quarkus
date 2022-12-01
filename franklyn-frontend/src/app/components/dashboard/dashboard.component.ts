@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
       this.getExamById();
     }
     else{
+      console.log(this.examinerId)
       this.loadLatestExamOfExaminer(this.examinerId!);
     }
   }
