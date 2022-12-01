@@ -70,9 +70,13 @@ export class MyTestsComponent implements OnInit {
   }
 
   deleteExam(examId: number){
-    this.examService.deleteById(examId).subscribe({
+    console.log(Number(this.localService.getData("selectedExamId")));
+    this.examService.deleteById(Number(this.localService.getData("selectedExamId"))).subscribe({
       next: data => {
-        this.router.navigate(['/myTests'])
+        let currentUrl = this.router.url;
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate([currentUrl]);
+        });
       }, 
       error: (error) => {alert("Fehler beim Löschen des Exams: "+error.message);}
     });
@@ -82,6 +86,7 @@ export class MyTestsComponent implements OnInit {
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
 			(result) => {
         this.deleteExam(this.globalService.getExamId);
+        console.log("test");
 			},
 			(reason) => {
 			},

@@ -44,6 +44,7 @@ export class ExamService {
   }
 
   deleteById(examId: number) {
+    console.log(examId)
     return this.http.delete("http://localhost:8080/api/exams/delete/"+examId, httpOptions);
   }
 
