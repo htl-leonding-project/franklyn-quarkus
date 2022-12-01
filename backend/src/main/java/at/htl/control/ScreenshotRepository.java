@@ -59,7 +59,7 @@ public class ScreenshotRepository implements PanacheRepository<Screenshot> {
 
     public List<Screenshot> getScreenshotsOfExaminee(Long examId, Long examineeId) {
         var query = this.getEntityManager().createQuery(
-                "select s from Screenshot s where s.examId = :EXAMID and s.examinee.id = :EXAMINEEID",
+                "select s from Screenshot s where s.exam.id = :EXAMID and s.examinee.id = :EXAMINEEID",
                 Screenshot.class
         ).setParameter("EXAMID", examId).setParameter("EXAMINEEID", examineeId);
         return query.getResultList();

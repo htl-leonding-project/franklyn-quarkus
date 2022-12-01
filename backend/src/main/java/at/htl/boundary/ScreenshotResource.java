@@ -62,7 +62,7 @@ public class ScreenshotResource {
         List<Screenshot> screenshotsTemp = screenshotRepository.getScreenshotsOfExaminee(examId,examineeId);
         List<ScreenshotAngularDto> screenshots = new LinkedList<>();
         for (Screenshot s : screenshotsTemp) {
-            screenshots.add(new ScreenshotAngularDto(s.examId,s.examinee.id,s.pathOfScreenshot,s.id));
+            screenshots.add(new ScreenshotAngularDto(s.exam.id,s.examinee.id,s.pathOfScreenshot,s.id));
         }
         return screenshots;
     }

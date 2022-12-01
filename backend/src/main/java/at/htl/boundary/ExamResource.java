@@ -77,8 +77,11 @@ public class ExamResource {
             title = exam.title;
             date= exam.date.toString();
             startTime = exam.startTime.toString();
-            if(exam.ongoing){
+            if(exam.examState == ExamState.RUNNING){
                 status= "Läuft";
+            }
+            else if ( exam.examState == ExamState.IN_PREPARATION){
+                status = "In Vorbereitung";
             }
             else{
                 status= "Beendet";
@@ -133,8 +136,11 @@ public class ExamResource {
                     {
                         startTime = " ";
                     }
-                    if(exam.ongoing){
+                    if(exam.examState == ExamState.RUNNING){
                         status= "Läuft";
+                    }
+                    else if ( exam.examState == ExamState.IN_PREPARATION){
+                        status = "In Vorbereitung";
                     }
                     else{
                         status= "Beendet";
@@ -193,8 +199,11 @@ public class ExamResource {
         }
         int nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
         String status = "";
-        if(exam.ongoing){
+        if(exam.examState == ExamState.RUNNING){
             status= "Läuft";
+        }
+        else if ( exam.examState == ExamState.IN_PREPARATION){
+            status = "In Vorbereitung";
         }
         else{
             status= "Beendet";
@@ -225,7 +234,7 @@ public class ExamResource {
         Exam e = new Exam(
                 pin,
                 exam.title(),
-                false,
+                ExamState.IN_PREPARATION,
                 LocalDate.parse(tempDate),
                 5,
                 Resolution.HD,
@@ -312,8 +321,7 @@ public class ExamResource {
         ex.date = LocalDate.parse(exam.date());
         ex.startTime = LocalDateTime.parse(exam.startTime());
         ex.endTime = LocalDateTime.parse(exam.endTime());
-        ex.ongoing = exam.ongoing();
-
+        examRepository.getEntityManager().merge(ex);
         return ex;
     }
 

@@ -63,7 +63,7 @@ public class InitBean {
         Exam exam1 = new Exam(
                 "234",
                 "Test",
-                false,
+                ExamState.FINISHED,
                 schoolClasses,
                 LocalDate.parse("2022-06-23"),
                 LocalDateTime.parse("2022-05-23T17:09:42.411"),
@@ -78,7 +78,7 @@ public class InitBean {
         Exam exam2 = new Exam(
                 "948",
                 "Franklyn",
-                false,
+                ExamState.RUNNING,
                 schoolClasses,
                 LocalDate.parse("2022-02-23"),
                 LocalDateTime.parse("2022-02-23T10:09:42.411"),

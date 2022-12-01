@@ -38,8 +38,9 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_TITLE")
     public String title;
 
-    @Column(name = "E_ONGOING")
-    public boolean ongoing = false;
+    @Column(name = "E_STATUS")
+    @Enumerated(EnumType.STRING)
+    public ExamState examState;
 
     @OneToMany( cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -89,14 +90,14 @@ public class Exam extends PanacheEntityBase {
 
     public Exam(String pin,
                 String title,
-                boolean ongoing,
+                ExamState state,
                 LocalDate date,
                 int interval,
                 Resolution resolution,
                 int compression) {
         this.pin = pin;
         this.title = title;
-        this.ongoing = ongoing;
+        this.examState = state;
         this.date = date;
         this.interval = interval;
         this.resolution = resolution;
@@ -105,7 +106,7 @@ public class Exam extends PanacheEntityBase {
 
     public Exam(String pin,
                 String title,
-                boolean ongoing,
+                ExamState state,
                 LocalDate date,
                 LocalDateTime startTime,
                 LocalDateTime endTime,
@@ -114,7 +115,7 @@ public class Exam extends PanacheEntityBase {
                 int compression) {
         this.pin = pin;
         this.title = title;
-        this.ongoing = ongoing;
+        this.examState = state;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -125,7 +126,7 @@ public class Exam extends PanacheEntityBase {
 
     public Exam(String pin,
                 String title,
-                boolean ongoing,
+                ExamState state,
                 List<SchoolClass> formIds,
                 LocalDate date,
                 LocalDateTime startTime,
@@ -136,7 +137,7 @@ public class Exam extends PanacheEntityBase {
                 int compression) {
         this.pin = pin;
         this.title = title;
-        this.ongoing = ongoing;
+        this.examState = state;
         this.formIds = formIds;
         this.date = date;
         this.startTime = startTime;
@@ -150,6 +151,6 @@ public class Exam extends PanacheEntityBase {
 
     @Override
     public String toString() {
-        return String.format(this.title + " " + this.date + " " + this.ongoing);
+        return String.format(this.title + " " + this.date + " " + this.examState);
     }
 }

@@ -51,8 +51,10 @@ public class Screenshot extends PanacheEntityBase {
     public Resolution resolution;
 
     @NotNull
-    @Column(name = "S_EXAM_ID")
-    public Long examId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "S_EXAM_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    public Exam exam;
 
     @NotNull
     @Min(1)
@@ -81,14 +83,14 @@ public class Screenshot extends PanacheEntityBase {
     }
 
     public Screenshot(Timestamp timestamp, Long runningNo, Examinee examinee,
-                      Resolution resolution, int compression, String pathOfScreenshot, Long examId) {
+                      Resolution resolution, int compression, String pathOfScreenshot, Exam exam) {
         this.timestamp = timestamp;
         this.runningNo = runningNo;
         this.examinee = examinee;
         this.resolution = resolution;
         this.compression = compression;
         this.pathOfScreenshot = pathOfScreenshot;
-        this.examId = examId;
+        this.exam = exam;
     }
 
     public Screenshot(Timestamp timestamp, Long runningNo,
