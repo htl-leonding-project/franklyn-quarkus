@@ -7,5 +7,6 @@ export interface Exam {
     forms: string,
     nrOfStudents: string,
     examiners: string,
-    id: number
+    id: number,
+    isToday: boolean
 }

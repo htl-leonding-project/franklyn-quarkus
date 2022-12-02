@@ -20,9 +20,7 @@ import { ScreenshotService } from 'src/app/services/screenshot.service';
 export class ScreenshotsComponent implements OnInit, OnDestroy {
 
   constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService, private router: Router) { }
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+
   currentScreenshot: Screenshot = {
     pathOfScreenshot: '',
     screenshotId: 0,
@@ -58,7 +56,8 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     forms: '',
     nrOfStudents: '',
     examiners: '',
-    id: 0
+    id: 0,
+    isToday: false
   };
   examinees: Examinee[] = [];
   screenshotsOfExaminee: Screenshot[]=[];
@@ -123,6 +122,9 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
         });
       });
     }
+/*     this.screenshots = this.screenshots.reverse();
+    this.currentScreenshot = this.screenshots[0]; */
+
   }
 
   loadExam() {
@@ -149,5 +151,9 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   logout(){
 
     this.router.navigate(['/start']);
+  }
+
+  ngOnDestroy(): void {
+    this.isSubscriped = false;
   }
 }

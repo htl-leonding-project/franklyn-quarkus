@@ -25,7 +25,8 @@ export class EditTestComponent implements OnInit {
     forms: '',
     nrOfStudents: '',
     examiners: '',
-    id: 0
+    id: 0,
+    isToday: false
   }
 
   newExam: NewExam = {

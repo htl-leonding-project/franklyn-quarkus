@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exam } from 'src/app/models/exam.model';
 import { ExamService } from 'src/app/services/exam.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { LocalService } from 'src/app/services/local.service';
+import { interval, Subscription, takeWhile } from 'rxjs';
+
 
 
 @Component({
@@ -11,7 +13,7 @@ import { LocalService } from 'src/app/services/local.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router, public globalService: GlobalService, private localService: LocalService, private examService: ExamService) { }
 
@@ -25,8 +27,12 @@ export class DashboardComponent implements OnInit {
     forms: '',
     nrOfStudents: '',
     examiners: '',
-    id: 0
+    id: 0,
+    isToday: false
   };
+  subscription: Subscription = new Subscription;
+  isSubscriped: boolean = false;
+
   
   ngOnInit(): void {
     this.examinerId = this.localService.getData("examinerId")
@@ -45,6 +51,23 @@ export class DashboardComponent implements OnInit {
       next: data => {
         this.exam = data;
         this.localService.saveData("selectedExamId", this.exam.id+"");
+        if(this.exam.isToday == true){
+          this.isSubscriped = true;
+        }
+        this.subscription = interval(5000)
+            .pipe(
+          takeWhile(() => this.isSubscriped)
+        )
+        .subscribe((x) => {
+          this.examService.getById(this.localService.getData("selectedExamId")!).subscribe({
+            next: data => {
+              this.exam = data;
+              this.localService.saveData("selectedExamId", this.exam.id+"");
+              
+            }, 
+            error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
+          });
+        });
       }, 
       error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
     });
@@ -55,6 +78,23 @@ export class DashboardComponent implements OnInit {
       next: data => {
         this.exam = data
         this.localService.saveData("selectedExamId", this.exam.id+"");
+        if(this.exam.isToday == true){
+          this.isSubscriped = true;
+        }
+        this.subscription = interval(5000)
+            .pipe(
+          takeWhile(() => this.isSubscriped)
+        )
+        .subscribe((x) => {
+          this.examService.getById(this.localService.getData("selectedExamId")!).subscribe({
+            next: data => {
+              this.exam = data;
+              this.localService.saveData("selectedExamId", this.exam.id+"");
+              
+            }, 
+            error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
+          });
+        });
       }, 
       error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
     });
@@ -62,7 +102,10 @@ export class DashboardComponent implements OnInit {
 
   logout(){
 
-    //this.localService.clearData();
     this.router.navigate(['/start']);
+  }
+
+  ngOnDestroy(): void {
+    this.isSubscriped = false;
   }
 }
