@@ -11,6 +11,8 @@ public record ShowExamDto(
         String nrOfStudents,
         String ongoing,
         String pin,
-        Long id
+        Long id,
+        boolean isToday
+
 ) {
 }

@@ -50,15 +50,14 @@ public class ExamineeRepository implements PanacheRepository<Examinee> {
 
     public void deleteExamFromExaminees(Long id) {
         var query = this.getEntityManager().createQuery(
-                "select e from Examinee e",
+                "select e from Examinee e where e.exam.id = :id",
                 Examinee.class
-        );
+        ).setParameter("id", id);
         Log.info("Test");
 
         List<Examinee> examinees = query.getResultList();
         for (Examinee ex : examinees) {
-            this.getEntityManager().remove(ex.exam);
-            //examRepository.getEntityManager().remove(ex.exam);
+            this.getEntityManager().remove(ex);
         }
     }
 }

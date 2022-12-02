@@ -21,9 +21,9 @@ public class Examinee extends PanacheEntityBase {
     @Column(name = "EE_LAST_NAME")
     public String lastName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "EE_EXAM")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     public Exam exam;
 
     @Column(name = "EE_IS_ONLINE")

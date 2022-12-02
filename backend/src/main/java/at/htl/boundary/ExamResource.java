@@ -56,6 +56,7 @@ public class ExamResource {
         String status = "";
         List<String> examiners = new ArrayList<>();
         List<String> forms = new ArrayList<>();
+        boolean isToday = false;
 
         for (Exam exam : tempExams) {
 
@@ -86,7 +87,10 @@ public class ExamResource {
             else{
                 status= "Beendet";
             }
-            examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
+            if(exam.date.equals(LocalDate.now())){
+                isToday = true;
+            }
+            examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday));
         }
         for (int i = 0, j = examSummary.size() - 1; i < j; i++) {
             examSummary.add(i, examSummary.remove(j));
@@ -107,6 +111,7 @@ public class ExamResource {
         String status = "";
         List<String> examiners = new ArrayList<>();
         List<String> forms = new ArrayList<>();
+        boolean isToday = false;
 
         for (Exam exam : tempExams) {
 
@@ -145,7 +150,10 @@ public class ExamResource {
                     else{
                         status= "Beendet";
                     }
-                    examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id));
+                    if(exam.date.equals(LocalDate.now())){
+                        isToday = true;
+                    }
+                    examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday));
                     examiners = new ArrayList<>();
                     forms = new ArrayList<>();
                 }
@@ -209,10 +217,14 @@ public class ExamResource {
             status= "Beendet";
         }
         String startTime = "";
+        boolean isToday = false;
         if(exam.startTime != null) {
             startTime = exam.startTime.toString();
         }
-        examSummary = new ShowExamDto(exam.title, exam.date.toString(), examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id);
+        if(exam.date.equals(LocalDate.now())){
+            isToday = true;
+        }
+        examSummary = new ShowExamDto(exam.title, exam.date.toString(), examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday);
         return examSummary;
     }
     /**
@@ -299,7 +311,7 @@ public class ExamResource {
         if(ex == null)
             return null;
         //examinerRepository.deleteExamFromExaminers(id);
-        //examineeRepository.deleteExamFromExaminees(id);
+        examineeRepository.deleteExamFromExaminees(id);
         //Log.info("deleted exam from examinees");
         boolean deleted = examRepository.deleteById(id);
         //examRepository.getEntityManager().remove(ex);

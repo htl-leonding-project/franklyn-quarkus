@@ -8,6 +8,7 @@ public record ExamDto(
         List<String> examinerIds,
         List<String> formIds,
         String startTime,
-        String endTime
+        String endTime,
+        boolean isToday
 ) {
 }
