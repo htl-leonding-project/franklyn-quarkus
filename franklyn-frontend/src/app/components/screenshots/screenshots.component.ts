@@ -65,13 +65,15 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   currentSelectedExamIsToday: boolean = true;
   subscription: Subscription = new Subscription;
   isSubscriped: boolean = true;
+  subscriptionStudents: Subscription = new Subscription;
+  isSubscripedStudents: boolean = true;
+
 
 
   ngOnInit(): void {
     this.loadStudents();
     this.loadExam();
     this.currentScreenshot = this.screenshots[0];
-
   }
 
   loadStudents() {
@@ -80,6 +82,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
         this.examinees = data;
         if(this.examinees.length > 0){
           this.selectedExamineeId = this.examinees[0].id;
+          this.SelectExaminee(this.selectedExamineeId);
         }
       }, 
       error: (error) => {alert("Fehler beim Laden der Examinees: "+error.message);}
@@ -104,6 +107,9 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
         this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
           next: data => {
             this.screenshots = data;
+            if(this.screenshots.length > 0){
+              this.currentScreenshot = this.screenshots[0];
+            }
           }, 
           error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
         });
@@ -117,6 +123,9 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
         this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
           next: data => {
             this.screenshots = data;
+            if(this.screenshots.length > 0){
+              this.currentScreenshot = this.screenshots[0];
+            }
           }, 
           error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
         });
@@ -131,10 +140,43 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     this.examService.getExamById(this.localService.getData("selectedExamId")!).subscribe({
       next: data => {
         this.exam = data;
+        if(this.exam.isToday){
+          console.log("today")
+          this.isSubscripedStudents = true;
+          this.loadStudentsEverySecond()
+        }
       }, 
       error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
     });
   }
+  loadStudentsEverySecond(){
+    this.subscriptionStudents = interval(1000)
+    .pipe(
+      takeWhile(() => this.isSubscripedStudents)
+    )
+    .subscribe((x) => {
+      this.examineeService.getExamineesByExamId(Number(this.localService.getData("selectedExamId"))).subscribe({
+        next: data => {
+          this.examinees = data;
+        }, 
+        error: (error) => {alert("Fehler beim Laden der Examinees: "+error.message);}
+      });
+    });
+/*     this.subscriptionStudents = interval(1000)
+    .pipe(
+      takeWhile(() => this.isSubscripedStudents)
+    )
+    .subscribe((x) => {
+      this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
+        next: data => {
+          this.screenshots = data;
+
+        }, 
+        error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
+      });
+    }); */
+  }
+
   goToNext() {
     if((this.screenshots.length -1) >= (this.currentIdx +1)){
       this.currentIdx = this.currentIdx + 1;
@@ -155,5 +197,6 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isSubscriped = false;
+    this.isSubscripedStudents= false;
   }
 }

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exam } from 'src/app/models/exam.model';
 import { ExamService } from 'src/app/services/exam.service';
 import { GlobalService } from 'src/app/services/global.service';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { LocalService } from 'src/app/services/local.service';
-import { Observable } from 'rxjs';
+import { interval, Observable, Subscription, takeWhile } from 'rxjs';
 import { PollingService } from 'src/app/services/polling.service';
 
 
@@ -16,7 +16,7 @@ import { PollingService } from 'src/app/services/polling.service';
   templateUrl: './my-tests.component.html',
   styleUrls: ['./my-tests.component.css']
 })
-export class MyTestsComponent implements OnInit {
+export class MyTestsComponent implements OnInit, OnDestroy {
   exams: Exam[] = [];
   closeResult = '';
   hasAlreadyExams: boolean = true;
@@ -24,10 +24,15 @@ export class MyTestsComponent implements OnInit {
   examiner: string[] = [];
   forms: string[] = [];
   selectedExam: number=0
+  subscription: Subscription = new Subscription;
+  isSubscriped: boolean = false;
 
   examToday!: Observable<Exam>;
 
   constructor(private router: Router, private examService:ExamService, public globalService: GlobalService, private modalService: NgbModal, private localService: LocalService, private pollingService: PollingService) { 
+  }
+  ngOnDestroy(): void {
+    this.isSubscriped = false;
   }
 
   ngOnInit(): void {
@@ -64,6 +69,23 @@ export class MyTestsComponent implements OnInit {
         console.log(this.exams.length)
         if(this.exams.length == 0){
           this.hasAlreadyExams = false;
+        }
+        for(let exam of this.exams){
+          if(exam.isToday == true){
+            this.isSubscriped = true;
+          }
+          this.subscription = interval(5000)
+              .pipe(
+            takeWhile(() => this.isSubscriped)
+          )
+          .subscribe((x) => {
+            this.examService.getExamsByExaminer(Number(this.localService.getData("examinerId"))).subscribe({
+              next: data => {
+                this.exams = data;                
+              }, 
+              error: (error) => {alert("Fehler beim Laden der Examen: "+error.message);}
+            });
+          });
         }
       }, 
       error: (error) => {alert("Fehler beim Laden der Examiner: "+error.message);}
