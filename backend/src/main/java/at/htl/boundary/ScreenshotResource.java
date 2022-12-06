@@ -64,6 +64,9 @@ public class ScreenshotResource {
         for (Screenshot s : screenshotsTemp) {
             screenshots.add(new ScreenshotAngularDto(s.exam.id,s.examinee.id,s.pathOfScreenshot,s.id));
         }
+        for (int i = 0, j = screenshots.size() - 1; i < j; i++) {
+            screenshots.add(i, screenshots.remove(j));
+        }
         return screenshots;
     }
 
