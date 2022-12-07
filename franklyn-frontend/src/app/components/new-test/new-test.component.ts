@@ -130,7 +130,7 @@ export class NewTestComponent implements OnInit {
   }
 
   logout(){
-
+    this.localService.removeData("selectedExamId");
     this.router.navigate(['/start']);
   }
 

@@ -131,7 +131,7 @@ export class MyTestsComponent implements OnInit, OnDestroy {
   }
 
   logout(){
-
+    this.localService.removeData("selectedExamId");
     this.router.navigate(['/start']);
   }
 }

@@ -95,7 +95,7 @@ export class EditTestComponent implements OnInit {
   }
 
   logout(){
-
+    this.localService.removeData("selectedExamId");
     this.router.navigate(['/start']);
   }
 
