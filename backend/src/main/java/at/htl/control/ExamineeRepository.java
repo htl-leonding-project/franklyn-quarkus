@@ -1,15 +1,12 @@
 package at.htl.control;
 
-import at.htl.entity.Exam;
 import at.htl.entity.Examinee;
-import at.htl.entity.Examiner;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.logging.Log;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Objects;
 
 
 @ApplicationScoped
@@ -27,7 +24,7 @@ public class ExamineeRepository implements PanacheRepository<Examinee> {
         return examinees.size();
     }
 
-    public boolean checkIfAlreadyEnroled(String firstName, String lastName, Long id) {
+    public boolean checkIfAlreadyEnrolled(String firstName, String lastName, Long id) {
         var query = this.getEntityManager().createQuery(
                 "select e from Examinee e where e.exam.id = :id and e.firstName = :firstName and e.lastName = :lastName",
                 Examinee.class

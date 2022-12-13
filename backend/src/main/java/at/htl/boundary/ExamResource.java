@@ -14,11 +14,9 @@ import io.quarkus.logging.Log;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -381,7 +379,7 @@ public class ExamResource {
         Exam exam = examRepository.findById(id);
         Examinee examinee = new Examinee(firstName, lastName, exam, true, LocalDateTime.now());
         Log.info(examinee.firstName);
-        boolean examineeAlreadyExists = examineeRepository.checkIfAlreadyEnroled(examinee.firstName, examinee.lastName, exam.id);
+        boolean examineeAlreadyExists = examineeRepository.checkIfAlreadyEnrolled(examinee.firstName, examinee.lastName, exam.id);
         if(examineeAlreadyExists){
             return -1L;
         }

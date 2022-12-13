@@ -22,11 +22,18 @@ import java.util.concurrent.*;
 
 //https://stackoverflow.com/questions/3324717/sending-http-post-request-in-java
 
-public class Main{
+public class Main {
 
     //http://localhost:8080/api/exams/enroll/1/Tamara/Melcher
 
-
+    /**
+     * This method is used to enroll a student to an exam
+     * + verification if already enrolled and not active (is online -> not else yes)
+     *
+     * @param examId
+     * @param firstName
+     * @param lastName
+     */
     public static void enterName(String id) throws URISyntaxException, IOException {
         Scanner sc = new Scanner(System.in);
 
@@ -43,14 +50,16 @@ public class Main{
 
             HttpClient httpclient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet();
-            httpGet.setURI(new URI("http://localhost:8080/api/exams/enroll/"+id+"/"+firstName+"/"+lastName));
+            httpGet.setURI(
+                    new URI("http://localhost:8080/api/exams/enroll/" + id + "/" + firstName + "/" + lastName)
+            );
             HttpResponse response = httpclient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             responseString = EntityUtils.toString(entity, "UTF-8");
-            if(responseString.equals("-1")){
-                System.out.println("You are already enroled for this exam!");
+            if (responseString.equals("-1")) {
+                System.out.println("You are already enrolled for this exam!");
             }
-        }while(responseString.equals("-1"));
+        } while (responseString.equals("-1"));
 
         if (!responseString.equals("0")) {
             sendScreenshots(id, firstName, lastName);
@@ -58,56 +67,63 @@ public class Main{
     }
 
     public static void main(String[] args) throws URISyntaxException, IOException {
+        enterPIN();
+    }
+
+    private static void enterPIN() throws URISyntaxException, IOException {
         Scanner sc = new Scanner(System.in);
 
         HttpClient httpclient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet();
         String responseString = "";
 
-        do{
+        do {
             System.out.print("Enter your pin: ");
             String pin = sc.next();
 
-            httpGet.setURI(new URI("http://localhost:8080/api/exams/verifyPIN/"+pin));
+            httpGet.setURI(new URI("http://localhost:8080/api/exams/verifyPIN/" + pin));
             HttpResponse response = httpclient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             responseString = EntityUtils.toString(entity, "UTF-8");
-        }while (responseString.equals("0"));
+        } while (responseString.equals("0"));
         enterName(responseString);
     }
-    public static void sendScreenshots(String firstName, String lastName, String id) throws IOException, URISyntaxException {
 
-        while(true) {
+
+    public static void sendScreenshots(String firstName, String lastName, String id)
+            throws IOException, URISyntaxException {
+
+        while (true) {
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            HttpPost httppost = new HttpPost();
-            CloseableHttpResponse httpresponse = null;
-            try{
+            HttpPost httpPost = new HttpPost();
+            CloseableHttpResponse httpResponse = null;
+            try {
                 Robot robot = new Robot();
                 String format = "png";
 
                 String localDateTime = LocalDateTime.now().toString()
                         .replace(':', '-')
-                        .replace(".","-");
-                String fileName = localDateTime+"_"+id+"_"+lastName+"_"+firstName+"." + format;
+                        .replace(".", "-");
+                String fileName = localDateTime + "_" + id + "_" + lastName + "_" + firstName + "." + format;
 
-                System.out.println("send "+fileName);
+                System.out.println("send " + fileName);
 
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
                 BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
                 File newFile = new File(fileName);
                 ImageIO.write(screenFullImage, format, newFile);
 
-                httppost.setEntity(new FileEntity(newFile));
-                httppost.setURI(new URI("http://localhost:8080/upload?filename="+fileName));
-                httpresponse= httpclient.execute(httppost);
+                httpPost.setEntity(new FileEntity(newFile));
+                httpPost.setURI(new URI("http://localhost:8080/upload?filename=" + fileName));
+                httpResponse = httpclient.execute(httpPost);
 
                 TimeUnit.SECONDS.sleep(5);
 
             } catch (AWTException | IOException | InterruptedException | URISyntaxException e) {
                 throw new RuntimeException(e);
-            }finally {
-                assert httpresponse != null;
-                httpresponse.close();
+            } finally {
+                assert httpResponse != null;
+                httpResponse.close();
                 httpclient.close();
             }
         }
