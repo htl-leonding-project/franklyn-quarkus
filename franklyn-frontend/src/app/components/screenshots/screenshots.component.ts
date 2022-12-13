@@ -30,22 +30,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
 
   currentIdx: number = 0;
 
-  screenshots: Screenshot[] = [{
-    pathOfScreenshot: "../../../assets/img/temp.png",
-    screenshotId: 1,
-    examineeId: 1,
-    examId: 1
-  },{
-    pathOfScreenshot: "../../../assets/img/temp2.png",
-    screenshotId: 1,
-    examineeId: 1,
-    examId: 1
-  },{
-    pathOfScreenshot: "../../../assets/img/temp3.png",
-    screenshotId: 1,
-    examineeId: 1,
-    examId: 1
-  }];
+  screenshots: Screenshot[] = [];
 
   exam: Exam = {
     pin: '',
@@ -67,6 +52,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   isSubscriped: boolean = true;
   subscriptionStudents: Subscription = new Subscription;
   isSubscripedStudents: boolean = true;
+  hasScreenshots: boolean = false;
 
 
 
@@ -109,6 +95,9 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
             this.screenshots = data;
             if(this.screenshots.length > 0){
               this.currentScreenshot = this.screenshots[0];
+              this.hasScreenshots = true;
+            }else{
+              this.hasScreenshots = false;
             }
           }, 
           error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
@@ -125,6 +114,9 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
             this.screenshots = data;
             if(this.screenshots.length > 0){
               this.currentScreenshot = this.screenshots[0];
+              this.hasScreenshots = true;
+            }else{
+              this.hasScreenshots = false;
             }
           }, 
           error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}

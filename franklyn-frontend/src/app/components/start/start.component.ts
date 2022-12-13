@@ -29,13 +29,14 @@ export class StartComponent implements OnInit {
 
   this.webUntisService.login(this.userName,this.passWord).subscribe({
       next: data => {
-        this.response = data
+        this.response = data +"";
+        console.log(data.toString());
       }, 
       error: (error) => {alert("Fehler beim Login!");}
     });
     if(this.response == "success"){
       this.loadExaminer();
-      this.router.navigate(['/dashboard'])
+      this.router.navigate(['/dashboard']);
     }
   }
   loadExaminer() {
