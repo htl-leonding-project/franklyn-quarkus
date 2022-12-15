@@ -4,7 +4,6 @@ import at.htl.control.ExamRepository;
 import at.htl.control.ExamineeRepository;
 import at.htl.control.ScreenshotRepository;
 import at.htl.entity.*;
-import at.htl.entity.dto.ScreenshotDto;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -13,13 +12,13 @@ import org.jboss.logging.Logger;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
-import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -59,7 +58,13 @@ public class ImageResource {
             Exam exam = examRepository.findById(Long.valueOf(fullPath[3]));
             exam.examState = ExamState.RUNNING;
             exam.startTime = LocalDateTime.now();
-            java.nio.file.Path path = Paths.get("../../"+pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]);
+            java.nio.file.Path path =
+                    Paths.get(String.format("../../%s/%s_%s/%s_%s",
+                            pathOfScreenshots,
+                            exam.title,
+                            exam.date,
+                            fullPath[1],
+                            fullPath[2]));
             Files.createDirectories(path);
 
             LOG.info(filename);
@@ -84,9 +89,16 @@ public class ImageResource {
                     examinee,
                     Resolution.HD,
                     1,
-                    "http://localhost:8082/"+pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]+"/"+filename,
+                    String.format("http://localhost:8082/%s/%s_%s_%s/%s",
+                            pathOfScreenshots,
+                            exam.title,
+                            exam.date,
+                            fullPath[1],
+                            fullPath[2],
+                            filename
+                    ),
                     exam
-                    );
+            );
             screenshotRepository.post(screenshot);
         }catch (NullPointerException ignore) {
             LOG.error("Error while saving the file");
