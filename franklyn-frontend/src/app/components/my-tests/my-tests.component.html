@@ -27,6 +27,7 @@
                     <br>
                     <table class="table">
                         <thead [style.color] = "'grey'" class="tableheader">
+                            <td></td>
                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NR</td>
                             <td>&nbsp;TITEL</td>
                             <td>&nbsp;KLASSEN</td>
@@ -42,9 +43,15 @@
                         <div class="space"></div>
                         <tbody>
                             <!-- [ngClass]="{'highlight' : exam.id == selectedExam}" -->
-                            <tr class="tablerow" *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="setExamId(exam.id)" >
+                            <tr class="tablerow" *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="toggleExam(exam)">
                                 <ng-container>
-                                    <td class="txt" >&nbsp;&nbsp;&nbsp;&nbsp;{{i+1}}</td>
+                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(exam) : null"
+                                        [checked]="selection.isSelected(exam)" color="warn">
+                                        </mat-checkbox>
+                                    </td>
+                                    <td class="txt" >{{i+1}}</td>
                                     <td class="txt" >{{exam.title}}</td>
                                     <td>
                                         <span class="txt"  *ngIf="exam.forms.length == 0">

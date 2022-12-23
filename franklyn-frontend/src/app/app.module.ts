@@ -35,7 +35,9 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { EditTestComponent } from './components/edit-test/edit-test.component';
+import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,9 @@ import {MatSelectModule} from '@angular/material/select';
     MdbTabsModule,
     MdbTooltipModule,
     MdbValidationModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

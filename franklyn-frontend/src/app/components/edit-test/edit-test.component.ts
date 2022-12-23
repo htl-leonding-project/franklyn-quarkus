@@ -5,6 +5,8 @@ import { Examiner } from 'src/app/models/examiner.model';
 import { Forms } from 'src/app/models/forms.model';
 import { NewExam } from 'src/app/models/new-exam.model';
 import { ExamService } from 'src/app/services/exam.service';
+import { ExaminersService } from 'src/app/services/examiners.service';
+import { FormsService } from 'src/app/services/forms.service';
 import { LocalService } from 'src/app/services/local.service';
 
 @Component({
@@ -14,7 +16,7 @@ import { LocalService } from 'src/app/services/local.service';
 })
 export class EditTestComponent implements OnInit {
 
-  constructor(private localService: LocalService, private examService: ExamService, private router:Router) { }
+  constructor(private localService: LocalService, private examService: ExamService, private router:Router, private examinersService: ExaminersService, private formService: FormsService) { }
 
   exam: Exam = {
     pin: '',
@@ -51,6 +53,8 @@ export class EditTestComponent implements OnInit {
   selectedForms: number[] = [];
   selectedExaminers: number[] = [];
 
+  tempExaminers: Examiner[] = [];
+  tempForms: Forms[] = [];
 
   examiners: Examiner[] = [];
   forms: Forms[] = [];
@@ -61,12 +65,8 @@ export class EditTestComponent implements OnInit {
     this.examinerId = this.localService.getData("examinerId");
     if(this.exam.id != Number(this.localService.getData("selectedExamId"))){
       this.getExamById();
-      //this.newExam.title = this.exam.title;
-      //this.newExam.date = this.exam.date;
-
-    }
-    else{
-      this.loadLatestExamOfExaminer(this.examinerId!);
+      this.loadExaminers();
+      this.loadForms();
     }
   }
 
@@ -87,6 +87,31 @@ export class EditTestComponent implements OnInit {
         this.localService.saveData("selectedExamId", this.exam.id+"");
       }, 
       error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
+    });
+  }
+
+  loadExaminers() {
+    this.examinersService.getAll().subscribe({
+      next: data => {
+        this.examiners = data
+        for(let examiner of this.examiners){
+          for(let alreadySelectedExaminer of this.exam.examiners){
+            if(examiner.id + "" == alreadySelectedExaminer){
+              this.tempExaminers.push(examiner);
+            }
+          }
+        }
+      }, 
+      error: (error) => {alert("Fehler beim Laden der Examiner: "+error.message);}
+    });
+  }
+
+  loadForms() {
+    this.formService.getAll().subscribe({
+      next: data => {
+        this.forms = data
+      }, 
+      error: (error) => {alert("Fehler beim Laden der Schulklassen: "+error.message);}
     });
   }
 
