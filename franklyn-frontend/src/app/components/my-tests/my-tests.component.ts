@@ -79,8 +79,13 @@ export class MyTestsComponent implements OnInit, OnDestroy {
     this.setExamId(exam.id);
   }
 
+  toggleExamInCheckBox(exam: Exam){
+    this.setExamId(exam.id);
+  }
+
   toggleExamOnInit(exam:Exam){
-    this.selection.toggle(exam);
+    //this.selection.toggle(exam);
+    this.selection.select(exam);
     console.log("toggled");
   }
 
@@ -88,7 +93,10 @@ export class MyTestsComponent implements OnInit, OnDestroy {
     this.examService.getById(selectedExam + "").subscribe({
       next: data => {
         this.currentExam = data;
-        this.toggleExamOnInit(this.currentExam);
+        if(this.currentExam != null){
+          this.selection.select(this.currentExam);
+          console.log(this.selection.selected)
+        }
       },
       error:(error) => {alert("Fehler beim Laden der Examen: "+error.message);}
     })

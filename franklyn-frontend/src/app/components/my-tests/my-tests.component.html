@@ -46,9 +46,9 @@
                             <tr class="tablerow" *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="toggleExam(exam)">
                                 <ng-container>
                                     <td>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <mat-checkbox (click)="$event.stopPropagation()"
+                                        <mat-checkbox (click)="$event.stopPropagation(); toggleExamInCheckBox(exam)"
                                         (change)="$event ? selection.toggle(exam) : null"
-                                        [checked]="selection.isSelected(exam)" color="warn">
+                                        [checked]="selectedExam == exam.id" color="warn">
                                         </mat-checkbox>
                                     </td>
                                     <td class="txt" >{{i+1}}</td>
