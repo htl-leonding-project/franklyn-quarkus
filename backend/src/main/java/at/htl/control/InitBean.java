@@ -73,7 +73,11 @@ public class InitBean {
                 Resolution.HD,
                 1
                 );
-        exam1.examiners = List.of(examinerWU, examiner2, examiner3);
+        List<Examiner> examiners1 = new ArrayList<>();
+        examiners1.add(examinerWU);
+        examiners1.add(examiner2);
+        examiners1.add(examiner3);
+        exam1.examiners = examiners1;
 
         Exam exam2 = new Exam(
                 "948",
@@ -88,9 +92,12 @@ public class InitBean {
                 Resolution.HD,
                 1
         );
-        exam2.examiners = List.of(examiner2, examinerWU);
         examRepository.persist(exam1);
         examRepository.persist(exam2);
+        List<Examiner> examiners2 = new ArrayList<>();
+        examiners2.add(examinerWU);
+        examiners2.add(examiner2);
+        exam2.examiners = examiners2;
         Log.info("Persist: " + exam1.title);
         Log.info("Persist: " + exam2.title);
 

@@ -233,7 +233,7 @@ public class ExamResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
-    public Exam addExam(ExamDto exam) {
+    public String addExam(ExamDto exam) {
         String pin = examRepository.createPIN(LocalDate.now());
         String tempDate = exam.date().substring(0,10);
         //String tempStartTime= tempDate + "T" + exam.startTime()+":00";
@@ -273,7 +273,7 @@ public class ExamResource {
         e.examiners = examiners;
         e.formIds = forms;
         examRepository.persist(e);
-        return e;
+        return pin;
     }
 
     /**
