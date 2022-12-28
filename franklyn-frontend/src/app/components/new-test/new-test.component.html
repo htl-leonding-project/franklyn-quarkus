@@ -17,13 +17,13 @@
                         <h5 class="card-title">Allgemeines</h5>
                         <br>
                         <label class="form-label">Titel</label>
-                        <input [(ngModel)]="newExam.title" class="form-control" type="text" placeholder="Titel">
+                        <input [(ngModel)]="newExam.title" class="form-control" type="text" placeholder="Titel" required>
                         <br>
                         <label class="form-label">Klassen</label>
                         <br>
                         <mat-form-field appearance="fill">
                             <mat-label>Auswahl</mat-label>
-                            <mat-select [(ngModel)]="selectedForms" multiple>
+                            <mat-select [(ngModel)]="selectedForms" multiple required>
                               <mat-option *ngFor="let form of forms" [value]="form.id">{{form.title}}</mat-option>
                             </mat-select>
                           </mat-form-field>
@@ -38,7 +38,7 @@
                           </mat-form-field>
                         <br>
                         <label class="form-label">Datum</label>
-                        <input [(ngModel)]="tempDate" class="form-control" type="date">
+                        <input [(ngModel)]="tempDate" class="form-control" type="date" required>
                       </div>
                       <button (click)="firstCardSubmit()" class="btn btn-forward lonebtn">Weiter</button>
                 </div>
@@ -82,7 +82,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Test wurde erfolgreich erstellt!</h5>
                         <br>
-                        <h1>PIN: todo</h1>
+                        <h1>PIN: {{pinOfNewTest}}</h1>
                     </div>
                 </div>
             </div>

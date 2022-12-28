@@ -45,6 +45,7 @@ export class NewTestComponent implements OnInit {
 
   selectedForms: number[] = [];
   selectedExaminers: number[] = [];
+  pinOfNewTest: string = '';
 
 
   examiners: Examiner[] = [];
@@ -93,6 +94,7 @@ export class NewTestComponent implements OnInit {
 
     this.examService.postNewTest(this.newExam).subscribe({
       next: data =>{
+        this.pinOfNewTest = data;
         this.showFourthCard = true;
       }, 
       error: (error)=>{alert("Konnte nicht gespeichert werden!")}

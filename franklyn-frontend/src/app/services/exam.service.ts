@@ -20,7 +20,7 @@ export class ExamService {
   constructor(private http: HttpClient) { }
 
   postNewTest(newExam: NewExam) {
-    return this.http.post<NewExam>("http://localhost:8080/api/exams", newExam, httpOptions);
+    return this.http.post<string>("http://localhost:8080/api/exams", newExam, httpOptions);
   }
 
   getAll() {
