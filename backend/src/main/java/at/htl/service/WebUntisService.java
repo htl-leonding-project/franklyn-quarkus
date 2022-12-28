@@ -16,6 +16,7 @@ import org.bytedream.untis4j.responseObjects.Teachers;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.io.IOException;
+import java.net.SocketException;
 
 @ApplicationScoped
 public class WebUntisService {
@@ -32,6 +33,8 @@ public class WebUntisService {
     @Inject
     SchoolClassRepository schoolClassRepository;
 
+    Session session;
+
     public String authenticateUser(String userName, String password) {
         try {
             Session session = Session.login(
@@ -43,9 +46,11 @@ public class WebUntisService {
             if (session != null) {
 
                 session.logout();
+                Log.info("success");
                 return "success";
             } else {
-                System.out.println("failed");
+                Log.info("failed");
+                return "failed";
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,13 +60,16 @@ public class WebUntisService {
     }
 
     public String initDB(String userName, String password) {
+        Log.info("Initializing DB...");
         try {
-            Session session = Session.login(
+                session = Session.login(
                     userName,
                     password,
                     this.serverName,
                     this.schoolName.replace(" ", "%20"));
 
+
+            Log.info("Session: " + session);
             if (session != null) {
                 var teachers = session.getTeachers();
                 var schoolClasses = session.getClasses();
@@ -69,12 +77,15 @@ public class WebUntisService {
                 persistExaminers(teachers);
                 persistSchoolClasses(schoolClasses, currentSchoolYear);
 
+                Log.info("WebUntis DB initialized");
                 session.logout();
                 return teachers.stream().findFirst().get().toString();
             } else {
-                System.out.println("Login failed");
+                Log.info("Login failed");
+                return "Login failed";
             }
         } catch (IOException e) {
+            Log.info(e.getMessage());
             e.printStackTrace();
         }
 
@@ -109,5 +120,32 @@ public class WebUntisService {
             schoolClass.year = currentSchoolYear.getName();
             schoolClassRepository.persist(schoolClass);
         }
+    }
+
+    public String tryOut(String userName, String password) {
+        Log.info("Initializing DB...");
+        try {
+            session = Session.login(
+                    userName,
+                    password,
+                    this.serverName,
+                    this.schoolName.replace(" ", "%20"));
+
+
+            Log.info("Session: " + session);
+            if (session != null) {
+
+                Log.info("WebUntis DB initialized");
+                session.logout();
+            } else {
+                Log.info("Login failed");
+                return "Login failed";
+            }
+        } catch (IOException e) {
+            Log.info(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return "Unknown error";
     }
 }

@@ -24,7 +24,7 @@ class ExamineeTest {
         exam.date = LocalDate.of(2022, Month.MARCH, 26);
         exam.interval=5;
         exam.pin="12345";
-        exam.ongoing=false;
+        exam.examState=ExamState.IN_PREPARATION;
         exam.title="NVS-Test";
         exam.resolution=Resolution.HD;
         exam.startTime = LocalDateTime.of(2022, 3, 26, 11, 45);

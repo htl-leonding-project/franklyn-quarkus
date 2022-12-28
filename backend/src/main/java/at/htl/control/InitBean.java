@@ -45,7 +45,9 @@ public class InitBean {
         examiners.add(examiner2);
         examiners.add(examiner3);
 
-        String webUntisResult = webUntisService.initDB("NNRADIO", "PAuthlyn28");
+
+
+        String webUntisResult = webUntisService.initDB("NNRADIO", "Pauthlyn28");
         Log.info("WebUntis Result: " + webUntisResult);
         Examiner examinerWU = examinerRepository.findByUsername("NNRADIO");
         examiners.add(examinerWU);

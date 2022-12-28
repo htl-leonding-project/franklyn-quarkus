@@ -21,7 +21,7 @@ class ExamTest {
         exam.date = LocalDate.of(2022, Month.MARCH, 26);
         exam.interval=5;
         exam.pin="12345";
-        exam.ongoing=false;
+        exam.examState=ExamState.IN_PREPARATION;
         exam.title="NVS-Test";
         exam.resolution=Resolution.HD;
         exam.startTime = LocalDateTime.of(2022, 3, 26, 11, 45);
@@ -41,7 +41,6 @@ class ExamTest {
         assertEquals(LocalDateTime.of(2022, 3, 26, 11, 45), exam.startTime);
         assertEquals(LocalDateTime.of(2022, 3, 26, 13, 45), exam.endTime);
         assertEquals("4AHIF", exam.formIds.get(0).title);
-        assertFalse(exam.ongoing);
 
     }
 }

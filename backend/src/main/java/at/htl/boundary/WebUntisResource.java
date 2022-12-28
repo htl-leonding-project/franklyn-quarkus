@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.service.WebUntisService;
+import io.quarkus.logging.Log;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -17,6 +18,7 @@ public class WebUntisResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String authUser(@PathParam("userName") String userName, String password){
         String response = webUntisService.authenticateUser(userName, password);
+        Log.info("logged in");
         return response;
     }
 }
