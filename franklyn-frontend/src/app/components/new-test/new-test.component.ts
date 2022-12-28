@@ -17,6 +17,7 @@ import { LocalService } from 'src/app/services/local.service';
   styleUrls: ['./new-test.component.css']
 })
 export class NewTestComponent implements OnInit {
+
   showFirstCard: boolean= true;
   showSecondCard: boolean=false;
   showThirdCard: boolean=false;
@@ -42,10 +43,12 @@ export class NewTestComponent implements OnInit {
   tempInterval: number = 5;
   tempStartTime: Date = new Date("Fri Dec 08 2019 07:44:57");
   tempEndTime: Date = new Date("Fri Dec 08 2019 07:44:57");
+  isIntervalValid: boolean = false;
 
   selectedForms: number[] = [];
   selectedExaminers: number[] = [];
   pinOfNewTest: string = '';
+  dateIsValid: boolean = false;
 
 
   examiners: Examiner[] = [];
@@ -122,6 +125,15 @@ export class NewTestComponent implements OnInit {
     });
   }
 
+  checkDate(){
+    if(this.tempDate.getDate + "" != 'dd' && this.tempDate.getMonth + "" != 'mm' && this.tempDate.getFullYear + "" != 'yyyy'){
+      this.dateIsValid = true;
+    }
+    else{
+      this.dateIsValid = false;
+    }
+  }
+
   loadForms() {
     this.formService.getAll().subscribe({
       next: data => {
@@ -134,6 +146,10 @@ export class NewTestComponent implements OnInit {
   logout(){
     this.localService.removeData("selectedExamId");
     this.router.navigate(['/start']);
+  }
+
+  onSubmit() {
+    throw new Error('Method not implemented.');
   }
 
 }
