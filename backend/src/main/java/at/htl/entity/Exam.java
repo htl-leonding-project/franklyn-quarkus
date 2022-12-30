@@ -87,12 +87,19 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_COMPRESSION")
     public int compression;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "E_EXAMINER_IDS")
+    @ManyToMany(cascade = CascadeType.ALL) //fetch = FetchType.EAGER
+    //@Fetch(value = FetchMode.SUBSELECT)
+    @Size(min = 1)
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    public List<Examiner> examiners = new ArrayList<>();
+
+/*    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "F_EXAM_EXAMINER",
             joinColumns = @JoinColumn(name = "examiner_id"),
             inverseJoinColumns = @JoinColumn(name = "exam_id"))
     @JsonIgnore
-    public List<Examiner> examiners = new ArrayList<>();
+    public List<Examiner> examiners = new ArrayList<>();*/
 
     public Exam() {
     }

@@ -36,10 +36,16 @@ public class Examiner extends PanacheEntityBase {
     @Column(name = "ER_IS_ADMIN")
     public boolean isAdmin;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinTable(name = "ER_E_EXAMINER_EXAM")
+    @JsonIgnore
+    public List<Exam> exams;
+
+/*    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
-    public List<Exam> exams = new ArrayList<>();
+    public List<Exam> exams = new ArrayList<>();*/
 
 
     public Examiner() {
