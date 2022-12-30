@@ -308,14 +308,7 @@ public class ExamResource {
         Exam ex = examRepository.findById(id);
         if(ex == null)
             return null;
-        //examinerRepository.deleteExamFromExaminers(id);
-        examineeRepository.deleteExamFromExaminees(id);
-        //Log.info("deleted exam from examinees");
-        boolean deleted = examRepository.deleteById(id);
-        //examRepository.getEntityManager().remove(ex);
-        Log.info("Delete Exam: " + ex.title);
-        Log.info("Delete Exam: " + deleted);
-        Log.info(examRepository.listAll().size());
+        examinerRepository.deleteExamFromExaminers(id);
         return ex;
     }
 

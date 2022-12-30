@@ -1,5 +1,6 @@
 package at.htl.boundary;
 
+import at.htl.control.ExamRepository;
 import at.htl.control.SchoolClassRepository;
 import at.htl.entity.Examiner;
 import at.htl.entity.SchoolClass;
@@ -16,6 +17,9 @@ public class SchoolClassResource {
 
     @Inject
     SchoolClassRepository schoolClassRepository;
+
+    @Inject
+    ExamRepository examRepository;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -80,23 +84,6 @@ public class SchoolClassResource {
     @Transactional
     public SchoolClass addSchoolClass(SchoolClass schoolClass){
         schoolClassRepository.getEntityManager().merge(schoolClass);
-        return schoolClass;
-    }
-
-    /**
-     * Deletes schoolclass by id
-     * @return deleted schoolclass
-     */
-    @DELETE
-    @Path("{id}")
-    @Transactional
-    public SchoolClass deleteSchoolClass(
-            @PathParam("id") Long id
-    ){
-        SchoolClass schoolClass = schoolClassRepository.findById(id);
-        if(schoolClass == null)
-            return null;
-        schoolClassRepository.deleteById(id);
         return schoolClass;
     }
 }

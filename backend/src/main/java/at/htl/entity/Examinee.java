@@ -1,6 +1,8 @@
 package at.htl.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -21,9 +23,8 @@ public class Examinee extends PanacheEntityBase {
     @Column(name = "EE_LAST_NAME")
     public String lastName;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "EE_EXAM")
-    //@OnDelete(action = OnDeleteAction.CASCADE)
     public Exam exam;
 
     @Column(name = "EE_IS_ONLINE")

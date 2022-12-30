@@ -1,5 +1,8 @@
 package at.htl.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.hibernate.annotations.*;
@@ -13,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @NamedQueries({
@@ -21,6 +25,9 @@ import java.util.List;
                 query = "select e from Exam e where e.date = :DATE and e.pin LIKE :PIN")
 })
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.StringIdGenerator.class,
+        property="e_id")
 @Entity
 @Table(name = "F_EXAM")
 public class Exam extends PanacheEntityBase {
@@ -54,13 +61,6 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_END_TIME")
     public LocalDateTime endTime;
 
-    @JoinColumn(name = "E_EXAMINER_IDS")
-    @ManyToMany(cascade = CascadeType.ALL) //fetch = FetchType.EAGER
-    //@Fetch(value = FetchMode.SUBSELECT)
-    @Size(min = 1)
-    //@LazyCollection(LazyCollectionOption.FALSE)
-    public List<Examiner> examiners;
-
     @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @Size(min = 1)
@@ -77,12 +77,22 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_RESOLUTION")
     @Enumerated(EnumType.STRING)
     public Resolution resolution;
+    @Column(name = "E_EXAMINEES")
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    public List<Examinee> examinees;
 
     @NotNull
     @Min(1)
     @Max(100)
     @Column(name = "E_COMPRESSION")
     public int compression;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "F_EXAM_EXAMINER",
+            joinColumns = @JoinColumn(name = "examiner_id"),
+            inverseJoinColumns = @JoinColumn(name = "exam_id"))
+    @JsonIgnore
+    public List<Examiner> examiners = new ArrayList<>();
 
     public Exam() {
     }

@@ -57,10 +57,10 @@ public class InitBean {
         SchoolClass schoolClass2 = new SchoolClass("3AHIF", "2021");
         schoolClasses.add(schoolClass1);
         schoolClasses.add(schoolClass2);
-        for (SchoolClass schoolClass : schoolClasses) {
+/*        for (SchoolClass schoolClass : schoolClasses) {
             schoolClassRepository.persist(schoolClass);
             Log.info("Persist Schoolclass: " + schoolClass.title);
-        }
+        }*/
 
         Exam exam1 = new Exam(
                 "234",
