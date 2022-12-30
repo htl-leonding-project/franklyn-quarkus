@@ -76,5 +76,16 @@ public class ExaminerResource {
         return examiner;
     }
 
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Examiner getExaminerById(@PathParam("id") String id) {
+        Examiner examiner = examinerRepository.findById(Long.parseLong(id));
+        if(examiner == null)
+            return null;
+        return examiner;
+    }
+
 
 }

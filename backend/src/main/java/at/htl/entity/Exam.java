@@ -42,13 +42,6 @@ public class Exam extends PanacheEntityBase {
     @Enumerated(EnumType.STRING)
     public ExamState examState;
 
-    @OneToMany( cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @Size(min = 1)
-    @JoinColumn(name = "E_FORM_IDS")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    public List<SchoolClass> formIds;
-
     @NotNull
     @Column(name = "E_DATE")
     public LocalDate date;
@@ -67,6 +60,13 @@ public class Exam extends PanacheEntityBase {
     @Size(min = 1)
     //@LazyCollection(LazyCollectionOption.FALSE)
     public List<Examiner> examiners;
+
+    @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @Size(min = 1)
+    @JoinColumn(name = "E_FORM_IDS")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    public List<SchoolClass> formIds;
 
     @NotNull
     @ConfigProperty(defaultValue = "5")

@@ -1,6 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.control.SchoolClassRepository;
+import at.htl.entity.Examiner;
 import at.htl.entity.SchoolClass;
 import io.quarkus.logging.Log;
 
@@ -56,6 +57,17 @@ public class SchoolClassResource {
             @PathParam("year") String year
     ){
         return schoolClassRepository.getSchoolClassByTitleAndYear(title, year);
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public SchoolClass getSchoolClassById(@PathParam("id") String id) {
+        SchoolClass schoolClass = schoolClassRepository.findById(Long.parseLong(id));
+        if(schoolClass == null)
+            return null;
+        return schoolClass;
     }
 
     /**
