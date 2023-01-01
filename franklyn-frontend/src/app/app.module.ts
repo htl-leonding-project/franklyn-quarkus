@@ -38,6 +38,7 @@ import { EditTestComponent } from './components/edit-test/edit-test.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';   //for full screen
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MdbValidationModule,
     MatSelectModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NgImageFullscreenViewModule
   ],
   providers: [],
   bootstrap: [AppComponent]

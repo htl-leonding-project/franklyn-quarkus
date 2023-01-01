@@ -27,7 +27,7 @@
                                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                         <div class="carousel-inner">
                                           <div class="carousel-item active">
-                                            <img class="d-block" src="{{currentScreenshot.pathOfScreenshot}}" alt="Screenshot">
+                                            <img class="d-block" src="{{currentScreenshot.pathOfScreenshot}}" (click)="showFullScreen(0)" alt="Screenshot">
                                           </div>
                                         </div>
                                         <a class="carousel-control-prev" (click)="goToPrevious()" role="button" data-slide="prev">
@@ -37,6 +37,14 @@
                                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         </a>
                                       </div>
+                                 </div>
+                                 <div>
+                                    <ng-image-fullscreen-view 
+                                    [images]="screenshots" 
+                                    [imageIndex]="currentIndexFS" 
+                                    [show]="showImgFullScreen" 
+                                    (close)="closeEventHandler()">
+                                    </ng-image-fullscreen-view>
                                  </div>
                             </div>
                             <div *ngIf="this.hasScreenshots == false" class="col-8 slideshow">

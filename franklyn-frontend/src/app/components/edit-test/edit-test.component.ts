@@ -53,6 +53,9 @@ export class EditTestComponent implements OnInit {
   selectedForms: number[] = [];
   selectedExaminers: number[] = [];
 
+  selectedFormsObjects: Forms[] = [];
+  selectedExaminersObjects: Examiner[] = [];
+
   tempExaminers: Examiner[] = [];
   tempForms: Forms[] = [];
 
@@ -75,6 +78,21 @@ export class EditTestComponent implements OnInit {
       next: data => {
         this.exam = data;
         this.localService.saveData("selectedExamId", this.exam.id+"");
+        if(this.exam.examiners.length > 0){
+          for(let examinerId of this.exam.examiners){
+            this.selectedExaminers.push(Number(examinerId))
+          }
+        }
+        /* if(this.exam.examiners.length > 0){
+          for(let examinerId of this.exam.examiners){
+            this.examinersService.getById(examinerId).subscribe({
+              next: data => {
+                this.selectedExaminersObjects.push(data);
+              }, 
+              error: (error) => {alert("Fehler beim Laden der Examiner: "+error.message);}
+            });
+          }
+        } */
       }, 
       error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
     });

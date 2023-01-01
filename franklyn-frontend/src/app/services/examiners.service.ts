@@ -24,5 +24,9 @@ export class ExaminersService {
     return this.http.get<Examiner>("http://localhost:8080/api/examiners/" + userName);
   }
 
+  getById(examinerId: string) {
+    return this.http.get<Examiner>("http://localhost:8080/api/examiners/id/" + examinerId);
+  }
+
 
 }
