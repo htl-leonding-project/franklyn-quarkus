@@ -14,7 +14,8 @@ public class JavaMain implements QuarkusApplication {
 
     @Override
     public int run(String... args) throws Exception {
-        apiCalls.enterPIN();
+        Long id = apiCalls.enterPIN();
+        apiCalls.enterName(id.toString());
         Quarkus.waitForExit();
         return 0;
     }

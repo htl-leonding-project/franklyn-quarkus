@@ -4,6 +4,7 @@ import at.htl.boundary.ExamineeService;
 import at.htl.boundary.ImageService;
 import io.quarkus.logging.Log;
 import io.quarkus.scheduler.Scheduled;
+import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -15,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 @ApplicationScoped
@@ -29,19 +31,20 @@ public class ApiCalls {
     ExamineeService examineeService;
     private String firstName = "";
     private String lastName = "";
-    private Long id;
-    private Long cnt = 1L;
-    private Long examineeId =1L;
+    private Long id = -1L;
+    private boolean authenticated = false;
     Scanner sc = new Scanner(System.in);
 
     @Scheduled(every = "5s")
-    public void sendScreenshots(){
-        if (!firstName.equals("") && !lastName.equals("")) {
+    public void sendScreenshots() {
+        if (authenticated) {
             try {
                 Robot robot = new Robot();
                 String fileExt = "png";
-                String fileName = cnt+"_"+lastName+"_"+firstName+"." + fileExt;
-                cnt++;
+                String localDateTime = LocalDateTime.now().toString()
+                        .replace(':', '-')
+                        .replace(".", "-");
+                String fileName = localDateTime + "_" + lastName + "_" + firstName + "_" + id  + "."+ fileExt;
 
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
                 BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
@@ -59,11 +62,9 @@ public class ApiCalls {
         }
     }
 
-    public void enterName(String id) throws URISyntaxException, IOException {
+    public Long enterName(String id) throws URISyntaxException, IOException {
 
-        String responseString = "";
-        String firstName = "";
-        String lastName = "";
+        Long response = -1L;
 
         do {
             System.out.print("Enter your first name: ");
@@ -72,28 +73,30 @@ public class ApiCalls {
             System.out.print("Enter your last name: ");
             lastName = sc.next();
 
-            Response response = examineeService.enrollStudentForExam(Long.parseLong(id), firstName, lastName);
+            response = executeService(id, firstName, lastName);
 
-            Object entity = response.getEntity();
-            responseString = entity.toString();
-            if (responseString.equals("-1")) {
+            if (response == -1) {
                 System.out.println("You are already enrolled for this exam!");
             }
-        } while (responseString.equals("-1"));
+        } while (response == -1);
+        authenticated = true;
+        return response;
     }
 
-    public void enterPIN() throws URISyntaxException, IOException {
-        String responseString = "";
+    public Long executeService(String id, String firstName, String lastName) {
+        return examineeService
+                .enrollStudentForExam(id, firstName, lastName);
+    }
+
+    public Long enterPIN() throws URISyntaxException, IOException {
 
         do {
             System.out.print("Enter your pin: ");
             String pin = sc.next();
 
-            Response response = examineeService.verifyPIN(pin);
-            Object entity = response.getEntity();
-            responseString = entity.toString();
-        } while (responseString.equals("0"));
+            id = examineeService.verifyPIN(pin);
+        } while (id == 0L);
 
-        enterName(responseString);
+        return id;
     }
 }

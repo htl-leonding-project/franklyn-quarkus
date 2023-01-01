@@ -1,6 +1,8 @@
 package at.htl.boundary;
 
+import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
+//import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,16 +16,15 @@ import javax.ws.rs.core.Response;
 public interface ExamineeService {
 
     @GET
-    @Path("enroll/{id}/{firstName}/{lastName}")
+    @Path("/enroll/{id}/{firstName}/{lastName}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response enrollStudentForExam(@PathParam("id") Long id,
-                                         @PathParam("firstName") String firstName,
-                                         @PathParam("lastName") String lastName);
+    Long enrollStudentForExam(@PathParam("id") String id,
+                                       @PathParam("firstName") String firstName,
+                                       @PathParam("lastName") String lastName);
 
     @GET
     @Path("verifyPIN/{pin}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response verifyPIN(@PathParam("pin") String pin);
+    Long verifyPIN(@PathParam("pin") String pin);
 
 }
