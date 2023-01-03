@@ -23,7 +23,7 @@
                         <br>
                         <mat-form-field appearance="fill">
                             <mat-label>Auswahl</mat-label>
-                            <mat-select [(ngModel)]="selectedForms" multiple>
+                            <mat-select [(ngModel)]="selectedFormsAny" multiple>
                               <mat-option *ngFor="let form of forms" [value]="form.id">{{form.title}}</mat-option>
                             </mat-select>
                           </mat-form-field>
@@ -31,11 +31,11 @@
                         <label class="form-label">Begleitlehrer</label>
                         <br>
                         <mat-form-field appearance="fill">
-                            <mat-label>Auswahl</mat-label>
-                            <mat-select [(ngModel)]="selectedExaminers" [(value)]="tempExaminers" multiple>
-                              <mat-option *ngFor="let examiner of examiners" [value]="examiner.id">{{examiner.firstName}} {{examiner.lastName}}</mat-option>
-                            </mat-select>
-                          </mat-form-field>
+                          <mat-label>Auswahl</mat-label>
+                          <mat-select [(ngModel)]="selectedExaminersAny" multiple>
+                            <mat-option *ngFor="let examiner of examiners" [value]="examiner.id">{{examiner.firstName}} {{examiner.lastName}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
                         <br>
                         <label class="form-label">Datum</label>
                         <input [(ngModel)]="exam.date" class="form-control" type="date">

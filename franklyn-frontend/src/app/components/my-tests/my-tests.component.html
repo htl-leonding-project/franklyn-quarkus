@@ -80,11 +80,11 @@
                                              
                                         </div>
                                     </td>
-                                    <td class="txt" >{{exam.startTime |date: 'HH:MM'}}</td>
+                                    <td class="txt" >{{exam.startTime | date: 'HH:MM'}}</td>
                                     <td class="txt" >{{exam.nrOfStudents}}</td>
                                     <td class="txt" >{{exam.ongoing}}</td>
-                                    <td><a class="txt"  role="button" [style.color] = "'green'" (click)="editExam(exam.id)" >Bearbeiten</a></td>
-                                    <td><a class="txt"  role="button" [style.color] = "'red'" (click)="open(content)">Löschen</a></td>
+                                    <td><a class="txt"  role="button" [style.color] = "'green'" (click)="editExam(exam.id)"  [ngClass]="!exam.canBeEdited ? 'isDisabled' : 'txt'">Bearbeiten</a></td>
+                                    <td><a class="txt"  role="button" [style.color] = "'red'" (click)="open(content)" [ngClass]="!exam.canBeDeleted ? 'isDisabled' : 'txt'">Löschen</a></td>
                                 </ng-container>
                             </tr>
                         </tbody>

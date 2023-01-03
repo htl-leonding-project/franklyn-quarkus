@@ -36,7 +36,9 @@ export class MyTestsComponent implements OnInit, OnDestroy {
     nrOfStudents: '',
     examiners: '',
     id: 0,
-    isToday: false
+    isToday: false,
+    canBeEdited: false,
+    canBeDeleted: false
   }
 
   examToday!: Observable<Exam>;
@@ -110,6 +112,7 @@ export class MyTestsComponent implements OnInit, OnDestroy {
         console.log(this.exams.length)
         if(this.exams.length == 0){
           this.hasAlreadyExams = false;
+
         }
         for(let exam of this.exams){
           if(exam.isToday == true){

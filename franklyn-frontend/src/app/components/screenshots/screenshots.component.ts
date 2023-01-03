@@ -22,15 +22,16 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService, private router: Router) { }
 
   currentScreenshot: Screenshot = {
-    pathOfScreenshot: '',
+    pathOfScreenshot: '../../../assets/img/temp.png',
     screenshotId: 0,
     examineeId: 0,
     examId: 0
   }
 
   currentIdx: number = 0;
-
   screenshots: Screenshot[] = [];
+  currentIndexFS: number = 0;
+  showImgFullScreen: boolean = false;
 
   exam: Exam = {
     pin: '',
@@ -42,7 +43,9 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     nrOfStudents: '',
     examiners: '',
     id: 0,
-    isToday: false
+    isToday: false,
+    canBeEdited: false,
+    canBeDeleted: false
   };
   examinees: Examinee[] = [];
   screenshotsOfExaminee: Screenshot[]=[];
@@ -60,6 +63,17 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     this.loadStudents();
     this.loadExam();
     this.currentScreenshot = this.screenshots[0];
+  }
+
+
+  showFullScreen(index: number) {
+    this.currentIndexFS = index;
+    this.showImgFullScreen = true;
+  }
+
+  closeEventHandler() {
+    this.showImgFullScreen = false;
+    this.currentIndexFS = -1;
   }
 
   loadStudents() {

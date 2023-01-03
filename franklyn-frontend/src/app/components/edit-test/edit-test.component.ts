@@ -8,6 +8,8 @@ import { ExamService } from 'src/app/services/exam.service';
 import { ExaminersService } from 'src/app/services/examiners.service';
 import { FormsService } from 'src/app/services/forms.service';
 import { LocalService } from 'src/app/services/local.service';
+import { Form, FormBuilder, FormControl, FormGroup,ReactiveFormsModule } from '@angular/forms';
+import { UpdateExam } from 'src/app/models/update-exam.model';
 
 @Component({
   selector: 'app-edit-test',
@@ -16,7 +18,8 @@ import { LocalService } from 'src/app/services/local.service';
 })
 export class EditTestComponent implements OnInit {
 
-  constructor(private localService: LocalService, private examService: ExamService, private router:Router, private examinersService: ExaminersService, private formService: FormsService) { }
+  constructor(private localService: LocalService, private examService: ExamService, private router:Router, private examinersService: ExaminersService, private formService: FormsService, private formBuilder: FormBuilder) {
+   }
 
   exam: Exam = {
     pin: '',
@@ -28,16 +31,17 @@ export class EditTestComponent implements OnInit {
     nrOfStudents: '',
     examiners: '',
     id: 0,
-    isToday: false
+    isToday: false,
+    canBeEdited: false,
+    canBeDeleted: false
   }
 
-  newExam: NewExam = {
+  newExam: UpdateExam = {
+    id: 0,
     title: '',
     formIds: [],
     examinerIds: [],
     date: new Date("Fri Dec 08 2019 07:44:57").toString(),
-    startTime: '',
-    endTime: '',
     interval: '',
   }
 
@@ -50,12 +54,10 @@ export class EditTestComponent implements OnInit {
   tempStartTime: Date = new Date("Fri Dec 08 2019 07:44:57");
   tempEndTime: Date = new Date("Fri Dec 08 2019 07:44:57");
 
-  selectedForms: number[] = [];
-  selectedExaminers: number[] = [];
-
   selectedFormsObjects: Forms[] = [];
   selectedExaminersObjects: Examiner[] = [];
-
+  selectedExaminersAny: any = [];
+  selectedFormsAny: any = [];
   tempExaminers: Examiner[] = [];
   tempForms: Forms[] = [];
 
@@ -64,45 +66,49 @@ export class EditTestComponent implements OnInit {
 
   examinerId: string|null = "";
 
+  selectedExaminersControl = new FormControl();
+
+
   ngOnInit(): void {
     this.examinerId = this.localService.getData("examinerId");
     if(this.exam.id != Number(this.localService.getData("selectedExamId"))){
       this.getExamById();
       this.loadExaminers();
       this.loadForms();
+      this.loadSelectedExaminer();
+      this.loadSelectedForms();
     }
+  }
+
+  loadSelectedExaminer(){
+    this.examinersService.getExaminersByExamId(this.localService.getData("selectedExamId")!).subscribe({
+      next: data => {
+        this.selectedExaminersObjects = data;
+        for(let examiner of this.selectedExaminersObjects){
+          this.selectedExaminersAny.push(examiner.id);
+        }
+      }, 
+      error: (error) => {alert("Fehler beim Laden des Examiner: "+error.message);}
+    });
+  }
+
+  loadSelectedForms(){
+    this.formService.getFormByExamId(this.localService.getData("selectedExamId")!).subscribe({
+      next: data => {
+        this.selectedFormsObjects = data;
+        for(let form of this.selectedFormsObjects){
+          this.selectedFormsAny.push(form.id);
+        }
+      }, 
+      error: (error) => {alert("Fehler beim Laden der Klassen: "+error.message);}
+    });
   }
 
   getExamById() {
     this.examService.getById(this.localService.getData("selectedExamId")!).subscribe({
       next: data => {
         this.exam = data;
-        this.localService.saveData("selectedExamId", this.exam.id+"");
-        if(this.exam.examiners.length > 0){
-          for(let examinerId of this.exam.examiners){
-            this.selectedExaminers.push(Number(examinerId))
-          }
-        }
-        /* if(this.exam.examiners.length > 0){
-          for(let examinerId of this.exam.examiners){
-            this.examinersService.getById(examinerId).subscribe({
-              next: data => {
-                this.selectedExaminersObjects.push(data);
-              }, 
-              error: (error) => {alert("Fehler beim Laden der Examiner: "+error.message);}
-            });
-          }
-        } */
-      }, 
-      error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
-    });
-  }
-  
-  loadLatestExamOfExaminer(examinerId: string) {
-    this.examService.getLatestById(examinerId).subscribe({
-      next: data => {
-        this.exam = data
-        this.localService.saveData("selectedExamId", this.exam.id+"");
+        this.newExam.id = this.exam.id;
       }, 
       error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
     });
@@ -111,14 +117,7 @@ export class EditTestComponent implements OnInit {
   loadExaminers() {
     this.examinersService.getAll().subscribe({
       next: data => {
-        this.examiners = data
-        for(let examiner of this.examiners){
-          for(let alreadySelectedExaminer of this.exam.examiners){
-            if(examiner.id + "" == alreadySelectedExaminer){
-              this.tempExaminers.push(examiner);
-            }
-          }
-        }
+        this.examiners = data;
       }, 
       error: (error) => {alert("Fehler beim Laden der Examiner: "+error.message);}
     });
@@ -134,12 +133,35 @@ export class EditTestComponent implements OnInit {
   }
 
   save() {
-    throw new Error('Method not implemented.');
+    this.newExam.examinerIds.push(this.localService.getData("examinerId") + '');
+    for(let s of this.selectedExaminersAny){
+      this.tempExaminerId = s +'';
+      this.newExam.examinerIds.push(this.tempExaminerId);
+      console.log(this.tempExaminerId);
+    }
+    for(let s of this.selectedFormsAny){
+      this.tempFormId = s +'';
+      this.newExam.formIds.push(this.tempFormId);
+    }
+    this.newExam.date = this.tempDate.toString();
+    this.newExam.interval = this.tempInterval + '';
+
+
+    this.examService.updateExam(this.newExam).subscribe({
+      next: data =>{
+      }, 
+      error: (error)=>{alert("Exam konnte nicht editiert werden!")}
+    })
   }
 
   logout(){
     this.localService.removeData("selectedExamId");
     this.router.navigate(['/start']);
+  }
+
+  comparer(o1: Examiner, o2: Examiner): boolean {
+    // if possible compare by object's name, and not by reference.
+    return o1 && o2 ? o1.id === o2.id : o2 === o2;
   }
 
 }

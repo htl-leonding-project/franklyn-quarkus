@@ -7,7 +7,7 @@ import { StartComponent } from './components/start/start.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MyTestsComponent } from './components/my-tests/my-tests.component';
 import { NewTestComponent } from './components/new-test/new-test.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HowtoComponent } from './components/howto/howto.component';
@@ -82,7 +82,8 @@ import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';   //for 
     MatSelectModule,
     MatTableModule,
     MatCheckboxModule,
-    NgImageFullscreenViewModule
+    NgImageFullscreenViewModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

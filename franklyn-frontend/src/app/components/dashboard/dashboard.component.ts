@@ -28,7 +28,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     nrOfStudents: '',
     examiners: '',
     id: 0,
-    isToday: false
+    isToday: false,
+    canBeEdited: false,
+    canBeDeleted: false
   };
   subscription: Subscription = new Subscription;
   isSubscriped: boolean = false;

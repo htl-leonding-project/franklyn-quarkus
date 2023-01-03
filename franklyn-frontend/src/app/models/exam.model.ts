@@ -8,5 +8,7 @@ export interface Exam {
     nrOfStudents: string,
     examiners: string,
     id: number,
-    isToday: boolean
+    isToday: boolean,
+    canBeEdited: boolean,
+    canBeDeleted: boolean
 }

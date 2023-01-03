@@ -12,4 +12,8 @@ export class FormsService {
   getAll(){
     return this.http.get<Forms[]>("http://localhost:8080/api/schoolclass");
   }
+
+  getFormByExamId(examinerId: string){
+    return this.http.get<Forms[]>("http://localhost:8080/api/schoolclass/exam/id/" + examinerId);
+  }
 }

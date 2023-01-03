@@ -82,9 +82,10 @@ export class NewTestComponent implements OnInit {
     //this.tempExaminerId = this.examiner_Id + '';
     //this.tempFormId = this.form_Id + '';
     this.newExam.examinerIds.push(this.localService.getData("examinerId") + '');
-    for(let s of this.selectedForms){
+    for(let s of this.selectedExaminers){
       this.tempExaminerId = s +'';
       this.newExam.examinerIds.push(this.tempExaminerId);
+      console.log(this.tempExaminerId);
     }
     for(let s of this.selectedForms){
       this.tempFormId = s +'';
