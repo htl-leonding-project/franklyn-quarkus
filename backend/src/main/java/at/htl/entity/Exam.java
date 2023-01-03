@@ -78,7 +78,7 @@ public class Exam extends PanacheEntityBase {
     @Enumerated(EnumType.STRING)
     public Resolution resolution;
     @Column(name = "E_EXAMINEES")
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Examinee> examinees;
 
     @NotNull
@@ -88,7 +88,7 @@ public class Exam extends PanacheEntityBase {
     public int compression;
 
     @JoinColumn(name = "E_EXAMINER_IDS")
-    @ManyToMany(cascade = CascadeType.ALL) //fetch = FetchType.EAGER
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //fetch = FetchType.EAGER
     //@Fetch(value = FetchMode.SUBSELECT)
     @Size(min = 1)
     //@LazyCollection(LazyCollectionOption.FALSE)

@@ -12,7 +12,10 @@ public record ShowExamDto(
         String ongoing,
         String pin,
         Long id,
-        boolean isToday
+        boolean isToday,
+        boolean canBeEdited,
+        boolean canBeDeleted,
+        int interval
 
 ) {
 }

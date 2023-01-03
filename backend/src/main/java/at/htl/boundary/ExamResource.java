@@ -55,6 +55,8 @@ public class ExamResource {
         List<String> examiners = new ArrayList<>();
         List<String> forms = new ArrayList<>();
         boolean isToday = false;
+        boolean canBeEdited = true;
+        boolean canBeDeleted = true;
 
         for (Exam exam : tempExams) {
 
@@ -78,17 +80,20 @@ public class ExamResource {
             startTime = exam.startTime.toString();
             if(exam.examState == ExamState.RUNNING){
                 status= "Läuft";
+                canBeEdited = false;
+                canBeDeleted = false;
             }
             else if ( exam.examState == ExamState.IN_PREPARATION){
                 status = "In Vorbereitung";
             }
             else{
                 status= "Beendet";
+                canBeEdited = false;
             }
             if(exam.date.equals(LocalDate.now())){
                 isToday = true;
             }
-            examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday));
+            examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday, canBeEdited, canBeDeleted, exam.interval));
         }
         for (int i = 0, j = examSummary.size() - 1; i < j; i++) {
             examSummary.add(i, examSummary.remove(j));
@@ -110,6 +115,8 @@ public class ExamResource {
         List<String> examiners = new ArrayList<>();
         List<String> forms = new ArrayList<>();
         boolean isToday = false;
+        boolean canBeEdited = true;
+        boolean canBeDeleted = true;
 
         for (Exam exam : tempExams) {
 
@@ -141,17 +148,22 @@ public class ExamResource {
                     }
                     if(exam.examState == ExamState.RUNNING){
                         status= "Läuft";
+                        canBeEdited = false;
+                        canBeDeleted = false;
                     }
                     else if ( exam.examState == ExamState.IN_PREPARATION){
                         status = "In Vorbereitung";
+                        canBeEdited = true;
+                        canBeDeleted = true;
                     }
                     else{
                         status= "Beendet";
+                        canBeEdited = false;
                     }
                     if(exam.date.equals(LocalDate.now())){
                         isToday = true;
                     }
-                    examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday));
+                    examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday, canBeEdited, canBeDeleted, exam.interval));
                     examiners = new ArrayList<>();
                     forms = new ArrayList<>();
                 }
@@ -179,6 +191,8 @@ public class ExamResource {
     @Produces(MediaType.APPLICATION_JSON)
     public ShowExamDto getExamById(@PathParam("id") String id) {
         Exam exam = examRepository.findById(Long.parseLong(id));
+        boolean canBeEdited = true;
+        boolean canBeDeleted = true;
         ShowExamDto examSummary;
         //StringBuilder teachers = new StringBuilder();
         //StringBuilder forms = new StringBuilder();
@@ -207,12 +221,18 @@ public class ExamResource {
         String status = "";
         if(exam.examState == ExamState.RUNNING){
             status= "Läuft";
+            canBeEdited = false;
+            canBeDeleted = false;
         }
         else if ( exam.examState == ExamState.IN_PREPARATION){
             status = "In Vorbereitung";
+            canBeEdited = true;
+            canBeDeleted = true;
         }
         else{
             status= "Beendet";
+            canBeEdited = false;
+            canBeDeleted = true;
         }
         String startTime = "";
         boolean isToday = false;
@@ -222,7 +242,7 @@ public class ExamResource {
         if(exam.date.equals(LocalDate.now())){
             isToday = true;
         }
-        examSummary = new ShowExamDto(exam.title, exam.date.toString(), examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday);
+        examSummary = new ShowExamDto(exam.title, exam.date.toString(), examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday, canBeEdited, canBeDeleted, exam.interval);
         return examSummary;
     }
     /**
@@ -238,7 +258,7 @@ public class ExamResource {
         String tempDate = exam.date().substring(0,10);
         //String tempStartTime= tempDate + "T" + exam.startTime()+":00";
         //String tempEndTime= tempDate + "T" + exam.endTime()+":00";
-
+        Log.info(exam.formIds().size());
 
         Log.info(exam.date());
         Exam e = new Exam(
@@ -318,18 +338,31 @@ public class ExamResource {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{id}")
+    @Path("update/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Exam updateExam(@PathParam("id") Long id, ExamUpdateDto exam) {
-        Exam ex = examRepository.findById(id);
+    public Exam updateExam(@PathParam("id") Long id, ExamUpdateDto updatedExam) {
+        Exam exam = examRepository.findById(id);
+        List<Examiner> examiners = new ArrayList<>();
+        List<SchoolClass> schoolClasses = new ArrayList<>();
 
-        ex.title = exam.title();
-        ex.date = LocalDate.parse(exam.date());
-        ex.startTime = LocalDateTime.parse(exam.startTime());
-        ex.endTime = LocalDateTime.parse(exam.endTime());
-        examRepository.getEntityManager().merge(ex);
-        return ex;
+        if(exam == null)
+            return null;
+
+        for(var examiner : updatedExam.examinerIds()) {
+            examiners.add(examinerRepository.findById(Long.valueOf(examiner)));
+        }
+
+        for(var form : updatedExam.formIds()) {
+            schoolClasses.add(schoolClassRepository.findById(Long.valueOf(form)));
+        }
+
+        exam.title = updatedExam.title();
+        exam.date = LocalDate.parse(updatedExam.date());
+        exam.interval = updatedExam.interval();
+
+        examRepository.getEntityManager().merge(exam);
+        return exam;
     }
 
     /**

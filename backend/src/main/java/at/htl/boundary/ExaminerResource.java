@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("api/examiners")
@@ -74,6 +75,23 @@ public class ExaminerResource {
         if(examiner == null)
             return null;
         return examiner;
+    }
+
+
+    @GET
+    @Path("exam/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public List<Examiner> getExaminerByExamId(@PathParam("id") String id) {
+        Exam exam = examRepository.findById(Long.parseLong(id));
+        List<Examiner> examiners = new ArrayList<>();
+        examiners = exam.examiners;
+        if(examiners.size() > 1) {
+            examiners.remove(0);
+        }else{
+            examiners.clear();
+        }
+        return examiners;
     }
 
     @GET
