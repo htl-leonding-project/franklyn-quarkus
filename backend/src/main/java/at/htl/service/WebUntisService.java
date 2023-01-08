@@ -35,7 +35,7 @@ public class WebUntisService {
 
     Session session;
 
-    public String authenticateUser(String userName, String password) {
+    public boolean authenticateUser(String userName, String password) {
         try {
             Session session = Session.login(
                     userName,
@@ -46,17 +46,15 @@ public class WebUntisService {
             if (session != null) {
 
                 session.logout();
-                Log.info("success");
-                return "success";
+                return true;
             } else {
-                Log.info("failed");
-                return "failed";
+                return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return "Unknown error";
+        return false;
     }
 
     public String initDB(String userName, String password) {

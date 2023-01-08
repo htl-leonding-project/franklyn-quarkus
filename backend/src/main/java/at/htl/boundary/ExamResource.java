@@ -59,6 +59,9 @@ public class ExamResource {
         boolean canBeDeleted = true;
 
         for (Exam exam : tempExams) {
+            if(exam.isDeleted){
+                continue;
+            }
 
             if(exam.examiners != null && exam.examiners.size() > 0) {
                 for(int i = 1; i < exam.examiners.size(); i++) {
@@ -193,6 +196,9 @@ public class ExamResource {
     @Produces(MediaType.APPLICATION_JSON)
     public ShowExamDto getExamById(@PathParam("id") String id, @PathParam("examinerId") String examinerId) {
         Exam exam = examRepository.findById(Long.parseLong(id));
+        if(exam.isDeleted){
+            return null;
+        }
         boolean canBeEdited = true;
         boolean canBeDeleted = true;
         ShowExamDto examSummary;
@@ -328,11 +334,14 @@ public class ExamResource {
     @Transactional
     public Exam deleteExam(@PathParam("id") Long id) {
         //can only be deleted if there are no more examiners in it
-        Exam ex = examRepository.findById(id);
-        if(ex == null)
+        Exam exam = examRepository.findById(id);
+        if(exam == null)
             return null;
         examinerRepository.deleteExamFromExaminers(id);
-        return ex;
+        //delete screenshots
+        exam.isDeleted = true;
+        examRepository.getEntityManager().merge(exam);
+        return exam;
     }
 
     /**
