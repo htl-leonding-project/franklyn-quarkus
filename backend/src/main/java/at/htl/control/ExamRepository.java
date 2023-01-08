@@ -35,7 +35,13 @@ public class ExamRepository implements PanacheRepository<Exam> {
     }
 
     public Boolean verifyPIN(Long id, String pin) {
-        Exam exam = this.find("Exam.verifyPIN", id).firstResult();
+        //Exam exam = this.find("Exam.verifyPIN", id).firstResult();
+        var query = this.getEntityManager().createQuery(
+                "select e from Exam e where e.pin = :PIN and e.isDeleted = :ISDELETED",
+                Exam.class
+        ).setParameter("PIN", pin).setParameter("ISDELETED", false);
+        Exam exam = query.getSingleResult();
+
         return pin.equals(exam.pin);
 
     }
@@ -59,7 +65,7 @@ public class ExamRepository implements PanacheRepository<Exam> {
         //List<Examiner> examiners = new ArrayList<>();
         for (Exam e : exams) {
             for (Examiner ex : e.examiners) {
-                if (Objects.equals(ex.id, id)){
+                if (Objects.equals(ex.id, id) && !e.isDeleted){
                     this.getEntityManager().remove(ex);
                 }
             }

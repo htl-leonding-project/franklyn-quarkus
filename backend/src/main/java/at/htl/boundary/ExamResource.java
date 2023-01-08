@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 @Path("api/exams")
 public class ExamResource {
@@ -339,6 +340,9 @@ public class ExamResource {
             return null;
         examinerRepository.deleteExamFromExaminers(id);
         //delete screenshots
+        exam.examiners.clear();
+        exam.formIds.clear();
+        exam.pin = "";
         exam.isDeleted = true;
         examRepository.getEntityManager().merge(exam);
         return exam;
@@ -390,7 +394,7 @@ public class ExamResource {
         Exam exam = null;
         boolean check = false;
         for (Exam e : exams) {
-            if(e.pin.equals(pin)){
+            if(e.pin.equals(pin) && Objects.equals(e.date, LocalDate.now())){
                 exam = e;
                 check = true;
             }
