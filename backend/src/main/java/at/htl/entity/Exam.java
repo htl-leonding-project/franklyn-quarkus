@@ -94,6 +94,9 @@ public class Exam extends PanacheEntityBase {
     //@LazyCollection(LazyCollectionOption.FALSE)
     public List<Examiner> examiners = new ArrayList<>();
 
+    @Column(name = "E_IS_DELETED")
+    public boolean isDeleted = false;
+
 /*    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "F_EXAM_EXAMINER",
             joinColumns = @JoinColumn(name = "examiner_id"),

@@ -40,9 +40,6 @@ public class ImageResource {
     @ConfigProperty(name = "PATHOFSCREENSHOT")
     String pathOfScreenshots;
 
-    @ConfigProperty(name = "CURRENT_HOST")
-    String currentHost;
-
     Long cnt = 0L;
 
     @POST
@@ -87,7 +84,7 @@ public class ImageResource {
                     examinee,
                     Resolution.HD,
                     1,
-                    currentHost+pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]+"/"+filename,
+                    pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]+"/"+filename,
                     exam
                     );
             screenshotRepository.post(screenshot);

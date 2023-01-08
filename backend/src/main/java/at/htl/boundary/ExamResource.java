@@ -123,9 +123,11 @@ public class ExamResource {
             for(Examiner examiner : exam.examiners){
                 if(examiner.id == Long.parseLong(id)){
                     if(exam.examiners != null && exam.examiners.size() > 0) {
-                        for(int i = 1; i < exam.examiners.size(); i++) {
+                        for(int i = 0; i < exam.examiners.size(); i++) {
                             if(exam.examiners.get(i) != null) {
-                                examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
+                                if(exam.examiners.get(i).id != Long.parseLong(id)){
+                                    examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
+                                }
                             }
                         }
                     }
@@ -187,9 +189,9 @@ public class ExamResource {
     }
 
     @GET
-    @Path("/exam/{id}")
+    @Path("/exam/{id}/examiner/{examinerId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ShowExamDto getExamById(@PathParam("id") String id) {
+    public ShowExamDto getExamById(@PathParam("id") String id, @PathParam("examinerId") String examinerId) {
         Exam exam = examRepository.findById(Long.parseLong(id));
         boolean canBeEdited = true;
         boolean canBeDeleted = true;
@@ -201,10 +203,11 @@ public class ExamResource {
         for(Examiner examiner : exam.examiners){
             if(examiner.id == Long.parseLong(id)) {
                 if (exam.examiners != null && exam.examiners.size() > 0) {
-                    for (int i = 1; i < exam.examiners.size(); i++) {
+                    for (int i = 0; i < exam.examiners.size(); i++) {
                         if (exam.examiners.get(i) != null) {
-                            examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
-                        }
+                            if(exam.examiners.get(i).id != Long.parseLong(id)){
+                                examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
+                            }                        }
                     }
                 }
             }
