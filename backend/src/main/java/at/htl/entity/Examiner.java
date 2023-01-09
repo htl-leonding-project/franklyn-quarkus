@@ -38,7 +38,7 @@ public class Examiner extends PanacheEntityBase {
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JoinTable(name = "ER_E_EXAMINER_EXAM")
+    //@JoinTable(name = "ER_E_EXAMINER_EXAM")
     @JsonIgnore
     public List<Exam> exams;
 

@@ -79,6 +79,7 @@ public class Exam extends PanacheEntityBase {
     public Resolution resolution;
     @Column(name = "E_EXAMINEES")
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     public List<Examinee> examinees;
 
     @NotNull
@@ -87,11 +88,19 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_COMPRESSION")
     public int compression;
 
-    @JoinColumn(name = "E_EXAMINER_IDS")
+/*    @JoinColumn(name = "E_EXAMINER_IDS")
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //fetch = FetchType.EAGER
     //@Fetch(value = FetchMode.SUBSELECT)
-    @Size(min = 1)
+    @Size(min = 1)*/
     //@LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "F_EXAM_F_EXAMINER",
+        joinColumns = {@JoinColumn(name = "E_ID")},
+        inverseJoinColumns = {@JoinColumn(name = "ER_ID")},
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"ER_ID", "E_ID"})
+        })
     public List<Examiner> examiners = new ArrayList<>();
 
     @Column(name = "E_IS_DELETED")

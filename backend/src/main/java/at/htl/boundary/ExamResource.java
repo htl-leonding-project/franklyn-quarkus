@@ -10,23 +10,28 @@ import at.htl.entity.dto.ExamUpdateDto;
 import at.htl.entity.dto.ExaminerDto;
 import at.htl.entity.dto.ShowExamDto;
 import io.quarkus.logging.Log;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Path("api/exams")
 public class ExamResource {
 
     @Inject
     ExamRepository examRepository;
+
+    @ConfigProperty(name = "CURRENT_ROOT_DIRECTORY")
+    File root;
 
     @Inject
     ExaminerRepository examinerRepository;
@@ -123,7 +128,9 @@ public class ExamResource {
         boolean canBeDeleted = true;
 
         for (Exam exam : tempExams) {
-
+            if(exam.isDeleted){
+                continue;
+            }
             for(Examiner examiner : exam.examiners){
                 if(examiner.id == Long.parseLong(id)){
                     if(exam.examiners != null && exam.examiners.size() > 0) {
@@ -207,14 +214,11 @@ public class ExamResource {
         //StringBuilder forms = new StringBuilder();
         List<String> examiners = new ArrayList<>();
         List<String> forms = new ArrayList<>();
-        for(Examiner examiner : exam.examiners){
-            if(examiner.id == Long.parseLong(id)) {
-                if (exam.examiners != null && exam.examiners.size() > 0) {
-                    for (int i = 0; i < exam.examiners.size(); i++) {
-                        if (exam.examiners.get(i) != null) {
-                            if(exam.examiners.get(i).id != Long.parseLong(id)){
-                                examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
-                            }                        }
+        if (exam.examiners != null && exam.examiners.size() > 0) {
+            for (int i = 0; i < exam.examiners.size(); i++) {
+                if (exam.examiners.get(i) != null) {
+                    if(exam.examiners.get(i).id != Long.parseLong(examinerId)){
+                        examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
                     }
                 }
             }
@@ -287,6 +291,8 @@ public class ExamResource {
                 Examiner examiner = examinerRepository.findById(Long.parseLong(examinerId));
                 if(examiner != null) {
                     examiners.add(examiner);
+                    examiner.exams.add(e);
+                    //examinerRepository.getEntityManager().merge(examiner);
                     //examinerRepository.addExam(examiner, e);
                     Log.info(examiner.id);
                 }
@@ -296,10 +302,14 @@ public class ExamResource {
         if(exam.formIds() != null && exam.formIds().size() > 0) {
             for (String formId : exam.formIds()) {
                 SchoolClass form = schoolClassRepository.findById(Long.parseLong(formId));
-                forms.add(form);
+                if(form != null) {
+                    forms.add(form);
+                    form.exams.add(e);
+                    //schoolClassRepository.getEntityManager().merge(form);
+                    //schoolClassRepository.addExam(form, e);
+                }
             }
         }
-
         e.examiners = examiners;
         e.formIds = forms;
         examRepository.persist(e);
@@ -340,6 +350,8 @@ public class ExamResource {
             return null;
         examinerRepository.deleteExamFromExaminers(id);
         //delete screenshots
+        //List<File> files = ExamRepository.deleteDirectoryOfScreenshots("Franklyn_2022-02-23", root);
+
         exam.examiners.clear();
         exam.formIds.clear();
         exam.pin = "";
@@ -361,6 +373,7 @@ public class ExamResource {
         Exam exam = examRepository.findById(id);
         List<Examiner> examiners = new ArrayList<>();
         List<SchoolClass> schoolClasses = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         if(exam == null)
             return null;
@@ -374,7 +387,7 @@ public class ExamResource {
         }
 
         exam.title = updatedExam.title();
-        exam.date = LocalDate.parse(updatedExam.date());
+        exam.date = LocalDate.parse(updatedExam.date(), formatter);
         exam.interval = updatedExam.interval();
 
         examRepository.getEntityManager().merge(exam);

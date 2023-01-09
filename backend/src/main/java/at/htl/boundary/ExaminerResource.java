@@ -79,17 +79,18 @@ public class ExaminerResource {
 
 
     @GET
-    @Path("exam/id/{id}")
+    @Path("exam/id/{id}/examiner/{examinerId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public List<Examiner> getExaminerByExamId(@PathParam("id") String id) {
+    public List<Examiner> getExaminerByExamId(@PathParam("id") String id, @PathParam("examinerId") String examinerId) {
         Exam exam = examRepository.findById(Long.parseLong(id));
         List<Examiner> examiners = new ArrayList<>();
         examiners = exam.examiners;
-        if(examiners.size() > 1) {
-            examiners.remove(0);
-        }else{
-            examiners.clear();
+        for (Examiner examiner : examiners) {
+            if (examiner.id == Long.parseLong(examinerId)) {
+                examiners.remove(examiner);
+                break;
+            }
         }
         return examiners;
     }

@@ -4,8 +4,10 @@ import at.htl.entity.Exam;
 import at.htl.entity.Examinee;
 import at.htl.entity.Examiner;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.Objects;
 
 @ApplicationScoped
 public class ExamRepository implements PanacheRepository<Exam> {
+
     public String createPIN(LocalDate date){
         List<Exam> examqs = this.find("date", LocalDate.now()).list();
         List<Exam> examsWithDate = this.find("date", LocalDate.now()).list();
@@ -54,6 +57,21 @@ public class ExamRepository implements PanacheRepository<Exam> {
         Exam exam = query.getSingleResult();
         return exam;
 
+    }
+
+    public static List<File> deleteDirectoryOfScreenshots(String name, File root) {
+        List<File> result = new ArrayList<>();
+        for (File file : Objects.requireNonNull(root.listFiles())) {
+            if (file.isDirectory()) {
+                if (file.getName().equals(name)) {
+                    result.add(file);
+                }
+
+                result.addAll(deleteDirectoryOfScreenshots(name, root));
+            }
+        }
+
+        return result;
     }
 
     public void deleteExaminerFromExams(Long id) {
