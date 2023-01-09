@@ -14,21 +14,24 @@ const httpOptions = {
 })
 export class ExaminersService {
 
+  private BASE_URL: string = "http://localhost:8080/api/examiners";
+
+
   constructor(private http: HttpClient) { }
 
   getAll(){
-    return this.http.get<Examiner[]>("http://localhost:8080/api/examiners");
+    return this.http.get<Examiner[]>(this.BASE_URL);
   }
 
   getTeacher(userName: string){
-    return this.http.get<Examiner>("http://localhost:8080/api/examiners/" + userName);
+    return this.http.get<Examiner>(this.BASE_URL + "/"+ userName);
   }
 
   getById(examinerId: string) {
-    return this.http.get<Examiner>("http://localhost:8080/api/examiners/id/" + examinerId);
+    return this.http.get<Examiner>(this.BASE_URL+"/id/" + examinerId);
   }
 
-  getExaminersByExamId(examinerId: string){
-    return this.http.get<Examiner[]>("http://localhost:8080/api/examiners/exam/id/" + examinerId);
+  getExaminersByExamId(examId: string, examinerId: string){
+    return this.http.get<Examiner[]>(this.BASE_URL+"/exam/id/" + examId + "/examiner/" + examinerId);
   }
 }

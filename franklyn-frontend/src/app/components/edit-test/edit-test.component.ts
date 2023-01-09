@@ -71,17 +71,15 @@ export class EditTestComponent implements OnInit {
 
   ngOnInit(): void {
     this.examinerId = this.localService.getData("examinerId");
-    if(this.exam.id != Number(this.localService.getData("selectedExamId"))){
-      this.getExamById();
-      this.loadExaminers();
-      this.loadForms();
-      this.loadSelectedExaminer();
-      this.loadSelectedForms();
-    }
+    this.getExamById();
+    this.loadExaminers();
+    this.loadForms();
+    this.loadSelectedExaminer();
+    this.loadSelectedForms();
   }
 
   loadSelectedExaminer(){
-    this.examinersService.getExaminersByExamId(this.localService.getData("selectedExamId")!).subscribe({
+    this.examinersService.getExaminersByExamId(this.localService.getData("selectedExamId")!, this.localService.getData("examinerId")!).subscribe({
       next: data => {
         this.selectedExaminersObjects = data;
         for(let examiner of this.selectedExaminersObjects){
@@ -105,10 +103,11 @@ export class EditTestComponent implements OnInit {
   }
 
   getExamById() {
-    this.examService.getById(this.localService.getData("selectedExamId")!).subscribe({
+    this.examService.getExamById(this.localService.getData("selectedExamId")!, this.localService.getData("examinerId")!).subscribe({
       next: data => {
         this.exam = data;
         this.newExam.id = this.exam.id;
+        this.tempDate = new Date(this.exam.date);
       }, 
       error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
     });
@@ -143,8 +142,12 @@ export class EditTestComponent implements OnInit {
       this.tempFormId = s +'';
       this.newExam.formIds.push(this.tempFormId);
     }
-    this.newExam.date = this.tempDate.toString();
+    this.tempDate = new Date(this.exam.date);
+    this.newExam.date = this.tempDate.toLocaleDateString();
+    //this.newExam.date = this.tempDate.toString();
+    console.log(this.tempDate.toLocaleDateString());
     this.newExam.interval = this.tempInterval + '';
+    this.newExam.title = this.exam.title;
 
 
     this.examService.updateExam(this.newExam).subscribe({
@@ -152,6 +155,7 @@ export class EditTestComponent implements OnInit {
       }, 
       error: (error)=>{alert("Exam konnte nicht editiert werden!")}
     })
+    this.router.navigate(['/myTests'])
   }
 
   logout(){

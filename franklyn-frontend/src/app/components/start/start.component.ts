@@ -18,7 +18,7 @@ export class StartComponent implements OnInit {
   userName: string = "";
   passWord: string = "";
 
-  response: string = "";
+  response: string = "false";
 
   ngOnInit(): void {
       
@@ -29,11 +29,11 @@ export class StartComponent implements OnInit {
 
   this.webUntisService.login(this.userName,this.passWord).subscribe({
       next: data => {
-        this.response = data +"";
+        this.response = data;
       }, 
       error: (error) => {alert("Fehler beim Login!");}
     });
-    if(this.response == "success"){
+    if(this.response == "true"){
       this.loadExaminer();
       this.router.navigate(['/dashboard']);
     }

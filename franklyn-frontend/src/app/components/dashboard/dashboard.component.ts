@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getExamById() {
-    this.examService.getById(this.localService.getData("selectedExamId")!).subscribe({
+    this.examService.getExamById(this.localService.getData("selectedExamId")!, this.localService.getData("examinerId")!).subscribe({
       next: data => {
         this.exam = data;
         this.localService.saveData("selectedExamId", this.exam.id+"");
@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           takeWhile(() => this.isSubscriped)
         )
         .subscribe((x) => {
-          this.examService.getById(this.localService.getData("selectedExamId")!).subscribe({
+          this.examService.getExamById(this.localService.getData("selectedExamId")!, this.localService.getData("examinerId")!).subscribe({
             next: data => {
               this.exam = data;
               this.localService.saveData("selectedExamId", this.exam.id+"");
@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           takeWhile(() => this.isSubscriped)
         )
         .subscribe((x) => {
-          this.examService.getById(this.localService.getData("selectedExamId")!).subscribe({
+          this.examService.getExamById(this.localService.getData("selectedExamId")!, this.localService.getData("examinerId")!).subscribe({
             next: data => {
               this.exam = data;
               this.localService.saveData("selectedExamId", this.exam.id+"");

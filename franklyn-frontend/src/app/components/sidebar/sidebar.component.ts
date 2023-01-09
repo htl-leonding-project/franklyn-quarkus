@@ -30,6 +30,4 @@ export class SidebarComponent implements OnInit {
   ShowScreenshots() {
     this.router.navigate(['/screenshots'])
   }
-
-
 }

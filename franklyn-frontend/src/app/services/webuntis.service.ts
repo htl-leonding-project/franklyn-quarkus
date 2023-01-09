@@ -14,9 +14,11 @@ const httpOptions = {
 })
 export class WebuntisService {
 
+  private BASE_URL: string = "http://localhost:8080/api/webuntis";
+
   constructor(private http: HttpClient) { }
 
   login(userName: string, passWord: string) {
-    return this.http.post("http://localhost:8080/api/webuntis/authUser/" +userName,passWord, {responseType: 'text'});
+    return this.http.post(this.BASE_URL+"/authUser/" +userName,passWord, {responseType: 'text'});
   }
 }

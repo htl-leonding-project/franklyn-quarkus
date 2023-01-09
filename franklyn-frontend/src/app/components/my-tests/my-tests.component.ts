@@ -58,18 +58,6 @@ export class MyTestsComponent implements OnInit, OnDestroy {
     this.getExamById(this.selectedExam);
   }
 
-  checkExamsIfToday(){
-    console.log(this.exams.length)
-    for(let exam of this.exams){
-      console.log(new Date(exam.date) );
-      console.log(new Date());
-      if(new Date(exam.date) == new Date()){
-        console.log("in if");
-        this.examToday = this.pollingService.getTestToday(exam.id);
-      }
-    }
-  }
-
   setExamId(examId: number) {
     this.localService.removeData("selectedExamId");
     this.localService.saveData("selectedExamId", examId +"");
@@ -83,6 +71,7 @@ export class MyTestsComponent implements OnInit, OnDestroy {
 
   toggleExamInCheckBox(exam: Exam){
     this.setExamId(exam.id);
+
   }
 
   toggleExamOnInit(exam:Exam){
@@ -92,13 +81,9 @@ export class MyTestsComponent implements OnInit, OnDestroy {
   }
 
   getExamById(selectedExam: number) {
-    this.examService.getById(selectedExam + "").subscribe({
+    this.examService.getExamById(selectedExam + "", this.localService.getData("examinerId")!).subscribe({
       next: data => {
         this.currentExam = data;
-        if(this.currentExam != null){
-          this.selection.select(this.currentExam);
-          console.log(this.selection.selected)
-        }
       },
       error:(error) => {alert("Fehler beim Laden der Examen: "+error.message);}
     })
@@ -112,7 +97,6 @@ export class MyTestsComponent implements OnInit, OnDestroy {
         console.log(this.exams.length)
         if(this.exams.length == 0){
           this.hasAlreadyExams = false;
-
         }
         for(let exam of this.exams){
           if(exam.isToday == true){

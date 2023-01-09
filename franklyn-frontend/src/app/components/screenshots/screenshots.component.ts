@@ -143,7 +143,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   }
 
   loadExam() {
-    this.examService.getExamById(this.localService.getData("selectedExamId")!).subscribe({
+    this.examService.getExamById(this.localService.getData("selectedExamId")!, this.localService.getData("examinerId")!).subscribe({
       next: data => {
         this.exam = data;
         if(this.exam.isToday){
