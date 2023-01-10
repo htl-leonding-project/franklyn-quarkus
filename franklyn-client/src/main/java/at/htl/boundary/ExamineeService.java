@@ -14,12 +14,10 @@ import javax.ws.rs.core.MediaType;
 public interface ExamineeService {
 
     /**
-     * Returns
-     *      -1L ... student already exists (not enrolled)
-     *      <<StudentId>> ... student got persisted (is now enrolled)
-     * @param id Id of the exam
+     * @param id        id of the exam
      * @param firstName firstname of the student
-     * @param lastName lastname of the student
+     * @param lastName  lastname of the student
+     * @return          the id if the student is enrolled
      */
     @GET
     @Path("/enroll/{id}/{firstName}/{lastName}")
@@ -29,10 +27,8 @@ public interface ExamineeService {
                                        @PathParam("lastName") String lastName);
 
     /**
-     * Returns
-     *      0L ... exam was not found
-     *      <<ExamId>>> exam was found
-     * @param pin pin to verify for an exam
+     * @param pin       pin to verify for an exam
+     * @return          the examId if the pin was verified
      */
     @GET
     @Path("verifyPIN/{pin}")

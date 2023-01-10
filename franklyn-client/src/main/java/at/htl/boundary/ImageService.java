@@ -7,7 +7,7 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 
 /**
-    * Send Screenshots to Backend
+ * Send Screenshots to Backend
  */
 
 @Path("upload")
@@ -15,9 +15,9 @@ import java.io.File;
 public interface ImageService {
 
     /**
-     * Returns a Response if the image got sent
-     * @param file screenshot that gets send to backend
-     * @param fileName name of the file
+     * @param file          screenshot that gets send to backend
+     * @param fileName      name of the file
+     * @return              Response for the upload
      */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
