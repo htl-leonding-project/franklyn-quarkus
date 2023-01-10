@@ -4,18 +4,15 @@ import at.htl.boundary.ExamineeService;
 import at.htl.boundary.ImageService;
 import io.quarkus.logging.Log;
 import io.quarkus.scheduler.Scheduled;
-import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
-import javax.ws.rs.core.Response;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -51,20 +48,20 @@ public class ApiCalls {
                 File newFile = new File(fileName);
                 ImageIO.write(screenFullImage, fileExt, newFile);
 
-                Log.info(imageService.uploadFile(newFile, fileName).getEntity());
-
-                //System.out.println(imageService.uploadFile(newFile, fileName, examineeId).getEntity());
+                imageService.uploadFile(newFile, fileName);
                 Log.info("A full screenshot saved!");
-                //System.out.println("A full screenshot saved!");
+
+                if(newFile.delete()){
+                    Log.info(String.format("Remove %s successfully", fileName));
+                }
             } catch (AWTException | IOException ex) {
                 System.err.println(ex);
             }
         }
     }
 
-    public Long enterName(String id) throws URISyntaxException, IOException {
-
-        Long response = -1L;
+    public Long enterName(String id){
+        Long response;
 
         do {
             System.out.print("Enter your first name: ");
@@ -75,10 +72,10 @@ public class ApiCalls {
 
             response = executeService(id, firstName, lastName);
 
-            if (response == -1) {
+            if (response == -1L) {
                 System.out.println("You are already enrolled for this exam!");
             }
-        } while (response == -1);
+        } while (response == -1L);
         authenticated = true;
         return response;
     }
@@ -88,8 +85,7 @@ public class ApiCalls {
                 .enrollStudentForExam(id, firstName, lastName);
     }
 
-    public Long enterPIN() throws URISyntaxException, IOException {
-
+    public Long enterPIN(){
         do {
             System.out.print("Enter your pin: ");
             String pin = sc.next();
