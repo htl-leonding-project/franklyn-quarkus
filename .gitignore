@@ -47,3 +47,5 @@ dist
 
 *.jar
 /backend/db-postgres/
+
+/client
