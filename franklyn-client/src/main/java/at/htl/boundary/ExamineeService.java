@@ -1,6 +1,5 @@
 package at.htl.boundary;
 
-import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -35,4 +34,8 @@ public interface ExamineeService {
     @Produces(MediaType.APPLICATION_JSON)
     Long verifyPIN(@PathParam("pin") String pin);
 
+    @GET
+    @Path("getExamId/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    int getInterval(@PathParam("id") String examId);
 }

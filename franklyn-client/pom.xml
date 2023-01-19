@@ -46,12 +46,12 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-scheduler</artifactId>
+            <artifactId>quarkus-junit5</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-junit5</artifactId>
-            <scope>test</scope>
+            <artifactId>quarkus-quartz</artifactId>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -132,7 +132,7 @@
                 </plugins>
             </build>
             <properties>
-                <quarkus.package.type>native</quarkus.package.type>
+                <quarkus.package.type>uber-jar</quarkus.package.type>
             </properties>
         </profile>
     </profiles>

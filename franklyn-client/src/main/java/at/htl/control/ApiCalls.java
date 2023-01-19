@@ -5,6 +5,9 @@ import at.htl.boundary.ImageService;
 import io.quarkus.logging.Log;
 import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.quartz.*;
+import org.quartz.SimpleScheduleBuilder;
+import org.quartz.TriggerBuilder;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.imageio.ImageIO;
@@ -19,7 +22,6 @@ import java.util.Scanner;
 @ApplicationScoped
 public class ApiCalls {
 
-
     @Inject
     @RestClient
     ImageService imageService;
@@ -29,19 +31,28 @@ public class ApiCalls {
     private String firstName = "";
     private String lastName = "";
     private Long id = -1L;
-    private boolean authenticated = false;
     Scanner sc = new Scanner(System.in);
 
-    @Scheduled(every = "5s")
-    public void sendScreenshots() {
-        if (authenticated) {
+    private boolean authenticated = false;
+
+    private int interval = 0;
+
+    @Inject
+    Scheduler scheduler;
+
+    /***
+     * send screenshot to backend
+     */
+    @Scheduled(every = "3s")                        // Scheduled time is useless due the fact that
+    public void sendScreenshots() {                 //   it will get overwritten anyway
+        if(authenticated) {
             try {
                 Robot robot = new Robot();
                 String fileExt = "png";
                 String localDateTime = LocalDateTime.now().toString()
                         .replace(':', '-')
                         .replace(".", "-");
-                String fileName = localDateTime + "_" + lastName + "_" + firstName + "_" + id  + "."+ fileExt;
+                String fileName = localDateTime + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
                 BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
@@ -51,16 +62,23 @@ public class ApiCalls {
                 imageService.uploadFile(newFile, fileName);
                 Log.info("A full screenshot saved!");
 
-                if(newFile.delete()){
+                if (newFile.delete()) {
                     Log.info(String.format("Remove %s successfully", fileName));
                 }
             } catch (AWTException | IOException ex) {
                 System.err.println(ex);
+
             }
         }
     }
 
-    public Long enterName(String id){
+    /***
+     * set enroll data
+     * @param id
+     * @return
+     */
+
+    public Long enterName(String id)  {
         Long response;
 
         do {
@@ -76,16 +94,31 @@ public class ApiCalls {
                 System.out.println("You are already enrolled for this exam!");
             }
         } while (response == -1L);
+
         authenticated = true;
         return response;
     }
+
+    /***
+     * enroll student in exam (POST)
+     *
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @return
+     */
 
     public Long executeService(String id, String firstName, String lastName) {
         return examineeService
                 .enrollStudentForExam(id, firstName, lastName);
     }
 
-    public Long enterPIN(){
+    /***
+     * send pin to backend (POST)
+     * @return exam id
+     */
+
+    public Long enterPIN() {
         do {
             System.out.print("Enter your pin: ");
             String pin = sc.next();
@@ -94,5 +127,58 @@ public class ApiCalls {
         } while (id == 0L);
 
         return id;
+    }
+
+    /***
+     * retrieve interval from backend (GET)
+     * @param examId
+     */
+
+    public void getIntervall(String examId) {
+        interval = examineeService.getInterval(examId);
+        Log.info(interval);
+    }
+
+    /***
+     * overwrite scheduler with interval given
+     * @throws SchedulerException
+     */
+
+    public void setScheduler() throws SchedulerException {
+        if(interval != 0){
+
+            Log.info("is in!!!");
+
+            JobDetail job = JobBuilder.newJob(SendScreenshotJob.class)
+                    .withIdentity("scheduleJob", "grp")
+                    .build();
+
+            Trigger trigger = TriggerBuilder.newTrigger()
+                    .withIdentity("scheduleTrigger", "grp")
+                    .startNow()
+                    .withSchedule(
+                            SimpleScheduleBuilder.simpleSchedule()
+                                    .withIntervalInSeconds(interval)
+                                    .repeatForever())
+                    .build();
+
+            scheduler.scheduleJob(job, trigger);
+            scheduler.pauseAll();
+            scheduler.resumeJob(job.getKey());
+        }
+    }
+
+    /***
+     * Job executes sendScreenshot() method
+     */
+
+    public static class SendScreenshotJob implements org.quartz.Job{
+        @Inject
+        ApiCalls calls;
+
+        @Override
+        public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+            calls.sendScreenshots();
+        }
     }
 }
