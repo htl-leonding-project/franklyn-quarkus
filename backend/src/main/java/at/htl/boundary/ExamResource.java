@@ -17,8 +17,6 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -465,6 +463,18 @@ public class ExamResource {
                         .findById(examineeId)
         );
         return examineeRepository.findById(examineeId);
+    }
+
+    @GET
+    @Transactional
+    @Path("getExamId/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public int getIntervallByExam(@PathParam("id") Long id){
+        int intervall = examRepository.getIntervalByExamId(id);
+
+        Log.info(intervall);
+        return intervall;
     }
 
 }

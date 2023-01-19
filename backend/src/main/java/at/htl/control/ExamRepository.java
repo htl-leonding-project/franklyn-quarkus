@@ -4,7 +4,6 @@ import at.htl.entity.Exam;
 import at.htl.entity.Examinee;
 import at.htl.entity.Examiner;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.File;
@@ -88,5 +87,13 @@ public class ExamRepository implements PanacheRepository<Exam> {
                 }
             }
         }
+    }
+
+    public int getIntervalByExamId(Long id) {
+        var query = this.getEntityManager().createQuery(
+                "select e from Exam e where e.id = :EXAMID", Exam.class
+        ).setParameter("EXAMID", id);
+
+        return query.getSingleResult().interval;
     }
 }
