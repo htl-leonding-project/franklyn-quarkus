@@ -31,6 +31,7 @@ public class ApiCalls {
     private String firstName = "";
     private String lastName = "";
     private Long id = -1L;
+    private String enrollOption = "";
     Scanner sc = new Scanner(System.in);
 
     private boolean authenticated = false;
@@ -92,6 +93,14 @@ public class ApiCalls {
 
             if (response == -1L) {
                 System.out.println("You are already enrolled for this exam!");
+
+                System.out.print("Enroll again with the same name? [J | N]");
+                enrollOption = sc.next();
+
+                if (!enrollOption.toUpperCase().equals("J") || !enrollOption.toUpperCase().equals("N")){
+
+                }
+
             }
         } while (response == -1L);
 
@@ -136,7 +145,6 @@ public class ApiCalls {
 
     public void getIntervall(String examId) {
         interval = examineeService.getInterval(examId);
-        Log.info(interval);
     }
 
     /***
@@ -146,8 +154,6 @@ public class ApiCalls {
 
     public void setScheduler() throws SchedulerException {
         if(interval != 0){
-
-            Log.info("is in!!!");
 
             JobDetail job = JobBuilder.newJob(SendScreenshotJob.class)
                     .withIdentity("scheduleJob", "grp")
