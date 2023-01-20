@@ -444,6 +444,21 @@ public class ExamResource {
         return returnExaminee.id;
     }
 
+    @GET
+    @Path("enroll/again/{id}/{firstName}/{lastName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Long enrollStudentForExamAgain(@PathParam("id") Long id,
+                                          @PathParam("firstName") String firstName,
+                                          @PathParam("lastName") String lastName) {
+
+        Exam exam = examRepository.findById(id);
+        Examinee examinee = examineeRepository.findByName(id, lastName, firstName);
+        if(examinee == null)
+            return 0L;
+        return examinee.id;
+    }
+
 
     /**
      * Removes examinee from exam
@@ -467,14 +482,14 @@ public class ExamResource {
 
     @GET
     @Transactional
-    @Path("getExamId/{id}")
+    @Path("getIntervalByExamId/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public int getIntervallByExam(@PathParam("id") Long id){
-        int intervall = examRepository.getIntervalByExamId(id);
+    public int getIntervalByExam(@PathParam("id") Long id){
+        int interval = examRepository.getIntervalByExamId(id);
 
-        Log.info(intervall);
-        return intervall;
+        Log.info(interval);
+        return interval;
     }
 
 }
