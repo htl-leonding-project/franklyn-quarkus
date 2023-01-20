@@ -9,6 +9,7 @@ public record ExamDto(
         List<String> formIds,
         String startTime,
         String endTime,
-        boolean isToday
+        boolean isToday,
+        int interval
 ) {
 }

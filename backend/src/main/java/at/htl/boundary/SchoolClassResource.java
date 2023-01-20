@@ -3,16 +3,12 @@ package at.htl.boundary;
 import at.htl.control.ExamRepository;
 import at.htl.control.SchoolClassRepository;
 import at.htl.entity.Exam;
-import at.htl.entity.Examiner;
 import at.htl.entity.SchoolClass;
-import at.htl.entity.dto.SchoolClassDto;
-import io.quarkus.logging.Log;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
 import java.util.List;
 
 @Path("api/schoolclass")
@@ -97,6 +93,6 @@ public class SchoolClassResource {
     @Transactional
     public List<SchoolClass> getExaminerByExamId(@PathParam("id") String id) {
         Exam exam = examRepository.findById(Long.parseLong(id));
-        return exam.formIds;
+        return exam.schoolClasses;
     }
 }

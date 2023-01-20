@@ -66,7 +66,7 @@ public class Exam extends PanacheEntityBase {
     @Size(min = 1)
     @JoinColumn(name = "E_FORM_IDS")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    public List<SchoolClass> formIds;
+    public List<SchoolClass> schoolClasses;
 
     @NotNull
     @ConfigProperty(defaultValue = "5")
@@ -81,6 +81,9 @@ public class Exam extends PanacheEntityBase {
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     public List<Examinee> examinees;
+
+    @Column(name = "E_ADMIN_ID")
+    public Long adminId;
 
     @NotNull
     @Min(1)
@@ -122,7 +125,8 @@ public class Exam extends PanacheEntityBase {
                 LocalDate date,
                 int interval,
                 Resolution resolution,
-                int compression) {
+                int compression,
+                Long adminId) {
         this.pin = pin;
         this.title = title;
         this.examState = state;
@@ -130,6 +134,7 @@ public class Exam extends PanacheEntityBase {
         this.interval = interval;
         this.resolution = resolution;
         this.compression = compression;
+        this.adminId = adminId;
     }
 
     public Exam(String pin,
@@ -155,7 +160,7 @@ public class Exam extends PanacheEntityBase {
     public Exam(String pin,
                 String title,
                 ExamState state,
-                List<SchoolClass> formIds,
+                List<SchoolClass> schoolClassIds,
                 LocalDate date,
                 LocalDateTime startTime,
                 LocalDateTime endTime,
@@ -166,7 +171,7 @@ public class Exam extends PanacheEntityBase {
         this.pin = pin;
         this.title = title;
         this.examState = state;
-        this.formIds = formIds;
+        this.schoolClasses = schoolClassIds;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
