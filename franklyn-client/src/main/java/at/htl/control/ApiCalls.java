@@ -46,7 +46,7 @@ public class ApiCalls {
      */
     @Scheduled(every = "3s")                        // Scheduled time is useless due the fact that
     public void sendScreenshots() {                 //   it will get overwritten anyway
-        if(authenticated) {
+        if (authenticated) {
             try {
                 Robot robot = new Robot();
                 String fileExt = "png";
@@ -79,7 +79,7 @@ public class ApiCalls {
      * @return
      */
 
-    public Long enterName(String id)  {
+    public Long enterName(String id) {
         Long response;
 
         do {
@@ -89,22 +89,28 @@ public class ApiCalls {
             System.out.print("Enter your last name: ");
             lastName = sc.next();
 
-            response = executeService(id, firstName, lastName);
+            response = executeEnrollService(id, firstName, lastName);
 
             if (response == -1L) {
                 System.out.println("You are already enrolled for this exam!");
 
-                System.out.print("Enroll again with the same name? [J | N]");
+                System.out.print("Enroll again with the same name? [J | N]: ");
                 enrollOption = sc.next();
 
-                if (!enrollOption.toUpperCase().equals("J") || !enrollOption.toUpperCase().equals("N")){
-
+                if (enrollOption.equalsIgnoreCase("J")) {
+                    response = executeEnrollAgainService(id, firstName, lastName);
+                }
+                else if(enrollOption.equalsIgnoreCase("N")){
+                    response = -100L;
                 }
 
             }
         } while (response == -1L);
 
-        authenticated = true;
+        if(response != -100L){
+            authenticated = true;
+        }
+
         return response;
     }
 
@@ -117,10 +123,24 @@ public class ApiCalls {
      * @return
      */
 
-    public Long executeService(String id, String firstName, String lastName) {
+    public Long executeEnrollService(String id, String firstName, String lastName) {
         return examineeService
                 .enrollStudentForExam(id, firstName, lastName);
     }
+
+    /***
+     * enroll student in exam again (POST)
+     *
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @return
+     */
+    public Long executeEnrollAgainService(String id, String firstName, String lastName) {
+        return examineeService
+                .enrollStudentForExamAgain(id, firstName, lastName);
+    }
+
 
     /***
      * send pin to backend (POST)
@@ -153,7 +173,7 @@ public class ApiCalls {
      */
 
     public void setScheduler() throws SchedulerException {
-        if(interval != 0){
+        if (interval != 0) {
 
             JobDetail job = JobBuilder.newJob(SendScreenshotJob.class)
                     .withIdentity("scheduleJob", "grp")
@@ -178,7 +198,7 @@ public class ApiCalls {
      * Job executes sendScreenshot() method
      */
 
-    public static class SendScreenshotJob implements org.quartz.Job{
+    public static class SendScreenshotJob implements org.quartz.Job {
         @Inject
         ApiCalls calls;
 

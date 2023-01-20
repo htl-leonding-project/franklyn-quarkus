@@ -25,6 +25,14 @@ public interface ExamineeService {
                                        @PathParam("firstName") String firstName,
                                        @PathParam("lastName") String lastName);
 
+
+    @GET
+    @Path("enroll/again/{id}/{firstName}/{lastName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    Long enrollStudentForExamAgain(@PathParam("id") String id,
+                                   @PathParam("firstName") String firstName,
+                                   @PathParam("lastName") String lastName);
+
     /**
      * @param pin       pin to verify for an exam
      * @return          the examId if the pin was verified
@@ -34,8 +42,15 @@ public interface ExamineeService {
     @Produces(MediaType.APPLICATION_JSON)
     Long verifyPIN(@PathParam("pin") String pin);
 
+
+    /***
+     * @param examId    id of the exam
+     * @return          interval for screenshots
+     */
     @GET
-    @Path("getExamId/{id}")
+    @Path("getIntervalByExamId/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     int getInterval(@PathParam("id") String examId);
+
+
 }
