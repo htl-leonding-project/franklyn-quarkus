@@ -85,8 +85,6 @@ public class ImageResource {
                     Timestamp.valueOf(LocalDateTime.now()),
                     cnt,
                     examinee,
-                    Resolution.HD,
-                    1,
                     pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]+"/"+filename,
                     exam
                     );

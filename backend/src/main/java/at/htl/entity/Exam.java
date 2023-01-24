@@ -73,10 +73,6 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_INTERVAL")
     public int interval;
 
-    @NotNull
-    @Column(name = "E_RESOLUTION")
-    @Enumerated(EnumType.STRING)
-    public Resolution resolution;
     @Column(name = "E_EXAMINEES")
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -124,16 +120,12 @@ public class Exam extends PanacheEntityBase {
                 ExamState state,
                 LocalDate date,
                 int interval,
-                Resolution resolution,
-                int compression,
                 Long adminId) {
         this.pin = pin;
         this.title = title;
         this.examState = state;
         this.date = date;
         this.interval = interval;
-        this.resolution = resolution;
-        this.compression = compression;
         this.adminId = adminId;
     }
 
@@ -143,9 +135,7 @@ public class Exam extends PanacheEntityBase {
                 LocalDate date,
                 LocalDateTime startTime,
                 LocalDateTime endTime,
-                int interval,
-                Resolution resolution,
-                int compression) {
+                int interval ){
         this.pin = pin;
         this.title = title;
         this.examState = state;
@@ -153,8 +143,7 @@ public class Exam extends PanacheEntityBase {
         this.startTime = startTime;
         this.endTime = endTime;
         this.interval = interval;
-        this.resolution = resolution;
-        this.compression = compression;
+
     }
 
     public Exam(String pin,
@@ -164,21 +153,10 @@ public class Exam extends PanacheEntityBase {
                 LocalDate date,
                 LocalDateTime startTime,
                 LocalDateTime endTime,
-                List<Examiner> examiners,
                 int interval,
-                Resolution resolution,
-                int compression) {
-        this.pin = pin;
-        this.title = title;
-        this.examState = state;
-        this.schoolClasses = schoolClassIds;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
+                List<Examiner> examiners) {
+        this(pin, title, state, date, startTime, endTime, interval);
         this.examiners = examiners;
-        this.interval = interval;
-        this.resolution = resolution;
-        this.compression = compression;
     }
 
 

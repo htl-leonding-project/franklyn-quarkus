@@ -73,10 +73,8 @@ public class InitBean {
                 LocalDate.parse("2022-06-23"),
                 LocalDateTime.parse("2022-05-23T17:09:42.411"),
                 LocalDateTime.parse("2022-05-23T18:09:42.411"),
-                examiners,
                 5,
-                Resolution.HD,
-                1
+                examiners
                 );
         List<Examiner> examiners1 = new ArrayList<>();
         examiners1.add(examinerWU);
@@ -93,10 +91,8 @@ public class InitBean {
                 LocalDate.parse("2022-02-23"),
                 LocalDateTime.parse("2022-02-23T10:09:42.411"),
                 LocalDateTime.parse("2022-02-23T12:09:42.411"),
-                examiners,
                 5,
-                Resolution.HD,
-                1
+                examiners
         );
         examRepository.persist(exam1);
         examRepository.persist(exam2);
@@ -140,8 +136,6 @@ public class InitBean {
                 Timestamp.valueOf(LocalDateTime.now()),
                 1L,
                 examinee1,
-                Resolution.HD,
-                1,
                 "here"
         );
         screenshotRepository.persist(screenshot1);
@@ -151,8 +145,6 @@ public class InitBean {
                 Timestamp.valueOf(LocalDateTime.now()),
                 2L,
                 examinee1,
-                Resolution.HD,
-                1,
                 "here"
         );
         screenshotRepository.persist(screenshot1);
@@ -162,8 +154,6 @@ public class InitBean {
                 Timestamp.valueOf(LocalDateTime.now()),
                 1L,
                 examinee2,
-                Resolution.HD,
-                1,
                 "here"
         );
         screenshotRepository.persist(screenshot1);
@@ -173,8 +163,6 @@ public class InitBean {
                 Timestamp.valueOf(LocalDateTime.now()),
                 2L,
                 examinee2,
-                Resolution.HD,
-                1,
                 "here"
         );
         screenshotRepository.persist(screenshot1);

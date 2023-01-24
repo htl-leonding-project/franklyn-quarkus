@@ -29,7 +29,6 @@ class ScreenshotTest {
         exam.pin="12345";
         exam.examState=ExamState.IN_PREPARATION;
         exam.title="NVS-Test";
-        exam.resolution=Resolution.HD;
         exam.startTime = LocalDateTime.of(2022, 3, 26, 11, 45);
         exam.endTime = LocalDateTime.of(2022, 3, 26, 13, 45);
         List<Examiner> examiners = new ArrayList<Examiner>();
@@ -45,15 +44,9 @@ class ScreenshotTest {
         examinees.add(new Examinee("Tamara", "Melcher"));
 
         Screenshot screenshot = new Screenshot(timestamp, 1L,
-                examinees.get(0), Resolution.HD, 30, "here");
+                examinees.get(0), "here");
 
         assertEquals(timestamp, screenshot.timestamp);
         assertEquals(1L, screenshot.runningNo);
-        assertEquals(Resolution.HD, screenshot.resolution);
-        assertEquals(30, screenshot.compression);
-
-        screenshot.compression = 50;
-
-        assertEquals(50, screenshot.compression);
     }
 }
