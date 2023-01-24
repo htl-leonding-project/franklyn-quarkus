@@ -7,6 +7,6 @@ public record ScreenshotAngularDto(
                                    Long examId,
                                    Long examineeId,
                                    String image,
-                                   Long screenShotId
+                                   Long screenshotId
 ) {
 }
