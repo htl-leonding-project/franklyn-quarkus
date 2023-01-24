@@ -7,14 +7,14 @@ package backend{
     frame "quarkus-backend"
 }
 
-package frontend{
-    frame "quarkus-frontend"
+package client{
+    frame "electron"
 }
 
-'package TeacherFrontend{
-'
-'    frame "angular"
-'}
+package Examiner{
+
+    frame "angular"
+}
 
 package "DB" {
     database "postgres"

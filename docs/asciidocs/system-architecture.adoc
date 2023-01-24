@@ -1,0 +1,32 @@
+= Systemarchitektur
+Melcher Tamara und Tran Michael
+31.01.2022
+:toc:
+:icons: font
+
+[plantuml]
+----
+include::plantuml/system-architecture.puml[]
+----
+
+== Technologie, Funktionsweise und Aufgaben
+
+* Funktionsweise und Aufgaben
+
+** Examiner
+*** Angular-Anwendung
+*** Im Frontend eingebunden
+*** Dashboard zum Verwalten und Anlegen eines Testes
+
+** Server
+*** Quarkus-Applikation
+*** Verwaltet eingehende API-Aufrufe
+*** Das Frontend holt sich mittels API-Aufrufe die Screenshots
+
+** DB
+*** Postgres
+*** Speichert die Screenshots
+
+** Client
+*** Electron-Anwendung
+*** Verbindet Schüler mit Server, wird zur Teilnahme an einer Testdurchführung benötigt, indem man einen PIN eingibt
