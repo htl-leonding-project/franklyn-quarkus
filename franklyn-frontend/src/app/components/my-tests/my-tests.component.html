@@ -1,0 +1,123 @@
+<!-- <head>
+    <script>
+        function autoRefresh() {
+            window.location = window.location.href;
+        }
+        setInterval('autoRefresh()', 2000);
+    </script>
+</head> -->
+
+
+<app-sidebar></app-sidebar>
+
+<div class="row large">
+    <div class="col-9">
+        <div class="content">
+            <div class="head">
+                <div class="nav-header">
+                    <h1 class="header-nav">Meine Tests</h1>
+                    <div class="logout">
+                        <button class="btn btn-danger" (click)="logout()">Abmelden</button>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid" *ngIf="hasAlreadyExams == true">
+                <div class="card">
+                    <h1 class="header" >Alle Tests</h1>
+                    <br>
+                    <table class="table">
+                        <thead [style.color] = "'grey'" class="tableheader">
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NR</td>
+                            <td>&nbsp;TITEL</td>
+                            <td>&nbsp;KLASSEN</td>
+                            <td>&nbsp;BEGLEITLEHRER</td>
+                            <td>&nbsp;PIN</td>
+                            <td>&nbsp;DATUM</td>
+                            <td>&nbsp;START</td>
+                            <td>&nbsp;SCHÜLERANZAHL</td>
+                            <td>&nbsp;STATUS</td>
+                            <td></td>
+                            <td></td>
+                        </thead>
+                        <div class="space"></div>
+                        <tbody>
+                            <!-- [ngClass]="{'highlight' : exam.id == selectedExam}" -->
+                            <tr class="tablerow" *ngFor="let exam of exams let odd = odd; let i = index;" [ngClass]="odd ? 'odd_col' : 'even_col'" (click)="setExamId(exam.id)" >
+                                <ng-container>
+                                    <td class="txt" >&nbsp;&nbsp;&nbsp;&nbsp;{{i+1}}</td>
+                                    <td class="txt" >{{exam.title}}</td>
+                                    <td>
+                                        <span class="txt"  *ngIf="exam.forms.length == 0">
+                                            -
+                                        </span>
+                                        <span class="txt"  *ngFor="let form of exam.forms; let f = first; let l = last">
+                                            {{form}}
+                                            <span *ngIf="!(f && l) && !l"> ,</span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="txt"  *ngIf="exam.examiners.length == 0">
+                                            -
+                                        </span>
+                                        <span class="txt"  *ngFor="let examiner of exam.examiners; let f = first; let l = last">
+                                            {{examiner}}
+                                            <span *ngIf="!(f && l) && !l">, </span>
+                                        </span>
+                                    </td>
+                                    <td class="txt" >{{exam.pin}}</td>
+                                    <td class="txt" >
+                                        <div *ngIf="exam.date != ' '">
+                                            {{exam.date | date: 'dd.MM.yyyy'}}
+                                        </div>
+                                        <div *ngIf="exam.date == ' '">
+                                             
+                                        </div>
+                                    </td>
+                                    <td class="txt" >{{exam.startTime |date: 'HH:MM'}}</td>
+                                    <td class="txt" >{{exam.nrOfStudents}}</td>
+                                    <td class="txt" >{{exam.ongoing}}</td>
+                                    <td><a class="txt"  role="button" [style.color] = "'green'" (click)="editExam(exam.id)" >Bearbeiten</a></td>
+                                    <td><a class="txt"  role="button" [style.color] = "'red'" (click)="open(content)">Löschen</a></td>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            
+            <ng-template #content let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">Test löschen</h4>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label>Test wirklich löschen?</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="modal.close('Delete click')">Löschen</button>
+                    <button type="button" class="btn" (click)="modal.dismiss('Cancel click')">Abbrechen</button>
+                </div>
+            </ng-template>
+            
+            
+            <div class="container-fluid" *ngIf="hasAlreadyExams == false">
+                <div class="card">
+                    <h1 class="header">
+                        Alle Tests
+                    </h1>
+                    <h3 class="header3">Noch keine Tests vorhanden!</h3>
+                </div>
+            </div>
+            
+        </div>
+        <div class="footer">
+            <h1>2022 Franklyn</h1>
+        </div>
+    </div>
+</div>
+

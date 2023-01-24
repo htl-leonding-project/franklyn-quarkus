@@ -1,0 +1,83 @@
+<app-sidebar></app-sidebar>
+
+<div class="row large">
+    <div class="col-9">
+        <div class="content">
+            <div class="head">
+                <div class="nav-header">
+                    <h1 class="header-nav">Screenshots</h1>
+                    <div class="logout">
+                        <button class="btn btn-danger" (click)="logout()">Abmelden</button>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="card">
+                    <h1 class="header" >
+                        {{exam.title}} - 
+                        <span *ngFor="let form of exam.forms; let f = first; let l = last">
+                                {{form}}
+                                <span *ngIf="!(f && l) && !l"> ,</span>
+                        </span>
+                        </h1>
+                    <div>
+                        <div class="row">
+                            <div class="col-8" *ngIf="this.hasScreenshots == true">
+                                <div class="slideshow">
+                                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                          <div class="carousel-item active">
+                                            <img class="d-block" src="{{currentScreenshot.pathOfScreenshot}}" alt="Screenshot">
+                                          </div>
+                                        </div>
+                                        <a class="carousel-control-prev" (click)="goToPrevious()" role="button" data-slide="prev">
+                                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        </a>
+                                        <a class="carousel-control-next" (click)="goToNext()" role="button" data-slide="next">
+                                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        </a>
+                                      </div>
+                                 </div>
+                            </div>
+                            <div *ngIf="this.hasScreenshots == false" class="col-8 slideshow">
+                                <h2>Keine Screenshots verfügbar!</h2>
+                            </div>
+                            <div class="col-1">
+                                <div class="students txt">
+                                    <label>Schüleranzahl:  {{exam.nrOfStudents}}</label>
+                                    <br>
+                                    <br>
+                                    <div class="patroullie">
+                                        <label>Patrouillie: </label>
+                                        <select class="form-select">
+                                            <option>Aus</option>
+                                            <option>Sequentiell</option>
+                                            <option>Zufällig</option>
+                                        </select>
+                                        <br>
+                                    </div>
+                                        <br>
+                                        <cdk-virtual-scroll-viewport class="examinee-viewport" itemSize="60">
+                                            <dl class="examinee-dl">
+                                              <ng-container *cdkVirtualFor="let examinee of examinees">
+                                                <dt class="examinee-dt normal" [ngClass]="{'highlight' : examinee.id == selectedExamineeId}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</dt>
+                                              </ng-container>
+                                            </dl>
+                                          </cdk-virtual-scroll-viewport>
+<!--                                     <ng-container *ngFor="let examinee of examinees">
+                                        <div class="card names text-black text-left normal" style="--bs-bg-opacity: .1;">
+                                            <div class="card-body" [ngClass]="{'highlight' : examinee.id == selectedExamineeId}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</div>
+                                        </div>                        
+                                    </ng-container> -->
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <h1>2022 Franklyn</h1>
+        </div>
+    </div>
+</div>

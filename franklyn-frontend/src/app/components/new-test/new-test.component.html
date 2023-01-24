@@ -1,0 +1,95 @@
+<app-sidebar></app-sidebar>
+
+<div class="row large">
+    <div class="col-9">
+        <div class="content">
+            <div class="head">
+                <div class="nav-header">
+                    <h1 class="header-nav">Test erstellen</h1>
+                    <div class="logout">
+                        <button class="btn btn-danger" (click)="logout()">Abmelden</button>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid" *ngIf="showFirstCard == true">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Allgemeines</h5>
+                        <br>
+                        <label class="form-label">Titel</label>
+                        <input [(ngModel)]="newExam.title" class="form-control" type="text" placeholder="Titel">
+                        <br>
+                        <label class="form-label">Klassen</label>
+                        <br>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Auswahl</mat-label>
+                            <mat-select [(ngModel)]="selectedForms" multiple>
+                              <mat-option *ngFor="let form of forms" [value]="form.id">{{form.title}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        <br>
+                        <label class="form-label">Begleitlehrer</label>
+                        <br>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Auswahl</mat-label>
+                            <mat-select [(ngModel)]="selectedExaminers" multiple>
+                              <mat-option *ngFor="let examiner of examiners" [value]="examiner.id">{{examiner.firstName}} {{examiner.lastName}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        <br>
+                        <label class="form-label">Datum</label>
+                        <input [(ngModel)]="tempDate" class="form-control" type="date">
+                      </div>
+                      <button (click)="firstCardSubmit()" class="btn btn-forward lonebtn">Weiter</button>
+                </div>
+            </div>
+        
+<!--             <div class="container-fluid" *ngIf="showSecondCard == true">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Start- und Endzeit festlegen</h5>
+                        <br>
+                        <label class="form-label">Startzeit</label>
+                        <input [(ngModel)]="tempStartTime" class="form-control" type="time">
+                        <br>
+                        <label class="form-label">Endzeit</label>
+                        <input [(ngModel)]="tempEndTime" class="form-control" type="time">
+                        <button class="btn btn-secondary btn-back inline" (click)="secondCardBack()">Zurück</button>
+                        <button (click)="secondCardSubmit()" class="btn btn-forward inline">Weiter</button>
+                    </div>
+                </div>
+            </div> -->
+        
+            <div class="container-fluid" *ngIf="showThirdCard == true">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Screenshot Einstellungen</h5>
+                        <br>
+                        <label class="form-label">Interval [1-20]</label>
+                        <input [(ngModel)]="tempInterval" class="form-control" type="number">
+                        <!-- <input style="width: 50%;" [(ngModel)]="rangeValue" min="0" max="20" type="range" class="form-range" id="customRange1"> -->
+                        <br>
+            <!-- todo komprimierungsfaktor -->
+                        <button class="btn btn-secondary btn-back inline" (click)="thirdCardBack()">Zurück</button>
+                        <button (click)="thirdCardSubmit()" class="btn btn-forward inline">Test erstellen</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid" *ngIf="showFourthCard == true">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Test wurde erfolgreich erstellt!</h5>
+                        <br>
+                        <h1>PIN: todo</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <h1>2022 Franklyn</h1>
+        </div>
+    </div>
+</div>
+

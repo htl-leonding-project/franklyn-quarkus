@@ -1,3 +1,6 @@
+/franklyn-frontend/node_modules
+/franklyn-frontend/.angular
+
 /db/
 #Maven
 target/
@@ -41,3 +44,8 @@ docs/.env
 
 dist
 /docs/slides/revealjs/
+
+*.jar
+/backend/db-postgres/
+
+/client
