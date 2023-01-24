@@ -87,8 +87,8 @@ public class ExamResource {
     @GET
     @Path("/latestExam/examiner/{adminId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ShowExamDto getLatestExamByExaminerId(@PathParam("adminId") String adminId) {
-        List<ShowExamDto> examSummary = getExamsByExaminerId(adminId);
+    public ShowExamDto getLatestExamByExaminerId(@PathParam("adminId") Long adminId) {
+        List<ShowExamDto> examSummary = getExamsByExaminerId(String.valueOf(adminId));
         return examSummary.get(0) != null ? examSummary.get(0) : null;
     }
 

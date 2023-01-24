@@ -49,20 +49,22 @@ public class ExamineeResource {
     @Path("exam/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<ExamineeDto> getExamineesByExamId(@PathParam("id") Long id) {
-        Exam tempExam = examRepository.findById(id);
-        if(tempExam == null)
+        Exam exam = examRepository.findById(id);
+        if(exam == null)
             return null;
-        List<Examinee> tempExaminees = examineeRepository.listAll();
+        List<Examinee> examineeList = examineeRepository.listAll();
         List<ExamineeDto> examinees = new LinkedList<>();
         ExamineeDto tempExaminee;
-        for (Examinee examinee : tempExaminees) {
-            if (Objects.equals(examinee.exam.id, id)) {
-                tempExaminee = new ExamineeDto( examinee.firstName, examinee.lastName, examinee.isOnline, String.valueOf(examinee.id));
-                examinees.add(tempExaminee);
+        for (Examinee examinee : examineeList) {
+            boolean isOnline = this.examineeRepository.checkIfExamineeIsStillOnline(examinee, exam.interval);
+            if (Objects.equals(examinee.exam.id, id) && exam.adminId != examinee.id) {
+                examinees.add(new ExamineeDto( examinee.firstName, examinee.lastName, isOnline, String.valueOf(examinee.id)));
             }
         }
         return examinees;
     }
+
+
 
 
     /**

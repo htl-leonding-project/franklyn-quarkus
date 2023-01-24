@@ -35,7 +35,7 @@ class ExamineeTest {
         forms.add(new SchoolClass("4AHIF", "2022"));
         forms.add(new SchoolClass("3AHIF", "2021"));
         exam.examiners = examiners;
-        exam.formIds = forms;
+        exam.schoolClasses = forms;
 
         Examinee examinee = new Examinee();
         examinee.firstName = "Tamara";

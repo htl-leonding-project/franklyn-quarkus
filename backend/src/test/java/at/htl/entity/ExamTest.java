@@ -32,7 +32,7 @@ class ExamTest {
         forms.add(new SchoolClass("4AHIF", "2022"));
         forms.add(new SchoolClass("3AHIF", "2021"));
         exam.examiners = examiners;
-        exam.formIds = forms;
+        exam.schoolClasses = forms;
 
         assertEquals(1L, exam.id);
         assertNotEquals(2, exam.compression);
@@ -40,7 +40,7 @@ class ExamTest {
         assertTrue(exam.examiners.get(0).isAdmin);
         assertEquals(LocalDateTime.of(2022, 3, 26, 11, 45), exam.startTime);
         assertEquals(LocalDateTime.of(2022, 3, 26, 13, 45), exam.endTime);
-        assertEquals("4AHIF", exam.formIds.get(0).title);
+        assertEquals("4AHIF", exam.schoolClasses.get(0).title);
 
     }
 }

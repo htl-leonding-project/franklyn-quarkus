@@ -47,7 +47,7 @@ public class InitBean {
 
 
 
-        String webUntisResult = webUntisService.initDB("NNRADIO", "Pauthlyn28");
+        String webUntisResult = webUntisService.initDB("NNRADIO", "PAuthlyn28");
         Log.info("WebUntis Result: " + webUntisResult);
         Examiner examinerWU = examinerRepository.findByUsername("NNRADIO");
         examiners.add(examinerWU);
@@ -61,12 +61,15 @@ public class InitBean {
             schoolClassRepository.persist(schoolClass);
             Log.info("Persist Schoolclass: " + schoolClass.title);
         }*/
+        List<SchoolClass> schoolClasses2 = new ArrayList<>();
+        schoolClasses2.add(schoolClass2);
+
 
         Exam exam1 = new Exam(
                 "234",
                 "Test",
                 ExamState.FINISHED,
-                schoolClasses,
+                schoolClasses2,
                 LocalDate.parse("2022-06-23"),
                 LocalDateTime.parse("2022-05-23T17:09:42.411"),
                 LocalDateTime.parse("2022-05-23T18:09:42.411"),
@@ -80,6 +83,7 @@ public class InitBean {
         examiners1.add(examiner2);
         examiners1.add(examiner3);
         exam1.examiners = examiners1;
+        exam1.adminId = examinerWU.id;
 
         Exam exam2 = new Exam(
                 "948",
@@ -100,6 +104,7 @@ public class InitBean {
         examiners2.add(examinerWU);
         examiners2.add(examiner2);
         exam2.examiners = examiners2;
+        exam2.adminId = examinerWU.id;
         Log.info("Persist: " + exam1.title);
         Log.info("Persist: " + exam2.title);
 
@@ -112,9 +117,11 @@ public class InitBean {
         examinee1.exam = exam1;
         examinee1.isOnline = true;
         Examinee examinee2 = new Examinee("Jan", "Melcher");
+        examinee2.lastOnline = LocalDateTime.now();
         examinee2.exam = exam1;
         examinee1.isOnline = false;
         Examinee examinee3 = new Examinee("Anna", "Wiesinger");
+        examinee3.lastOnline = LocalDateTime.now();
         examinee3.exam = exam2;
         examinee1.isOnline = true;
         Examinee examinee4 = new Examinee("Alina", "Schuster");
