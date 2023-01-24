@@ -7,7 +7,7 @@ import { StartComponent } from './components/start/start.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MyTestsComponent } from './components/my-tests/my-tests.component';
 import { NewTestComponent } from './components/new-test/new-test.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HowtoComponent } from './components/howto/howto.component';
@@ -35,7 +35,10 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { EditTestComponent } from './components/edit-test/edit-test.component';
+import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';   //for full screen
 
 @NgModule({
   declarations: [
@@ -76,7 +79,11 @@ import {MatSelectModule} from '@angular/material/select';
     MdbTabsModule,
     MdbTooltipModule,
     MdbValidationModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatCheckboxModule,
+    NgImageFullscreenViewModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

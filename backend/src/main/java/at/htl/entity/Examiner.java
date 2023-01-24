@@ -1,6 +1,8 @@
 package at.htl.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -8,8 +10,12 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.StringIdGenerator.class,
+        property="er_id")
 @Entity
 @Table(name = "F_EXAMINER")
 public class Examiner extends PanacheEntityBase {
@@ -32,9 +38,15 @@ public class Examiner extends PanacheEntityBase {
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JoinTable(name = "ER_E_Examiner_exam")
+    //@JoinTable(name = "ER_E_EXAMINER_EXAM")
     @JsonIgnore
     public List<Exam> exams;
+
+/*    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    public List<Exam> exams = new ArrayList<>();*/
+
 
     public Examiner() {
     }

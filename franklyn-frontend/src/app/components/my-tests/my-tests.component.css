@@ -110,3 +110,13 @@ table tr.highlight {
     display: inline-block;
     padding: 20px;
   }
+
+  .isDisabled{
+    font-size: 17px;
+    font-weight: normal;
+    font-style: normal;
+    pointer-events: none;
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }

@@ -1,5 +1,6 @@
 package at.htl.entity.dto;
 
+import java.util.HashMap;
 import java.util.List;
 
 public record ShowExamDto(
@@ -12,7 +13,10 @@ public record ShowExamDto(
         String ongoing,
         String pin,
         Long id,
-        boolean isToday
+        boolean isToday,
+        boolean canBeEdited,
+        boolean canBeDeleted,
+        int interval
 
 ) {
 }

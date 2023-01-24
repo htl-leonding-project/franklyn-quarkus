@@ -11,30 +11,22 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("api/examiners")
 public class ExaminerResource {
-
     @Inject
     ExaminerRepository examinerRepository;
-
     @Inject
     ExamRepository examRepository;
 
-    /**
-     * @return List of examinees ordereed by name(todo)
-     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Examiner> listAll() {        //todo ordering by name
-        return examinerRepository.listAll();
+    public List<Examiner> listAll() {
+        return examinerRepository.list("select ex from Examiner ex order by ex.name");
     }
 
-    /**
-     * Posts new examiner
-     * @return new examiner
-     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,11 +38,6 @@ public class ExaminerResource {
         return e;
     }
 
-    /**
-     * Delete examiner by id
-     * Only possible for admin
-     * @return deleted examiner
-     */
     @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -61,7 +48,6 @@ public class ExaminerResource {
             return null;
         examRepository.deleteExaminerFromExams(id);
         examinerRepository.deleteById(id);
-        Log.info("Delete Examiner: " + examiner.userName);
         return examiner;
     }
 
@@ -71,9 +57,32 @@ public class ExaminerResource {
     @Transactional
     public Examiner getExaminerByUsername(@PathParam("username") String username) {
         Examiner examiner = examinerRepository.findByUsername(username);
-        if(examiner == null)
-            return null;
         return examiner;
+    }
+
+
+    @GET
+    @Path("exam/{examId}/examiner/{examinerId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public List<Examiner> getExaminerByExamId(@PathParam("examId") String examId, @PathParam("examinerId") String examinerId) {
+        Exam exam = examRepository.findById(Long.parseLong(examId));
+        var examiners = exam.examiners;
+        for (Examiner examiner : examiners) {
+            if (examiner.id == Long.parseLong(examinerId)) {
+                examiners.remove(examiner);
+                break;
+            }
+        }
+        return examiners;
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Examiner getExaminerById(@PathParam("id") String id) {
+        return examinerRepository.findById(Long.parseLong(id));
     }
 
 

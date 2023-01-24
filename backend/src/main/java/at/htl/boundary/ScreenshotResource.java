@@ -17,6 +17,9 @@ import java.util.List;
 @Path("api/screenshot")
 public class ScreenshotResource {
 
+    @ConfigProperty(name = "CURRENT_HOST")
+    String currentHost;
+
     @Inject
     ScreenshotRepository screenshotRepository;
 
@@ -62,7 +65,7 @@ public class ScreenshotResource {
         List<Screenshot> screenshotsTemp = screenshotRepository.getScreenshotsOfExaminee(examId,examineeId);
         List<ScreenshotAngularDto> screenshots = new LinkedList<>();
         for (Screenshot s : screenshotsTemp) {
-            screenshots.add(new ScreenshotAngularDto(s.exam.id,s.examinee.id,s.pathOfScreenshot,s.id));
+            screenshots.add(new ScreenshotAngularDto(s.exam.id,s.examinee.id,currentHost+ s.pathOfScreenshot,s.id));
         }
         for (int i = 0, j = screenshots.size() - 1; i < j; i++) {
             screenshots.add(i, screenshots.remove(j));

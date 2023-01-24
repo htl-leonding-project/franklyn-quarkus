@@ -1,7 +1,7 @@
 import { NgbPaginationNumber } from "@ng-bootstrap/ng-bootstrap"
 
 export interface Screenshot {
-    pathOfScreenshot: string,
+    image: string,
     screenshotId: number,
     examineeId: number,
     examId: number

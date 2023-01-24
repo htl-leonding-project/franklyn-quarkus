@@ -1,8 +1,9 @@
 package at.htl.boundary;
 
+import at.htl.control.ExamRepository;
 import at.htl.control.SchoolClassRepository;
+import at.htl.entity.Exam;
 import at.htl.entity.SchoolClass;
-import io.quarkus.logging.Log;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -15,6 +16,9 @@ public class SchoolClassResource {
 
     @Inject
     SchoolClassRepository schoolClassRepository;
+
+    @Inject
+    ExamRepository examRepository;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -58,6 +62,17 @@ public class SchoolClassResource {
         return schoolClassRepository.getSchoolClassByTitleAndYear(title, year);
     }
 
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public SchoolClass getSchoolClassById(@PathParam("id") String id) {
+        SchoolClass schoolClass = schoolClassRepository.findById(Long.parseLong(id));
+        if(schoolClass == null)
+            return null;
+        return schoolClass;
+    }
+
     /**
      * Posts new schoolclass
      * @return schoolclass
@@ -71,20 +86,13 @@ public class SchoolClassResource {
         return schoolClass;
     }
 
-    /**
-     * Deletes schoolclass by id
-     * @return deleted schoolclass
-     */
-    @DELETE
-    @Path("{id}")
+
+    @GET
+    @Path("exam/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public SchoolClass deleteSchoolClass(
-            @PathParam("id") Long id
-    ){
-        SchoolClass schoolClass = schoolClassRepository.findById(id);
-        if(schoolClass == null)
-            return null;
-        schoolClassRepository.deleteById(id);
-        return schoolClass;
+    public List<SchoolClass> getExaminerByExamId(@PathParam("id") String id) {
+        Exam exam = examRepository.findById(Long.parseLong(id));
+        return exam.schoolClasses;
     }
 }

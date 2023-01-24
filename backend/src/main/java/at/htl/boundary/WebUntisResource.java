@@ -1,6 +1,9 @@
 package at.htl.boundary;
 
+import at.htl.control.ExaminerRepository;
+import at.htl.entity.Examiner;
 import at.htl.service.WebUntisService;
+import io.quarkus.logging.Log;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -12,11 +15,18 @@ public class WebUntisResource {
     @Inject
     WebUntisService webUntisService;
 
+    @Inject
+    ExaminerRepository examinerRepository;
+
     @POST
     @Path("authUser/{userName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String authUser(@PathParam("userName") String userName, String password){
-        String response = webUntisService.authenticateUser(userName, password);
-        return response;
+    public boolean authUser(@PathParam("userName") String userName, String password){
+        boolean response = webUntisService.authenticateUser(userName, password);
+        Examiner examiner = examinerRepository.findByUsername(userName);
+        if(response && examiner != null){
+            return true;
+        }
+        return false;
     }
 }

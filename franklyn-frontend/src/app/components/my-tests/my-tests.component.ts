@@ -7,7 +7,7 @@ import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { LocalService } from 'src/app/services/local.service';
 import { interval, Observable, Subscription, takeWhile } from 'rxjs';
 import { PollingService } from 'src/app/services/polling.service';
-
+import {SelectionModel} from '@angular/cdk/collections';
 
 
 
@@ -26,8 +26,23 @@ export class MyTestsComponent implements OnInit, OnDestroy {
   selectedExam: number=0
   subscription: Subscription = new Subscription;
   isSubscriped: boolean = false;
+  currentExam: Exam ={
+    pin: '',
+    title: '',
+    ongoing: '',
+    date: '',
+    startTime: new Date(),
+    forms: '',
+    nrOfStudents: '',
+    examiners: '',
+    id: 0,
+    isToday: false,
+    canBeEdited: false,
+    canBeDeleted: false
+  }
 
   examToday!: Observable<Exam>;
+  selection = new SelectionModel<Exam>(false, []);
 
   constructor(private router: Router, private examService:ExamService, public globalService: GlobalService, private modalService: NgbModal, private localService: LocalService, private pollingService: PollingService) { 
   }
@@ -38,27 +53,40 @@ export class MyTestsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.examinerId = this.localService.getData("examinerId");
     this.loadExams();
-    this.checkExamsIfToday();
-    console.log("test")
+    //this.checkExamsIfToday();
     this.selectedExam = Number.parseInt(this.localService.getData("selectedExamId")!);
-  }
-
-  checkExamsIfToday(){
-    console.log(this.exams.length)
-    for(let exam of this.exams){
-      console.log(new Date(exam.date) );
-      console.log(new Date());
-      if(new Date(exam.date) == new Date()){
-        console.log("in if");
-        this.examToday = this.pollingService.getTestToday(exam.id);
-      }
-    }
+    this.getExamById(this.selectedExam);
   }
 
   setExamId(examId: number) {
     this.localService.removeData("selectedExamId");
     this.localService.saveData("selectedExamId", examId +"");
     this.selectedExam = examId;
+  }
+
+  toggleExam(exam: Exam) {
+    this.selection.toggle(exam);
+    this.setExamId(exam.id);
+  }
+
+  toggleExamInCheckBox(exam: Exam){
+    this.setExamId(exam.id);
+
+  }
+
+  toggleExamOnInit(exam:Exam){
+    //this.selection.toggle(exam);
+    this.selection.select(exam);
+    console.log("toggled");
+  }
+
+  getExamById(selectedExam: number) {
+    this.examService.getExamById(selectedExam + "", this.localService.getData("examinerId")!).subscribe({
+      next: data => {
+        this.currentExam = data;
+      },
+      error:(error) => {alert("Fehler beim Laden der Examen: "+error.message);}
+    })
   }
 
   loadExams(){
@@ -134,4 +162,7 @@ export class MyTestsComponent implements OnInit, OnDestroy {
     this.localService.removeData("selectedExamId");
     this.router.navigate(['/start']);
   }
+
 }
+
+

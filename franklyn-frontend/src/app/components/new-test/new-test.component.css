@@ -1,27 +1,22 @@
 .form-control{
-    width: 500px;
+    width: 40%;
     height: 40px;
 }
 
 .form-select{
-    width: 500px;
+    width: 40%;
     height: 30px;
 }
 
 .btn-forward{
     color: white;
-    margin-bottom: 20px;
-    background-color: #02c39a;
+    background-color: #45cd40;
     width: 200px;
     float: right; 
 }
 
-.lonebtn{
-    margin-left: 85%;
-}
-
 .btn-forward:hover{
-    background-color: #02c39a;
+    background-color: #45cd40;
     color: white;
 }
 
@@ -39,6 +34,10 @@
     background-color: rgb(245, 244, 244) !important;
     height: 100%;
     padding: 30px;
+}
+
+.card-body{
+    padding: 0px
 }
 
 .col-9{
@@ -61,7 +60,8 @@
 }
 
 mat-form-field{
-    width: 500px;
+    width: 40%;
+    border-radius: 30px;
 }
 
 .card{
@@ -108,4 +108,16 @@ label{
     float: right;
     display: inline-block;
     padding: 20px;
+  }
+
+  .required{
+    width: 40%;
+  }
+
+  form{
+    margin: 20px;
+  }
+
+  .successful{
+    margin: 20px;  
   }

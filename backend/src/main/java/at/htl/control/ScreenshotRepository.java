@@ -1,7 +1,6 @@
 package at.htl.control;
 
 import at.htl.entity.Exam;
-import at.htl.entity.Resolution;
 import at.htl.entity.Screenshot;
 import at.htl.entity.dto.ScreenshotDto;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -43,8 +42,6 @@ public class ScreenshotRepository implements PanacheRepository<Screenshot> {
                 Timestamp.valueOf(LocalDateTime.now()),
                 screenshot.runningNo(),
                 screenshot.examinee(),
-                Resolution.HD,
-                1,
                 pathOfScreenshot + "/exam/" + screenshot.exam().id + "/" + screenshot.examinee().id
         );
         this.persist(s);

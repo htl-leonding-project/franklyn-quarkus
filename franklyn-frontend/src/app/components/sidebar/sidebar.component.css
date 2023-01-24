@@ -17,7 +17,7 @@
     align-items: center;
     flex-direction: column;
     color: white;
-    background-color:#77dcc6;
+    background-color:#45cd40;
     font-size: 16px;
     padding: 16px;
     height: 100%;
@@ -29,11 +29,14 @@
 }
 
 .sidebar-text:hover{
-    background:#02c39a;
+    background: rgb(182, 185, 182);
+    border-color: rgb(182, 185, 182);
 }
 
 .sidebar-text:active{
-    background:#02c39a;
+    background: rgb(182, 185, 182);
+    border-color: rgb(182, 185, 182);
+
 }
 
 .sidebar-text{
@@ -47,11 +50,15 @@
     color: white;
     margin-top: 500px;
     margin-bottom: 20px;
-    background-color: #02c39a;
+    /* background-color: #02c39a; */
     font-size: 18px;
 }
 
 .sidebar-btn:hover{
 
-    background-color: #02c39a;
+    /* background-color: #02c39a; */
+}
+
+.btn{
+    width: 220px;
 }

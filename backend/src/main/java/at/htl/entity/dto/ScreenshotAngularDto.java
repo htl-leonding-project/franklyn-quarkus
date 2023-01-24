@@ -6,7 +6,7 @@ import at.htl.entity.Examinee;
 public record ScreenshotAngularDto(
                                    Long examId,
                                    Long examineeId,
-                                   String pathOfScreenshot,
+                                   String image,
                                    Long screenShotId
 ) {
 }

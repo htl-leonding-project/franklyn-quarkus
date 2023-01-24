@@ -45,10 +45,6 @@ public class Screenshot extends PanacheEntityBase {
     @OnDelete(action = OnDeleteAction.CASCADE)
     public Examinee examinee;
 
-    @NotNull
-    @Column(name = "S_RESOLUTION")
-    @Enumerated(EnumType.STRING)
-    public Resolution resolution;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
@@ -56,15 +52,6 @@ public class Screenshot extends PanacheEntityBase {
     @OnDelete(action = OnDeleteAction.CASCADE)
     public Exam exam;
 
-    @NotNull
-    @Min(1)
-    @Max(100)
-    @Column(name = "S_COMPRESSION")
-    public int compression;
-
-    @Column(name = "S_IS_COMPRESSED")
-    @Enumerated(EnumType.STRING)
-    public IsCompressed isCompressed;
 
     @Column(name = "S_PATH_OF_SCREENSHOT")
     public String pathOfScreenshot;
@@ -72,28 +59,20 @@ public class Screenshot extends PanacheEntityBase {
     public Screenshot() {
     }
 
-    public Screenshot(Timestamp timestamp, Long runningNo, Examinee examinee,
-                      Resolution resolution, int compression, String pathOfScreenshot) {
+    public Screenshot(Timestamp timestamp, Long runningNo, Examinee examinee, String pathOfScreenshot) {
         this.timestamp = timestamp;
         this.runningNo = runningNo;
         this.examinee = examinee;
-        this.resolution = resolution;
-        this.compression = compression;
         this.pathOfScreenshot = pathOfScreenshot;
     }
 
     public Screenshot(Timestamp timestamp, Long runningNo, Examinee examinee,
-                      Resolution resolution, int compression, String pathOfScreenshot, Exam exam) {
-        this.timestamp = timestamp;
-        this.runningNo = runningNo;
-        this.examinee = examinee;
-        this.resolution = resolution;
-        this.compression = compression;
-        this.pathOfScreenshot = pathOfScreenshot;
+                      String pathOfScreenshot, Exam exam) {
+        this(timestamp, runningNo, examinee, pathOfScreenshot);
         this.exam = exam;
     }
 
-    public Screenshot(Timestamp timestamp, Long runningNo,
+    /*public Screenshot(Timestamp timestamp, Long runningNo,
                       Resolution resolution, int compression,
                       IsCompressed isCompressed, String pathOfScreenshot) {
         this.timestamp = timestamp;
@@ -102,7 +81,7 @@ public class Screenshot extends PanacheEntityBase {
         this.compression = compression;
         this.isCompressed = isCompressed;
         this.pathOfScreenshot = pathOfScreenshot;
-    }
+    }*/
 
     @Override
     public String toString() {

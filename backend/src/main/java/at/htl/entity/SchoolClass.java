@@ -1,7 +1,12 @@
 package at.htl.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.util.List;
 
 @NamedQueries({
         @NamedQuery(
@@ -30,6 +35,12 @@ public class SchoolClass extends PanacheEntityBase {
 
     @Column(name = "SC_YEAR")
     public String year;
+
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinTable
+    @JsonIgnore
+    public List<Exam> exams;
 
     public SchoolClass() {
     }

@@ -10,393 +10,244 @@ import at.htl.entity.dto.ExamUpdateDto;
 import at.htl.entity.dto.ExaminerDto;
 import at.htl.entity.dto.ShowExamDto;
 import io.quarkus.logging.Log;
+import io.quarkus.panache.common.Parameters;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Path("api/exams")
 public class ExamResource {
-
     @Inject
     ExamRepository examRepository;
-
+    @ConfigProperty(name = "CURRENT_ROOT_DIRECTORY")
+    File root;
     @Inject
     ExaminerRepository examinerRepository;
-
     @Inject
     ExamineeRepository examineeRepository;
-
     @Inject
     SchoolClassRepository schoolClassRepository;
 
-    /**
-     * @return list of all exams
-     */
     @GET
-    @Path("all")
+    @Transactional
+    @Path("/examiner/{adminId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ShowExamDto> listAll() {
-        List<Exam> tempExams = examRepository.listAll();
+    public List<ShowExamDto> getExamsByExaminerId(@PathParam("adminId") String adminId) {
+        List<Exam> exams = examRepository.find("select e from Exam e where e.adminId = :id and e.isDeleted = false order by e.date", Parameters.with("id", Long.valueOf(adminId))).list();
+
         List<ShowExamDto> examSummary = new LinkedList<>();
-        String secondTeacher = "";
-        String form = "";
-        int nrOfStudentsPerExam = 0;
-        String title = "";
-        String date = "";
-        String startTime = "";
-        String status = "";
-        List<String> examiners = new ArrayList<>();
-        List<String> forms = new ArrayList<>();
-        boolean isToday = false;
 
-        for (Exam exam : tempExams) {
-
-            if(exam.examiners != null && exam.examiners.size() > 0) {
-                for(int i = 1; i < exam.examiners.size(); i++) {
-                    if(exam.examiners.get(i) != null) {
-                        examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
-                    }
-                }
-            }
-            if(exam.formIds != null && exam.formIds.size() > 0) {
-                for(int i = 1; i < exam.formIds.size(); i++) {
-                    if(exam.formIds.get(i) != null) {
-                        forms.add(exam.formIds.get(i).title);
-                    }
-                }
-            }
-            nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
-            title = exam.title;
-            date= exam.date.toString();
-            startTime = exam.startTime.toString();
-            if(exam.examState == ExamState.RUNNING){
-                status= "Läuft";
-            }
-            else if ( exam.examState == ExamState.IN_PREPARATION){
-                status = "In Vorbereitung";
-            }
-            else{
-                status= "Beendet";
-            }
-            if(exam.date.equals(LocalDate.now())){
-                isToday = true;
-            }
-            examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday));
-        }
-        for (int i = 0, j = examSummary.size() - 1; i < j; i++) {
-            examSummary.add(i, examSummary.remove(j));
+        for (Exam exam : exams) {
+            BuildShowExamDTO(adminId, examSummary, exam);
         }
         return examSummary;
     }
 
-    @GET
-    @Path("/examiner/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<ShowExamDto> getExamsByExaminerId(@PathParam("id") String id) {
-        List<Exam> tempExams = examRepository.listAll();
-        List<ShowExamDto> examSummary = new LinkedList<>();
-        int nrOfStudentsPerExam = 0;
-        String title = "";
-        String date = "";
-        String startTime = "";
+    private void BuildShowExamDTO(String adminId, List<ShowExamDto> examSummary, Exam exam) {
+        var examiners = examRepository.GetAllExaminersOfExam(exam, Long.parseLong(adminId));
+        var forms = examRepository.GetAllSchoolClassesOfExam(exam);
+        var nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
+
+        // Überprüft ob Exam nicht schon beendet, wenn ja ändert sich der Status des Exams
+        if (!exam.date.equals(LocalDate.now()) && exam.examState == ExamState.RUNNING) {
+            exam.examState = ExamState.FINISHED;
+            examRepository.persist(exam);
+        }
+
+        // Exam Status wird in Text umgewandelt
         String status = "";
-        List<String> examiners = new ArrayList<>();
-        List<String> forms = new ArrayList<>();
-        boolean isToday = false;
-
-        for (Exam exam : tempExams) {
-
-            for(Examiner examiner : exam.examiners){
-                if(examiner.id == Long.parseLong(id)){
-                    if(exam.examiners != null && exam.examiners.size() > 0) {
-                        for(int i = 1; i < exam.examiners.size(); i++) {
-                            if(exam.examiners.get(i) != null) {
-                                examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
-                            }
-                        }
-                    }
-                    if(exam.formIds != null && exam.formIds.size() > 0) {
-                        for(int i = 0; i < exam.formIds.size(); i++) {
-                            if(exam.formIds.get(i) != null) {
-                                forms.add(exam.formIds.get(i).title);
-                            }
-                        }
-                    }
-                    nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
-                    title = exam.title;
-                    date= exam.date.toString();
-                    if(exam.startTime != null) {
-                        startTime = exam.startTime.toString();
-                    }
-                    else
-                    {
-                        startTime = " ";
-                    }
-                    if(exam.examState == ExamState.RUNNING){
-                        status= "Läuft";
-                    }
-                    else if ( exam.examState == ExamState.IN_PREPARATION){
-                        status = "In Vorbereitung";
-                    }
-                    else{
-                        status= "Beendet";
-                    }
-                    if(exam.date.equals(LocalDate.now())){
-                        isToday = true;
-                    }
-                    examSummary.add(new ShowExamDto(title, date, examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday));
-                    examiners = new ArrayList<>();
-                    forms = new ArrayList<>();
-                }
-            }
-        }
-        for (int i = 0, j = examSummary.size() - 1; i < j; i++) {
-            examSummary.add(i, examSummary.remove(j));
-        }
-        return examSummary;
-    }
-
-    @GET
-    @Path("/exam/examiner/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public ShowExamDto getLatestExamByExaminerId(@PathParam("id") String id) {
-        List<ShowExamDto> examSummary = getExamsByExaminerId(id);
-        if(examSummary.size() > 0){
-            return examSummary.get(0);
-        }
-        return null;
-    }
-
-    @GET
-    @Path("/exam/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public ShowExamDto getExamById(@PathParam("id") String id) {
-        Exam exam = examRepository.findById(Long.parseLong(id));
-        ShowExamDto examSummary;
-        //StringBuilder teachers = new StringBuilder();
-        //StringBuilder forms = new StringBuilder();
-        List<String> examiners = new ArrayList<>();
-        List<String> forms = new ArrayList<>();
-        for(Examiner examiner : exam.examiners){
-            if(examiner.id == Long.parseLong(id)) {
-                if (exam.examiners != null && exam.examiners.size() > 0) {
-                    for (int i = 1; i < exam.examiners.size(); i++) {
-                        if (exam.examiners.get(i) != null) {
-                            examiners.add(exam.examiners.get(i).firstName + " " + exam.examiners.get(i).lastName);
-                        }
-                    }
-                }
-            }
-        }
-        if(exam.formIds != null && exam.formIds.size() > 0) {
-            Log.info("FormIds: "+exam.formIds.size());
-            for(int i = 0; i < exam.formIds.size(); i++) {
-                if(exam.formIds.get(i) != null) {
-                    forms.add(exam.formIds.get(i).title);
-                }
-            }
-        }
-        int nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
-        String status = "";
-        if(exam.examState == ExamState.RUNNING){
-            status= "Läuft";
-        }
-        else if ( exam.examState == ExamState.IN_PREPARATION){
+        if (exam.examState == ExamState.RUNNING) {
+            status = "Läuft";
+        } else if (exam.examState == ExamState.IN_PREPARATION) {
             status = "In Vorbereitung";
+        } else {
+            status = "Beendet";
         }
-        else{
-            status= "Beendet";
-        }
-        String startTime = "";
-        boolean isToday = false;
-        if(exam.startTime != null) {
-            startTime = exam.startTime.toString();
-        }
-        if(exam.date.equals(LocalDate.now())){
-            isToday = true;
-        }
-        examSummary = new ShowExamDto(exam.title, exam.date.toString(), examiners, forms, startTime, Integer.toString(nrOfStudentsPerExam), status, exam.pin, exam.id, isToday);
-        return examSummary;
+
+        // Dto wird zusammengesetzt
+        examSummary.add(new ShowExamDto(
+                exam.title, exam.date.toString(), examiners, forms,
+                exam.startTime != null ? exam.startTime.toString() : " ",
+                Integer.toString(nrOfStudentsPerExam),
+                status, exam.pin, exam.id,
+                exam.date.equals(LocalDate.now()),
+                exam.examState == ExamState.IN_PREPARATION,
+                exam.examState == ExamState.IN_PREPARATION,
+                exam.interval));
     }
-    /**
-     * Posts new Exam
-     * @return new exam
-     */
+
+    @GET
+    @Path("/latestExam/examiner/{adminId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ShowExamDto getLatestExamByExaminerId(@PathParam("adminId") Long adminId) {
+        List<ShowExamDto> examSummary = getExamsByExaminerId(String.valueOf(adminId));
+        return examSummary.get(0) != null ? examSummary.get(0) : null;
+    }
+
+    @GET
+    @Path("/exam/{examId}/examiner/{adminId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ShowExamDto getExamById(@PathParam("examId") String examId, @PathParam("adminId") String adminId) {
+        Exam exam = examRepository.findById(Long.parseLong(examId));
+        if (exam.isDeleted) {
+            return null;
+        }
+        var examSummary = new LinkedList<ShowExamDto>();
+        BuildShowExamDTO(adminId, examSummary, exam);
+        return examSummary.get(0);
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
-    public Exam addExam(ExamDto exam) {
-        String pin = examRepository.createPIN(LocalDate.now());
-        String tempDate = exam.date().substring(0,10);
-        //String tempStartTime= tempDate + "T" + exam.startTime()+":00";
-        //String tempEndTime= tempDate + "T" + exam.endTime()+":00";
-
-
-        Log.info(exam.date());
+    public String addExam(ExamDto exam) {
+        String pin = examRepository.createPIN();
         Exam e = new Exam(
                 pin,
                 exam.title(),
                 ExamState.IN_PREPARATION,
-                LocalDate.parse(tempDate),
-                5,
+                LocalDate.parse(exam.date().substring(0, 10)),
+                exam.interval(),
                 Resolution.HD,
-                1
+                1,
+                Long.valueOf(exam.examinerIds().get(0))
         );
-        List<Examiner> examiners = new LinkedList<>();
-        if(exam.examinerIds() != null && exam.examinerIds().size() > 0) {
-            for (String examinerId : exam.examinerIds()) {
-                Log.info(examinerId);
-                Examiner examiner = examinerRepository.findById(Long.parseLong(examinerId));
-                if(examiner != null) {
-                    examiners.add(examiner);
-                    //examinerRepository.addExam(examiner, e);
-                    Log.info(examiner.id);
-                }
-            }
-        }
-        List<SchoolClass> forms = new LinkedList<>();
-        if(exam.formIds() != null && exam.formIds().size() > 0) {
-            for (String formId : exam.formIds()) {
-                SchoolClass form = schoolClassRepository.findById(Long.parseLong(formId));
-                forms.add(form);
+
+        e.examiners = new LinkedList<>();
+        for (String examinerId : exam.examinerIds()) {
+            Examiner examiner = examinerRepository.findById(Long.parseLong(examinerId));
+            if (examiner != null) {
+                e.examiners.add(examiner);
+                examiner.exams.add(e);
             }
         }
 
-        e.examiners = examiners;
-        e.formIds = forms;
+        e.schoolClasses = new LinkedList<>();
+        for (String formId : exam.formIds()) {
+            SchoolClass form = schoolClassRepository.findById(Long.parseLong(formId));
+            if (form != null) {
+                e.schoolClasses.add(form);
+                form.exams.add(e);
+            }
+        }
+
         examRepository.persist(e);
-        return e;
+        return pin;
     }
 
-    /**
-     * Adds an Examiner to Exam (id)
-     * Verifys if examiner already has been enrolled
-     * @return Exam
-     */
     @PUT
     @Path("addExaminer/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Exam addExaminerToExam(@PathParam("id") Long id, ExaminerDto examiner) {
-
-        //validation for duplicate examiners
-
         Exam ex = examRepository.findById(id);
         Examiner newExaminer = new Examiner(examiner.userName(), examiner.firstName(), examiner.lastName(), examiner.isAdmin());
         ex.examiners.add(newExaminer);
         return ex;
     }
-    /**
-     * Deletes exam
-     * Remove all examiners from exam before deleting exam
-     * @return screenshot of examinee
-     */
+
     @DELETE
-    @Path("delete/{id}")
+    @Path("delete/{examId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public Exam deleteExam(@PathParam("id") Long id) {
-        //can only be deleted if there are no more examiners in it
-        Exam ex = examRepository.findById(id);
-        if(ex == null)
+    public Exam deleteExam(@PathParam("examId") Long examId) {
+        Exam exam = examRepository.findById(examId);
+        if (exam == null)
             return null;
-        //examinerRepository.deleteExamFromExaminers(id);
-        examineeRepository.deleteExamFromExaminees(id);
-        //Log.info("deleted exam from examinees");
-        boolean deleted = examRepository.deleteById(id);
-        //examRepository.getEntityManager().remove(ex);
-        Log.info("Delete Exam: " + ex.title);
-        Log.info("Delete Exam: " + deleted);
-        Log.info(examRepository.listAll().size());
-        return ex;
+        examinerRepository.deleteExamFromExaminers(examId);
+
+        //delete screenshots
+        //List<File> files = ExamRepository.deleteDirectoryOfScreenshots("Franklyn_2022-02-23", root);
+
+        exam.pin = "";
+        exam.isDeleted = true;
+        examRepository.persist(exam);
+        return exam;
     }
 
-    /**
-     * Updates exam
-     * @return updated exam
-     */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{id}")
+    @Path("update/{examId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Exam updateExam(@PathParam("id") Long id, ExamUpdateDto exam) {
-        Exam ex = examRepository.findById(id);
+    public Exam updateExam(@PathParam("examId") Long examId, ExamUpdateDto updatedExam) {
+        Exam exam = examRepository.findById(examId);
+        List<Examiner> examiners = new ArrayList<>();
+        List<SchoolClass> schoolClasses = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        ex.title = exam.title();
-        ex.date = LocalDate.parse(exam.date());
-        ex.startTime = LocalDateTime.parse(exam.startTime());
-        ex.endTime = LocalDateTime.parse(exam.endTime());
-        examRepository.getEntityManager().merge(ex);
-        return ex;
+        if (exam == null)
+            return null;
+
+        for (var examiner : updatedExam.examinerIds()) {
+            examiners.add(examinerRepository.findById(Long.valueOf(examiner)));
+        }
+
+        for (var form : updatedExam.formIds()) {
+            schoolClasses.add(schoolClassRepository.findById(Long.valueOf(form)));
+        }
+
+        exam.title = updatedExam.title();
+        exam.date = LocalDate.parse(updatedExam.date(), formatter);
+        exam.interval = updatedExam.interval();
+        exam.examiners = examiners;
+        exam.schoolClasses = schoolClasses;
+
+        examRepository.persist(exam);
+        return exam;
     }
 
-    /**
-     * Looks for exam with pin (for enrolling as student)
-     * @return id of exam or 0 if not found
-     */
+
     @GET
     @Path("verifyPIN/{pin}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Long verifyPIN(@PathParam("pin") String pin){
-        Log.info(pin);
+    public Long verifyPIN(@PathParam("pin") String pin) {
         List<Exam> exams = examRepository.listAll();
         Exam exam = null;
         boolean check = false;
         for (Exam e : exams) {
-            if(e.pin.equals(pin)){
+            if (e.pin.equals(pin) && Objects.equals(e.date, LocalDate.now())) {
                 exam = e;
                 check = true;
             }
         }
-        if (!check){
+        if (!check) {
             return 0L;
         }
         return exam.id;
     }
 
-    /**
-     * Enroll student for
-     * Verify if already enrolled if not -> enroll
-     * if yes -> ask student if he/she wants to enroll again
-     * @return screenshot of examinee
-     */
     @GET
-    @Path("enroll/{id}/{firstName}/{lastName}")
+    @Path("enroll/{examId}/{firstName}/{lastName}")
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Long enrollStudentForExam(@PathParam("id") Long id, @PathParam("firstName") String firstName,@PathParam("lastName") String lastName) {
+    public Long enrollStudentForExam(@PathParam("examId") Long examId, @PathParam("firstName") String firstName, @PathParam("lastName") String lastName) {
         //show if already exists with first and last name
-        Exam exam = examRepository.findById(id);
+        Exam exam = examRepository.findById(examId);
         Examinee examinee = new Examinee(firstName, lastName, exam, true, LocalDateTime.now());
-        Log.info(examinee.firstName);
         boolean examineeAlreadyExists = examineeRepository.checkIfAlreadyEnrolled(examinee.firstName, examinee.lastName, exam.id);
-        if(examineeAlreadyExists){
+        if (examineeAlreadyExists) {
             return -1L;
         }
         examineeRepository.persist(examinee);
         Examinee returnExaminee = examineeRepository.find("id", examinee.id).firstResult();
-        if(returnExaminee == null)
+        if (returnExaminee == null)
             return 0L;
-        Log.info(returnExaminee.id);
         return returnExaminee.id;
     }
 
-
-    /**
-     * Removes examinee from exam
-     * @return examinee
-     */
-    //sends details back
+    // Tran muss definitiv überarbeiten => falsche entitäten, passt nichts zusammen
     @PUT
     @Transactional
     @Path("removeExaminee/{id}")
@@ -404,11 +255,7 @@ public class ExamResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Examinee removeExamineeFromExam(@PathParam("id") Long id, Long examineeId) {
         Exam ex = examRepository.findById(id);
-
-        ex.examiners.remove(
-                examineeRepository
-                        .findById(examineeId)
-        );
+        ex.examinees.remove(examineeRepository.findById(examineeId));
         return examineeRepository.findById(examineeId);
     }
 

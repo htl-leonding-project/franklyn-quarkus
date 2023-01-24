@@ -13,34 +13,52 @@
             </div>
             <div class="container-fluid" *ngIf="showFirstCard == true">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Allgemeines</h5>
-                        <br>
-                        <label class="form-label">Titel</label>
-                        <input [(ngModel)]="newExam.title" class="form-control" type="text" placeholder="Titel">
-                        <br>
-                        <label class="form-label">Klassen</label>
-                        <br>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Auswahl</mat-label>
-                            <mat-select [(ngModel)]="selectedForms" multiple>
-                              <mat-option *ngFor="let form of forms" [value]="form.id">{{form.title}}</mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                        <br>
-                        <label class="form-label">Begleitlehrer</label>
-                        <br>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Auswahl</mat-label>
-                            <mat-select [(ngModel)]="selectedExaminers" multiple>
-                              <mat-option *ngFor="let examiner of examiners" [value]="examiner.id">{{examiner.firstName}} {{examiner.lastName}}</mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                        <br>
-                        <label class="form-label">Datum</label>
-                        <input [(ngModel)]="tempDate" class="form-control" type="date">
-                      </div>
-                      <button (click)="firstCardSubmit()" class="btn btn-forward lonebtn">Weiter</button>
+                    <form (ngSubmit)="onSubmit()" #myForm="ngForm">
+                        <div class="card-body">
+                            <h5 class="card-title">Allgemeines</h5>
+                            <br>
+                            <div class="form-group">
+                                <label for="title" class="form-label">Titel</label>
+                                <input [(ngModel)]="newExam.title" id="title" name="newExam.title" class="form-control" type="text" placeholder="Titel" #title="ngModel" required>
+                                <div [hidden]="title.valid"
+                                     class="alert alert-danger required">
+                                  Title is required
+                                </div>
+                              </div>
+                              <br>
+                              <div class="form-group">
+                                <label for="formIds" class="form-label">Klassen</label>
+                                <br>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Auswahl</mat-label>
+                                    <mat-select [(ngModel)]="selectedForms" id="formIds" name="selectedForms" #formIds="ngModel" multiple required>
+                                      <mat-option *ngFor="let form of forms" [value]="form.id">{{form.title}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                <div [hidden]="formIds.valid" class="alert alert-danger required">
+                                  Class is required
+                                </div>
+                              </div>
+                            <br>
+                            <label class="form-label">Begleitlehrer</label>
+                            <br>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Auswahl</mat-label>
+                                <mat-select [(ngModel)]="selectedExaminers" id="examiners" name="examinerIds" multiple>
+                                  <mat-option *ngFor="let examiner of examiners" [value]="examiner.id">{{examiner.firstName}} {{examiner.lastName}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            <br>
+                            <div class="form-group">
+                                <label for="tempDate" class="form-label">Datum</label>
+                                <input [(ngModel)]="tempDate" class="form-control" type="date" id="tempDate" name="tempDate" #date="ngModel" (change)="checkDate()" (ngModelChange)="checkDate()" required>
+                                <div [hidden]="dateIsValid" class="alert alert-danger required">
+                                    Date is required
+                                </div>
+                            </div>
+                          </div>
+                          <button (click)="firstCardSubmit()" type="submit" [disabled]="!myForm.form.valid || !dateIsValid" class="btn btn-forward lonebtn">Weiter</button>
+                    </form>
                 </div>
             </div>
         
@@ -62,27 +80,31 @@
         
             <div class="container-fluid" *ngIf="showThirdCard == true">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Screenshot Einstellungen</h5>
-                        <br>
-                        <label class="form-label">Interval [1-20]</label>
-                        <input [(ngModel)]="tempInterval" class="form-control" type="number">
-                        <!-- <input style="width: 50%;" [(ngModel)]="rangeValue" min="0" max="20" type="range" class="form-range" id="customRange1"> -->
-                        <br>
-            <!-- todo komprimierungsfaktor -->
-                        <button class="btn btn-secondary btn-back inline" (click)="thirdCardBack()">Zurück</button>
-                        <button (click)="thirdCardSubmit()" class="btn btn-forward inline">Test erstellen</button>
-                    </div>
+                    <form (ngSubmit)="onSubmit()" #screenshotForm="ngForm">
+                        <div class="card-body">
+                            <h5 class="card-title">Screenshot Einstellungen</h5>
+                            <br>
+                            <label for="tempInterval" class="form-label">Interval [1-20]</label>
+                            <input [(ngModel)]="tempInterval" id="tempInterval" name="tempInterval" #interval="ngModel" min="1" max="20" class="form-control" type="number">
+                            <div [hidden]="interval.valid" class="alert alert-danger required">
+                                Interval is required
+                            </div>
+                            <!-- <input style="width: 50%;" [(ngModel)]="rangeValue" min="0" max="20" type="range" class="form-range" id="customRange1"> -->
+                            <br>
+                <!-- todo komprimierungsfaktor -->
+                            <button class="btn btn-secondary btn-back inline" (click)="thirdCardBack()">Zurück</button>
+                            <button (click)="thirdCardSubmit()" type="submit" [disabled]="!screenshotForm.form.valid"  class="btn btn-forward inline">Test erstellen</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
-
             <div class="container-fluid" *ngIf="showFourthCard == true">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body successful">
                         <h5 class="card-title">Test wurde erfolgreich erstellt!</h5>
                         <br>
-                        <h1>PIN: todo</h1>
+                        <h1>PIN: {{pinOfNewTest}}</h1>
                     </div>
                 </div>
             </div>

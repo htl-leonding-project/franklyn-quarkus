@@ -3,9 +3,13 @@ package at.htl.control;
 import at.htl.entity.Examinee;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.logging.Log;
+import io.quarkus.panache.common.Parameters;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.List;
 
 
@@ -56,5 +60,16 @@ public class ExamineeRepository implements PanacheRepository<Examinee> {
         for (Examinee ex : examinees) {
             this.getEntityManager().remove(ex);
         }
+    }
+
+    public boolean checkIfExamineeIsStillOnline(Examinee examinee, int interval) {
+        if(examinee.lastOnline == null) {
+            return false;
+        }
+        long seconds = Duration.between(examinee.lastOnline, LocalDateTime.now()).toSeconds();
+        if(seconds > (interval* 3L)) {
+            return false;
+        }
+        return true;
     }
 }

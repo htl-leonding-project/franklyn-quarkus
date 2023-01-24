@@ -87,8 +87,6 @@ public class ImageResource {
                     Timestamp.valueOf(LocalDateTime.now()),
                     cnt,
                     examinee,
-                    Resolution.HD,
-                    1,
                     String.format("http://localhost:8082/%s/%s_%s_%s/%s",
                             pathOfScreenshots,
                             exam.title,

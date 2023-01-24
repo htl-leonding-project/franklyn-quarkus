@@ -45,6 +45,8 @@ public class InitBean {
         examiners.add(examiner2);
         examiners.add(examiner3);
 
+
+
         String webUntisResult = webUntisService.initDB("NNRADIO", "PAuthlyn28");
         Log.info("WebUntis Result: " + webUntisResult);
         Examiner examinerWU = examinerRepository.findByUsername("NNRADIO");
@@ -55,25 +57,31 @@ public class InitBean {
         SchoolClass schoolClass2 = new SchoolClass("3AHIF", "2021");
         schoolClasses.add(schoolClass1);
         schoolClasses.add(schoolClass2);
-        for (SchoolClass schoolClass : schoolClasses) {
+/*        for (SchoolClass schoolClass : schoolClasses) {
             schoolClassRepository.persist(schoolClass);
             Log.info("Persist Schoolclass: " + schoolClass.title);
-        }
+        }*/
+        List<SchoolClass> schoolClasses2 = new ArrayList<>();
+        schoolClasses2.add(schoolClass2);
+
 
         Exam exam1 = new Exam(
                 "234",
                 "Test",
                 ExamState.FINISHED,
-                schoolClasses,
+                schoolClasses2,
                 LocalDate.parse("2022-06-23"),
                 LocalDateTime.parse("2022-05-23T17:09:42.411"),
                 LocalDateTime.parse("2022-05-23T18:09:42.411"),
-                examiners,
                 5,
-                Resolution.HD,
-                1
+                examiners
                 );
-        exam1.examiners = List.of(examinerWU, examiner2, examiner3);
+        List<Examiner> examiners1 = new ArrayList<>();
+        examiners1.add(examinerWU);
+        examiners1.add(examiner2);
+        examiners1.add(examiner3);
+        exam1.examiners = examiners1;
+        exam1.adminId = examinerWU.id;
 
         Exam exam2 = new Exam(
                 "948",
@@ -83,14 +91,16 @@ public class InitBean {
                 LocalDate.parse("2022-02-23"),
                 LocalDateTime.parse("2022-02-23T10:09:42.411"),
                 LocalDateTime.parse("2022-02-23T12:09:42.411"),
-                examiners,
                 5,
-                Resolution.HD,
-                1
+                examiners
         );
-        exam2.examiners = List.of(examiner2, examinerWU);
         examRepository.persist(exam1);
         examRepository.persist(exam2);
+        List<Examiner> examiners2 = new ArrayList<>();
+        examiners2.add(examinerWU);
+        examiners2.add(examiner2);
+        exam2.examiners = examiners2;
+        exam2.adminId = examinerWU.id;
         Log.info("Persist: " + exam1.title);
         Log.info("Persist: " + exam2.title);
 
@@ -103,9 +113,11 @@ public class InitBean {
         examinee1.exam = exam1;
         examinee1.isOnline = true;
         Examinee examinee2 = new Examinee("Jan", "Melcher");
+        examinee2.lastOnline = LocalDateTime.now();
         examinee2.exam = exam1;
         examinee1.isOnline = false;
         Examinee examinee3 = new Examinee("Anna", "Wiesinger");
+        examinee3.lastOnline = LocalDateTime.now();
         examinee3.exam = exam2;
         examinee1.isOnline = true;
         Examinee examinee4 = new Examinee("Alina", "Schuster");
@@ -124,8 +136,6 @@ public class InitBean {
                 Timestamp.valueOf(LocalDateTime.now()),
                 1L,
                 examinee1,
-                Resolution.HD,
-                1,
                 "here"
         );
         screenshotRepository.persist(screenshot1);
@@ -135,8 +145,6 @@ public class InitBean {
                 Timestamp.valueOf(LocalDateTime.now()),
                 2L,
                 examinee1,
-                Resolution.HD,
-                1,
                 "here"
         );
         screenshotRepository.persist(screenshot1);
@@ -146,8 +154,6 @@ public class InitBean {
                 Timestamp.valueOf(LocalDateTime.now()),
                 1L,
                 examinee2,
-                Resolution.HD,
-                1,
                 "here"
         );
         screenshotRepository.persist(screenshot1);
@@ -157,8 +163,6 @@ public class InitBean {
                 Timestamp.valueOf(LocalDateTime.now()),
                 2L,
                 examinee2,
-                Resolution.HD,
-                1,
                 "here"
         );
         screenshotRepository.persist(screenshot1);

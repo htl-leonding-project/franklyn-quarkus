@@ -15,14 +15,16 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ExamineeService {
+  private BASE_URL: string = "http://localhost:8080/api";
+
 
   constructor(private http: HttpClient) { }
 
   getExamineesByExamId(id: number){
-    return this.http.get<Examinee[]>("http://localhost:8080/api/examinees/exam/"+id);
+    return this.http.get<Examinee[]>(this.BASE_URL+"/examinees/exam/"+id);
   }
 
   getLatestScreenshotByExamIdAndExamineeId(examId: number, examineeId: number){
-    return this.http.get<Screenshot>("http://localhost:8080/api/screenshot/exam/"+examId+"/examinee/"+examineeId);
+    return this.http.get<Screenshot>(this.BASE_URL+"/screenshot/exam/"+examId+"/examinee/"+examineeId);
   }
 }

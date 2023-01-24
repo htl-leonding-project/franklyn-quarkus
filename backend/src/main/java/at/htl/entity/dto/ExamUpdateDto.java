@@ -6,7 +6,9 @@ public record ExamUpdateDto(
         String title,
         boolean ongoing,
         String date,
-        String startTime,
-        String endTime
+        int interval,
+        List<String> examinerIds,
+        List<String> formIds
+
 ) {
 }

@@ -22,15 +22,16 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService, private router: Router) { }
 
   currentScreenshot: Screenshot = {
-    pathOfScreenshot: '',
+    image: '../../../assets/img/temp.png',
     screenshotId: 0,
     examineeId: 0,
     examId: 0
   }
 
   currentIdx: number = 0;
-
   screenshots: Screenshot[] = [];
+  currentIndexFS: number = 0;
+  showImgFullScreen: boolean = false;
 
   exam: Exam = {
     pin: '',
@@ -42,7 +43,9 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     nrOfStudents: '',
     examiners: '',
     id: 0,
-    isToday: false
+    isToday: false,
+    canBeEdited: false,
+    canBeDeleted: false
   };
   examinees: Examinee[] = [];
   screenshotsOfExaminee: Screenshot[]=[];
@@ -54,12 +57,23 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   isSubscripedStudents: boolean = true;
   hasScreenshots: boolean = false;
 
-
+  imageObject: Array<object> = [];
 
   ngOnInit(): void {
     this.loadStudents();
     this.loadExam();
     this.currentScreenshot = this.screenshots[0];
+  }
+
+
+  showFullScreen(index: number) {
+    this.currentIndexFS = index;
+    this.showImgFullScreen = true;
+  }
+
+  closeEventHandler() {
+    this.showImgFullScreen = false;
+    this.currentIndexFS = -1;
   }
 
   loadStudents() {
@@ -95,7 +109,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
             this.screenshots = data;
             if(this.screenshots.length > 0){
               this.currentScreenshot = this.screenshots[0];
-              this.hasScreenshots = true;
+              this.hasScreenshots = true; 
             }else{
               this.hasScreenshots = false;
             }
@@ -129,11 +143,10 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   }
 
   loadExam() {
-    this.examService.getExamById(this.localService.getData("selectedExamId")!).subscribe({
+    this.examService.getExamById(this.localService.getData("selectedExamId")!, this.localService.getData("examinerId")!).subscribe({
       next: data => {
         this.exam = data;
         if(this.exam.isToday){
-          console.log("today")
           this.isSubscripedStudents = true;
           this.loadStudentsEverySecond()
         }

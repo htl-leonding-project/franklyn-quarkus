@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Exam } from '../models/exam.model';
 import { NewExam } from '../models/new-exam.model';
+import { UpdateExam } from '../models/update-exam.model';
 
 
 const httpOptions = {
@@ -17,35 +18,37 @@ const httpOptions = {
 })
 export class ExamService {
 
+  private BASE_URL: string = "http://localhost:8080/api/exams";
+
   constructor(private http: HttpClient) { }
 
   postNewTest(newExam: NewExam) {
-    return this.http.post<NewExam>("http://localhost:8080/api/exams", newExam, httpOptions);
+    return this.http.post<string>(this.BASE_URL, newExam, httpOptions);
   }
 
   getAll() {
-    return this.http.get<Exam[]>("http://localhost:8080/api/exams/all");
-  }
-
-  getById(id: string){
-    return this.http.get<Exam>("http://localhost:8080/api/exams/exam/"+id);
+    return this.http.get<Exam[]>(this.BASE_URL+"/all");
   }
 
   getLatestById(id: string){
-    return this.http.get<Exam>("http://localhost:8080/api/exams/exam/examiner/"+id);
+    return this.http.get<Exam>(this.BASE_URL+"/latestExam/examiner/"+id);
   }
 
-  getExamById(id: string){
-    return this.http.get<Exam>("http://localhost:8080/api/exams/exam/"+id);
+  getExamById(id: string, examinerId: string){
+    return this.http.get<Exam>(this.BASE_URL+"/exam/"+id + "/examiner/"+examinerId);
   }
 
   getExamsByExaminer(id: number){
-    return this.http.get<Exam[]>("http://localhost:8080/api/exams/examiner/"+id);
+    return this.http.get<Exam[]>(this.BASE_URL+"/examiner/"+id);
   }
 
   deleteById(examId: number) {
     console.log(examId)
-    return this.http.delete("http://localhost:8080/api/exams/delete/"+examId, httpOptions);
+    return this.http.delete(this.BASE_URL+"/delete/"+examId, httpOptions);
+  }
+
+  updateExam(updatedExam: UpdateExam){
+    return this.http.put<string>(this.BASE_URL+"/update/" + updatedExam.id, updatedExam, httpOptions);
   }
 
 }
