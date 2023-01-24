@@ -19,7 +19,7 @@ public interface ExamineeService {
      * @return          the id if the student is enrolled
      */
     @GET
-    @Path("/enroll/{id}/{firstName}/{lastName}")
+    @Path("enroll/{id}/{firstName}/{lastName}")
     @Produces(MediaType.APPLICATION_JSON)
     Long enrollStudentForExam(@PathParam("id") String id,
                                        @PathParam("firstName") String firstName,

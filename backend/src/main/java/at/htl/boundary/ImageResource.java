@@ -90,14 +90,7 @@ public class ImageResource {
                     Timestamp.valueOf(LocalDateTime.now()),
                     cnt,
                     examinee,
-                    String.format("%s/%s_%s_%s/%s",
-                            pathOfScreenshots,
-                            exam.title,
-                            exam.date,
-                            fullPath[1],
-                            fullPath[2],
-                            filename
-                    ),
+                    pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]+"/"+filename,
                     exam
             );
             screenshotRepository.post(screenshot);

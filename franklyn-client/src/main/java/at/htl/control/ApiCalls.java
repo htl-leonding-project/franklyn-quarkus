@@ -94,10 +94,10 @@ public class ApiCalls {
             if (response == -1L) {
                 System.out.println("You are already enrolled for this exam!");
 
-                System.out.print("Enroll again with the same name? [J | N]: ");
+                System.out.print("Enroll again with the same name? [Y | N]: ");
                 enrollOption = sc.next();
 
-                if (enrollOption.equalsIgnoreCase("J")) {
+                if (enrollOption.equalsIgnoreCase("Y")) {
                     response = executeEnrollAgainService(id, firstName, lastName);
                 }
                 else if(enrollOption.equalsIgnoreCase("N")){

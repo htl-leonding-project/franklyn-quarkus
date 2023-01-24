@@ -91,4 +91,12 @@ public class ExamRepository implements PanacheRepository<Exam> {
         }
         return schoolClasses;
     }
+
+    public int getIntervalByExamId(Long id) {
+        var query = this.getEntityManager().createQuery(
+                "select e from Exam e where e.id = :EXAMID", Exam.class
+        ).setParameter("EXAMID", id);
+
+        return query.getSingleResult().interval;
+    }
 }
