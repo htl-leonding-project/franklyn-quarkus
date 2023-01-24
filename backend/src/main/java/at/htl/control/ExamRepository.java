@@ -7,6 +7,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Parameters;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
@@ -15,16 +16,19 @@ import java.util.*;
 public class ExamRepository implements PanacheRepository<Exam> {
 
     public String createPIN() {
+        List<Exam> examqs = this.find("date", LocalDate.now()).list();
+        List<Exam> examsWithDate = this.find("date", LocalDate.now()).list();
         boolean pinIsValid = false;
         String pin;
-        do {
-            pin = String.valueOf((int) (Math.random() * (999 - 100)) + 100);
-            var exams = this.find("select e from Exam e where e.pin LIKE :PIN and e.date = :DATE",
-                    Parameters.with("PIN", pin),
-                    Parameters.with("DATE", LocalDate.now())).list();
-            if (exams.isEmpty())
+        do{
+            pin = String.valueOf((int) (Math.random()*(999-100))+100);
+            List<Exam> exams = this.getEntityManager().createNamedQuery("Exam.findExamWithSameDateAndPIN", Exam.class)
+                    .setParameter("DATE", LocalDate.now())
+                    .setParameter("PIN", pin)
+                    .getResultList();
+            if(exams == null)
                 pinIsValid = true;
-        } while (pinIsValid);
+        }while (pinIsValid);
         return pin;
     }
 

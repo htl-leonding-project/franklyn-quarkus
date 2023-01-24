@@ -13,6 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Path("api/examiners")
 public class ExaminerResource {
@@ -24,7 +25,7 @@ public class ExaminerResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Examiner> listAll() {
-        return examinerRepository.list("select ex from Examiner ex order by ex.name");
+        return examinerRepository.list("select ex from Examiner ex order by ex.lastName");
     }
 
     @POST
@@ -65,11 +66,11 @@ public class ExaminerResource {
     @Path("exam/{examId}/examiner/{examinerId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public List<Examiner> getExaminerByExamId(@PathParam("examId") String examId, @PathParam("examinerId") String examinerId) {
-        Exam exam = examRepository.findById(Long.parseLong(examId));
+    public List<Examiner> getExaminerByExamId(@PathParam("examId") Long examId, @PathParam("examinerId") Long examinerId) {
+        Exam exam = examRepository.findById(examId);
         var examiners = exam.examiners;
         for (Examiner examiner : examiners) {
-            if (examiner.id == Long.parseLong(examinerId)) {
+            if (Objects.equals(examiner.id, examinerId)) {
                 examiners.remove(examiner);
                 break;
             }

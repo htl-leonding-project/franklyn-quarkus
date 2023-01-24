@@ -41,7 +41,7 @@ public class ExamResource {
     @Path("/examiner/{adminId}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<ShowExamDto> getExamsByExaminerId(@PathParam("adminId") String adminId) {
-        List<Exam> exams = examRepository.find("select e from Exam e where e.adminId = :id and e.isDeleted = false order by e.date", Parameters.with("id", Long.valueOf(adminId))).list();
+        List<Exam> exams = examRepository.find("select e from Exam e where e.adminId = :id and e.isDeleted = false order by e.date desc", Parameters.with("id", Long.valueOf(adminId))).list();
 
         List<ShowExamDto> examSummary = new LinkedList<>();
 
@@ -97,6 +97,9 @@ public class ExamResource {
     @Produces(MediaType.APPLICATION_JSON)
     public ShowExamDto getExamById(@PathParam("examId") String examId, @PathParam("adminId") String adminId) {
         Exam exam = examRepository.findById(Long.parseLong(examId));
+        if(exam == null) {
+            return null;
+        }
         if (exam.isDeleted) {
             return null;
         }
@@ -137,7 +140,6 @@ public class ExamResource {
                 form.exams.add(e);
             }
         }
-
         examRepository.persist(e);
         return pin;
     }
