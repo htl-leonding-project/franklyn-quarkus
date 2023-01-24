@@ -32,6 +32,6 @@ export class ExaminersService {
   }
 
   getExaminersByExamId(examId: string, examinerId: string){
-    return this.http.get<Examiner[]>(this.BASE_URL+"/exam/id/" + examId + "/examiner/" + examinerId);
+    return this.http.get<Examiner[]>(this.BASE_URL+"/exam/" + examId + "/examiner/" + examinerId);
   }
 }

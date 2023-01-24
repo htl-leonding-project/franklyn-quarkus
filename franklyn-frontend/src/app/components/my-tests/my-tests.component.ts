@@ -77,7 +77,6 @@ export class MyTestsComponent implements OnInit, OnDestroy {
   toggleExamOnInit(exam:Exam){
     //this.selection.toggle(exam);
     this.selection.select(exam);
-    console.log("toggled");
   }
 
   getExamById(selectedExam: number) {
@@ -128,6 +127,9 @@ export class MyTestsComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
           this.router.navigate([currentUrl]);
         });
+        if(this.exams.length >= 1){
+          this.setExamId(this.exams[1].id);
+        }
       }, 
       error: (error) => {alert("Fehler beim Löschen des Exams: "+error.message);}
     });
@@ -137,7 +139,7 @@ export class MyTestsComponent implements OnInit, OnDestroy {
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
 			(result) => {
         this.deleteExam(this.globalService.getExamId);
-        console.log("test");
+
 			},
 			(reason) => {
 			},
