@@ -22,7 +22,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService, private router: Router) { }
 
   currentScreenshot: Screenshot = {
-    pathOfScreenshot: '../../../assets/img/temp.png',
+    image: '../../../assets/img/temp.png',
     screenshotId: 0,
     examineeId: 0,
     examId: 0
@@ -57,7 +57,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   isSubscripedStudents: boolean = true;
   hasScreenshots: boolean = false;
 
-
+  imageObject: Array<object> = [];
 
   ngOnInit(): void {
     this.loadStudents();
@@ -109,7 +109,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
             this.screenshots = data;
             if(this.screenshots.length > 0){
               this.currentScreenshot = this.screenshots[0];
-              this.hasScreenshots = true;
+              this.hasScreenshots = true; 
             }else{
               this.hasScreenshots = false;
             }
@@ -147,7 +147,6 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
       next: data => {
         this.exam = data;
         if(this.exam.isToday){
-          console.log("today")
           this.isSubscripedStudents = true;
           this.loadStudentsEverySecond()
         }

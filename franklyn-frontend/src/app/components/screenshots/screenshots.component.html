@@ -27,7 +27,7 @@
                                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                         <div class="carousel-inner">
                                           <div class="carousel-item active">
-                                            <img class="d-block" src="{{currentScreenshot.pathOfScreenshot}}" (click)="showFullScreen(0)" alt="Screenshot">
+                                            <img class="d-block" src="{{currentScreenshot.image}}" (click)="showFullScreen(0)" alt="Screenshot">
                                           </div>
                                         </div>
                                         <a class="carousel-control-prev" (click)="goToPrevious()" role="button" data-slide="prev">
@@ -67,8 +67,21 @@
                                         <br>
                                         <cdk-virtual-scroll-viewport class="examinee-viewport" itemSize="60">
                                             <dl class="examinee-dl">
-                                              <ng-container *cdkVirtualFor="let examinee of examinees">
-                                                <dt class="examinee-dt normal" [ngClass]="{'highlight' : examinee.id == selectedExamineeId}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</dt>
+                                              <ng-container *ngFor="let examinee of examinees">
+                                                <dt class="examinee-dt normal" [ngClass]="{'highlight' : examinee.id == selectedExamineeId}" (click)="SelectExaminee(examinee.id)">
+                                                    <div *ngIf="examinee.isOnline">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#00b400" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                                            <circle cx="8" cy="8" r="8"/>
+                                                        </svg>
+                                                        &nbsp;&nbsp;{{examinee.firstName}} {{examinee.lastName}}
+                                                    </div>
+                                                    <div *ngIf="!examinee.isOnline">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#dc0000" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                                            <circle cx="8" cy="8" r="8"/>
+                                                        </svg>
+                                                        &nbsp;&nbsp;{{examinee.firstName}} {{examinee.lastName}}
+                                                    </div>
+                                                </dt>
                                               </ng-container>
                                             </dl>
                                           </cdk-virtual-scroll-viewport>

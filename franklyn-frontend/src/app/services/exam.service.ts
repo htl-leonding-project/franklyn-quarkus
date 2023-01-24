@@ -31,7 +31,7 @@ export class ExamService {
   }
 
   getLatestById(id: string){
-    return this.http.get<Exam>(this.BASE_URL+"/exam/examiner/"+id);
+    return this.http.get<Exam>(this.BASE_URL+"/latestExam/examiner/"+id);
   }
 
   getExamById(id: string, examinerId: string){

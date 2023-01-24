@@ -10,13 +10,13 @@
 
 .btn-forward{
     color: white;
-    background-color: #02c39a;
+    background-color: #45cd40;
     width: 200px;
     float: right; 
 }
 
 .btn-forward:hover{
-    background-color: #02c39a;
+    background-color: #45cd40;
     color: white;
 }
 

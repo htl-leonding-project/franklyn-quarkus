@@ -1,5 +1,5 @@
 import { Time } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Form, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Examiner } from 'src/app/models/examiner.model';
