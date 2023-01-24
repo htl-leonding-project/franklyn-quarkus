@@ -117,8 +117,6 @@ public class ExamResource {
                 ExamState.IN_PREPARATION,
                 LocalDate.parse(exam.date().substring(0, 10)),
                 exam.interval(),
-                Resolution.HD,
-                1,
                 Long.valueOf(exam.examinerIds().get(0))
         );
 

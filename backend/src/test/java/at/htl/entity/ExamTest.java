@@ -23,7 +23,6 @@ class ExamTest {
         exam.pin="12345";
         exam.examState=ExamState.IN_PREPARATION;
         exam.title="NVS-Test";
-        exam.resolution=Resolution.HD;
         exam.startTime = LocalDateTime.of(2022, 3, 26, 11, 45);
         exam.endTime = LocalDateTime.of(2022, 3, 26, 13, 45);
         List<Examiner> examiners = new ArrayList<Examiner>();

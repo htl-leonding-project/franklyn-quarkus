@@ -94,6 +94,8 @@ public class InitBean {
                 5,
                 examiners
         );
+        exam1.schoolClasses = schoolClasses2;
+        exam2.schoolClasses = schoolClasses;
         examRepository.persist(exam1);
         examRepository.persist(exam2);
         List<Examiner> examiners2 = new ArrayList<>();

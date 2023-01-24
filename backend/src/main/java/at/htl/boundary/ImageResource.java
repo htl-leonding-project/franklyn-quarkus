@@ -81,13 +81,16 @@ public class ImageResource {
             //String[] files = filename.split("_");
             //LOG.info(files[1]);
             //Exam exam = examRepository.findById(Long.valueOf(files[3]));
-            examRepository.getEntityManager().merge(exam);
+            examRepository.persist(exam);
             Examinee examinee = examineeRepository.findByName(exam.id, fullPath[1], fullPath[2]);
+            examinee.isOnline = true;
+            examinee.lastOnline = LocalDateTime.now();
+            examineeRepository.persist(examinee);
             Screenshot screenshot = new Screenshot(
                     Timestamp.valueOf(LocalDateTime.now()),
                     cnt,
                     examinee,
-                    String.format("http://localhost:8082/%s/%s_%s_%s/%s",
+                    String.format("%s/%s_%s_%s/%s",
                             pathOfScreenshots,
                             exam.title,
                             exam.date,
