@@ -46,6 +46,7 @@ dist
 /docs/slides/revealjs/
 
 *.jar
+!/backend/lib/*.jar
 /backend/db-postgres/
 
 /client
