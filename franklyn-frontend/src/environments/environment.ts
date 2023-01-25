@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://student.cloud.htl-leonding.ac.at/api'
+  API_URL: 'http://localhost:8080/api'
 };
 
 /*
