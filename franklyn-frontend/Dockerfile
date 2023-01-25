@@ -2,7 +2,7 @@
 FROM node:16 as build
 WORKDIR /app
 COPY package*.json /app/
-RUN npm install
+RUN npm install --force
 COPY . /app
 ARG configuration=production
 RUN npm run build -- --outputPath=./dist/out --configuration $configuration
