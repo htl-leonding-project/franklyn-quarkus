@@ -5,7 +5,7 @@ COPY package*.json /app/
 RUN npm install --force
 COPY . /app
 ARG configuration=production
-RUN npm run build -- --outputPath=./dist/out --configuration $configuration
+RUN npm run build -- --outputPath=./dist/out --configuration $configuration --base-href /t.melcher/franklyn/
 
 # Stage 2, use the compiled app, ready for production with Nginx
 FROM nginx
