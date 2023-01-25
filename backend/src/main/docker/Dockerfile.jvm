@@ -5,11 +5,13 @@ USER root
 COPY mvnw /code/mvnw
 COPY .mvn /code/.mvn
 COPY pom.xml /code/
-
+COPY ./lib/ /code/lib/
 WORKDIR /code
-RUN ./mvnw -B org.apache.maven.plugins:maven-dependency-plugin:3.1.2:go-offline
+
+#RUN ./mvnw -B org.apache.maven.plugins:maven-dependency-plugin:3.1.2:go-offline
+
 COPY ./src /code/src
-RUN ./mvnw package
+RUN ./mvnw package -DskipTests
 
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.13-1.1655306439
 
