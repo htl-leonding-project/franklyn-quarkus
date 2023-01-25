@@ -15,7 +15,7 @@ const httpOptions = {
 })
 export class ExaminersService {
 
-  private BASE_URL: string = environment.API_URL+ "/api/examiners";
+  private BASE_URL: string = environment.API_URL+ "/examiners";
 
 
   constructor(private http: HttpClient) { }
