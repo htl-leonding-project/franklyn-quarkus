@@ -8,7 +8,7 @@ import {environment} from "../../environments/environment";
 })
 export class FormsService {
 
-  private BASE_URL: string = environment.API_URL+ "schoolclass";
+  private BASE_URL: string = environment.API_URL+ "/schoolclass";
 
 
   constructor(private http: HttpClient) { }
