@@ -21,7 +21,7 @@ export class StartComponent implements OnInit {
   response: string = "false";
 
   ngOnInit(): void {
-      
+
   }
 
 
@@ -30,20 +30,20 @@ export class StartComponent implements OnInit {
   this.webUntisService.login(this.userName,this.passWord).subscribe({
       next: data => {
         this.response = data;
-      }, 
+        if(this.response == "true"){
+          this.loadExaminer();
+          this.router.navigate(['/dashboard']);
+        }
+      },
       error: (error) => {alert("Fehler beim Login!");}
     });
-    if(this.response == "true"){
-      this.loadExaminer();
-      this.router.navigate(['/dashboard']);
-    }
   }
   loadExaminer() {
     this.examinerService.getTeacher(this.userName).subscribe({
       next: data => {
         this.globalService.setExaminer = data
         this.localService.saveData("examinerId", this.globalService.getExaminer.id+ '');
-      }, 
+      },
       error: (error) => {alert("Fehler beim Laden des Examiner: "+error.message);}
     });
   }
