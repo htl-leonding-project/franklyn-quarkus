@@ -22,7 +22,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Path("upload")
+@Path("upload") //TODO: CHANGE URL IN CLIENT (add /api)
 public class ImageResource {
     @Inject
     Logger LOG;

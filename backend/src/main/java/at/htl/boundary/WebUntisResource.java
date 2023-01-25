@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("api/webuntis")
+@Path("webuntis")
 public class WebUntisResource {
 
     @Inject

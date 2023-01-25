@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-@Path("api/exams")
+@Path("exams")
 public class ExamResource {
     @Inject
     ExamRepository examRepository;

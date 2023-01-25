@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.LinkedList;
 import java.util.List;
 
-@Path("api/screenshot")
+@Path("screenshot")
 public class ScreenshotResource {
 
     @ConfigProperty(name = "CURRENT_HOST")

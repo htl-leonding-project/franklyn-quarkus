@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-@Path("api/examinees")
+@Path("examinees")
 public class ExamineeResource {
 
     @Inject

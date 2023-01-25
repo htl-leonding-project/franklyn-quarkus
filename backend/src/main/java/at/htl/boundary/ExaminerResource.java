@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Path("api/examiners")
+@Path("examiners")
 public class ExaminerResource {
     @Inject
     ExaminerRepository examinerRepository;
