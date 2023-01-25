@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Examiner } from '../models/examiner.model';
+import {environment} from "../../environments/environment";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,7 +15,7 @@ const httpOptions = {
 })
 export class ExaminersService {
 
-  private BASE_URL: string = "http://localhost:8080/api/examiners";
+  private BASE_URL: string = environment.API_URL+ "/api/examiners";
 
 
   constructor(private http: HttpClient) { }

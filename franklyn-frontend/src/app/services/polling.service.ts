@@ -3,6 +3,7 @@ import { Observable, timer, Subscription, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { switchMap, tap, share, retry, takeUntil } from 'rxjs/operators';
 import { Exam } from '../models/exam.model';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +22,13 @@ export class PollingService {
 
   getTestToday(id: number): Observable<Exam> {
     this.allTests = timer(1, 3000).pipe(
-      switchMap(() => this.http.get<Exam>("http://localhost:8080/api/exams/exam/"+id)),
+      switchMap(() => this.http.get<Exam>(environment.API_URL+ "/exams/exam/"+id)),
       retry(),
       tap(console.log),
       share(),
       takeUntil(this.stopPolling)
     );
-    return this.allTests.pipe(   
+    return this.allTests.pipe(
       tap(() => console.log('data sent to subscriber'))
     );
   }

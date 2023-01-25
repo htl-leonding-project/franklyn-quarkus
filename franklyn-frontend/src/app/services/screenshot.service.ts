@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Screenshot } from '../models/screenshot.model';
+import {environment} from "../../environments/environment";
 
 
 
@@ -16,7 +17,7 @@ const httpOptions = {
 })
 export class ScreenshotService {
 
-  private BASE_URL: string = "http://localhost:8080/api/screenshot";
+  private BASE_URL: string = environment.API_URL+ "/screenshot";
 
 
   constructor(private http: HttpClient) { }

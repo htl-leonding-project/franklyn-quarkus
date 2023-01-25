@@ -40,6 +40,8 @@ export class MyTestsComponent implements OnInit, OnDestroy {
     canBeEdited: false,
     canBeDeleted: false
   }
+  currentYear: number=new Date().getFullYear();
+
 
   examToday!: Observable<Exam>;
   selection = new SelectionModel<Exam>(false, []);

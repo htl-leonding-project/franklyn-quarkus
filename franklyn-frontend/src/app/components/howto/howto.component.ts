@@ -19,5 +19,7 @@ export class HowtoComponent implements OnInit {
     this.localService.clearData();
     this.router.navigate(['/start']);
   }
+  currentYear: number=new Date().getFullYear();
+
 
 }

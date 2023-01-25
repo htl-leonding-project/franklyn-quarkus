@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Exam } from '../models/exam.model';
 import { NewExam } from '../models/new-exam.model';
 import { UpdateExam } from '../models/update-exam.model';
+import {environment} from "../../environments/environment";
 
 
 const httpOptions = {
@@ -12,13 +13,13 @@ const httpOptions = {
   })
   }
 
-  
+
 @Injectable({
   providedIn: 'root'
 })
 export class ExamService {
 
-  private BASE_URL: string = "http://localhost:8080/api/exams";
+  private BASE_URL: string = environment.API_URL+ "/exams";
 
   constructor(private http: HttpClient) { }
 

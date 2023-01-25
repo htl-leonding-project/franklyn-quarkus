@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {environment} from "../../environments/environment";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -8,13 +9,13 @@ const httpOptions = {
   'responseType': 'text',
   })
   }
-  
+
 @Injectable({
   providedIn: 'root'
 })
 export class WebuntisService {
 
-  private BASE_URL: string = "http://localhost:8080/api/webuntis";
+  private BASE_URL: string = environment.API_URL+ "/webuntis";
 
   constructor(private http: HttpClient) { }
 

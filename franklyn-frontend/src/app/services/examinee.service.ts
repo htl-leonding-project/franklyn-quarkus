@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Examinee } from '../models/examinee.model';
 import { Screenshot } from '../models/screenshot.model';
+import {environment} from "../../environments/environment";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,7 +16,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ExamineeService {
-  private BASE_URL: string = "http://localhost:8080/api";
+  private BASE_URL: string = environment.API_URL;
 
 
   constructor(private http: HttpClient) { }

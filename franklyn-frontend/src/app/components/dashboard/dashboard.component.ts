@@ -34,6 +34,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   };
   subscription: Subscription = new Subscription;
   isSubscriped: boolean = false;
+  currentYear: number=new Date().getFullYear();
+
 
   
   ngOnInit(): void {

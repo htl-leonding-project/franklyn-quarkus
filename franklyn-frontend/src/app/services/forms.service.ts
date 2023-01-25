@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Forms } from '../models/forms.model';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormsService {
 
-  private BASE_URL: string = "http://localhost:8080/api/schoolclass";
+  private BASE_URL: string = environment.API_URL+ "schoolclass";
 
 
   constructor(private http: HttpClient) { }

@@ -59,6 +59,9 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
 
   imageObject: Array<object> = [];
 
+  currentYear: number=new Date().getFullYear();
+
+
   ngOnInit(): void {
     this.loadStudents();
     this.loadExam();

@@ -53,6 +53,8 @@ export class EditTestComponent implements OnInit {
   tempInterval: number = 5;
   tempStartTime: Date = new Date("Fri Dec 08 2019 07:44:57");
   tempEndTime: Date = new Date("Fri Dec 08 2019 07:44:57");
+  currentYear: number=new Date().getFullYear();
+
 
   selectedFormsObjects: Forms[] = [];
   selectedExaminersObjects: Examiner[] = [];

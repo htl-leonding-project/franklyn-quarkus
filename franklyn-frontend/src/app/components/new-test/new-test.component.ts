@@ -35,6 +35,9 @@ export class NewTestComponent implements OnInit {
     interval: '',
   }
 
+  currentYear: number=new Date().getFullYear();
+
+
   form_Id: number = 0;
   examiner_Id: number = 0;
   tempExaminerId: string = "";
