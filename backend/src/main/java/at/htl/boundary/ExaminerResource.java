@@ -79,11 +79,11 @@ public class ExaminerResource {
     }
 
     @GET
-    @Path("{id}")
+    @Path("getById/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Examiner getExaminerById(@PathParam("id") String id) {
-        return examinerRepository.findById(Long.parseLong(id));
+    public Examiner getExaminerById(@PathParam("id") Long id) {
+        return examinerRepository.findById(Long.parseLong(String.valueOf(id)));
     }
 
 
