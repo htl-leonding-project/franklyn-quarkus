@@ -1,0 +1,181 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+  namespace: student-t-melcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: franklyndatabase
+  template:
+    metadata:
+      labels:
+        app: franklyndatabase
+    spec:
+      containers:
+        - name: franklyndatabase
+          image: postgres
+          ports:
+            - containerPort: 5432
+              name: "postgres"
+          env:
+            - name: POSTGRES_DB
+              value: db
+            - name: POSTGRES_USER
+              value: app
+            - name: POSTGRES_PASSWORD
+              value: app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: student-t-melcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      volumes:
+        - name: shared-data
+          emptyDir: { }
+      containers:
+        - name: imageserver
+          image: nginx
+          volumeMounts:
+            - name: shared-data
+              mountPath: /usr/share/nginx/html
+          ports:
+            - containerPort: 80
+        - name: backend
+          image: ghcr.io/htl-leonding-project/franklyn-quarkus-backend
+          env:
+            - name: PATHOFSCREENSHOT
+              value: /t.melcher/tmp/file-upload/exams
+            - name: CURRENT_HOST
+              value: https://student.cloud.htl-leonding.ac.at/
+            - name: CURRENT_ROOT_DIRECTORY
+              value: Desktop/file-upload/exams
+          volumeMounts:
+            - name: shared-data
+              mountPath: /t.melcher/tmp/file-upload/exams
+          ports:
+            - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: student-t-melcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/htl-leonding-project/franklyn-quarkus-frontend
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-svc
+  namespace: student-t-melcher
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: backend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: imageserver-svc
+  namespace: student-t-melcher
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app: backend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-svc
+  namespace: student-t-melcher
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app: frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-svc
+  namespace: student-t-melcher
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+      name: franklyndatabase
+  selector:
+    app: franklyndatabase
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend-ingress
+  namespace: student-t-melcher
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: student.cloud.htl-leonding.ac.at
+      http:
+        paths:
+          - path: /t.melcher/api(/|$)(.*)$
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-svc
+                port:
+                  number: 80
+          - path: /t.melcher/tmp/file-upload/exams(/|$)(.*)$
+            pathType: Prefix
+            backend:
+              service:
+                name: imageserver-svc
+                port:
+                  number: 80
+          - path: /t.melcher/franklyn(/|$)(.*)$
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-svc
+                port:
+                  number: 80

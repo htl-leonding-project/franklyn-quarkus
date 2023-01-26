@@ -48,7 +48,8 @@ public class Main{
                 ImageIO.write(screenFullImage, format, newFile);
 
                 httppost.setEntity(new FileEntity(newFile));
-                httppost.setURI(new URI("http://localhost:8080/upload?filename="+fileName));
+                //httppost.setURI(new URI("http://localhost:8080/api/upload?filename="+fileName));
+                httppost.setURI(new URI("https://student.cloud.htl-leonding.ac.at/t.melcher/api/upload?filename="+fileName));
                 httpclient.execute(httppost);
 
                 TimeUnit.SECONDS.sleep(5);

@@ -69,7 +69,6 @@ public class ImageResource {
 
             LOG.info(filename);
             Log.info(path.toString());
-            LOG.info("saved file");
 
             Files.copy(
                     is,
