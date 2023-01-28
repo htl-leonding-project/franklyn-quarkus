@@ -47,13 +47,13 @@
   margin-right: 20px;
   text-align: right;
   margin-top: -10px;
-  font-size: 35px;
+  font-size: 30px;
 }
 
 .subheader{
   margin-right: 20px;
   text-align: right;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .card-footer{
@@ -61,6 +61,8 @@
   margin-top: 5px;
   margin-right: 20px;
   margin-left: 20px;
+  color: #777;
+  text-align: left;
 }
 
 .nav-header{
