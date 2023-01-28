@@ -55,6 +55,8 @@ public class ExamResource {
         var examiners = examRepository.GetAllExaminersOfExam(exam, Long.parseLong(adminId));
         var forms = examRepository.GetAllSchoolClassesOfExam(exam);
         var nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
+        boolean canBeDeleted = false;
+        boolean canBeEdited = false;
 
         // Überprüft ob Exam nicht schon beendet, wenn ja ändert sich der Status des Exams
         if (!exam.date.equals(LocalDate.now()) && exam.examState == ExamState.RUNNING) {
@@ -66,10 +68,14 @@ public class ExamResource {
         String status = "";
         if (exam.examState == ExamState.RUNNING) {
             status = "Läuft";
+
         } else if (exam.examState == ExamState.IN_PREPARATION) {
             status = "In Vorbereitung";
+            canBeEdited = true;
+            canBeDeleted = true;
         } else {
             status = "Beendet";
+            canBeDeleted = true;
         }
 
         // Dto wird zusammengesetzt
@@ -79,8 +85,8 @@ public class ExamResource {
                 Integer.toString(nrOfStudentsPerExam),
                 status, exam.pin, exam.id,
                 exam.date.equals(LocalDate.now()),
-                exam.examState == ExamState.IN_PREPARATION,
-                exam.examState == ExamState.IN_PREPARATION,
+                canBeEdited,
+                canBeDeleted,
                 exam.interval));
     }
 
