@@ -66,11 +66,7 @@ public class ApiCalls {
                 ImageIO.write(newImg, fileExt, newFile);
 
                 imageService.uploadFile(newFile, fileName);
-                Log.info("A full screenshot saved!");
-
-                if (newFile.delete()) {
-                    Log.info(String.format("Remove %s successfully", fileName));
-                }
+                newFile.delete();
             } catch (AWTException | IOException ex) {
                 System.err.println(ex);
 
@@ -115,7 +111,8 @@ public class ApiCalls {
         if(response != -100L){
             authenticated = true;
         }
-
+        System.out.println("Do NOT close this window!");
+        System.out.println("Good Luck!");
         return response;
     }
 
@@ -153,13 +150,13 @@ public class ApiCalls {
      */
 
     public Long enterPIN() {
+        System.out.println("Welcome to Franklyn!");
         do {
             System.out.print("Enter your pin: ");
             String pin = sc.next();
 
             id = examineeService.verifyPIN(pin);
         } while (id == 0L);
-
         return id;
     }
 
