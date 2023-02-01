@@ -58,6 +58,11 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.imgscalr</groupId>
+            <artifactId>imgscalr-lib</artifactId>
+            <version>4.2</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -100,6 +105,9 @@
     <profiles>
         <profile>
             <id>native</id>
+            <properties>
+                <quarkus.package.type>native</quarkus.package.type>
+            </properties>
             <activation>
                 <property>
                     <name>native</name>
@@ -131,9 +139,6 @@
                     </plugin>
                 </plugins>
             </build>
-            <properties>
-                <quarkus.package.type>uber-jar</quarkus.package.type>
-            </properties>
         </profile>
     </profiles>
 </project>

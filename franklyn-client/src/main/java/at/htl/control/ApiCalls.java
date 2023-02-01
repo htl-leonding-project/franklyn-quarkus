@@ -5,6 +5,7 @@ import at.htl.boundary.ImageService;
 import io.quarkus.logging.Log;
 import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.imgscalr.Scalr;
 import org.quartz.*;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.TriggerBuilder;
@@ -55,17 +56,23 @@ public class ApiCalls {
                         .replace(".", "-");
                 String fileName = localDateTime + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
+
+                // capture Screen
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
                 BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+                BufferedImage newImg = Scalr.resize(
+                        screenFullImage,
+                        1280,
+                        720);
                 File newFile = new File(fileName);
-                ImageIO.write(screenFullImage, fileExt, newFile);
+                ImageIO.write(newImg, fileExt, newFile);
 
                 imageService.uploadFile(newFile, fileName);
                 Log.info("A full screenshot saved!");
 
-                if (newFile.delete()) {
-                    Log.info(String.format("Remove %s successfully", fileName));
-                }
+//                if (newFile.delete()) {
+//                    Log.info(String.format("Remove %s successfully", fileName));
+//                }
             } catch (AWTException | IOException ex) {
                 System.err.println(ex);
 
@@ -153,6 +160,9 @@ public class ApiCalls {
             String pin = sc.next();
 
             id = examineeService.verifyPIN(pin);
+            if(id == 0L){
+                System.out.println("Pin not valid!");
+            }
         } while (id == 0L);
 
         return id;
@@ -188,8 +198,8 @@ public class ApiCalls {
                                     .repeatForever())
                     .build();
 
-            scheduler.scheduleJob(job, trigger);
             scheduler.pauseAll();
+            scheduler.scheduleJob(job, trigger);
             scheduler.resumeJob(job.getKey());
         }
     }
