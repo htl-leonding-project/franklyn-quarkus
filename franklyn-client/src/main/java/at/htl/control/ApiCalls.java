@@ -5,6 +5,7 @@ import at.htl.boundary.ImageService;
 import io.quarkus.logging.Log;
 import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.imgscalr.Scalr;
 import org.quartz.*;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.TriggerBuilder;
