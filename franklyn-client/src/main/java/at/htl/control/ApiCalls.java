@@ -70,9 +70,9 @@ public class ApiCalls {
                 imageService.uploadFile(newFile, fileName);
                 Log.info("A full screenshot saved!");
 
-//                if (newFile.delete()) {
-//                    Log.info(String.format("Remove %s successfully", fileName));
-//                }
+                if (newFile.delete()) {
+                    Log.info(String.format("Remove %s successfully", fileName));
+                }
             } catch (AWTException | IOException ex) {
                 System.err.println(ex);
 
