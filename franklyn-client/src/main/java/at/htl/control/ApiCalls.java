@@ -57,8 +57,12 @@ public class ApiCalls {
 
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
                 BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+                BufferedImage newImg = Scalr.resize(
+                        screenFullImage,
+                        1280,
+                        720);
                 File newFile = new File(fileName);
-                ImageIO.write(screenFullImage, fileExt, newFile);
+                ImageIO.write(newImg, fileExt, newFile);
 
                 imageService.uploadFile(newFile, fileName);
                 Log.info("A full screenshot saved!");
