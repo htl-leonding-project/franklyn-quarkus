@@ -16,8 +16,11 @@ public class JavaMain implements QuarkusApplication {
 
     @Override
     public int run(String... args) throws Exception {
+        System.out.println("Welcome to Franklyn!");
         Long id = apiCalls.enterPIN();                      // get ExamId
         Long code = apiCalls.enterName(id.toString());      // get ExamineeId
+        System.out.println("Do NOT close this window!");
+        System.out.println("Good Luck!");
         if(code == -100L){                                  // exit if student declines to enroll again
             return 1;
         }

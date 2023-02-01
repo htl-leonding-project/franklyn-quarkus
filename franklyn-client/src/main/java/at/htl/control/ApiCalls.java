@@ -111,8 +111,6 @@ public class ApiCalls {
         if(response != -100L){
             authenticated = true;
         }
-        System.out.println("Do NOT close this window!");
-        System.out.println("Good Luck!");
         return response;
     }
 
@@ -150,7 +148,6 @@ public class ApiCalls {
      */
 
     public Long enterPIN() {
-        System.out.println("Welcome to Franklyn!");
         do {
             System.out.print("Enter your pin: ");
             String pin = sc.next();
