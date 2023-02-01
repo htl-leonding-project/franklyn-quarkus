@@ -5,17 +5,21 @@ Melcher Tamara, Tran Michael
 :icons: font
 :url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
 
-== Start the server(backend) first
+== How to start the server(backend)
 
-* open a terminal in `backend`-project and execute:
+* connect to the pod where the backend is running
+* redirect to the `backend`-project and start the backend
+** `./mvnw clean quarkus:prod`
 
-`./mvnw clean quarkus:dev`
+== How to start the frontend(Examiner-UI)
 
-== Start the frontend
+* connect to the pod where the backend is running
+* redirect to the `franklyn-frontend`-project and start the application
+** `ng serve`
 
-* open a terminal in `frontend`-project and execute:
+== How to start the client
 
-`./mvnw clean quarkus:dev`
+* download the client from the website
+* open a terminal and execute `franklyn3-client.jar` and execute:
 
-* after that open http://localhost:8090/client/login and log yourself in
-
+`java -jar franklyn3-client.jar`

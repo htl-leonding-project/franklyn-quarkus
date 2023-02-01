@@ -28,5 +28,5 @@ include::plantuml/system-architecture.puml[]
 *** Speichert die Screenshots
 
 ** Client
-*** Electron-Anwendung
+*** Quarkus-Anwendung
 *** Verbindet Schüler mit Server, wird zur Teilnahme an einer Testdurchführung benötigt, indem man einen PIN eingibt

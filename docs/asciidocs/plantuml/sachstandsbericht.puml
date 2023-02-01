@@ -30,10 +30,14 @@
 ****[#green] Screenshot
 *****[#green] GET
 *****[#green] POST
-***[#red] Endpoints testen
+***[#green] Endpoints testen
 ** Sprint 04
-***[#red] WebUntis-Authentifizierung
-***[#red] Testen mit Frontend von Franklyn2
+***[#green] WebUntis-Authentifizierung
+***[#green] Testen mit Frontend von Franklyn2
+***[#green] Angular-App erstellen
+****[#green] Testen mit Backend
 ** Sprint 05
-***[#red] Deployen
+***[#green] Deployment
+** Sprint 06
+***[#yellow] Bilder komprimieren
 @endwbs

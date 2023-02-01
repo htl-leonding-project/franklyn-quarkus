@@ -8,20 +8,20 @@ package backend{
 }
 
 package client{
-    frame "electron"
+    frame "quarkus-client"
 }
 
-package Examiner{
+package frontend{
 
-    frame "angular"
+    frame "Angular"
 }
 
 package "DB" {
-    database "postgres"
+    database "Postgres"
  }
 
 DB -r- backend
 backend -d- frontend : http
-'TeacherFrontend -- backend : http
+backend -u- client : http
 
 @enduml
