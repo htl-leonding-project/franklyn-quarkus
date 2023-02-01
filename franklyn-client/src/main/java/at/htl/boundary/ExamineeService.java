@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
  * Register User to the Server
  */
 
-@Path("exams")
+@Path("/api/exams")
 @RegisterRestClient(configKey="client-api")
 public interface ExamineeService {
 
