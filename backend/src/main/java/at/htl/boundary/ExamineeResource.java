@@ -6,6 +6,7 @@ import at.htl.entity.Exam;
 import at.htl.entity.Examinee;
 import at.htl.entity.dto.ExamineeDto;
 import io.quarkus.logging.Log;
+import io.quarkus.panache.common.Sort;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -52,7 +53,7 @@ public class ExamineeResource {
         Exam exam = examRepository.findById(id);
         if(exam == null)
             return null;
-        List<Examinee> examineeList = examineeRepository.listAll();
+        List<Examinee> examineeList = examineeRepository.listAllOrdered();
         List<ExamineeDto> examinees = new LinkedList<>();
         ExamineeDto tempExaminee;
         for (Examinee examinee : examineeList) {

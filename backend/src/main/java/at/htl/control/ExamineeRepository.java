@@ -4,6 +4,7 @@ import at.htl.entity.Examinee;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.logging.Log;
 import io.quarkus.panache.common.Parameters;
+import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -71,5 +72,9 @@ public class ExamineeRepository implements PanacheRepository<Examinee> {
             return false;
         }
         return true;
+    }
+
+    public List<Examinee> listAllOrdered() {
+        return this.listAll(Sort.by("lastName").and("firstName"));
     }
 }
