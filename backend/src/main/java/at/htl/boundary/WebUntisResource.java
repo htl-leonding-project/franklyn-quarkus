@@ -23,6 +23,7 @@ public class WebUntisResource {
     @Produces(MediaType.APPLICATION_JSON)
     public boolean authUser(@PathParam("userName") String userName, String password){
         boolean response = webUntisService.authenticateUser(userName, password);
+        userName = userName.toUpperCase();
         Examiner examiner = examinerRepository.findByUsername(userName);
         if(response && examiner != null){
             return true;
