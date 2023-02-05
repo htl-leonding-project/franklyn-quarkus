@@ -32,7 +32,6 @@ export class StartComponent implements OnInit {
         this.response = data;
         if(this.response == "true"){
           this.loadExaminer();
-          this.router.navigate(['/dashboard']);
         }
       },
       error: (error) => {alert("Fehler beim Login!");}
@@ -43,6 +42,7 @@ export class StartComponent implements OnInit {
       next: data => {
         this.globalService.setExaminer = data
         this.localService.saveData("examinerId", this.globalService.getExaminer.id+ '');
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {alert("Fehler beim Laden des Examiner: "+error.message);}
     });

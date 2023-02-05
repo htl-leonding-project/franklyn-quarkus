@@ -57,6 +57,7 @@ public class ExaminerResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Examiner getExaminerByUsername(@PathParam("username") String username) {
+        username = username.toUpperCase();
         Examiner examiner = examinerRepository.findByUsername(username);
         return examiner;
     }
