@@ -1,0 +1,26 @@
+= Gatling-Performance-Test for Franklyn3
+
+== How to use the Test
+
+CAUTION: You have Maven installed
+
+IMPORTANT:  PLEASE NOTE THAT IT ONLY WORKS WHEN THE SERVER JUST STARTED
+
+IMPORTANT: for test purposes there is already a screenshot in resources/data `2023-02-01T09-11-28-793580100_Tran_Michael_3.png`
+
+1. start the server (project name: `backend`) by executing the command: `./mvnw clean quarkus:dev`
+2. start the frontend (project name: `franklyn-frontend`) by executing the command: `ng serve`
+3. open `http://localhost:4200` in the browser
+4. login and create a test
+* only the admin/teachers can create a test
+5. now start the *real* client and enroll once (you can close it immediately after the interval you defined)
+* user has to be
+** Firstname: Michael
+** Lastname: Tran
+*** reason for that is, that the example screenshot has that name included
+
+TIP: You can also create your own screenshot but the structure should stay the same such as:
+`<any LocalDateTime String>_<Lastname>_<Firstname>_3.png`. You also have to change the name of those in the code.
+
+6. and now you can start the gatling-test with `mvn gatling:test`
+* to see the detailed results open the file in the path given at the end of the test
