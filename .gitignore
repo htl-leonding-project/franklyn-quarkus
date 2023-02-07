@@ -46,6 +46,7 @@ dist
 /docs/slides/revealjs/
 
 *.jar
+!/franklyn-frontend/src/assets/franklyn3-client.jar
 !/backend/lib/*.jar
 /backend/db-postgres/
 
