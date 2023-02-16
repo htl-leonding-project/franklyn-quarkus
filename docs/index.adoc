@@ -17,7 +17,6 @@ ifdef::backend-html5[]
 
 <<./asciidocs/HowTo.adoc#, How-To>>
 
-
 == System Specification
 
 <<./asciidocs/system-specification.adoc#, System Specification>>
