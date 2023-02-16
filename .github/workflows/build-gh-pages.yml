@@ -1,11 +1,12 @@
-name: build slides
+name: build gh-pages
 
 on:
   push:
     branches:
       - '*'
     paths:
-      - docs/slides/**
+      - docs/asciidocs/**
+  workflow_dispatch:
 
 jobs:
   build:

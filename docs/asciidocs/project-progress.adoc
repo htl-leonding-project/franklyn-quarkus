@@ -1,0 +1,20 @@
+= Was wurde gemacht
+Melcher Tamara und Michael Tran
+1.0.0, 2021-11-16:
+ifndef::imagesdir[:imagesdir: images]
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+== Frontend
+
+* das Frontend wurde neu erstellt und mit Angular gemacht
+
+== Backend
+
+* das Backend wurde neu erstellt und auf Quarkus umgeschrieben
+
+== Client
+
+* der Client wurde neu erstellt und auf einer Quarkus-Standalone-Application umgeschrieben
