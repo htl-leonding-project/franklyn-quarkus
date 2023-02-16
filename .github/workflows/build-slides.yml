@@ -1,9 +1,9 @@
-name: Docs
+name: build slides
 
 on:
   push:
     branches:
-      - 'main'
+      - '*'
     paths:
       - docs/**
 
