@@ -30,8 +30,15 @@ ifdef::backend-html5[]
 
 <<./asciidocs/stop-restart-franklyn.adoc#, How to stop and restart Franklyn>>
 
+== Was wurde gemacht
+
+<<./asciidocs/project-progress.adoc#, Projektfortschritt>>
+
+== Deployment
+
+https://student.cloud.htl-leonding.ac.at/t.melcher/franklyn/start
+
 == Slides
 
 https://htl-leonding-project.github.io/franklyn-quarkus/slides/#/
-
 
