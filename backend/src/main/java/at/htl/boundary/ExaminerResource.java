@@ -86,6 +86,4 @@ public class ExaminerResource {
     public Examiner getExaminerById(@PathParam("id") Long id) {
         return examinerRepository.findById(Long.parseLong(String.valueOf(id)));
     }
-
-
 }
