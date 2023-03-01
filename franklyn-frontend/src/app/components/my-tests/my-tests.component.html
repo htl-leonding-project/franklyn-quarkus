@@ -7,7 +7,7 @@
                 <div class="nav-header">
                     <h1 class="header-nav">Meine Tests</h1>
                     <div class="logout">
-                        <button class="btn btn-danger" (click)="logout()">Abmelden</button>
+                        <button class="btn btn-danger" (click)="logout()"><i class="bi bi-door-open"></i>&nbsp;&nbsp;&nbsp;Abmelden</button>
                     </div>
                 </div>
             </div>
@@ -67,22 +67,22 @@
                                             {{exam.date | date: 'dd.MM.yyyy'}}
                                         </div>
                                         <div *ngIf="exam.date == ' '">
-                                             
+
                                         </div>
                                     </td>
                                     <td class="txt" >{{exam.startTime | date: 'HH:MM'}}</td>
                                     <td class="txt" >{{exam.nrOfStudents}}</td>
                                     <td class="txt" >{{exam.ongoing}}</td>
-                                    <td><a class="txt"  role="button" [style.color] = "'green'" (click)="editExam(exam.id)"  [ngClass]="!exam.canBeEdited ? 'isDisabled' : 'txt'">Bearbeiten</a></td>
-                                    <td><a class="txt"  role="button" [style.color] = "'red'" (click)="open(content)" [ngClass]="!exam.canBeDeleted ? 'isDisabled' : 'txt'">Löschen</a></td>
+                                    <td><btn class="btn btn-success txt" [style.color]="'white'" (click)="editExam(exam.id)"  [ngClass]="!exam.canBeEdited ? 'isDisabled' : 'txt'"><i class="bi bi-pencil"></i>&nbsp;&nbsp;&nbsp;Bearbeiten</btn></td>
+                                    <td><btn class="btn btn-danger txt" [style.color] = "'white'" (click)="open(content)" [ngClass]="!exam.canBeDeleted ? 'isDisabled' : 'txt'"><i class="bi bi-trash"></i>&nbsp;&nbsp;&nbsp;Löschen</btn></td>
                                 </ng-container>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            
-            
+
+
             <ng-template #content let-modal>
                 <div class="modal-header">
                     <h4 class="modal-title" id="modal-basic-title">Test löschen</h4>
@@ -100,8 +100,8 @@
                     <button type="button" class="btn" (click)="modal.dismiss('Cancel click')">Abbrechen</button>
                 </div>
             </ng-template>
-            
-            
+
+
             <div class="container-fluid" *ngIf="hasAlreadyExams == false">
                 <div class="card">
                     <h1 class="header">
@@ -110,7 +110,7 @@
                     <h3 class="header3">Noch keine Tests vorhanden!</h3>
                 </div>
             </div>
-            
+
         </div>
         <div class="footer">
             <h1>{{currentYear}} Franklyn</h1>

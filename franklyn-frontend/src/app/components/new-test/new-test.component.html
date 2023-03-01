@@ -16,7 +16,7 @@
                 <div class="nav-header">
                     <h1 class="header-nav">Test erstellen</h1>
                     <div class="logout">
-                        <button class="btn btn-danger" (click)="logout()">Abmelden</button>
+                        <button class="btn btn-danger" (click)="logout()"><i class="bi bi-door-open"></i>&nbsp;&nbsp;&nbsp;Abmelden</button>
                     </div>
                 </div>
             </div>
@@ -49,15 +49,18 @@
                                 </div>
                               </div>
                             <br>
+                          <div class="form-group">
                             <label class="form-label">Begleitlehrer</label>
                             <br>
                             <mat-form-field appearance="fill">
-                                <mat-label>Auswahl</mat-label>
-                                <mat-select [(ngModel)]="selectedExaminers" id="examiners" name="examinerIds" multiple>
-                                  <mat-option *ngFor="let examiner of examiners" [value]="examiner.id">{{examiner.firstName}} {{examiner.lastName}}</mat-option>
-                                </mat-select>
-                              </mat-form-field>
+                              <mat-label>Auswahl</mat-label>
+                              <mat-select [(ngModel)]="selectedExaminers" id="examiners" name="examinerIds" multiple>
+                                <mat-option *ngFor="let examiner of examiners" [value]="examiner.id">{{examiner.firstName}} {{examiner.lastName}}</mat-option>
+                              </mat-select>
+                            </mat-form-field>
                             <br>
+                          </div>
+
                             <div class="form-group">
                                 <label for="tempDate" class="form-label">Datum</label>
                                 <input [(ngModel)]="tempDate" class="form-control" type="date" id="tempDate" name="tempDate" #date="ngModel" (change)="checkDate()" (ngModelChange)="checkDate()" required>
@@ -70,7 +73,7 @@
                     </form>
                 </div>
             </div>
-        
+
             <div class="container-fluid" *ngIf="showThirdCard == true">
                 <div class="card">
                     <form (ngSubmit)="onSubmit()" #screenshotForm="ngForm">

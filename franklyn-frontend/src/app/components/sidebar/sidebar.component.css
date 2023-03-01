@@ -25,25 +25,17 @@
     height:100%;
 }
 
-.sidebar-text:hover{
-    background: rgb(182, 185, 182);
-    border-color: rgb(182, 185, 182);
-}
-
-.sidebar-text:active{
-    background: rgb(182, 185, 182);
-    border-color: rgb(182, 185, 182);
-
-}
 
 .sidebar-text{
     color: white;
     margin-top: 20px;
     margin-bottom: 20px;
     font-size: 18px;
+  text-align: left;
 }
 
 .sidebar-btn{
+  text-align: left;
     color: white;
     margin-bottom: 20px;
     /* background-color: #02c39a; */

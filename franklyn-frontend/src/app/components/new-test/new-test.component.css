@@ -1,6 +1,6 @@
 .form-control{
     width: 40%;
-    height: 40px;
+    height: 30px;
 }
 
 .form-select{
@@ -8,11 +8,19 @@
     height: 30px;
 }
 
+.form-group{
+  height: 90px;
+}
+
+mat-form-field{
+  height: 30px;
+}
+
 .btn-forward{
     color: white;
     background-color: #45cd40;
     width: 200px;
-    float: right; 
+    float: right;
 }
 
 .btn-forward:hover{
@@ -26,7 +34,7 @@
 
 .inline{
     margin-top: 50px;
-    display: inline-block; 
+    display: inline-block;
     vertical-align: top;
 }
 
@@ -37,7 +45,7 @@
 }
 
 .card-body{
-    padding: 0px
+    padding: 0px;
 }
 
 .col-9{
@@ -103,7 +111,7 @@ label{
     padding: 22px;
     font-size: 25px;
   }
-  
+
   .logout{
     float: right;
     display: inline-block;
@@ -112,6 +120,8 @@ label{
 
   .required{
     width: 40%;
+    height: 30px;
+    padding-top: 5px;
   }
 
   form{
@@ -119,5 +129,5 @@ label{
   }
 
   .successful{
-    margin: 20px;  
+    margin: 20px;
   }

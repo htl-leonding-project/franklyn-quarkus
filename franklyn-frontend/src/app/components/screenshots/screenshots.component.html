@@ -16,14 +16,14 @@
                 <div class="nav-header">
                     <h1 class="header-nav">Screenshots</h1>
                     <div class="logout">
-                        <button class="btn btn-danger" (click)="logout()">Abmelden</button>
+                        <button class="btn btn-danger" (click)="logout()"><i class="bi bi-door-open"></i>&nbsp;&nbsp;&nbsp;Abmelden</button>
                     </div>
                 </div>
             </div>
             <div class="container-fluid">
                 <div class="card">
                     <h1 class="header" >
-                        {{exam.title}} - 
+                        {{exam.title}} -
                         <span *ngFor="let form of exam.forms; let f = first; let l = last">
                                 {{form}}
                                 <span *ngIf="!(f && l) && !l"> ,</span>
@@ -48,10 +48,10 @@
                                       </div>
                                  </div>
                                  <div>
-                                    <ng-image-fullscreen-view 
-                                    [images]="screenshots" 
-                                    [imageIndex]="currentIndexFS" 
-                                    [show]="showImgFullScreen" 
+                                    <ng-image-fullscreen-view
+                                    [images]="screenshots"
+                                    [imageIndex]="currentIndexFS"
+                                    [show]="showImgFullScreen"
                                     (close)="closeEventHandler()">
                                     </ng-image-fullscreen-view>
                                  </div>
@@ -97,7 +97,7 @@
 <!--                                     <ng-container *ngFor="let examinee of examinees">
                                         <div class="card names text-black text-left normal" style="--bs-bg-opacity: .1;">
                                             <div class="card-body" [ngClass]="{'highlight' : examinee.id == selectedExamineeId}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</div>
-                                        </div>                        
+                                        </div>
                                     </ng-container> -->
                                 </div>
                             </div>

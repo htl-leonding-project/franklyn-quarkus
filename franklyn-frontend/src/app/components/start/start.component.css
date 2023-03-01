@@ -480,6 +480,10 @@ a:hover {
     color: #F7F7F7;
 }
 
+btn-download{
+  width: 200px;
+}
+
 .mfp-s-ready .mfp-preloader {
     display: none;
 }
@@ -810,5 +814,5 @@ nav ul li.active {
     transition: 0.3s;
 }
 nav ul li.active a {
-    color: #05668d;    
+    color: #05668d;
 }

@@ -103,7 +103,7 @@ table tr.highlight {
     padding: 22px;
     font-size: 25px;
   }
-  
+
   .logout{
     float: right;
     display: inline-block;
@@ -111,7 +111,7 @@ table tr.highlight {
   }
 
   .isDisabled{
-    font-size: 17px;
+    font-size: 13px;
     font-weight: normal;
     font-style: normal;
     pointer-events: none;
