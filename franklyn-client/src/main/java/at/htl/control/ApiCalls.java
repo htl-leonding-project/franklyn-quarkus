@@ -3,7 +3,6 @@ package at.htl.control;
 import at.htl.boundary.ExamineeService;
 import at.htl.boundary.ImageService;
 import io.quarkus.logging.Log;
-import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.imgscalr.Scalr;
 import org.quartz.*;
@@ -45,8 +44,7 @@ public class ApiCalls {
     /***
      * send screenshot to backend
      */
-    @Scheduled(every = "3s")                        // Scheduled time is useless due the fact that
-    public void sendScreenshots() {                 //   it will get overwritten anyway
+    public void sendScreenshots() {
         if (authenticated) {
             try {
                 Robot robot = new Robot();
@@ -188,8 +186,6 @@ public class ApiCalls {
                     .build();
 
             scheduler.scheduleJob(job, trigger);
-            scheduler.pauseAll();
-            scheduler.resumeJob(job.getKey());
         }
     }
 
@@ -197,11 +193,10 @@ public class ApiCalls {
      * Job executes sendScreenshot() method
      */
 
-    public static class SendScreenshotJob implements org.quartz.Job {
+    public static class SendScreenshotJob implements Job {
         @Inject
         ApiCalls calls;
 
-        @Override
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
             calls.sendScreenshots();
         }
