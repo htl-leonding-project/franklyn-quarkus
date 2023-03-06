@@ -12,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 @RegisterRestClient(configKey="client-api")
 public interface ExamineeService {
 
-
     /**
      * @param id        id of the exam
      * @param firstName firstname of the student
