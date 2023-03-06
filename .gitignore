@@ -47,6 +47,7 @@ dist
 
 *.jar
 !/franklyn-frontend/src/assets/franklyn3-client.jar
+!/franklyn-frontend/src/assets/franklyn3-client.zip
 !/backend/lib/*.jar
 /backend/db-postgres/
 
