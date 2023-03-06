@@ -58,13 +58,7 @@ public class ImageResource {
             Exam exam = examRepository.findById(Long.valueOf(fullPath[3]));
             exam.examState = ExamState.RUNNING;
             exam.startTime = LocalDateTime.now();
-            java.nio.file.Path path =
-                    Paths.get(String.format("../../%s/%s_%s/%s_%s",
-                            pathOfScreenshots,
-                            exam.title,
-                            exam.date,
-                            fullPath[1],
-                            fullPath[2]));
+            java.nio.file.Path path = Paths.get(String.format("../%s/%s_%s/%s_%s", pathOfScreenshots, exam.title, exam.date, fullPath[1], fullPath[2]));
             Files.createDirectories(path);
 
             LOG.info(filename);
@@ -89,11 +83,10 @@ public class ImageResource {
                     Timestamp.valueOf(LocalDateTime.now()),
                     cnt,
                     examinee,
-                    pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]+"/"+filename,
-                    exam
-            );
+                    Paths.get("").toAbsolutePath().toString() + "/" + path + "/" + filename,
+                    exam);
             screenshotRepository.post(screenshot);
-        }catch (NullPointerException ignore) {
+        } catch (NullPointerException ignore) {
             LOG.error("Error while saving the file");
         }
 

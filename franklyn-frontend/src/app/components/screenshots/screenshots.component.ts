@@ -1,16 +1,16 @@
-import { ThisReceiver } from '@angular/compiler';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { interval, Subscription, takeWhile } from 'rxjs';
-import { Exam } from 'src/app/models/exam.model';
-import { Examinee } from 'src/app/models/examinee.model';
-import { Screenshot } from 'src/app/models/screenshot.model';
-import { ExamService } from 'src/app/services/exam.service';
-import { ExamineeService } from 'src/app/services/examinee.service';
-import { GlobalService } from 'src/app/services/global.service';
-import { LocalService } from 'src/app/services/local.service';
-import { ScreenshotService } from 'src/app/services/screenshot.service';
-
+import {ThisReceiver} from '@angular/compiler';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {interval, Subscription, takeWhile} from 'rxjs';
+import {Exam} from 'src/app/models/exam.model';
+import {Examinee} from 'src/app/models/examinee.model';
+import {Screenshot} from 'src/app/models/screenshot.model';
+import {ExamService} from 'src/app/services/exam.service';
+import {ExamineeService} from 'src/app/services/examinee.service';
+import {GlobalService} from 'src/app/services/global.service';
+import {LocalService} from 'src/app/services/local.service';
+import {ScreenshotService} from 'src/app/services/screenshot.service';
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-screenshots',
@@ -19,13 +19,16 @@ import { ScreenshotService } from 'src/app/services/screenshot.service';
 })
 export class ScreenshotsComponent implements OnInit, OnDestroy {
 
-  constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService, private router: Router) { }
+  constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService, private router: Router,
+              private sanitizer: DomSanitizer) {
+  }
 
   currentScreenshot: Screenshot = {
     image: '../../../assets/img/temp.png',
     screenshotId: 0,
     examineeId: 0,
-    examId: 0
+    examId: 0,
+    file: []
   }
 
   currentIdx: number = 0;
@@ -48,7 +51,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     canBeDeleted: false
   };
   examinees: Examinee[] = [];
-  screenshotsOfExaminee: Screenshot[]=[];
+  screenshotsOfExaminee: Screenshot[] = [];
   selectedExamineeId: string = "";
   currentSelectedExamIsToday: boolean = true;
   subscription: Subscription = new Subscription;
@@ -57,11 +60,9 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   isSubscripedStudents: boolean = true;
   hasScreenshots: boolean = false;
 
-  imageObject: Array<object> = [];
+  currentImage: SafeResourceUrl = "";
 
-  currentYear: number=new Date().getFullYear();
-
-
+  currentYear: number = new Date().getFullYear();
   ngOnInit(): void {
     this.loadStudents();
     this.loadExam();
@@ -83,12 +84,14 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     this.examineeService.getExamineesByExamId(Number(this.localService.getData("selectedExamId"))).subscribe({
       next: data => {
         this.examinees = data;
-        if(this.examinees.length > 0){
+        if (this.examinees.length > 0) {
           this.selectedExamineeId = this.examinees[0].id;
           this.SelectExaminee(this.selectedExamineeId);
         }
-      }, 
-      error: (error) => {alert("Fehler beim Laden der Examinees: "+error.message);}
+      },
+      error: (error) => {
+        alert("Fehler beim Laden der Examinees: " + error.message);
+      }
     });
   }
 
@@ -97,51 +100,59 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, examineeId).subscribe({
       next: data => {
         this.screenshots = data;
-      }, 
-      error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
+      },
+      error: (error) => {
+        alert("Fehler beim Laden der Screenshots: " + error.message);
+      }
     });
     this.selectedExamineeId = examineeId;
-    if(this.currentSelectedExamIsToday){
+    if (this.currentSelectedExamIsToday) {
       this.subscription = interval(5000)
-      .pipe(
-        takeWhile(() => this.isSubscriped)
-      )
-      .subscribe((x) => {
-        this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
-          next: data => {
-            this.screenshots = data;
-            if(this.screenshots.length > 0){
-              this.currentScreenshot = this.screenshots[0];
-              this.hasScreenshots = true; 
-            }else{
-              this.hasScreenshots = false;
+        .pipe(
+          takeWhile(() => this.isSubscriped)
+        )
+        .subscribe((x) => {
+          this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
+            next: data => {
+              this.screenshots = data;
+              if (this.screenshots.length > 0) {
+                this.currentScreenshot = this.screenshots[0];
+                this.currentImage = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,' + this.screenshots[0].file);
+                this.hasScreenshots = true;
+              } else {
+                this.hasScreenshots = false;
+              }
+            },
+            error: (error) => {
+              alert("Fehler beim Laden der Screenshots: " + error.message);
             }
-          }, 
-          error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
+          });
         });
-      });
       this.isSubscriped = true;
       this.subscription = interval(5000)
-      .pipe(
-        takeWhile(() => this.isSubscriped)
-      )
-      .subscribe((x) => {
-        this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
-          next: data => {
-            this.screenshots = data;
-            if(this.screenshots.length > 0){
-              this.currentScreenshot = this.screenshots[0];
-              this.hasScreenshots = true;
-            }else{
-              this.hasScreenshots = false;
+        .pipe(
+          takeWhile(() => this.isSubscriped)
+        )
+        .subscribe((x) => {
+          this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
+            next: data => {
+              this.screenshots = data;
+              if (this.screenshots.length > 0) {
+                this.currentScreenshot = this.screenshots[0];
+                this.currentImage = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,' + this.screenshots[0].file);
+                this.hasScreenshots = true;
+              } else {
+                this.hasScreenshots = false;
+              }
+            },
+            error: (error) => {
+              alert("Fehler beim Laden der Screenshots: " + error.message);
             }
-          }, 
-          error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
+          });
         });
-      });
     }
-/*     this.screenshots = this.screenshots.reverse();
-    this.currentScreenshot = this.screenshots[0]; */
+    /*     this.screenshots = this.screenshots.reverse();
+        this.currentScreenshot = this.screenshots[0]; */
 
   }
 
@@ -149,62 +160,68 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     this.examService.getExamById(this.localService.getData("selectedExamId")!, this.localService.getData("examinerId")!).subscribe({
       next: data => {
         this.exam = data;
-        if(this.exam.isToday){
+        if (this.exam.isToday) {
           this.isSubscripedStudents = true;
           this.loadStudentsEverySecond()
         }
-      }, 
-      error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
+      },
+      error: (error) => {
+        alert("Fehler beim Laden des Exams: " + error.message);
+      }
     });
   }
-  loadStudentsEverySecond(){
-    this.subscriptionStudents = interval(1000)
-    .pipe(
-      takeWhile(() => this.isSubscripedStudents)
-    )
-    .subscribe((x) => {
-      this.examineeService.getExamineesByExamId(Number(this.localService.getData("selectedExamId"))).subscribe({
-        next: data => {
-          this.examinees = data;
-        }, 
-        error: (error) => {alert("Fehler beim Laden der Examinees: "+error.message);}
-      });
-    });
-/*     this.subscriptionStudents = interval(1000)
-    .pipe(
-      takeWhile(() => this.isSubscripedStudents)
-    )
-    .subscribe((x) => {
-      this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
-        next: data => {
-          this.screenshots = data;
 
-        }, 
-        error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
+  loadStudentsEverySecond() {
+    this.subscriptionStudents = interval(1000)
+      .pipe(
+        takeWhile(() => this.isSubscripedStudents)
+      )
+      .subscribe((x) => {
+        this.examineeService.getExamineesByExamId(Number(this.localService.getData("selectedExamId"))).subscribe({
+          next: data => {
+            this.examinees = data;
+          },
+          error: (error) => {
+            alert("Fehler beim Laden der Examinees: " + error.message);
+          }
+        });
       });
-    }); */
+    /*     this.subscriptionStudents = interval(1000)
+        .pipe(
+          takeWhile(() => this.isSubscripedStudents)
+        )
+        .subscribe((x) => {
+          this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
+            next: data => {
+              this.screenshots = data;
+
+            },
+            error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
+          });
+        }); */
   }
 
   goToNext() {
-    if((this.screenshots.length -1) >= (this.currentIdx +1)){
+    if ((this.screenshots.length - 1) >= (this.currentIdx + 1)) {
       this.currentIdx = this.currentIdx + 1;
     }
     this.currentScreenshot = this.screenshots[this.currentIdx];
   }
+
   goToPrevious() {
-    if(0 <= (this.currentIdx -1)){
+    if (0 <= (this.currentIdx - 1)) {
       this.currentIdx = this.currentIdx - 1;
     }
     this.currentScreenshot = this.screenshots[this.currentIdx];
   }
 
-  logout(){
+  logout() {
     this.localService.removeData("selectedExamId");
     this.router.navigate(['/start']);
   }
 
   ngOnDestroy(): void {
     this.isSubscriped = false;
-    this.isSubscripedStudents= false;
+    this.isSubscripedStudents = false;
   }
 }
