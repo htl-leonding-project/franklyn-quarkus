@@ -10,7 +10,7 @@ import java.io.File;
  * Send Screenshots to Backend
  */
 
-@Path("upload")
+@Path("api/upload")
 @RegisterRestClient(configKey="client-api")
 public interface ImageService {
 
