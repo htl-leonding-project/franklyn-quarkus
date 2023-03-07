@@ -83,3 +83,6 @@ image::lightblue.png[background, size=cover]
 * Herunterladen der Bilder eines Schülers als Film
 * Kleine Änderungen des Designs am Frontend
 * Nativer Client für Windows, Linux und MacOS
+
+== Danke für Ihre Aufmerksamkeit!
+image::lightblue.png[background, size=cover]
