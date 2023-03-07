@@ -27,6 +27,7 @@ image::problems2.jpg[background, size=cover]
 * Bei Node.js gibt es sehr viele Libraries mit unterschiedlichen Maintainer. D.h. beim Updaten dieser müssen die Funktionen genau überprüft werden.
 * MongoDB ist eine nicht relationale Datenbank -> Unstrukturierte Speicherung von Daten
 
+
 == Unsere Aufgabe
 image::todo2.jpg[background, size=cover]
 - Neuimplementierung des Backends in Quarkus
