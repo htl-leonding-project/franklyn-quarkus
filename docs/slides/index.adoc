@@ -6,6 +6,7 @@ ifndef::imagesdir[:imagesdir: images]
 ifndef::backend[:backend: html5]
 :title-slide-background-image: title.jpg
 :icons: font
+:customcss: css/presentation.css
 image::title.jpg[background, size=cover]
 
 
