@@ -67,7 +67,7 @@ image::geschäfts.png[800,650]
 
 == Systemarchitektur
 image::lightblue.png[background, size=cover]
-image::sys-arch2.png[]
+image::sysarch3.png[800,650]
 
 
 === Verwendete Technologien
