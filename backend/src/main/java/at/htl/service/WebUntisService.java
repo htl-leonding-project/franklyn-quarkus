@@ -17,6 +17,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.util.List;
 
 @ApplicationScoped
 public class WebUntisService {
@@ -93,17 +94,25 @@ public class WebUntisService {
     @Transactional
     public void persistExaminers(Teachers result){
         String name= "";
-
+        List<Examiner> examiners = examinerRepository.listAll();
+        boolean alreadyExists = false;
         for (var teacher : result)  {
             Examiner examiner = new Examiner();
             name = teacher.getFullName();
-            if(name.contains(" ")){
-                examiner.isAdmin = false;
-                examiner.firstName = name.split(" ")[0];
-                examiner.lastName = name.split(" ")[1];
-                examiner.userName = teacher.getName();
-                examinerRepository.persist(examiner);
+            for (Examiner ex : examiners) {
+                if(ex.firstName ==  name.split(" ")[0] && ex.lastName == name.split(" ")[1])
+                    alreadyExists = true;
             }
+            if(!alreadyExists){
+                if(name.contains(" ")){
+                    examiner.isAdmin = false;
+                    examiner.firstName = name.split(" ")[0];
+                    examiner.lastName = name.split(" ")[1];
+                    examiner.userName = teacher.getName();
+                    examinerRepository.persist(examiner);
+                }
+            }
+            alreadyExists = false;
             Log.info(name);
         }
     }
@@ -111,12 +120,20 @@ public class WebUntisService {
     @Transactional
     public void persistSchoolClasses(Classes schoolClasses, SchoolYears.SchoolYearObject currentSchoolYear){
         String name= "";
-
+        boolean alreadyExists = false;
+        List<SchoolClass> scs = schoolClassRepository.listAll();
         for (var form : schoolClasses)  {
-            SchoolClass schoolClass = new SchoolClass();
-            schoolClass.title = form.getName();
-            schoolClass.year = currentSchoolYear.getName();
-            schoolClassRepository.persist(schoolClass);
+            for (SchoolClass sc : scs) {
+                if(sc.title == form.getName() && sc.year == currentSchoolYear.getName())
+                    alreadyExists = true;
+            }
+            if(!alreadyExists){
+                SchoolClass schoolClass = new SchoolClass();
+                schoolClass.title = form.getName();
+                schoolClass.year = currentSchoolYear.getName();
+                schoolClassRepository.persist(schoolClass);
+            }
+            alreadyExists = false;
         }
     }
 
