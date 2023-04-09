@@ -17,6 +17,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -31,7 +32,8 @@ public class ApiCalls {
     ExamineeService examineeService;
     private String firstName = "";
     private String lastName = "";
-    private Long id = -1L;
+    private Long examId = -1L;
+    private Long examineeId = -1L;
     private String enrollOption = "";
     Scanner sc = new Scanner(System.in);
 
@@ -54,7 +56,7 @@ public class ApiCalls {
                 String localDateTime = LocalDateTime.now().toString()
                         .replace(':', '-')
                         .replace(".", "-");
-                String fileName = localDateTime + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
+                String fileName = localDateTime + "_" + lastName + "_" + firstName + "_" + examId + "." + fileExt;
 
                 Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
                 BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
@@ -67,6 +69,7 @@ public class ApiCalls {
 
                 imageService.uploadFile(newFile, fileName);
                 newFile.delete();
+                imageService.generateVideoOfExamineeAndExamById(examId.toString(), examineeId.toString());
             } catch (AWTException | IOException ex) {
                 System.err.println(ex);
 
@@ -124,8 +127,9 @@ public class ApiCalls {
      */
 
     public Long executeEnrollService(String id, String firstName, String lastName) {
-        return examineeService
+        examineeId = examineeService
                 .enrollStudentForExam(id, firstName, lastName);
+        return examineeId;
     }
 
     /***
@@ -137,8 +141,9 @@ public class ApiCalls {
      * @return
      */
     public Long executeEnrollAgainService(String id, String firstName, String lastName) {
-        return examineeService
+        examineeId = examineeService
                 .enrollStudentForExamAgain(id, firstName, lastName);
+        return examineeId;
     }
 
 
@@ -152,9 +157,9 @@ public class ApiCalls {
             System.out.print("Enter your pin: ");
             String pin = sc.next();
 
-            id = examineeService.verifyPIN(pin);
-        } while (id == 0L);
-        return id;
+            examId = examineeService.verifyPIN(pin);
+        } while (examId == 0L);
+        return examId;
     }
 
     /***

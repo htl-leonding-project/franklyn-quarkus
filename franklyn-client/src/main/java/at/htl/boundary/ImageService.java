@@ -1,5 +1,6 @@
 package at.htl.boundary;
 
+import io.smallrye.mutiny.Multi;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -10,7 +11,7 @@ import java.io.File;
  * Send Screenshots to Backend
  */
 
-@Path("api/upload")
+@Path("upload")
 @RegisterRestClient(configKey="client-api")
 public interface ImageService {
 
@@ -23,4 +24,11 @@ public interface ImageService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     Response uploadFile(File file, @QueryParam("filename") String fileName);
+
+    @POST
+    @Path("video/{examId}/{examineeId}")
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces(MediaType.APPLICATION_JSON)
+    Response generateVideoOfExamineeAndExamById(
+            @PathParam("examId") String examId, @PathParam("examineeId") String examineeId);
 }
