@@ -6,6 +6,10 @@ import at.htl.control.ScreenshotRepository;
 import at.htl.entity.*;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
+import net.bramp.ffmpeg.FFmpeg;
+import net.bramp.ffmpeg.FFmpegExecutor;
+import net.bramp.ffmpeg.FFprobe;
+import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
@@ -95,6 +99,55 @@ public class ImageResource {
             screenshotRepository.post(screenshot);
         }catch (NullPointerException ignore) {
             LOG.error("Error while saving the file");
+        }
+
+        return Multi.createFrom().items(Response.ok().build());
+    }
+
+    @POST
+    @Path("video/{examId}/{examineeId}")
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Multi<Response> generateVideoOfExamineeAndExamById(
+            @PathParam("examId") String examId, @PathParam("examineeId") String examineeId){
+        Log.info(examId);
+
+        Exam exam = examRepository.findById(Long.parseLong(examId));
+        Examinee examinee = examineeRepository.findById(Long.parseLong(examineeId));
+
+        java.nio.file.Path screeshotPath =
+                Paths.get(String.format("../../%s/%s_%s/%s_%s/",
+                        pathOfScreenshots,
+                        exam.title,
+                        exam.date,
+                        examinee.lastName,
+                        examinee.firstName));
+
+        try {
+            FFmpeg ffmpeg = new FFmpeg("/usr/bin/ffmpeg");      //Path of ffmpeg installation(currently, ffmpeg on Linux default path)
+            FFprobe ffprobe = new FFprobe("/usr/bin/ffmpeg");
+
+            FFmpegBuilder builder = new FFmpegBuilder()
+                    .addExtraArgs("-f", "image2")
+                    .addExtraArgs("-pattern_type", "glob")
+                    .addExtraArgs("-framerate", "1")
+                    .setInput(screeshotPath + "/*.png")
+                    .overrideOutputFiles(true)
+                    .addOutput(String.format("%s/%s_%s_%s_video.mkv",
+                            screeshotPath,
+                            examinee.lastName,
+                            examinee.firstName,
+                            exam.title))
+                    .addExtraArgs("-c:v", "libx264")
+                    .addExtraArgs("-pix_fmt", "yuv420p")
+                    .done();
+
+            FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
+
+            executor.createJob(builder).run();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return Multi.createFrom().items(Response.ok().build());
