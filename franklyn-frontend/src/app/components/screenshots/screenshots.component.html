@@ -55,6 +55,9 @@
                                     (close)="closeEventHandler()">
                                     </ng-image-fullscreen-view>
                                  </div>
+                              <div>
+                                <a (click)="downloadVideo(selectedExamineeId, exam.id.toString())" class="btn btn-primary m-4">Download</a>
+                              </div>
                             </div>
                             <div *ngIf="this.hasScreenshots == false" class="col-8 slideshow">
                                 <h2>Keine Screenshots verfügbar!</h2>
