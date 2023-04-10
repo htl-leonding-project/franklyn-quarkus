@@ -25,10 +25,4 @@ public interface ImageService {
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     Response uploadFile(File file, @QueryParam("filename") String fileName);
 
-    @POST
-    @Path("video/{examId}/{examineeId}")
-    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
-    @Produces(MediaType.APPLICATION_JSON)
-    Response generateVideoOfExamineeAndExamById(
-            @PathParam("examId") String examId, @PathParam("examineeId") String examineeId);
 }

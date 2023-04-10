@@ -2,7 +2,6 @@ package at.htl.control;
 
 import at.htl.boundary.ExamineeService;
 import at.htl.boundary.ImageService;
-import io.quarkus.logging.Log;
 import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.imgscalr.Scalr;
@@ -17,7 +16,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -69,7 +67,7 @@ public class ApiCalls {
 
                 imageService.uploadFile(newFile, fileName);
                 newFile.delete();
-                imageService.generateVideoOfExamineeAndExamById(examId.toString(), examineeId.toString());
+//                videoService.generateVideoOfExamineeAndExamById(examId.toString(), examineeId.toString());
             } catch (AWTException | IOException ex) {
                 System.err.println(ex);
 
