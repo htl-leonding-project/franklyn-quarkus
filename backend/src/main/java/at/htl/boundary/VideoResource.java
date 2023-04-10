@@ -1,0 +1,122 @@
+package at.htl.boundary;
+
+import at.htl.control.ExamRepository;
+import at.htl.control.ExamineeRepository;
+import at.htl.entity.Exam;
+import at.htl.entity.Examinee;
+import io.quarkus.logging.Log;
+import io.smallrye.mutiny.Multi;
+import net.bramp.ffmpeg.FFmpeg;
+import net.bramp.ffmpeg.FFmpegExecutor;
+import net.bramp.ffmpeg.FFprobe;
+import net.bramp.ffmpeg.builder.FFmpegBuilder;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.jboss.logging.Logger;
+
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
+@Path("download")
+public class VideoResource {
+
+    @ConfigProperty(name = "CURRENT_HOST")
+    String currentHost;
+
+    @Inject
+    Logger LOG;
+
+    @Inject
+    ExamRepository examRepository;
+
+    @Inject
+    ExamineeRepository examineeRepository;
+
+    @ConfigProperty(name = "PATHOFSCREENSHOT")
+    String pathOfScreenshots;
+
+    String videoName;
+
+    java.nio.file.Path screenshotPath;
+
+    Long cnt = 0L;
+
+    private String generateVideoOfExamineeAndExamById(String examId, String examineeId) {
+        Log.info(examId);
+
+        Exam exam = examRepository.findById(Long.parseLong(examId));
+        Examinee examinee = examineeRepository.findById(Long.parseLong(examineeId));
+
+        screenshotPath =
+                Paths.get(String.format("../../%s/%s_%s/%s_%s/",
+                        pathOfScreenshots,
+                        exam.title,
+                        exam.date,
+                        examinee.lastName,
+                        examinee.firstName));
+
+        videoName = String.format("%s_%s_%s_video.mkv",
+                examinee.lastName,
+                examinee.firstName,
+                exam.title);
+
+        String videoOutputPath = String.format("%s/%s_%s/%s_%s/%s",
+                pathOfScreenshots,
+                exam.title,
+                exam.date,
+                examinee.lastName,
+                examinee.firstName,
+                videoName);
+
+        try {
+            FFmpeg ffmpeg = new FFmpeg("/usr/bin/ffmpeg");      //Path of ffmpeg installation(currently, ffmpeg on Linux default path)
+            FFprobe ffprobe = new FFprobe("/usr/bin/ffmpeg");
+
+            FFmpegBuilder builder = new FFmpegBuilder()
+                    .addExtraArgs("-f", "image2")
+                    .addExtraArgs("-pattern_type", "glob")
+                    .addExtraArgs("-framerate", "1")
+                    .setInput(screenshotPath + "/*.png")
+                    .overrideOutputFiles(true)
+                    .addOutput("../../" + videoOutputPath)
+                    .addExtraArgs("-c:v", "libx264")
+                    .addExtraArgs("-pix_fmt", "yuv420p")
+                    .done();
+
+            FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
+
+            executor.createJob(builder).run();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return videoOutputPath;
+    }
+
+
+    @Path("video/{examId}/{examineeId}")
+    @GET
+    public Multi<String> getVideoByExamineeIdAndExamId(@PathParam("examId") String examId,
+                                                         @PathParam("examineeId") String examineeId){
+        String videoOutputPath = generateVideoOfExamineeAndExamById(examId, examineeId);
+        try {
+            Files.copy(
+                    new FileInputStream("../../"+videoOutputPath),
+                    Paths.get("./src/main/resources/META-INF/resources", videoName),
+                    StandardCopyOption.REPLACE_EXISTING
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return Multi.createFrom().items(currentHost+"/"+videoName);
+    }
+}
