@@ -18,6 +18,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.List;
+import java.util.Objects;
 
 @ApplicationScoped
 public class WebUntisService {
@@ -100,7 +101,7 @@ public class WebUntisService {
             Examiner examiner = new Examiner();
             name = teacher.getFullName();
             for (Examiner ex : examiners) {
-                if(ex.firstName ==  name.split(" ")[0] && ex.lastName == name.split(" ")[1])
+                if(Objects.equals(ex.firstName, name.split(" ")[0]) && Objects.equals(ex.lastName, name.split(" ")[1]))
                     alreadyExists = true;
             }
             if(!alreadyExists){
@@ -124,7 +125,7 @@ public class WebUntisService {
         List<SchoolClass> scs = schoolClassRepository.listAll();
         for (var form : schoolClasses)  {
             for (SchoolClass sc : scs) {
-                if(sc.title == form.getName() && sc.year == currentSchoolYear.getName())
+                if(Objects.equals(sc.title, form.getName()) && Objects.equals(sc.year, currentSchoolYear.getName()))
                     alreadyExists = true;
             }
             if(!alreadyExists){
