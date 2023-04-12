@@ -15,6 +15,8 @@ Der Schülerclient sendet dabei in einem regelmäßigen Intervall Screenshots, w
 * Tamara Melcher
 * Michael Tran
 
+## Links
+
 [Franklyn 3](https://student.cloud.htl-leonding.ac.at/t.melcher/franklyn/start)
 
 [Git-Repo](https://github.com/htl-leonding-project/franklyn-quarkus)
