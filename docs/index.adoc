@@ -1,6 +1,6 @@
-= Franklyn2 in Quarkus
+= Franklyn3
 Melcher Tamara und Michael Tran
-1.0.0, 2021-11-16:
+12.04.2023: Dokumentation für Franklyn3
 ifndef::imagesdir[:imagesdir: images]
 :sourcedir: ../src/main/java
 :icons: font
@@ -13,10 +13,13 @@ ifdef::backend-html5[]
 // print the toc here (not at the default position)
 //toc::[]
 
-== How-To
+== Development
 
-<<./asciidocs/HowTo.adoc#, How-To>>
+<<./asciidocs/HowTo.adoc#, How-To Start for Development>>
 
+== Starten des Franklyn3
+
+<<./asciidocs/startfranklyn3.adoc#, How-To Start Franklyn3>>
 
 == System Specification
 
@@ -26,12 +29,18 @@ ifdef::backend-html5[]
 
 <<./asciidocs/minutes-of-meeting.adoc#, Minutes of Meeting>>
 
-== Franklyn maintenance
+== Franklyn2 maintenance
 
 <<./asciidocs/stop-restart-franklyn.adoc#, How to stop and restart Franklyn>>
 
 == Slides
 
 https://htl-leonding-project.github.io/franklyn-quarkus/slides/#/
+
+== Systemregeln
+
+TODO
+
+
 
 

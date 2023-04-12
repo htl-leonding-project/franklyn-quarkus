@@ -1,10 +1,10 @@
 = AsciiDoc Article Title
 Melcher Tamara und Tran Michael - Franklyn maintenance
-3.0, July 29, 2022: AsciiDoc article template
+12.04.2023
 :toc:
 :icons: font
 :url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
-== Stop and Restart Franklyn
+== Stop and Restart Franklyn2
 ```bash
 # Connect to the VM
 ssh fradmin@franklyn2.htl-leonding.ac.at

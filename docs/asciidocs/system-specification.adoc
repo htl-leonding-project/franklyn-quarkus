@@ -32,62 +32,52 @@ Für die Ansicht der Screenshots wird noch das Patroulierintervall angeboten, we
 
 == Problemstellung
 * Franklyn2 wurde mit Node.js geschrieben.
-Da sich bei Node.js die Libraries ständig ändert, muss ständig upgedated werden, um den Code funktionstüchtig zu halten.
+** Es gibt sehr viele Libraries mit unterschiedlichen Maintainer. D.h. beim Updaten dieser müssen die Funktionen genau überprüft werden.
 
-* Die derzeitige Datenbank ist eine nicht-relationale DB (MongoBD) -> unstrukturierte Speicherung von Daten
+* Die derzeitige Datenbank ist eine nicht-relationale DB (MongoBD)
+** unstrukturierte Speicherung von Daten
+** Aufgrund der vielen Entitäten ist eine relationale DB sinnvoller
 
-* Wenn einE SchülerIn einen Fehler bei der Abgabe tätigt und den falschen Ordner abgibt, bleibt dem unterrichtenden Professor nichts anderes übrig, als ihm/ihr eine negative Note zu geben.
-
+* Wenn einE SchülerIn einen Fehler bei der Abgabe tätigt und den falschen Ordner abgibt, bleibt dem unterrichtenden Professor nichts anderes übrig, als ihm/ihr eine negative Note zu geben
 * Bei einer großen Anzahl von SchülerInnen können Professoren bei einem Test schnell den Überblick verlieren bzgl. Unverständlichkeiten oder Problematiken die mehrere SchülerInnen betreffen
 
+== Zielsetzung
 
-== Datenmodell
-
-[plantuml]
-----
-include::plantuml/classDiagram.puml[]
-----
-
-== Sachbestandsbericht
-
-[plantuml]
-----
-include::plantuml/sachstandsbericht.puml[]
-----
+* Lehrkräfte sowie SchülerInnen während eines Testes zu unterstützen
+* Um es wie in der realen Welt zu gestalten, dürfen die SchülerInnen das Internet benutzen. Dabei soll es jedoch fair bleiben.
 
 
-== Unsere Aufgaben
-.Aufgaben
-|===
-|Aufgabe |Status
+== Technische Details
 
-|Screenshots every 5 secs
-|done
+=== Datenmodell
 
-|Upload Image
-|done
+image::images/classdiagram.png[]
 
-|Download Image
-|Done
 
-|Datenmodell
-|In Progess
+=== Systemarchitektur
+image::images/sysarch.png[]
 
-|MOM
-|up-to-date
+* Technologie, Aufgaben
 
-|Qute - Student Login
-|In progress
+** Frontend
+*** Angular-Anwendung
+*** Dashboard zum Verwalten und Anlegen eines Testes
+*** Download des Clients
 
-|Datenmodell
-|In progress
+** Server
+*** Quarkus-Applikation
+*** Speichert die Screenshots in der Datenbank und dem Filesystem
+*** Stellt die für den Client benötigte API zur Verfügung
+*** Stellt die für das Frontend benötigte API zur Verfügung
 
-|===
+** DB
+*** Postgres
+*** Speichert die Screenshots
+*** Speichert die Daten der Examiner, Examinee und die Links zu den Screenshots
 
-== Was noch kommt
+** Client
+*** Quarkus-Applikation
+*** Verbindet Schüler, nach positiver Eingabe des PINs, mit dem Server
 
-* Tests
-* Lehrerfrontend (Website)
-* Client (Electron)
-* ImageCompressor
+
 
