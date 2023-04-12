@@ -19,7 +19,7 @@ Der Schülerclient sendet dabei in einem regelmäßigen Intervall Screenshots, w
 
 [Franklyn 3](https://student.cloud.htl-leonding.ac.at/t.melcher/franklyn/start)
 
-[Git-Repo](https://github.com/htl-leonding-project/franklyn-quarkus)
+[Dokumentation](https://htl-leonding-project.github.io/franklyn-quarkus/)
 
 [YouTrack - Agile Board](https://vm81.htl-leonding.ac.at/agiles/99-313/current)
 
