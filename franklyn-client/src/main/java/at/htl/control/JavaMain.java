@@ -16,7 +16,14 @@ public class JavaMain implements QuarkusApplication {
 
     @Override
     public int run(String... args) throws Exception {
-        System.out.println("Welcome to Franklyn!");
+        System.out.println(" __          __  _                            _          ______               _    _             ____  _ \n" +
+                " \\ \\        / / | |                          | |        |  ____|             | |  | |           |___ \\| |\n" +
+                "  \\ \\  /\\  / /__| | ___ ___  _ __ ___   ___  | |_ ___   | |__ _ __ __ _ _ __ | | _| |_   _ _ __   __) | |\n" +
+                "   \\ \\/  \\/ / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ | __/ _ \\  |  __| '__/ _` | '_ \\| |/ / | | | | '_ \\ |__ <| |\n" +
+                "    \\  /\\  /  __/ | (_| (_) | | | | | |  __/ | || (_) | | |  | | | (_| | | | |   <| | |_| | | | |___) |_|\n" +
+                "     \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|  \\__\\___/  |_|  |_|  \\__,_|_| |_|_|\\_\\_|\\__, |_| |_|____/(_)\n" +
+                "                                                                                      __/ |              \n" +
+                "                                                                                     |___/               ");
         Long id = apiCalls.enterPIN();                      // get ExamId
         Long code = apiCalls.enterName(id.toString());      // get ExamineeId
         System.out.println("Do NOT close this window!");
@@ -26,7 +33,6 @@ public class JavaMain implements QuarkusApplication {
         }
         apiCalls.getIntervall(id.toString());               // get intervall for Screenshots
         apiCalls.setScheduler();                            // set Scheduler adjusted to the intervall
-        apiCalls.sendScreenshots();                         // send screenshots
         Quarkus.waitForExit();
         return 0;
     }
