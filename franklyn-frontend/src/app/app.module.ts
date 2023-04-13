@@ -40,6 +40,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';   //for full screen
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,7 +86,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatCheckboxModule,
     NgImageFullscreenViewModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

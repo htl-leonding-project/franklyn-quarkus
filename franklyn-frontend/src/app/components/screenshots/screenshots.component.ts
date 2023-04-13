@@ -17,14 +17,14 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 @Component({
   selector: 'app-screenshots',
   templateUrl: './screenshots.component.html',
-  styleUrls: ['./screenshots.component.css'],
+  styleUrls: ['./screenshots.component.css']
 })
 export class ScreenshotsComponent implements OnInit, OnDestroy {
 
   constructor(private examineeService: ExamineeService, public globalService: GlobalService,
               private localService: LocalService, private examService: ExamService,
               private screenshotService: ScreenshotService, private router: Router,
-              private videoService: VideoService, public dialog: MatDialog, private modalService: NgbModal ) { }
+              public dialog: MatDialog, private modalService: NgbModal ) { }
 
   currentScreenshot: Screenshot = {
     image: '../../../assets/img/temp.png',
@@ -202,7 +202,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   }
 
   downloadVideo(examineeId: string) {
-    this.videoService.downloadVideo(this.localService.getData("selectedExamId")!, examineeId).subscribe({
+    /*this.videoService.downloadVideo(this.localService.getData("selectedExamId")!, examineeId).subscribe({
       next: data => {
         console.log(data);
         let link = document.createElement('a');
@@ -211,6 +211,6 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
         link.click();
       },
       error: (error) => {alert("Fehler beim Erstellen des Videos: "+error.message);}
-    });
+    });*/
   }
 }
