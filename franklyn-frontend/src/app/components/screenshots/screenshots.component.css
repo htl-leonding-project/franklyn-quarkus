@@ -36,7 +36,7 @@ table tr.even_col {
     border-radius: 5px;
 }
 
-.patroullie{ 
+.patroullie{
     display: inline;
 }
 
@@ -61,7 +61,7 @@ table tr.even_col {
 .selected {
     background-color: rgb(96, 215, 255);
   }
-  
+
 .normal {
     background-color:rgb(166, 223, 242);
     border-radius: 5px;
@@ -135,7 +135,7 @@ table tr.even_col {
     padding: 22px;
     font-size: 25px;
   }
-  
+
   .logout{
     float: right;
     display: inline-block;
@@ -148,11 +148,20 @@ table tr.even_col {
     /* border: 3px solid rgb(196, 194, 194); */
     border-radius: 5px;
   }
-  
+
   .examinee-dt {
     text-align: left;
-    height: 50px;
-    padding:15px;
+    height: 60px;
+    padding:20px;
     margin-bottom: 5px;
     /* border-bottom: 1px solid rgb(196, 194, 194); */
+  }
+
+  .students{
+    display: inline-block;
+  }
+
+  .download{
+    float: right;
+    height: 35px;
   }

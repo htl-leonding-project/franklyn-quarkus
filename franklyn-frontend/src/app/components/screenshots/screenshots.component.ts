@@ -10,7 +10,9 @@ import { ExamineeService } from 'src/app/services/examinee.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { LocalService } from 'src/app/services/local.service';
 import { ScreenshotService } from 'src/app/services/screenshot.service';
-
+import {VideoService} from "../../services/video.service";
+import {MatDialog} from "@angular/material/dialog";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-screenshots',
@@ -19,7 +21,10 @@ import { ScreenshotService } from 'src/app/services/screenshot.service';
 })
 export class ScreenshotsComponent implements OnInit, OnDestroy {
 
-  constructor(private examineeService: ExamineeService, public globalService: GlobalService, private localService: LocalService, private examService: ExamService, private screenshotService: ScreenshotService, private router: Router) { }
+  constructor(private examineeService: ExamineeService, public globalService: GlobalService,
+              private localService: LocalService, private examService: ExamService,
+              private screenshotService: ScreenshotService, private router: Router,
+              private videoService: VideoService, public dialog: MatDialog, private modalService: NgbModal ) { }
 
   currentScreenshot: Screenshot = {
     image: '../../../assets/img/temp.png',
@@ -68,7 +73,6 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     this.currentScreenshot = this.screenshots[0];
   }
 
-
   showFullScreen(index: number) {
     this.currentIndexFS = index;
     this.showImgFullScreen = true;
@@ -87,7 +91,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
           this.selectedExamineeId = this.examinees[0].id;
           this.SelectExaminee(this.selectedExamineeId);
         }
-      }, 
+      },
       error: (error) => {alert("Fehler beim Laden der Examinees: "+error.message);}
     });
   }
@@ -97,7 +101,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, examineeId).subscribe({
       next: data => {
         this.screenshots = data;
-      }, 
+      },
       error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
     });
     this.selectedExamineeId = examineeId;
@@ -112,11 +116,11 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
             this.screenshots = data;
             if(this.screenshots.length > 0){
               this.currentScreenshot = this.screenshots[0];
-              this.hasScreenshots = true; 
+              this.hasScreenshots = true;
             }else{
               this.hasScreenshots = false;
             }
-          }, 
+          },
           error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
         });
       });
@@ -135,14 +139,11 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
             }else{
               this.hasScreenshots = false;
             }
-          }, 
+          },
           error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
         });
       });
     }
-/*     this.screenshots = this.screenshots.reverse();
-    this.currentScreenshot = this.screenshots[0]; */
-
   }
 
   loadExam() {
@@ -153,7 +154,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
           this.isSubscripedStudents = true;
           this.loadStudentsEverySecond()
         }
-      }, 
+      },
       error: (error) => {alert("Fehler beim Laden des Exams: "+error.message);}
     });
   }
@@ -166,23 +167,10 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
       this.examineeService.getExamineesByExamId(Number(this.localService.getData("selectedExamId"))).subscribe({
         next: data => {
           this.examinees = data;
-        }, 
+        },
         error: (error) => {alert("Fehler beim Laden der Examinees: "+error.message);}
       });
     });
-/*     this.subscriptionStudents = interval(1000)
-    .pipe(
-      takeWhile(() => this.isSubscripedStudents)
-    )
-    .subscribe((x) => {
-      this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, this.selectedExamineeId).subscribe({
-        next: data => {
-          this.screenshots = data;
-
-        }, 
-        error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
-      });
-    }); */
   }
 
   goToNext() {
@@ -206,5 +194,23 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.isSubscriped = false;
     this.isSubscripedStudents= false;
+  }
+
+  openFullscreen(content: any) {
+    this.currentIndexFS = 0;
+    this.modalService.open(content, { fullscreen: true });
+  }
+
+  downloadVideo(examineeId: string) {
+    this.videoService.downloadVideo(this.localService.getData("selectedExamId")!, examineeId).subscribe({
+      next: data => {
+        console.log(data);
+        let link = document.createElement('a');
+        link.href = data;
+        link.download = "video.mkv";
+        link.click();
+      },
+      error: (error) => {alert("Fehler beim Erstellen des Videos: "+error.message);}
+    });
   }
 }
