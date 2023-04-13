@@ -13,7 +13,7 @@
     margin-bottom: 20px;
     background-color: #02c39a;
     width: 200px;
-    float: right; 
+    float: right;
 }
 
 .lonebtn{
@@ -31,7 +31,7 @@
 
 .inline{
     margin-top: 50px;
-    display: inline-block; 
+    display: inline-block;
     vertical-align: top;
 }
 
@@ -77,20 +77,20 @@ mat-form-field{
     color: #777;
   }
 
-  .footer{
-    position: absolute;
-    bottom: 0px;
-    z-index: 2000;
-    width: 83%;
-    height: 80px;
-    background-color: white;
-    border-top: 1px solid rgb(0 0 0 / 18%);
-    font-weight: 400;
-    padding: 22px;
-    font-size: 25px;
-    text-align: right;
-    color: #777;
-  }
+.footer{
+  position: fixed;
+  bottom: 0px;
+  z-index: 2000;
+  width: 83%;
+  height: 70px;
+  background-color: white;
+  border-top: 1px solid rgb(0 0 0 / 18%);
+  font-weight: 400;
+  padding: 18px;
+  font-size: 25px;
+  text-align: right;
+  color: #777;
+}
 
   .header-nav{
     float: left;
@@ -99,7 +99,7 @@ mat-form-field{
     padding: 22px;
     font-size: 25px;
   }
-  
+
   .logout{
     float: right;
     display: inline-block;

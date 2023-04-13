@@ -82,19 +82,19 @@ table tr.highlight {
 }
 
 .footer{
-    position: absolute;
-    bottom: 0px;
-    z-index: 2000;
-    width: 83%;
-    height: 80px;
-    background-color: white;
-    border-top: 1px solid rgb(0 0 0 / 18%);
-    font-weight: 400;
-    padding: 22px;
-    font-size: 25px;
-    text-align: right;
-    color: #777;
-  }
+  position: fixed;
+  bottom: 0px;
+  z-index: 2000;
+  width: 83%;
+  height: 70px;
+  background-color: white;
+  border-top: 1px solid rgb(0 0 0 / 18%);
+  font-weight: 400;
+  padding: 18px;
+  font-size: 25px;
+  text-align: right;
+  color: #777;
+}
 
   .header-nav{
     float: left;

@@ -114,15 +114,15 @@ table tr.even_col {
 }
 
 .footer{
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     z-index: 2000;
     width: 83%;
-    height: 80px;
+    height: 70px;
     background-color: white;
     border-top: 1px solid rgb(0 0 0 / 18%);
     font-weight: 400;
-    padding: 22px;
+    padding: 18px;
     font-size: 25px;
     text-align: right;
     color: #777;
