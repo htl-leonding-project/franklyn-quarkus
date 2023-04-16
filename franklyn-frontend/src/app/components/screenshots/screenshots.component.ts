@@ -13,6 +13,7 @@ import { ScreenshotService } from 'src/app/services/screenshot.service';
 import {VideoService} from "../../services/video.service";
 import {MatDialog} from "@angular/material/dialog";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 
 @Component({
   selector: 'app-screenshots',
@@ -24,7 +25,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   constructor(private examineeService: ExamineeService, public globalService: GlobalService,
               private localService: LocalService, private examService: ExamService,
               private screenshotService: ScreenshotService, private router: Router,
-              public dialog: MatDialog, private modalService: NgbModal ) { }
+              public dialog: MatDialog, private modalService: NgbModal, private videoService: VideoService) { }
 
   currentScreenshot: Screenshot = {
     image: '../../../assets/img/temp.png',
@@ -37,6 +38,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   screenshots: Screenshot[] = [];
   currentIndexFS: number = 0;
   showImgFullScreen: boolean = false;
+  randomP: boolean = false;
 
   exam: Exam = {
     pin: '',
@@ -61,11 +63,11 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   subscriptionStudents: Subscription = new Subscription;
   isSubscripedStudents: boolean = true;
   hasScreenshots: boolean = false;
-
   imageObject: Array<object> = [];
-
   currentYear: number=new Date().getFullYear();
-
+  patroulliermode: boolean = false;
+  patroullier: boolean = false;
+  intervallId = 0;
 
   ngOnInit(): void {
     this.loadStudents();
@@ -98,6 +100,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
 
   SelectExaminee(examineeId: string) {
     this.isSubscriped = false
+    console.log(examineeId)
     this.screenshotService.getAllScreenshotsOfExaminee(this.localService.getData("selectedExamId")!, examineeId).subscribe({
       next: data => {
         this.screenshots = data;
@@ -106,7 +109,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     });
     this.selectedExamineeId = examineeId;
     if(this.currentSelectedExamIsToday){
-      this.subscription = interval(5000)
+/*      this.subscription = interval(5000)
       .pipe(
         takeWhile(() => this.isSubscriped)
       )
@@ -123,7 +126,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
           },
           error: (error) => {alert("Fehler beim Laden der Screenshots: "+error.message);}
         });
-      });
+      });*/
       this.isSubscriped = true;
       this.subscription = interval(5000)
       .pipe(
@@ -159,7 +162,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     });
   }
   loadStudentsEverySecond(){
-    this.subscriptionStudents = interval(1000)
+    this.subscriptionStudents = interval(5000)
     .pipe(
       takeWhile(() => this.isSubscripedStudents)
     )
@@ -212,5 +215,34 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
       },
       error: (error) => {alert("Fehler beim Erstellen des Videos: "+error.message);}
     });*/
+  }
+
+  async onChange($event: MatSlideToggleChange) {
+    if (this.examinees.length > 0) {
+      if (this.patroulliermode) {
+        this.patroullier = true;
+        while(this.patroullier){
+          for (let i = 0; i < this.examinees.length; i++) {
+            if(!this.patroullier){
+              break;
+            }
+            console.log(this.examinees[i].lastName)
+            this.SelectExaminee(this.examinees[i].id);
+            await new Promise(f => setTimeout(f, 10000));
+          }
+        }
+      }
+      else if (!this.patroulliermode) {
+        this.randomP = false;
+        this.patroullier = false;
+        clearInterval(this.intervallId);
+        this.patroulliermode = false;
+      }
+    }
+  }
+
+  SelectExamineeAndStop(id: string) {
+    this.patroullier=false;
+    this.SelectExaminee(id);
   }
 }

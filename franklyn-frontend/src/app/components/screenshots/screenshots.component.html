@@ -75,25 +75,26 @@
                                     <br>
                                     <br>
                                     <div class="patroullie">
-                                        <label>Patrouillie: </label>
-                                        <select class="form-select">
-                                            <option>Aus</option>
-                                            <option>Sequentiell</option>
-                                            <option>Zufällig</option>
-                                        </select>
-                                        <br>
+<!--                                        <label>Patrouillie: </label>
+                                        <select [(ngModel)]="patroulliermode" (change)="onChange($event)" class="form-select">
+                                            <option [value]="'Aus'">Aus</option>
+                                            <option [value]="'Sequentiell'">Sequentiell</option>
+                                            <option [value]="'Zufällig'">Zufällig</option>
+                                        </select>-->
+                                      <mat-slide-toggle (change)="onChange($event)" [(ngModel)]="patroulliermode">Patroullie</mat-slide-toggle>
+                                      <br>
                                     </div>
                                         <br>
                                         <cdk-virtual-scroll-viewport class="examinee-viewport" itemSize="60">
                                             <dl class="examinee-dl">
                                               <ng-container *ngFor="let examinee of examinees">
-                                                <dt class="examinee-dt normal" [ngClass]="{'highlight' : examinee.id == selectedExamineeId}" (click)="SelectExaminee(examinee.id)">
-                                                    <div *ngIf="examinee.isOnline">
+                                                <dt class="examinee-dt normal" [ngClass]="{'highlight' : examinee.id == selectedExamineeId}" (click)="SelectExamineeAndStop(examinee.id)">
+                                                    <div *ngIf="examinee.isOnline" class="students">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#00b400" class="bi bi-circle-fill" viewBox="0 0 16 16">
                                                             <circle cx="8" cy="8" r="8"/>
                                                         </svg>
                                                         &nbsp;&nbsp;{{examinee.firstName}} {{examinee.lastName}}
-                                                      <button class="btn btn-info"  (click)="downloadVideo(examinee.id)")>
+                                                      <button class="btn btn-info"  (click)="downloadVideo(examinee.id)">
                                                         <i class="bi bi-arrow-down-circle"></i>
                                                       </button>
                                                     </div>
@@ -106,7 +107,6 @@
                                                           <i class="bi bi-arrow-down-circle"></i>
                                                         </button>
                                                     </div>
-
                                                 </dt>
                                               </ng-container>
                                             </dl>
