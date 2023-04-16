@@ -245,6 +245,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
 
   SelectExamineeAndStop(id: string) {
     this.patroullier=false;
+    this.patroulliermode = false;
     this.SelectExaminee(id);
   }
 
