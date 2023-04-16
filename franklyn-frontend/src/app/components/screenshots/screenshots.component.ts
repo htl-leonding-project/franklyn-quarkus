@@ -68,6 +68,8 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
   patroulliermode: boolean = false;
   patroullier: boolean = false;
   intervallId = 0;
+  videoLinks: string[] = [];
+  examineesLength: number = 0;
 
   ngOnInit(): void {
     this.loadStudents();
@@ -245,4 +247,23 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     this.patroullier=false;
     this.SelectExaminee(id);
   }
+
+  /*downloadAll(examId: string) {
+    var link = document.createElement('a');
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    for (let i = 0; i < this.examinees.length; i++) {
+      this.videoService.downloadVideo(this.localService.getData("selectedExamId")!, this.examinees[i].id).subscribe({
+        next: data => {
+          link.href = data;
+          link.download = "video.mkv";
+          console.log(data)
+          //link.click();
+          window.open(data, '_blank')
+        },
+        error: (error) => {alert("Fehler beim Erstellen des Videos: "+error.message);}
+      });
+    }
+    document.body.removeChild(link);
+  }*/
 }

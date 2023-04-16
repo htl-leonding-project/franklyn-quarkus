@@ -70,7 +70,7 @@ tr {
 
 .nav-header{
     width: 100%;
-    height: 80px;
+    height: 70px;
     background-color: white;
     border-bottom: 1px solid rgb(0 0 0 / 18%);
     color: #777;
@@ -100,14 +100,14 @@ table tr.highlight {
     float: left;
     display: inline-block;
     font-weight: 400;
-    padding: 22px;
+    padding: 18px;
     font-size: 25px;
   }
 
   .logout{
     float: right;
     display: inline-block;
-    padding: 20px;
+    padding: 16px;
   }
 
   .isDisabled{

@@ -67,14 +67,18 @@
                                     <br>
                                     <br>
                                     <div class="patroullie">
-                                      <mat-slide-toggle (change)="onChange($event)" [(ngModel)]="patroulliermode">Patroullie</mat-slide-toggle>
+                                      <mat-slide-toggle color="warn" (change)="onChange($event)" [(ngModel)]="patroulliermode">Patroullie</mat-slide-toggle>
                                       <br>
                                       <br>
-                                      <div>
-                                        <a (click)="downloadVideo(selectedExamineeId, exam.id.toString())" class="btn btn-primary">Download</a>
+                                      <a (click)="downloadVideo(selectedExamineeId, exam.id.toString())" class="btn btn-primary">Download</a>
+
+<!--                                      <div class="downloadbtns">
+                                        <a style="margin-left: 5px" (click)="downloadAll(exam.id.toString())" class="btn btn-primary">Download All</a>
                                       </div>
                                     </div>
-                                        <br>
+                                  <br>-->
+                                  <br>
+                                      <br>
                                         <cdk-virtual-scroll-viewport class="examinee-viewport" itemSize="60">
                                             <dl class="examinee-dl">
                                               <ng-container *ngFor="let examinee of examinees">
