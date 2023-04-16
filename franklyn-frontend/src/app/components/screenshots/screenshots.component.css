@@ -6,7 +6,7 @@ table tr.even_col {
 }
 
 .container-fluid{
-    padding: 30px;
+    padding: 20px;
     margin-right: 30px;
     background-color: rgb(245, 244, 244) !important;
     height: 100%;
@@ -168,4 +168,9 @@ table tr.even_col {
   .downloadbtns{
     display: inline-block;
   }
+
+.fullscreenimg{
+  height: 80%;
+  width: 80%;
+}
 

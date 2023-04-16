@@ -9,11 +9,11 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title">Screenshot</h4>
+    <h2 class="modal-title">Screenshot</h2>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <img  src="{{currentScreenshot.image}}" alt="Screenshot">
+    <img class="fullscreenimg" src="{{currentScreenshot.image}}" alt="Screenshot">
   </div>
 </ng-template>
 
