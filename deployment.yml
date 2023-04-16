@@ -62,6 +62,8 @@ spec:
               value: https://student.cloud.htl-leonding.ac.at/
             - name: CURRENT_ROOT_DIRECTORY
               value: Desktop/file-upload/exams
+            - name: FFMPEG_PATH
+              value: /usr/bin/ffmpeg
           volumeMounts:
             - name: shared-data
               mountPath: /t.melcher/tmp/file-upload/exams
