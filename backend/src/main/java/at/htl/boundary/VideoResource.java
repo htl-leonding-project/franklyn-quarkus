@@ -30,8 +30,8 @@ public class VideoResource {
     @ConfigProperty(name = "CURRENT_HOST")
     String currentHost;
 
-    @ConfigProperty(name = "FFMPEG_PATH")
-    String pathOfFFMPEG;
+    //@ConfigProperty(name = "FFMPEG_PATH")
+    //String pathOfFFMPEG;
 
     @Inject
     Logger LOG;
