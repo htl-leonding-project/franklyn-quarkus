@@ -38,7 +38,6 @@ import { EditTestComponent } from './components/edit-test/edit-test.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';   //for full screen
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -85,7 +84,6 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatSelectModule,
     MatTableModule,
     MatCheckboxModule,
-    NgImageFullscreenViewModule,
     ReactiveFormsModule,
     MatIconModule,
     MatDialogModule,

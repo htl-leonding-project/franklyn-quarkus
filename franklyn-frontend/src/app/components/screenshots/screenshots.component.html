@@ -57,14 +57,6 @@
                                         </a>
                                       </div>
                                  </div>
-<!--                                 <div>
-                                    <ng-image-fullscreen-view
-                                    [images]="screenshots"
-                                    [imageIndex]="currentIndexFS"
-                                    [show]="showImgFullScreen"
-                                    (close)="closeEventHandler()">
-                                    </ng-image-fullscreen-view>
-                                 </div>-->
                             </div>
                             <div *ngIf="this.hasScreenshots == false" class="col-8 slideshow">
                                 <h2>Keine Screenshots verfügbar!</h2>
@@ -75,14 +67,12 @@
                                     <br>
                                     <br>
                                     <div class="patroullie">
-<!--                                        <label>Patrouillie: </label>
-                                        <select [(ngModel)]="patroulliermode" (change)="onChange($event)" class="form-select">
-                                            <option [value]="'Aus'">Aus</option>
-                                            <option [value]="'Sequentiell'">Sequentiell</option>
-                                            <option [value]="'Zufällig'">Zufällig</option>
-                                        </select>-->
                                       <mat-slide-toggle (change)="onChange($event)" [(ngModel)]="patroulliermode">Patroullie</mat-slide-toggle>
                                       <br>
+                                      <br>
+                                      <div>
+                                        <a (click)="downloadVideo(selectedExamineeId, exam.id.toString())" class="btn btn-primary">Download</a>
+                                      </div>
                                     </div>
                                         <br>
                                         <cdk-virtual-scroll-viewport class="examinee-viewport" itemSize="60">
@@ -94,28 +84,17 @@
                                                             <circle cx="8" cy="8" r="8"/>
                                                         </svg>
                                                         &nbsp;&nbsp;{{examinee.firstName}} {{examinee.lastName}}
-                                                      <button class="btn btn-info"  (click)="downloadVideo(examinee.id)">
-                                                        <i class="bi bi-arrow-down-circle"></i>
-                                                      </button>
                                                     </div>
                                                     <div *ngIf="!examinee.isOnline" class="students">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#dc0000" class="bi bi-circle-fill" viewBox="0 0 16 16">
                                                             <circle cx="8" cy="8" r="8"/>
                                                         </svg>
                                                         &nbsp;&nbsp;{{examinee.firstName}} {{examinee.lastName}}
-                                                        <button class="btn btn-secondary download">
-                                                          <i class="bi bi-arrow-down-circle"></i>
-                                                        </button>
                                                     </div>
                                                 </dt>
                                               </ng-container>
                                             </dl>
-                                          </cdk-virtual-scroll-viewport>
-<!--                                     <ng-container *ngFor="let examinee of examinees">
-                                        <div class="card names text-black text-left normal" style="--bs-bg-opacity: .1;">
-                                            <div class="card-body" [ngClass]="{'highlight' : examinee.id == selectedExamineeId}" (click)="SelectExaminee(examinee.id)">{{examinee.firstName}} {{examinee.lastName}}</div>
-                                        </div>
-                                    </ng-container> -->
+                                        </cdk-virtual-scroll-viewport>
                                 </div>
                             </div>
                           </div>

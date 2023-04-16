@@ -52,7 +52,6 @@ public class ImageResource {
             LOG.error("filename is empty");
         }
 
-        LOG.info("Trying to save the file");
         try (is) {
             String[] fullPath = filename.split("_|\\.");
             Exam exam = examRepository.findById(Long.valueOf(fullPath[3]));
@@ -67,16 +66,12 @@ public class ImageResource {
                             fullPath[2]));
             Files.createDirectories(path);
 
-            LOG.info(filename);
-            Log.info(path.toString());
-
             Files.copy(
                     is,
                     Paths.get(path.toString(), filename),
                     StandardCopyOption.REPLACE_EXISTING
             );
             cnt++;
-            LOG.info(filename);
             //String[] files = filename.split("_");
             //LOG.info(files[1]);
             //Exam exam = examRepository.findById(Long.valueOf(files[3]));

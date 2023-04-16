@@ -204,8 +204,8 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
     this.modalService.open(content, { fullscreen: true });
   }
 
-  downloadVideo(examineeId: string) {
-    /*this.videoService.downloadVideo(this.localService.getData("selectedExamId")!, examineeId).subscribe({
+  downloadVideo(examineeId: string, examId: string) {
+    this.videoService.downloadVideo(this.localService.getData("selectedExamId")!, examineeId).subscribe({
       next: data => {
         console.log(data);
         let link = document.createElement('a');
@@ -214,7 +214,7 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
         link.click();
       },
       error: (error) => {alert("Fehler beim Erstellen des Videos: "+error.message);}
-    });*/
+    });
   }
 
   async onChange($event: MatSlideToggleChange) {
