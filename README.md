@@ -14,7 +14,7 @@ Der Schülerclient sendet dabei in einem regelmäßigen Intervall Screenshots, w
   * Den Client auf der Startseite herunterladen; .jar-Button
   * Den Zip-Ordner "entzippen"
   * Den Ordner (franklyn3-client) im Terminal öffnen
-  * Im Terminal 'java -jar franklyn3-client.jar' eingeben und ausführen
+  * Im Terminal **java -jar franklyn3-client.jar** eingeben und ausführen
 
 # Technologien
 * Quarkus
