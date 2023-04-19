@@ -11,9 +11,11 @@ Der Schülerclient sendet dabei in einem regelmäßigen Intervall Screenshots, w
 ** Mit WebUntis-Credentials auf der Website anmelden
 ** Neuen Test erstellen
 * Schüler
+
 ** Den Client auf der Startseite herunterladen; .jar-Button
 ** Den Zip-Ordner "entzippen"
-** 
+** Den Ordner (franklyn3-client) im Terminal öffnen
+** Im Terminal 'java -jar franklyn3-client.jar' eingeben und ausführen
 
 # Technologien
 * Quarkus
