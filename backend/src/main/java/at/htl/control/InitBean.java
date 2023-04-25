@@ -37,22 +37,22 @@ public class InitBean {
 
     @Transactional
     public void init(@Observes StartupEvent event){
-        /*List<Examiner> examiners = new ArrayList<>();
+        List<Examiner> examiners = new ArrayList<>();
         Examiner examiner1 = new Examiner("tmelch", "Tamara", "Melcher", true);
         Examiner examiner2 = new Examiner("mtran", "Michael", "Tran", true);
         Examiner examiner3 = new Examiner("tstuet", "Thomas", "Stuetz", true);
         examiners.add(examiner1);
         examiners.add(examiner2);
-        examiners.add(examiner3);*/
+        examiners.add(examiner3);
 
 
 
         String webUntisResult = webUntisService.initDB("NNRADIO", "PAuthlyn28");
         Log.info("WebUntis Result: " + webUntisResult);
         Examiner examinerWU = examinerRepository.findByUsername("NNRADIO");
-        //examiners.add(examinerWU);
+        examiners.add(examinerWU);
 
-        /*List<SchoolClass> schoolClasses = new ArrayList<>();
+        List<SchoolClass> schoolClasses = new ArrayList<>();
         SchoolClass schoolClass1 = new SchoolClass("5AHIF", "2022");
         SchoolClass schoolClass2 = new SchoolClass("3AHIF", "2021");
         schoolClasses.add(schoolClass1);
@@ -168,6 +168,6 @@ public class InitBean {
                 "here"
         );
         screenshotRepository.persist(screenshot1);
-        Log.info("Saved Screenshot");*/
+        Log.info("Saved Screenshot");
     }
 }
