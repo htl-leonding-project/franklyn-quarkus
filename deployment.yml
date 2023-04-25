@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: franklyn3-db-deployment
+  name: franklyn-db-deployment
   namespace: student-t-stuetz
 spec:
   replicas: 1
@@ -30,30 +30,30 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: franklyn3-backend-deployment
+  name: franklyn-backend-deployment
   namespace: student-t-stuetz
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: franklyn3-backend
+      app: franklyn-backend
   template:
     metadata:
       labels:
-        app: franklyn3-backend
+        app: franklyn-backend
     spec:
       volumes:
         - name: shared-data
           emptyDir: { }
       containers:
-        - name: franklyn3-imageserver
+        - name: franklyn-imageserver
           image: nginx
           volumeMounts:
             - name: shared-data
               mountPath: /usr/share/nginx/html
           ports:
             - containerPort: 80
-        - name: franklyn3-backend
+        - name: franklyn-backend
           image: ghcr.io/htl-leonding-project/franklyn-quarkus-backend
           env:
             - name: PATHOFSCREENSHOT
@@ -66,27 +66,27 @@ spec:
               value: /usr/bin/ffmpeg
           volumeMounts:
             - name: shared-data
-              mountPath: /t.stuetz/franklyn3/tmp/file-upload/exams
+              mountPath: /t.stuetz/franklyn/tmp/file-upload/exams
           ports:
             - containerPort: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: franklyn3-frontend-deployment
+  name: franklyn-frontend-deployment
   namespace: student-t-stuetz
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: franklyn3-frontend
+      app: franklyn-frontend
   template:
     metadata:
       labels:
-        app: franklyn3-frontend
+        app: franklyn-frontend
     spec:
       containers:
-        - name: franklyn3-frontend
+        - name: franklyn-frontend
           image: ghcr.io/htl-leonding-project/franklyn-quarkus-frontend
           ports:
             - containerPort: 80
@@ -95,7 +95,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: franklyn3-backend-svc
+  name: franklyn-backend-svc
   namespace: student-t-stuetz
 spec:
   ports:
@@ -104,12 +104,12 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: franklyn3-backend
+    app: franklyn-backend
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: franklyn3-imageserver-svc
+  name: franklyn-imageserver-svc
   namespace: student-t-stuetz
 spec:
   ports:
@@ -118,12 +118,12 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: franklyn3-backend
+    app: franklyn-backend
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: franklyn3-frontend-svc
+  name: franklyn-frontend-svc
   namespace: student-t-stuetz
 spec:
   ports:
@@ -132,12 +132,12 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: franklyn3-frontend
+    app: franklyn-frontend
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: franklyn3-database-svc
+  name: franklyn-database-svc
   namespace: student-t-stuetz
 spec:
   ports:
@@ -151,7 +151,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: franklyn3-backend-ingress
+  name: franklyn-backend-ingress
   namespace: student-t-stuetz
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
@@ -160,24 +160,24 @@ spec:
     - host: student.cloud.htl-leonding.ac.at
       http:
         paths:
-          - path: /t.stuetz/franklyn3/api(/|$)(.*)$
+          - path: /t.stuetz/franklyn/api(/|$)(.*)$
             pathType: Prefix
             backend:
               service:
-                name: franklyn3-backend-svc
+                name: franklyn-backend-svc
                 port:
                   number: 80
-          - path: /t.stuetz/franklyn3/tmp/file-upload/exams(/|$)(.*)$
+          - path: /t.stuetz/franklyn/tmp/file-upload/exams(/|$)(.*)$
             pathType: Prefix
             backend:
               service:
-                name: franklyn3-imageserver-svc
+                name: franklyn-imageserver-svc
                 port:
                   number: 80
-          - path: /t.stuetz/franklyn3(/|$)(.*)$
+          - path: /t.stuetz/franklyn(/|$)(.*)$
             pathType: Prefix
             backend:
               service:
-                name: franklyn3-frontend-svc
+                name: franklyn-frontend-svc
                 port:
                   number: 80
