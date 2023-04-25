@@ -46,7 +46,7 @@ export class MyTestsComponent implements OnInit, OnDestroy {
   examToday!: Observable<Exam>;
   selection = new SelectionModel<Exam>(false, []);
 
-  constructor(private router: Router, private examService:ExamService, public globalService: GlobalService, private modalService: NgbModal, private localService: LocalService, private pollingService: PollingService) { 
+  constructor(private router: Router, private examService:ExamService, public globalService: GlobalService, private modalService: NgbModal, private localService: LocalService, private pollingService: PollingService) {
   }
   ngOnDestroy(): void {
     this.isSubscriped = false;
@@ -57,7 +57,9 @@ export class MyTestsComponent implements OnInit, OnDestroy {
     this.loadExams();
     //this.checkExamsIfToday();
     this.selectedExam = Number.parseInt(this.localService.getData("selectedExamId")!);
-    this.getExamById(this.selectedExam);
+    if(this.localService.getData("selectedExamId")! != null){
+      this.getExamById(this.selectedExam);
+    }
   }
 
   setExamId(examId: number) {
@@ -110,13 +112,13 @@ export class MyTestsComponent implements OnInit, OnDestroy {
           .subscribe((x) => {
             this.examService.getExamsByExaminer(Number(this.localService.getData("examinerId"))).subscribe({
               next: data => {
-                this.exams = data;                
-              }, 
+                this.exams = data;
+              },
               error: (error) => {alert("Fehler beim Laden der Examen: "+error.message);}
             });
           });
         }
-      }, 
+      },
       error: (error) => {alert("Fehler beim Laden der Examiner: "+error.message);}
     });
   }
@@ -132,7 +134,7 @@ export class MyTestsComponent implements OnInit, OnDestroy {
         if(this.exams.length >= 1){
           this.setExamId(this.exams[1].id);
         }
-      }, 
+      },
       error: (error) => {alert("Fehler beim Löschen des Exams: "+error.message);}
     });
   }

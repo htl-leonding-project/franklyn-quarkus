@@ -77,4 +77,12 @@ public class ExamineeRepository implements PanacheRepository<Examinee> {
     public List<Examinee> listAllOrdered() {
         return this.listAll(Sort.by("lastName").and("firstName"));
     }
+
+    public List<Examinee> getAllByExam(String examId) {
+        var query = this.getEntityManager().createQuery(
+                        "select e from Examinee e where e.exam.id = :id",
+                        Examinee.class
+                ).setParameter("id", examId);
+        return query.getResultList();
+    }
 }

@@ -73,8 +73,10 @@ export class ScreenshotsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadStudents();
-    this.loadExam();
-    this.currentScreenshot = this.screenshots[0];
+    if(this.localService.getData("selectedExamId")!= null){
+      this.loadExam();
+      this.currentScreenshot = this.screenshots[0];
+    }
   }
 
   showFullScreen(index: number) {
