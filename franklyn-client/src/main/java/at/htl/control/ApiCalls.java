@@ -3,8 +3,12 @@ package at.htl.control;
 import at.htl.boundary.ExamineeService;
 import at.htl.boundary.ImageService;
 import io.quarkus.logging.Log;
+import nu.pattern.OpenCV;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.imgscalr.Scalr;
+import org.opencv.core.*;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 import org.quartz.*;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.TriggerBuilder;
@@ -28,15 +32,19 @@ public class ApiCalls {
     @Inject
     @RestClient
     ExamineeService examineeService;
-    private String firstName = "";
-    private String lastName = "";
+    private String firstName = "max";
+    private String lastName = "muster";
     private Long id = -1L;
+
+    private static String mainFramePath = "";
     private String enrollOption = "";
     Scanner sc = new Scanner(System.in);
 
     private boolean authenticated = false;
 
-    private int interval = 0;
+    private static int countOfImages = 0;
+
+    private int interval = 12;
 
     @Inject
     Scheduler scheduler;
@@ -45,31 +53,62 @@ public class ApiCalls {
      * send screenshot to backend
      */
     public void sendScreenshots() {
-        if (authenticated) {
-            try {
-                Robot robot = new Robot();
-                String fileExt = "png";
-                String localDateTime = LocalDateTime.now().toString()
-                        .replace(':', '-')
-                        .replace(".", "-");
-                String fileName = localDateTime + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
-                Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-                BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
-                BufferedImage newImg = Scalr.resize(
-                        screenFullImage,
-                        1280,
-                        720);
-                File newFile = new File(fileName);
-                ImageIO.write(newImg, fileExt, newFile);
+        try {
+            OpenCV.loadLocally();
+            Robot robot = new Robot();
+            String fileExt = "png";
+            String localDateTime = LocalDateTime.now().toString()
+                    .replace(':', '-')
+                    .replace(".", "-");
+            String fileName = ++countOfImages + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
-                imageService.uploadFile(newFile, fileName);
-                newFile.delete();
-            } catch (AWTException | IOException ex) {
-                System.err.println(ex);
+            Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+            BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+            BufferedImage newImg = Scalr.resize(
+                    screenFullImage,
+                    1280,
+                    720);
+            File newFile = new File(fileName);
+            System.out.println(newFile.getAbsoluteFile());
+            ImageIO.write(newImg, fileExt, newFile);
+            if (mainFramePath.length() == 0) {
+                mainFramePath = newFile.getAbsolutePath();
 
             }
+            if (countOfImages >= 2) {
+                System.out.println("Difference between main and " + countOfImages);
+                Mat image1 = Imgcodecs.imread(mainFramePath);
+                Mat image2 = Imgcodecs.imread(newFile.getAbsolutePath());
+
+
+
+                Mat difference = new Mat();
+                Core.absdiff(image1, image2, difference);
+
+
+
+                newFile.delete();
+                String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
+                        "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
+                Imgcodecs.imwrite(currentWorkingDir, difference);
+
+
+
+
+
+
+
+
+
+            }
+            //imageService.uploadFile(newFile, fileName);
+            //newFile.delete();
+        } catch (AWTException | IOException ex) {
+            System.err.println(ex);
+
         }
+
     }
 
     /***
@@ -98,15 +137,14 @@ public class ApiCalls {
 
                 if (enrollOption.equalsIgnoreCase("Y")) {
                     response = executeEnrollAgainService(id, firstName, lastName);
-                }
-                else if(enrollOption.equalsIgnoreCase("N")){
+                } else if (enrollOption.equalsIgnoreCase("N")) {
                     response = -100L;
                 }
 
             }
         } while (response == -1L);
 
-        if(response != -100L){
+        if (response != -100L) {
             authenticated = true;
         }
         return response;
@@ -181,7 +219,7 @@ public class ApiCalls {
                     .startNow()
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
-                                    .withIntervalInSeconds(interval)
+                                    .withIntervalInSeconds(5)
                                     .repeatForever())
                     .build();
 

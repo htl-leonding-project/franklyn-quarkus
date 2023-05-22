@@ -24,14 +24,14 @@ public class JavaMain implements QuarkusApplication {
                 "     \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|  \\__\\___/  |_|  |_|  \\__,_|_| |_|_|\\_\\_|\\__, |_| |_|____/(_)\n" +
                 "                                                                                      __/ |              \n" +
                 "                                                                                     |___/               ");
-        Long id = apiCalls.enterPIN();                      // get ExamId
-        Long code = apiCalls.enterName(id.toString());      // get ExamineeId
+       // Long id = apiCalls.enterPIN();                      // get ExamId
+        //Long code = apiCalls.enterName(id.toString());      // get ExamineeId
         System.out.println("Do NOT close this window!");
         System.out.println("Good Luck!");
-        if(code == -100L){                                  // exit if student declines to enroll again
-            return 1;
-        }
-        apiCalls.getIntervall(id.toString());               // get intervall for Screenshots
+        //if(code == -100L){                                  // exit if student declines to enroll again
+        //    return 1;
+        //}
+        //apiCalls.getIntervall(id.toString());               // get intervall for Screenshots
         apiCalls.setScheduler();                            // set Scheduler adjusted to the intervall
         Quarkus.waitForExit();
         return 0;
