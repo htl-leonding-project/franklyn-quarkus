@@ -710,7 +710,7 @@ include::plantuml/classDiagram_before.puml[]
 include::plantuml/classDiagram.puml[]
 ----
 
-== 2023-16-05
+== 2023-05-16
 
 * Bezeichnung Franklyn: "Ist ein Softwaresystem, welches in periodischen Einsatzzwecken verwendet wird."
 * IstArchitektur = Architektur
@@ -783,7 +783,7 @@ client soll Bufferfunktion verwenden
 
 
 
-== 2023-23-05
+== 2023-05-23
 
 * Überarbeitung des Datenmodells
 
