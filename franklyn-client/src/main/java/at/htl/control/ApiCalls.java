@@ -55,6 +55,7 @@ public class ApiCalls {
     public void sendScreenshots() {
 
         try {
+            System.out.println(mainFramePath + " is the main frame");
             OpenCV.loadLocally();
             Robot robot = new Robot();
             String fileExt = "png";
@@ -74,6 +75,7 @@ public class ApiCalls {
             ImageIO.write(newImg, fileExt, newFile);
             if (mainFramePath.length() == 0) {
                 mainFramePath = newFile.getAbsolutePath();
+                return;
 
             }
             if (countOfImages >= 2) {
@@ -82,24 +84,32 @@ public class ApiCalls {
                 Mat image2 = Imgcodecs.imread(newFile.getAbsolutePath());
 
 
-
                 Mat difference = new Mat();
                 Core.absdiff(image1, image2, difference);
 
 
-
                 newFile.delete();
-                String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
-                        "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
-                Imgcodecs.imwrite(currentWorkingDir, difference);
+                if (!difference.empty()) {
+                    var grayDifference = new Mat();
+                    Imgproc.cvtColor(difference, grayDifference, Imgproc.COLOR_BGR2GRAY);
+                    var totalPixels = grayDifference.cols() * grayDifference.rows();
+                    var nonZeroPixels = Core.countNonZero(grayDifference);
 
+                    var differencePercentage = (double) nonZeroPixels / totalPixels * 100;
+                    System.out.println(differencePercentage);
 
+                    if (differencePercentage >= 3) {
+                        String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
+                                "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
+                        Imgcodecs.imwrite(currentWorkingDir, difference);
+                    }
 
+                    if (differencePercentage >= 20) {
+                        this.mainFramePath = "";
 
+                    }
 
-
-
-
+                }
 
             }
             //imageService.uploadFile(newFile, fileName);
