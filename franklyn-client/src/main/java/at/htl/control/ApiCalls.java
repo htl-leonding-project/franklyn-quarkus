@@ -98,11 +98,11 @@ public class ApiCalls {
                     var differencePercentage = (double) nonZeroPixels / totalPixels * 100;
                     System.out.println(differencePercentage);
 
-                    if (differencePercentage >= 3) {
-                        String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
-                                "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
-                        Imgcodecs.imwrite(currentWorkingDir, difference);
-                    }
+
+                    String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
+                            "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
+                    Imgcodecs.imwrite(currentWorkingDir, difference);
+
 
                     if (differencePercentage >= 20) {
                         this.mainFramePath = "";
