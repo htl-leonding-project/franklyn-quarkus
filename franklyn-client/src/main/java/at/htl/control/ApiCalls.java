@@ -97,9 +97,9 @@ public class ApiCalls {
                     if (differenceInPercentage >= 30) {
                         alphaFramePath = newFile.getAbsolutePath();
                     } else {
-                        var mask = createMask(difference);
+
                         var result = new Mat();
-                        image2.copyTo(result, mask);
+                        image2.copyTo(result, difference);
                         String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
                                 "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
                         result = convertBlackPixelsToTransparentPixels(result);
@@ -159,12 +159,7 @@ public class ApiCalls {
     }
 
 
-    private Mat createMask(Mat image) {
-        var mask = new Mat();
-        double threshold = 1;
-        Imgproc.threshold(image, mask, threshold, 255, Imgproc.THRESH_BINARY);
-        return mask;
-    }
+
 
     /***
      * set enroll data
