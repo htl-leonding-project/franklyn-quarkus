@@ -35,7 +35,7 @@ public class ApiCalls {
     private String lastName = "muster";
     private Long id = -1L;
 
-    private static String mainFramePath = "";
+    private static String alphaFramePath = "";
     private String enrollOption = "";
     Scanner sc = new Scanner(System.in);
 
@@ -54,7 +54,7 @@ public class ApiCalls {
     public void sendScreenshots() {
 
         try {
-            System.out.println(mainFramePath + " is the main frame");
+            System.out.println(alphaFramePath + " is the main frame");
             OpenCV.loadLocally();
             Robot robot = new Robot();
             String fileExt = "png";
@@ -72,8 +72,8 @@ public class ApiCalls {
             File newFile = new File(fileName);
             System.out.println(newFile.getAbsoluteFile());
             ImageIO.write(newImg, fileExt, newFile);
-            if (mainFramePath.length() == 0) {
-                mainFramePath = newFile.getAbsolutePath();
+            if (alphaFramePath.length() == 0) {
+                alphaFramePath = newFile.getAbsolutePath();
                 return;
 
             }
@@ -81,21 +81,21 @@ public class ApiCalls {
                 System.out.println("Difference between main and " + countOfImages);
 
 
-                var image1 = Imgcodecs.imread(mainFramePath);
+                var image1 = Imgcodecs.imread(alphaFramePath);
                 var image2 = Imgcodecs.imread(newFile.getAbsolutePath());
 
                 var image1Gray = convertColoredImagesToGray(image1);
                 var image2Gray = convertColoredImagesToGray(image2);
 
                 Mat difference = new Mat();
-                Core.absdiff(image1Gray, image2Gray, difference);
+                Core.compare(image1Gray,image2Gray,difference,Core.CMP_NE);
 
 
                 if (!difference.empty()) {
 
                     var differenceInPercentage = getDifferenceInPercentage(difference);
-                    if (differenceInPercentage >= 20) {
-                        mainFramePath = newFile.getAbsolutePath();
+                    if (differenceInPercentage >= 30) {
+                        alphaFramePath = newFile.getAbsolutePath();
                     } else {
                         var mask = createMask(difference);
                         var result = new Mat();
@@ -161,7 +161,7 @@ public class ApiCalls {
 
     private Mat createMask(Mat image) {
         var mask = new Mat();
-        double threshold = 30;
+        double threshold = 1;
         Imgproc.threshold(image, mask, threshold, 255, Imgproc.THRESH_BINARY);
         return mask;
     }
