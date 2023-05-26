@@ -710,6 +710,90 @@ include::plantuml/classDiagram_before.puml[]
 include::plantuml/classDiagram.puml[]
 ----
 
+== 2023-05-16
+
+* Bezeichnung Franklyn: "Ist ein Softwaresystem, welches in periodischen Einsatzzwecken verwendet wird."
+* IstArchitektur = Architektur
+* Folie mit Generation. javafx, node, mongodb und jetzt Quarkus backend und client
+* Ich möchte eine Ist-Architektur: ich habe einen Client und der macht einen Airsync. Zeige was er synct?
+
+* Clients cachen und Server kommuniziert
+* Client hält bereit
+* Server geht durch und synchronisiert die Clients
+
+
+* wir haben ein Netzwerk, irgend ein Rechner wird gestartet mit Docker, oder fixer server dann habe ich meine clients und gehen darauf
+client soll Bufferfunktion verwenden
+
+* Temp ist die Lösung
+* statt Service, Tempfile
+* im Tempfile werden Sceenshots zusammengefügt
+* im Temp cachen
+
+* SchoolClassUser= internUser
+* Classes = UserGroup
+* oder UserGroup kann eine andere UserGroup enthalten
+* SchoolClasses = ExamineeGroup
+* Screenshot ist 1 Exam und 1 User zugeordnet
+
+* Es gibt Rollen: user, examinees, admin
+* Dropdown mit alle Benutzergruppen
+
+* alte Tests automatisch löschen, wenn kein Speicher mehr vorhanden ist
+
+* eventuelle Erweiterung:
+** permission
+** keycloack: Die Rechte im Webuntis holen
+** keycloak nur für webuntis
+** mit PinCode
+
+* einfach registrieren ohne Test
+* vom webuntis weg
+* admin kann Tests und klassen erstellen nach Registritation: nach Anmeldung-> datum und uhrzeit wann Test ist
+* kranke/r Schüler/in bekommt Pincode geschickt und kann auch teilnehmen
+
+
+* wenn keine Schule Franklyn verwendet: mit Pincode, dann Username und Email Abfrage und wenn dieser bereits vorhanden ist, dann werden diese Daten verwendet. ansonsten wird User angelegt
+
+
+* es gibt die Permanenten(Schulklassen) und die Temporären
+* Temporären werden gleich gelöscht (außer im Detail gibt man die Option an: wird gelöscht: ja/nein)
+
+* Fehlende werden angezeigt: rot
+* einmal angemeldet: gelb
+* nicht angemeldet: rot
+
+
+* Ergänzung von IP-Adresse:
+** wird bei Screenshots angezeigt
+** warnings anzeigen
+- ip-adresse und user soll in warnings stehen bei Wechsel
+* in seassion soll die ip- und mac-adresse drinnen sein
+* wenn ich drücke "Test teilnehmen", dann soll die Seassion und der Hostname gestartet werden
+* 2 seassions: Die userseassion darf nicht wechseln sonst verdächtig
+
+
+.Erste Phase:
+*Franklynplayer*:
+
+* Änderung zu jedem Bild Anzahl der Codezeilen speichern
+* flexibel machen: Werte mit speichern und für jede zeile ein Wert mit divs
+* mvp: neues Verfahren mit divs.
+* Screenshots als Film downloaden
+
+
+
+== 2023-05-23
+
+* Überarbeitung des Datenmodells
+
+* Versuchen ob 60 mal pro Minute erstellt werden
+
+* Dokumentation des zukünftigen Codes
+
+
+
+
 
 
 
