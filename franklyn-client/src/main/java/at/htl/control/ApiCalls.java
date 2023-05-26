@@ -2,7 +2,6 @@ package at.htl.control;
 
 import at.htl.boundary.ExamineeService;
 import at.htl.boundary.ImageService;
-import io.quarkus.logging.Log;
 import nu.pattern.OpenCV;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.imgscalr.Scalr;
@@ -80,33 +79,34 @@ public class ApiCalls {
             }
             if (countOfImages >= 2) {
                 System.out.println("Difference between main and " + countOfImages);
-                Mat image1 = Imgcodecs.imread(mainFramePath);
-                Mat image2 = Imgcodecs.imread(newFile.getAbsolutePath());
+
+
+                var image1 = Imgcodecs.imread(mainFramePath);
+                var image2 = Imgcodecs.imread(newFile.getAbsolutePath());
+
 
 
                 Mat difference = new Mat();
-                Core.absdiff(image1, image2, difference);
+                Core.absdiff(image2, image1, difference);
 
 
-                newFile.delete();
                 if (!difference.empty()) {
                     var grayDifference = new Mat();
                     Imgproc.cvtColor(difference, grayDifference, Imgproc.COLOR_BGR2GRAY);
-                    var totalPixels = grayDifference.cols() * grayDifference.rows();
+                    var totalPixels = difference.cols() * difference.rows();
                     var nonZeroPixels = Core.countNonZero(grayDifference);
 
                     var differencePercentage = (double) nonZeroPixels / totalPixels * 100;
                     System.out.println(differencePercentage);
 
 
-                    String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
-                            "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
-                    Imgcodecs.imwrite(currentWorkingDir, difference);
-
-
                     if (differencePercentage >= 20) {
-                        this.mainFramePath = "";
+                        mainFramePath = newFile.getAbsolutePath();
+                    } else {
+                        String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
+                                "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
+                        Imgcodecs.imwrite(currentWorkingDir, difference);
                     }
 
                 }
@@ -229,7 +229,7 @@ public class ApiCalls {
                     .startNow()
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
-                                    .withIntervalInSeconds(5)
+                                    .withIntervalInSeconds(1)
                                     .repeatForever())
                     .build();
 
