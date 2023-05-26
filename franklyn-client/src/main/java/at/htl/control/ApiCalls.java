@@ -84,29 +84,27 @@ public class ApiCalls {
                 var image1 = Imgcodecs.imread(mainFramePath);
                 var image2 = Imgcodecs.imread(newFile.getAbsolutePath());
 
-
+                var image1Gray = convertColoredImagesToGray(image1);
+                var image2Gray = convertColoredImagesToGray(image2);
 
                 Mat difference = new Mat();
-                Core.absdiff(image2, image1, difference);
+                Core.absdiff(image1Gray, image2Gray, difference);
 
 
                 if (!difference.empty()) {
-                    var grayDifference = new Mat();
-                    Imgproc.cvtColor(difference, grayDifference, Imgproc.COLOR_BGR2GRAY);
-                    var totalPixels = difference.cols() * difference.rows();
-                    var nonZeroPixels = Core.countNonZero(grayDifference);
 
-                    var differencePercentage = (double) nonZeroPixels / totalPixels * 100;
-                    System.out.println(differencePercentage);
-
-
-                    if (differencePercentage >= 20) {
+                    var differenceInPercentage = getDifferenceInPercentage(difference);
+                    if (differenceInPercentage >= 20) {
                         mainFramePath = newFile.getAbsolutePath();
                     } else {
+                        var mask = createMask(difference);
+                        var result = new Mat();
+                        image2.copyTo(result, mask);
                         String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
                                 "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
+                        result = convertBlackPixelsToTransparentPixels(result);
 
-                        Imgcodecs.imwrite(currentWorkingDir, difference);
+                        Imgcodecs.imwrite(currentWorkingDir, result);
                     }
 
                 }
@@ -119,6 +117,53 @@ public class ApiCalls {
 
         }
 
+    }
+
+    private Mat convertColoredImagesToGray(Mat coloredImage) {
+        var grayDifference = new Mat();
+        Imgproc.cvtColor(coloredImage, grayDifference, Imgproc.COLOR_RGB2GRAY);
+        return grayDifference;
+    }
+
+    private double getDifferenceInPercentage(Mat grayDifference) {
+        //var grayDifference = convertColoredImagesToGray(coloredDifferences);
+        var totalPixels = grayDifference.cols() * grayDifference.rows();
+        var nonZeroPixels = Core.countNonZero(grayDifference);
+
+        var differenceInPercentage = (double) nonZeroPixels / totalPixels * 100;
+        System.out.println(differenceInPercentage);
+        return differenceInPercentage;
+
+    }
+
+    private Mat convertBlackPixelsToTransparentPixels(Mat coloredDifferences) {
+        var mask = Mat.zeros(coloredDifferences.size(), CvType.CV_8UC4);
+
+        for (int row = 0; row < mask.rows(); row++) {
+            for (int column = 0; column < mask.cols(); column++) {
+                var pixelRGB = coloredDifferences.get(row, column);
+                var red = pixelRGB[0];
+                var green = pixelRGB[1];
+                var blue = pixelRGB[2];
+
+                double[] newPixelColors;
+                if (green == 0 && red == 0 && blue == 0) {
+                    newPixelColors = new double[]{0, 0, 0, 0};
+                } else {
+                    newPixelColors = new double[]{red, green, blue, 255};
+                }
+                mask.put(row, column, newPixelColors);
+            }
+        }
+        return mask;
+    }
+
+
+    private Mat createMask(Mat image) {
+        var mask = new Mat();
+        double threshold = 30;
+        Imgproc.threshold(image, mask, threshold, 255, Imgproc.THRESH_BINARY);
+        return mask;
     }
 
     /***
