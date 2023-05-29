@@ -842,10 +842,38 @@ include::plantuml/classDiagram.puml[]
 
 == 2023-05-23
 
+.Teilnehmer
+[%collapsible]
+====
+|===
+|Vorname |Nachname |Klasse
+
+|
+| Prof. Stuetz
+|
+
+| Mona
+| Angerer
+| 4BHITM
+
+| Al Sabagh
+| Abdulrahman
+| 4BHITM
+
+| Peter
+| Klose
+| 4BHITM
+
+| David
+| Thaller
+| 4BHITM
+|===
+====
+
+=== Besprochene Themen
+
 * Überarbeitung des Datenmodells
-
 * Versuchen ob 60 mal pro Minute erstellt werden
-
 * Dokumentation des zukünftigen Codes
 
 
