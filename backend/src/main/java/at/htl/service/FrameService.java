@@ -16,8 +16,8 @@ public class FrameService {
             File alphaFramesDir = new File(ALPHA_FRAMES_DIR);
             alphaFramesDir.mkdirs();
 
-
-            String filePath = ALPHA_FRAMES_DIR + generateFileName();
+            String fileName = generateFileName();
+            String filePath = ALPHA_FRAMES_DIR + fileName;
 
             File imageFile = new File(filePath);
             // Save image
