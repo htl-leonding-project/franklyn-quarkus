@@ -1,0 +1,98 @@
+= Franklyn-Funktionsweise
+Franklyn3 Dev Team
+29.05.2023: Dokumentation für Franklyn3
+ifndef::imagesdir[:imagesdir: images]
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== Screenshots
+
+=== Aufnehmen
+
+Die bilder werden in der APICalls Klasse im Client erstellt.
+
+.ApiCalls.java
+[source,java]
+----
+public void sendScreenshots() {
+    ...
+    OpenCV.loadLocally();
+
+    Robot robot = new Robot();
+
+    String fileExt = "png";
+    String localDateTime = LocalDateTime.now().toString()
+        .replace(':', '-')
+        .replace(".", "-");
+    String fileName = ++countOfImages +
+        "_" + lastName +
+        "_" + firstName +
+        "_" + id +
+        "." + fileExt;
+
+    Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+
+    BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+    BufferedImage newImg = Scalr
+        .resize(screenFullImage,1280,720);
+
+    File newFile = new File(fileName);
+    ImageIO.write(newImg, fileExt, newFile);
+    ...
+}
+----
+
+=== Verarbeiten (Differenzberechnung)
+
+Die bilder werden in der APICalls Klasse im Client erstellt.
+
+.ApiCalls.java
+[source,java]
+----
+public void sendScreenshots() {
+    ...
+    var image1 = Imgcodecs.imread(alphaFramePath);
+    var image2 = Imgcodecs.imread(newFile.getAbsolutePath());
+
+    var image1Gray = convertColoredImagesToGray(image1);
+    var image2Gray = convertColoredImagesToGray(image2);
+
+    Mat difference = new Mat();
+    Core.compare(image1Gray,image2Gray,difference,Core.CMP_NE);
+
+
+    if (!difference.empty()) {
+
+        var differenceInPercentage = getDifferenceInPercentage(difference);
+        if (differenceInPercentage >= 30) {
+            alphaFramePath = newFile.getAbsolutePath();
+        } else {
+
+        var result = new Mat();
+        image2.copyTo(result, difference);
+        String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
+        "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
+        result = convertBlackPixelsToTransparentPixels(result);
+
+        Imgcodecs.imwrite(currentWorkingDir, result);
+        }
+    }
+    ...
+}
+----
+
+=== Zusammensetzten
+
+...
+
+=== Speichern
+
+...
