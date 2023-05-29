@@ -1,13 +1,14 @@
 = Franklyn-Datenblatt
-Melcher Tamara, Tran Michael
-23.Juni 2022: franklyn-quarkus
+Franklyn 3 Dev-Team
+29.Mai 2023: franklyn-quarkus
 :toc:
 :icons: font
 :url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
 
-== Wer ist dabei?
+== Team
 
-.Programmierer
+=== Gen 1: Franklyn 3
+
 |===
 |Vorname |Nachname |Klasse
 
@@ -18,6 +19,28 @@ Melcher Tamara, Tran Michael
 | Michael
 | Tran
 | 5AHIF
+|===
+
+=== Gen 2: Franklyn 3 Relaunch
+
+|===
+|Vorname |Nachname |Klasse
+
+| Mona
+| Angerer
+| 4BHITM
+
+| Al Sabagh
+| Abdulrahman
+| 4BHITM
+
+| Peter
+| Klose
+| 4BHITM
+
+| David
+| Thaller
+| 4BHITM
 |===
 
 
