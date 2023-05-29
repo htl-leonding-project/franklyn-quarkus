@@ -1,12 +1,12 @@
 package at.htl.entity.dto;
 
 import at.htl.entity.Exam;
-import at.htl.entity.Examinee;
+import at.htl.entity.User;
 
 public record ScreenshotDto(
         Long runningNo,
         Exam exam,
-        Examinee examinee,
+        User examinee,
         String screenshotName
 ) {
 }

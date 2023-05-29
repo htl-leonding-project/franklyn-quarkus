@@ -3,10 +3,7 @@ package at.htl.boundary;
 import at.htl.control.ExamRepository;
 import at.htl.control.ExamineeRepository;
 import at.htl.entity.Exam;
-import at.htl.entity.Examinee;
 import at.htl.entity.dto.ExamineeDto;
-import io.quarkus.logging.Log;
-import io.quarkus.panache.common.Sort;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;

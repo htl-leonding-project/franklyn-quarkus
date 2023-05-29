@@ -3,6 +3,7 @@ package at.htl.boundary;
 import at.htl.control.ExamRepository;
 import at.htl.control.ExamineeRepository;
 import at.htl.control.ScreenshotRepository;
+import at.htl.control.UserRepository;
 import at.htl.entity.*;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
@@ -34,7 +35,7 @@ public class ImageResource {
     ExamRepository examRepository;
 
     @Inject
-    ExamineeRepository examineeRepository;
+    UserRepository userRepository;
 
     @ConfigProperty(name = "PATHOFSCREENSHOT")
     String pathOfScreenshots;
@@ -76,10 +77,10 @@ public class ImageResource {
             //LOG.info(files[1]);
             //Exam exam = examRepository.findById(Long.valueOf(files[3]));
             examRepository.persist(exam);
-            Examinee examinee = examineeRepository.findByName(exam.id, fullPath[1], fullPath[2]);
+            User examinee = userRepository.findByName(exam.id, fullPath[1], fullPath[2]);
             examinee.isOnline = true;
             examinee.lastOnline = LocalDateTime.now();
-            examineeRepository.persist(examinee);
+            userRepository.persist(examinee);
             Screenshot screenshot = new Screenshot(
                     Timestamp.valueOf(LocalDateTime.now()),
                     cnt,

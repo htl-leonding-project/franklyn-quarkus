@@ -1,13 +1,11 @@
 package at.htl.control;
 
 import at.htl.entity.Exam;
-import at.htl.entity.Examinee;
-import at.htl.entity.Examiner;
+import at.htl.entity.User;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Parameters;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
@@ -64,7 +62,7 @@ public class ExamRepository implements PanacheRepository<Exam> {
     public void deleteExaminerFromExams(Long id) {
         var exams = this.listAll();
         for (Exam e : exams) {
-            for (Examiner ex : e.examiners) {
+            for (User ex : e.examiners) {
                 if (Objects.equals(ex.id, id) && !e.isDeleted) {
                     this.getEntityManager().remove(ex);
                 }
@@ -74,7 +72,7 @@ public class ExamRepository implements PanacheRepository<Exam> {
 
     public ArrayList<String> GetAllExaminersOfExam(Exam exam, Long adminId) {
         var examiners = new ArrayList<String>();
-        for (Examiner examiner : exam.examiners) {
+        for (User examiner : exam.examiners) {
             if (examiner.id != adminId) {
                 examiners.add(examiner.firstName + " " + examiner.lastName);
             }
@@ -84,8 +82,8 @@ public class ExamRepository implements PanacheRepository<Exam> {
 
     public ArrayList<String> GetAllSchoolClassesOfExam(Exam exam) {
         var schoolClasses = new ArrayList<String>();
-        if (exam.schoolClasses != null) {
-            for (var schoolClass : exam.schoolClasses) {
+        if (exam.userGroups != null) {
+            for (var schoolClass : exam.userGroups) {
                 schoolClasses.add(schoolClass.title);
             }
         }

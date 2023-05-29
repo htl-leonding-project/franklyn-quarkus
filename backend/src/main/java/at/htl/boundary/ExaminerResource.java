@@ -3,7 +3,6 @@ package at.htl.boundary;
 import at.htl.control.ExamRepository;
 import at.htl.control.ExaminerRepository;
 import at.htl.entity.Exam;
-import at.htl.entity.Examiner;
 import at.htl.entity.dto.ExaminerDto;
 import io.quarkus.logging.Log;
 
@@ -11,7 +10,6 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

@@ -27,11 +27,11 @@ class ExamTest {
         exam.endTime = LocalDateTime.of(2022, 3, 26, 13, 45);
         List<Examiner> examiners = new ArrayList<Examiner>();
         examiners.add(new Examiner("stuetz", "Thomas", "Stuetz", true));
-        List<SchoolClass> forms = new ArrayList<SchoolClass>();
-        forms.add(new SchoolClass("4AHIF", "2022"));
-        forms.add(new SchoolClass("3AHIF", "2021"));
+        List<UserGroup> forms = new ArrayList<UserGroup>();
+        forms.add(new UserGroup("4AHIF", "2022"));
+        forms.add(new UserGroup("3AHIF", "2021"));
         exam.examiners = examiners;
-        exam.schoolClasses = forms;
+        exam.userGroups = forms;
 
         assertEquals(1L, exam.id);
         assertNotEquals(2, exam.compression);
@@ -39,7 +39,7 @@ class ExamTest {
         assertTrue(exam.examiners.get(0).isAdmin);
         assertEquals(LocalDateTime.of(2022, 3, 26, 11, 45), exam.startTime);
         assertEquals(LocalDateTime.of(2022, 3, 26, 13, 45), exam.endTime);
-        assertEquals("4AHIF", exam.schoolClasses.get(0).title);
+        assertEquals("4AHIF", exam.userGroups.get(0).title);
 
     }
 }

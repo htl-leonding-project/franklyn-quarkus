@@ -4,6 +4,7 @@ import at.htl.control.ExamRepository;
 import at.htl.control.ExamineeRepository;
 import at.htl.control.ExaminerRepository;
 import at.htl.control.SchoolClassRepository;
+import at.htl.control.UserGroupRepository;
 import at.htl.entity.*;
 import at.htl.entity.dto.ExamDto;
 import at.htl.entity.dto.ExamUpdateDto;
@@ -34,7 +35,7 @@ public class ExamResource {
     @Inject
     ExamineeRepository examineeRepository;
     @Inject
-    SchoolClassRepository schoolClassRepository;
+    UserGroupRepository userGroupRepository;
 
     @GET
     @Transactional
@@ -141,11 +142,11 @@ public class ExamResource {
             }
         }
 
-        e.schoolClasses = new LinkedList<>();
+        e.userGroups = new LinkedList<>();
         for (String formId : exam.formIds()) {
-            SchoolClass form = schoolClassRepository.findById(Long.parseLong(formId));
+            UserGroup form = schoolClassRepository.findById(Long.parseLong(formId));
             if (form != null) {
-                e.schoolClasses.add(form);
+                e.userGroups.add(form);
                 form.exams.add(e);
             }
         }
@@ -192,7 +193,7 @@ public class ExamResource {
     public Exam updateExam(@PathParam("examId") Long examId, ExamUpdateDto updatedExam) {
         Exam exam = examRepository.findById(examId);
         List<Examiner> examiners = new ArrayList<>();
-        List<SchoolClass> schoolClasses = new ArrayList<>();
+        List<UserGroup> userGroups = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         if (exam == null)
@@ -203,14 +204,14 @@ public class ExamResource {
         }
 
         for (var form : updatedExam.formIds()) {
-            schoolClasses.add(schoolClassRepository.findById(Long.valueOf(form)));
+            userGroups.add(schoolClassRepository.findById(Long.valueOf(form)));
         }
 
         exam.title = updatedExam.title();
         exam.date = LocalDate.parse(updatedExam.date(), formatter);
         exam.interval = updatedExam.interval();
         exam.examiners = examiners;
-        exam.schoolClasses = schoolClasses;
+        exam.userGroups = userGroups;
 
         examRepository.persist(exam);
         return exam;

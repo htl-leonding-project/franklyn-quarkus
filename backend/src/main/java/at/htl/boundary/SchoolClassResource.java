@@ -3,7 +3,7 @@ package at.htl.boundary;
 import at.htl.control.ExamRepository;
 import at.htl.control.SchoolClassRepository;
 import at.htl.entity.Exam;
-import at.htl.entity.SchoolClass;
+import at.htl.entity.UserGroup;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -22,7 +22,7 @@ public class SchoolClassResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<SchoolClass> listAll() {
+    public List<UserGroup> listAll() {
         return schoolClassRepository.getAllSchoolClasses();
     }
 
@@ -33,7 +33,7 @@ public class SchoolClassResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("current")
-    public List<SchoolClass> getCurrentSchoolClass() {
+    public List<UserGroup> getCurrentSchoolClass() {
         return schoolClassRepository.getCurrentSchoolClass();
     }
 
@@ -44,7 +44,7 @@ public class SchoolClassResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("stats")
-    public List<SchoolClass> getStats(){
+    public List<UserGroup> getStats(){
         return schoolClassRepository.getStats();
     }
 
@@ -55,7 +55,7 @@ public class SchoolClassResource {
     @GET
     @Path("{title}/{year}")
     @Produces(MediaType.APPLICATION_JSON)
-    public SchoolClass getSchoolClassByTitleAndYear(
+    public UserGroup getSchoolClassByTitleAndYear(
             @PathParam("title") String title,
             @PathParam("year") String year
     ){
@@ -66,11 +66,11 @@ public class SchoolClassResource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public SchoolClass getSchoolClassById(@PathParam("id") String id) {
-        SchoolClass schoolClass = schoolClassRepository.findById(Long.parseLong(id));
-        if(schoolClass == null)
+    public UserGroup getSchoolClassById(@PathParam("id") String id) {
+        UserGroup userGroup = schoolClassRepository.findById(Long.parseLong(id));
+        if(userGroup == null)
             return null;
-        return schoolClass;
+        return userGroup;
     }
 
     /**
@@ -81,9 +81,9 @@ public class SchoolClassResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public SchoolClass addSchoolClass(SchoolClass schoolClass){
-        schoolClassRepository.getEntityManager().merge(schoolClass);
-        return schoolClass;
+    public UserGroup addSchoolClass(UserGroup userGroup){
+        schoolClassRepository.getEntityManager().merge(userGroup);
+        return userGroup;
     }
 
 
@@ -91,8 +91,8 @@ public class SchoolClassResource {
     @Path("exam/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public List<SchoolClass> getExaminerByExamId(@PathParam("id") String id) {
+    public List<UserGroup> getExaminerByExamId(@PathParam("id") String id) {
         Exam exam = examRepository.findById(Long.parseLong(id));
-        return exam.schoolClasses;
+        return exam.userGroups;
     }
 }

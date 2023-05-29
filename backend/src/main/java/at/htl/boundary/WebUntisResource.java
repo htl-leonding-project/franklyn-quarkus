@@ -1,9 +1,8 @@
 package at.htl.boundary;
 
 import at.htl.control.ExaminerRepository;
-import at.htl.entity.Examiner;
+import at.htl.entity.User;
 import at.htl.service.WebUntisService;
-import io.quarkus.logging.Log;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -24,7 +23,7 @@ public class WebUntisResource {
     public boolean authUser(@PathParam("userName") String userName, String password){
         boolean response = webUntisService.authenticateUser(userName, password);
         userName = userName.toUpperCase();
-        Examiner examiner = examinerRepository.findByUsername(userName);
+        User examiner = examinerRepository.findByUsername(userName);
         if(response && examiner != null){
             return true;
         }

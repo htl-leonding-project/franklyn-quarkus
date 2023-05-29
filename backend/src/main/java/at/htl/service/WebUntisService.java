@@ -6,8 +6,7 @@ import javax.transaction.Transactional;
 
 import at.htl.control.ExaminerRepository;
 import at.htl.control.SchoolClassRepository;
-import at.htl.entity.Examiner;
-import at.htl.entity.SchoolClass;
+import at.htl.entity.UserGroup;
 import io.quarkus.logging.Log;
 import org.bytedream.untis4j.Session;
 import org.bytedream.untis4j.responseObjects.Classes;
@@ -16,7 +15,6 @@ import org.bytedream.untis4j.responseObjects.Teachers;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.List;
 import java.util.Objects;
 
@@ -122,17 +120,17 @@ public class WebUntisService {
     public void persistSchoolClasses(Classes schoolClasses, SchoolYears.SchoolYearObject currentSchoolYear){
         String name= "";
         boolean alreadyExists = false;
-        List<SchoolClass> scs = schoolClassRepository.listAll();
+        List<UserGroup> scs = schoolClassRepository.listAll();
         for (var form : schoolClasses)  {
-            for (SchoolClass sc : scs) {
+            for (UserGroup sc : scs) {
                 if(Objects.equals(sc.title, form.getName()) && Objects.equals(sc.year, currentSchoolYear.getName()))
                     alreadyExists = true;
             }
             if(!alreadyExists){
-                SchoolClass schoolClass = new SchoolClass();
-                schoolClass.title = form.getName();
-                schoolClass.year = currentSchoolYear.getName();
-                schoolClassRepository.persist(schoolClass);
+                UserGroup userGroup = new UserGroup();
+                userGroup.title = form.getName();
+                userGroup.year = currentSchoolYear.getName();
+                schoolClassRepository.persist(userGroup);
             }
             alreadyExists = false;
         }

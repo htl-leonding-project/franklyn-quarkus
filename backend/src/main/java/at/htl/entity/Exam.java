@@ -66,7 +66,7 @@ public class Exam extends PanacheEntityBase {
     @Size(min = 1)
     @JoinColumn(name = "E_FORM_IDS")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    public List<SchoolClass> schoolClasses;
+    public List<UserGroup> userGroups;
 
     @NotNull
     @ConfigProperty(defaultValue = "5")
@@ -76,7 +76,7 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_EXAMINEES")
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    public List<Examinee> examinees;
+    public List<User> examinees;
 
     @Column(name = "E_ADMIN_ID")
     public Long adminId;
@@ -100,7 +100,7 @@ public class Exam extends PanacheEntityBase {
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"ER_ID", "E_ID"})
         })
-    public List<Examiner> examiners = new ArrayList<>();
+    public List<User> examiners = new ArrayList<>();
 
     @Column(name = "E_IS_DELETED")
     public boolean isDeleted = false;
@@ -149,12 +149,12 @@ public class Exam extends PanacheEntityBase {
     public Exam(String pin,
                 String title,
                 ExamState state,
-                List<SchoolClass> schoolClassIds,
+                List<UserGroup> userGroupIds,
                 LocalDate date,
                 LocalDateTime startTime,
                 LocalDateTime endTime,
                 int interval,
-                List<Examiner> examiners) {
+                List<User> examiners) {
         this(pin, title, state, date, startTime, endTime, interval);
         this.examiners = examiners;
     }

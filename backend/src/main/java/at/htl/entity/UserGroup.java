@@ -10,42 +10,46 @@ import java.util.List;
 
 @NamedQueries({
         @NamedQuery(
-                name = "SchoolClass.getStats",
+                name = "UserGroup.getStats",
                 query = "select new at.htl.entity.dto.SchoolClassDto(sc.id, sc.title, count(sc.title)) " +
-                        "from SchoolClass sc " +
+                        "from UserGroup sc " +
                         "where sc.year = ?1 " +
                         "group by sc.id, sc.title"
         ),
         @NamedQuery(
-                name = "SchoolClass.getByTitleAndYear",
-                query = "select sc from SchoolClass sc where sc.title = ?1 and sc.year = ?2"
+                name = "UserGroup.getByTitleAndYear",
+                query = "select sc from UserGroup sc where sc.title = ?1 and sc.year = ?2"
         )
 })
 
 @Entity
-@Table(name = "F_SCHOOL_CLASS")
-public class SchoolClass extends PanacheEntityBase {
+@Table(name = "F_USER_GROUP")
+public class UserGroup extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SC_ID")
+    @Column(name = "UG_ID")
     public Long id;
 
-    @Column(name = "SC_TITLE")
+    @Column(name = "UG_TITLE")
     public String title;
 
-    @Column(name = "SC_YEAR")
+    @Column(name = "UG_YEAR")
     public String year;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @JoinTable
-    @JsonIgnore
-    public List<Exam> exams;
+    @Column(name = "UG_STATUS")
+    @Enumerated(EnumType.STRING)
+    public UserGroupType userGroupType;
 
-    public SchoolClass() {
+//    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+//    @Fetch(value = FetchMode.SUBSELECT)
+//    @JoinTable
+//    @JsonIgnore
+//    public List<Exam> exams;
+
+    public UserGroup() {
     }
 
-    public SchoolClass(String title, String year) {
+    public UserGroup(String title, String year) {
         this.title = title;
         this.year = year;
     }

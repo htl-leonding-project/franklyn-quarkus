@@ -1,16 +1,13 @@
 package at.htl.control;
 
-import at.htl.entity.Examinee;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.logging.Log;
-import io.quarkus.panache.common.Parameters;
 import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.List;
 
 

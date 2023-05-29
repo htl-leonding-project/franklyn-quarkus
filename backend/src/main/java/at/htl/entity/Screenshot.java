@@ -28,7 +28,7 @@ import java.sql.Timestamp;
 public class Screenshot extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ED_ID")
+    @Column(name = "S_ID")
     public Long id;
 
     @NotNull
@@ -41,9 +41,9 @@ public class Screenshot extends PanacheEntityBase {
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "S_EXAMINEE_ID")
+    @JoinColumn(name = "S_USER_ID")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    public Examinee examinee;
+    public User user;
 
 
     @NotNull
@@ -59,16 +59,16 @@ public class Screenshot extends PanacheEntityBase {
     public Screenshot() {
     }
 
-    public Screenshot(Timestamp timestamp, Long runningNo, Examinee examinee, String pathOfScreenshot) {
+    public Screenshot(Timestamp timestamp, Long runningNo, User user, String pathOfScreenshot) {
         this.timestamp = timestamp;
         this.runningNo = runningNo;
-        this.examinee = examinee;
+        this.user = user;
         this.pathOfScreenshot = pathOfScreenshot;
     }
 
-    public Screenshot(Timestamp timestamp, Long runningNo, Examinee examinee,
+    public Screenshot(Timestamp timestamp, Long runningNo, User user,
                       String pathOfScreenshot, Exam exam) {
-        this(timestamp, runningNo, examinee, pathOfScreenshot);
+        this(timestamp, runningNo, user, pathOfScreenshot);
         this.exam = exam;
     }
 
@@ -85,6 +85,6 @@ public class Screenshot extends PanacheEntityBase {
 
     @Override
     public String toString() {
-        return String.format(this.examinee.lastName + ": " + this.runningNo + ", " + this.pathOfScreenshot);
+        return String.format(this.user.lastName + ": " + this.runningNo + ", " + this.pathOfScreenshot);
     }
 }

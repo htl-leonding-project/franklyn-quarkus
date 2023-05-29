@@ -20,10 +20,10 @@ public class InitBean {
     ExamineeRepository examineeRepository;
 
     @Inject
-    ExaminerRepository examinerRepository;
+    UserRepository userRepository;
 
     @Inject
-    SchoolClassRepository schoolClassRepository;
+    UserGroupRepository userGroupRepository;
 
     @Inject
     ExamRepository examRepository;
@@ -37,10 +37,11 @@ public class InitBean {
 
     @Transactional
     public void init(@Observes StartupEvent event){
-        List<Examiner> examiners = new ArrayList<>();
-        Examiner examiner1 = new Examiner("tmelch", "Tamara", "Melcher", true);
-        Examiner examiner2 = new Examiner("mtran", "Michael", "Tran", true);
-        Examiner examiner3 = new Examiner("tstuet", "Thomas", "Stuetz", true);
+        /*
+        List<User> examiners = new ArrayList<>();
+        User examiner1 = new User("Tamara", "Melcher", true);
+        User examiner2 = new User("Michael", "Tran", true);
+        User examiner3 = new User("Thomas", "Stuetz", true);
         examiners.add(examiner1);
         examiners.add(examiner2);
         examiners.add(examiner3);
@@ -49,20 +50,20 @@ public class InitBean {
 
         String webUntisResult = webUntisService.initDB("NNRADIO", "PAuthlyn28");
         Log.info("WebUntis Result: " + webUntisResult);
-        Examiner examinerWU = examinerRepository.findByUsername("NNRADIO");
+        User examinerWU = userRepository.findByUsername("NNRADIO");
         examiners.add(examinerWU);
 
-        List<SchoolClass> schoolClasses = new ArrayList<>();
-        SchoolClass schoolClass1 = new SchoolClass("5AHIF", "2022");
-        SchoolClass schoolClass2 = new SchoolClass("3AHIF", "2021");
-        schoolClasses.add(schoolClass1);
-        schoolClasses.add(schoolClass2);
-        for (SchoolClass schoolClass : schoolClasses) {
-            schoolClassRepository.persist(schoolClass);
-            Log.info("Persist Schoolclass: " + schoolClass.title);
+        List<UserGroup> userGroups = new ArrayList<>();
+        UserGroup userGroup1 = new UserGroup("5AHIF", "2022");
+        UserGroup userGroup2 = new UserGroup("3AHIF", "2021");
+        userGroups.add(userGroup1);
+        userGroups.add(userGroup2);
+        for (UserGroup userGroup : userGroups) {
+            userGroupRepository.persist(userGroup);
+            Log.info("Persist Schoolclass: " + userGroup.title);
         }
-        List<SchoolClass> schoolClasses2 = new ArrayList<>();
-        schoolClasses2.add(schoolClass2);
+        List<UserGroup> schoolClasses2 = new ArrayList<>();
+        schoolClasses2.add(userGroup2);
 
 
         Exam exam1 = new Exam(
@@ -76,7 +77,7 @@ public class InitBean {
                 5,
                 examiners
                 );
-        List<Examiner> examiners1 = new ArrayList<>();
+        List<User> examiners1 = new ArrayList<>();
         examiners1.add(examinerWU);
         examiners1.add(examiner2);
         examiners1.add(examiner3);
@@ -87,18 +88,20 @@ public class InitBean {
                 "948",
                 "Franklyn",
                 ExamState.RUNNING,
-                schoolClasses,
+                userGroups,
                 LocalDate.parse("2022-02-23"),
                 LocalDateTime.parse("2022-02-23T10:09:42.411"),
                 LocalDateTime.parse("2022-02-23T12:09:42.411"),
                 5,
                 examiners
         );
-        exam1.schoolClasses = schoolClasses2;
-        exam2.schoolClasses = schoolClasses;
+
+        exam1.userGroups = schoolClasses2;
+
+        exam2.userGroups = userGroups;
         examRepository.persist(exam1);
         examRepository.persist(exam2);
-        List<Examiner> examiners2 = new ArrayList<>();
+        List<User> examiners2 = new ArrayList<>();
         examiners2.add(examinerWU);
         examiners2.add(examiner2);
         exam2.examiners = examiners2;
@@ -110,15 +113,15 @@ public class InitBean {
         examiner2.exams = List.of(exam1);
         examiner3.exams = List.of(exam1, exam2);
 
-        List<Examinee> examinees = new ArrayList<>();
-        Examinee examinee1 = new Examinee("Jakob", "Unterberger");
+        List<User> examinees = new ArrayList<>();
+        User examinee1 = new Examinee("Jakob", "Unterberger");
         examinee1.exam = exam1;
         examinee1.isOnline = true;
-        Examinee examinee2 = new Examinee("Jan", "Melcher");
+        User examinee2 = new Examinee("Jan", "Melcher");
         examinee2.lastOnline = LocalDateTime.now();
         examinee2.exam = exam1;
         examinee1.isOnline = false;
-        Examinee examinee3 = new Examinee("Anna", "Wiesinger");
+        User examinee3 = new Examinee("Anna", "Wiesinger");
         examinee3.lastOnline = LocalDateTime.now();
         examinee3.exam = exam2;
         examinee1.isOnline = true;
@@ -169,5 +172,7 @@ public class InitBean {
         );
         screenshotRepository.persist(screenshot1);
         Log.info("Saved Screenshot");
+
+         */
     }
 }
