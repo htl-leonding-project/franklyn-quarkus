@@ -1,12 +1,14 @@
 = Minutes of Meeting
-Melcher Tamara and Tran Micheal
-2022
+Franklyn 3 Dev-Team
+2022/23
 :toc:
 :icons: font
 
 == 2022-01-17
 
 .Teilnehmer
+[%collapsible]
+====
 |===
 |anwesend | |
 
@@ -27,8 +29,10 @@ Melcher Tamara and Tran Micheal
 | Tran
 | 4AHIF
 |===
-
+====
 .Ort und Zeit
+[%collapsible]
+====
 [cols=2*]
 |===
 |Ort
@@ -39,6 +43,7 @@ Melcher Tamara and Tran Micheal
 |Dauer
 | 25 Minuten
 |===
+====
 
 === Besprochene Themen
 * Das neue Github-Repo wurde initialisiert
@@ -50,6 +55,8 @@ Melcher Tamara and Tran Micheal
 
 == 2022-01-24
 .Teilnehmer
+[%collapsible]
+====
 |===
 |anwesend | |
 
@@ -78,8 +85,11 @@ Melcher Tamara and Tran Micheal
 | Tran
 | 4AHIF
 |===
+====
 
 .Ort und Zeit
+[%collapsible]
+====
 [cols=2*]
 |===
 |Ort
@@ -90,6 +100,7 @@ Melcher Tamara and Tran Micheal
 |Dauer
 | 20 min.
 |===
+====
 
 === Besprochene Themen
 
@@ -151,6 +162,8 @@ Melcher Tamara and Tran Micheal
 == 2022-03-01
 
 .Teilnehmer
+[%collapsible]
+====
 |===
 |anwesend | |
 
@@ -171,8 +184,11 @@ Melcher Tamara and Tran Micheal
 | Tran
 | 4AHIF
 |===
+====
 
 .Ort und Zeit
+[%collapsible]
+====
 [cols=2*]
 |===
 |Ort
@@ -183,6 +199,7 @@ Melcher Tamara and Tran Micheal
 |Dauer
 | 55 Minuten
 |===
+====
 
 === Nächste Schritte
 
@@ -205,6 +222,8 @@ Melcher Tamara and Tran Micheal
 == 2022-03-07
 
 .Teilnehmer
+[%collapsible]
+====
 |===
 |anwesend | |
 
@@ -225,8 +244,11 @@ Melcher Tamara and Tran Micheal
 | Tran
 | 4AHIF
 |===
+====
 
 .Ort und Zeit
+[%collapsible]
+====
 [cols=2*]
 |===
 |Ort
@@ -237,6 +259,7 @@ Melcher Tamara and Tran Micheal
 |Dauer
 | 45 Minuten
 |===
+====
 
 === Besprochene Themen
 
@@ -268,6 +291,8 @@ image::images/systemarchitecture.jpeg[]
 
 == 2022-03-09
 .Teilnehmer
+[%collapsible]
+====
 |===
 |anwesend | |
 
@@ -296,8 +321,11 @@ image::images/systemarchitecture.jpeg[]
 | Tran
 | 4AHIF
 |===
+====
 
 .Ort und Zeit
+[%collapsible]
+====
 [cols=2*]
 |===
 |Ort
@@ -308,6 +336,7 @@ image::images/systemarchitecture.jpeg[]
 |Dauer
 | 25 min.
 |===
+====
 
 === Besprochene Themen
 
@@ -327,6 +356,8 @@ image::images/systemarchitecture.jpeg[]
 == 2022-03-14
 
 .Teilnehmer
+[%collapsible]
+====
 |===
 |anwesend | |
 
@@ -346,8 +377,11 @@ image::images/systemarchitecture.jpeg[]
 | Tran
 | 4AHIF
 |===
+====
 
 .Ort und Zeit
+[%collapsible]
+====
 [cols=2*]
 |===
 |Ort
@@ -358,6 +392,7 @@ image::images/systemarchitecture.jpeg[]
 |Dauer
 | 40 min.
 |===
+====
 
 === Besprochene Themen
 
@@ -402,6 +437,8 @@ image::images/systemarchitecture.jpeg[]
 == 2022-03-21
 
 .Teilnehmer
+[%collapsible]
+====
 |===
 |anwesend | |
 
@@ -421,8 +458,11 @@ image::images/systemarchitecture.jpeg[]
 | Tran
 | 4AHIF
 |===
+====
 
 .Ort und Zeit
+[%collapsible]
+====
 [cols=2*]
 |===
 |Ort
@@ -433,6 +473,7 @@ image::images/systemarchitecture.jpeg[]
 |Dauer
 | 50 min.
 |===
+====
 
 === Besprochene Themen
 
@@ -461,6 +502,8 @@ backend -right- screenshots
 == 2022-03-24
 
 .Teilnehmer
+[%collapsible]
+====
 |===
 |Vorname |Nachname |Klasse
 
@@ -489,8 +532,11 @@ backend -right- screenshots
 | Tran
 | 4AHIF
 |===
+====
 
 .Ort und Zeit
+[%collapsible]
+====
 [cols=2*]
 |===
 |Ort
@@ -501,6 +547,7 @@ backend -right- screenshots
 |Dauer
 |
 |===
+====
 
 === Besprochene Themen
 
@@ -528,6 +575,8 @@ Anwesend Prof. Stuetz, Prof. Bucek, Tamara Melcher, Michael Tran
 
 
 .Teilnehmer
+[%collapsible]
+====
 |===
 |Vorname |Nachname |Klasse
 
@@ -548,6 +597,7 @@ Anwesend Prof. Stuetz, Prof. Bucek, Tamara Melcher, Michael Tran
 | 4AHIF
 
 |===
+====
 
 === Was wurde besprochen?
 
@@ -571,7 +621,9 @@ Anwesend Prof. Stuetz, Prof. Bucek, Tamara Melcher, Michael Tran
 == 2022-06-20
 
 
-_.Teilnehmer
+.Teilnehmer
+[%collapsible]
+====
 |===
 |Vorname |Nachname |Klasse
 
@@ -587,7 +639,8 @@ _.Teilnehmer
 | Tran
 | 4AHIF
 
-|===_
+|===
+====
 
 === Was wurde besprochen?
 
@@ -602,7 +655,9 @@ _.Teilnehmer
 
 == 2022-06-20
 
-_.Teilnehmer
+.Teilnehmer
+[%collapsible]
+====
 |===
 |Vorname |Nachname |Klasse
 
@@ -622,7 +677,8 @@ _.Teilnehmer
 | Tran
 | 4AHIF
 
-|===_
+|===
+====
 
 === Was wurde besprochen?
 
@@ -639,7 +695,9 @@ _.Teilnehmer
 
 == 2022-06-24
 
-_.Teilnehmer
+.Teilnehmer
+[%collapsible]
+====
 |===
 |Vorname |Nachname |Klasse
 
@@ -656,6 +714,7 @@ _.Teilnehmer
 | 4AHIF
 
 |===
+====
 
 === Was wurde besprochen?
 
@@ -796,4 +855,36 @@ client soll Bufferfunktion verwenden
 
 
 
+// Template
+// == yyyy-mm-dd
 
+// .Teilnehmer
+// [%collapsible]
+// ====
+// |===
+// |Vorname |Nachname |Klasse
+//
+// |
+// | Prof. Stuetz
+// |
+//
+// | Mona
+// | Angerer
+// | 4BHITM
+//
+// | Al Sabagh
+// | Abdulrahman
+// | 4BHITM
+//
+// | Peter
+// | Klose
+// | 4BHITM
+//
+// | David
+// | Thaller
+// | 4BHITM
+// |===
+// ====
+
+// === Besprochene Themen
+// === Vereinbarung

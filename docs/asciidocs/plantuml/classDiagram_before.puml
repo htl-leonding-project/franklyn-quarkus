@@ -3,29 +3,35 @@
 
 
 class Exam{
+    id: Long
     pin: String
     title: String
     ongoing: boolean
-    schoolClasses: List<SchoolClass>
+    schoolClasses: SchoolClass
     date: LocalDate
     startTime: LocalDateTime
     endTime: LocalDateTime
 }
 
+
+
 class Examinee{
+    id: Long
     firstName: String
     lastName: String
     exam: Exam
-}
-
-
-class ExamineeDetails{
-    examine: Examinee
     isOnline: boolean
     lastOnline: LocalDateTime
 }
 
+class ExaminerExam{
+    id: Long
+    examiner: Examiner
+    exam: Exam
+}
+
 class Examiner{
+    id: Long
     userName: String
     firstName: String
     lastName: String
@@ -34,6 +40,7 @@ class Examiner{
 }
 
 class Screenshot{
+    id: Long
     timestamp: Timestamp
     runningNo: Integer
     examinee: Examinee
@@ -56,6 +63,7 @@ class requestSummary{
 }
 
 class SchoolClass{
+    id: Long
     title: String
     year: String
 }
@@ -73,7 +81,6 @@ class config{
     maintenance: boolean
 }
 
-
 enum Resolution{
     HD,
     NATIVE,
@@ -82,9 +89,8 @@ enum Resolution{
 
 
 Examinee "1".."*" Exam
-Examiner "1".."*" Exam
 Examinee "*".."1" Screenshot
-ExamineeDetails "*".."1" Examinee
 Exam "1".."*" SchoolClass
-
+Examiner "1".."*" ExaminerExam
+Exam "1".."*" ExaminerExam
 @enduml
