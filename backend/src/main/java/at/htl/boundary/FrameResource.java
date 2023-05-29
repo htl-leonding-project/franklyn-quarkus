@@ -20,6 +20,7 @@ public class FrameResource {
     @Inject
     FrameService frameService;
 
+    @Path("alpha")
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     public Response saveAlphaFrame(byte[] imageData) {
@@ -28,6 +29,19 @@ public class FrameResource {
                         Response.Status.OK :
                         Response.Status.INTERNAL_SERVER_ERROR)
                 .build();
+    }
+
+    @POST
+    @Path("/beta")
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+    public Response sendBetaFrame(File file) {
+        if (file.isFile() && file.getTotalSpace() > 0) {
+            System.out.println(file.getName());
+            return Response.status(Response.Status.OK).build();
+        } else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
     }
 
 

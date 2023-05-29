@@ -96,29 +96,27 @@ public class ApiCalls {
 
                 Mat difference = new Mat();
                 Core.compare(image1Gray, image2Gray, difference, Core.CMP_NE);
+                var differenceInPercentage = getDifferenceInPercentage(difference);
+                if (differenceInPercentage == 0) return;
 
+                if (differenceInPercentage >= 30) {
+                    updateAlphaFrame(newFile);
 
-                if (!difference.empty()) {
+                } else {
 
-                    var differenceInPercentage = getDifferenceInPercentage(difference);
-                    if (differenceInPercentage >= 30) {
+                    var result = new Mat();
+                    image2.copyTo(result, difference);
 
-                        updateAlphaFrame(newFile);
+                    result = convertBlackPixelsToTransparentPixels(result);
+                    String newFileName = newFile.getAbsolutePath();
 
-                    } else {
-
-                        var result = new Mat();
-                        image2.copyTo(result, difference);
-                        String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
-                                "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
-                        result = convertBlackPixelsToTransparentPixels(result);
-
-                        Imgcodecs.imwrite(currentWorkingDir, result);
-                    }
-
+                    Imgcodecs.imwrite(newFileName, result);
+                    frameService.sendBetaFrame(newFile);
                 }
 
             }
+
+
             //imageService.uploadFile(newFile, fileName);
             //newFile.delete();
         } catch (Exception ex) {
