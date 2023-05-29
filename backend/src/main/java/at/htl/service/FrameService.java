@@ -1,20 +1,17 @@
-package at.htl;
+package at.htl.service;
 
+
+import javax.enterprise.context.ApplicationScoped;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-@Path("/alphaframes")
-public class AlphaFrameEndpoint {
+@ApplicationScoped
+public class FrameService {
+    private static final String ALPHA_FRAMES_DIR = "alpha-frames/";
 
-    private static final String ALPHA_FRAMES_DIR = "alphaframes/";
+    public boolean saveAlphaFrame(byte[] imageData) {
 
-    @POST
-    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
-    public Response saveAlphaFrame(byte[] imageData) {
         try {
             File alphaFramesDir = new File(ALPHA_FRAMES_DIR);
             alphaFramesDir.mkdirs();
@@ -27,16 +24,15 @@ public class AlphaFrameEndpoint {
             FileOutputStream fos = new FileOutputStream(imageFile);
             fos.write(imageData);
             fos.close();
-
-            return Response.status(Response.Status.OK).build();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 
     private String generateFileName() {
         long timestamp = System.currentTimeMillis();
-        return "alphaframe_" + timestamp + ".png";
+        return "alpha-frame_" + timestamp + ".png";
     }
 }
