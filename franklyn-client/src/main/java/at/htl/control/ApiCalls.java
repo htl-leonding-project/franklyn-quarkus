@@ -2,7 +2,6 @@ package at.htl.control;
 
 import at.htl.boundary.ExamineeService;
 import at.htl.boundary.ImageService;
-import io.quarkus.logging.Log;
 import nu.pattern.OpenCV;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.imgscalr.Scalr;
@@ -36,7 +35,7 @@ public class ApiCalls {
     private String lastName = "muster";
     private Long id = -1L;
 
-    private static String mainFramePath = "";
+    private static String alphaFramePath = "";
     private String enrollOption = "";
     Scanner sc = new Scanner(System.in);
 
@@ -55,7 +54,7 @@ public class ApiCalls {
     public void sendScreenshots() {
 
         try {
-            System.out.println(mainFramePath + " is the main frame");
+            System.out.println(alphaFramePath + " is the main frame");
             OpenCV.loadLocally();
             Robot robot = new Robot();
             String fileExt = "png";
@@ -73,40 +72,39 @@ public class ApiCalls {
             File newFile = new File(fileName);
             System.out.println(newFile.getAbsoluteFile());
             ImageIO.write(newImg, fileExt, newFile);
-            if (mainFramePath.length() == 0) {
-                mainFramePath = newFile.getAbsolutePath();
+            if (alphaFramePath.length() == 0) {
+                alphaFramePath = newFile.getAbsolutePath();
                 return;
 
             }
             if (countOfImages >= 2) {
                 System.out.println("Difference between main and " + countOfImages);
-                Mat image1 = Imgcodecs.imread(mainFramePath);
-                Mat image2 = Imgcodecs.imread(newFile.getAbsolutePath());
 
+
+                var image1 = Imgcodecs.imread(alphaFramePath);
+                var image2 = Imgcodecs.imread(newFile.getAbsolutePath());
+
+                var image1Gray = convertColoredImagesToGray(image1);
+                var image2Gray = convertColoredImagesToGray(image2);
 
                 Mat difference = new Mat();
-                Core.absdiff(image1, image2, difference);
+                Core.compare(image1Gray,image2Gray,difference,Core.CMP_NE);
 
 
-                newFile.delete();
                 if (!difference.empty()) {
-                    var grayDifference = new Mat();
-                    Imgproc.cvtColor(difference, grayDifference, Imgproc.COLOR_BGR2GRAY);
-                    var totalPixels = grayDifference.cols() * grayDifference.rows();
-                    var nonZeroPixels = Core.countNonZero(grayDifference);
 
-                    var differencePercentage = (double) nonZeroPixels / totalPixels * 100;
-                    System.out.println(differencePercentage);
+                    var differenceInPercentage = getDifferenceInPercentage(difference);
+                    if (differenceInPercentage >= 30) {
+                        alphaFramePath = newFile.getAbsolutePath();
+                    } else {
 
-                    if (differencePercentage >= 3) {
+                        var result = new Mat();
+                        image2.copyTo(result, difference);
                         String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
                                 "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
-                        Imgcodecs.imwrite(currentWorkingDir, difference);
-                    }
+                        result = convertBlackPixelsToTransparentPixels(result);
 
-                    if (differencePercentage >= 20) {
-                        this.mainFramePath = "";
-
+                        Imgcodecs.imwrite(currentWorkingDir, result);
                     }
 
                 }
@@ -120,6 +118,48 @@ public class ApiCalls {
         }
 
     }
+
+    private Mat convertColoredImagesToGray(Mat coloredImage) {
+        var grayDifference = new Mat();
+        Imgproc.cvtColor(coloredImage, grayDifference, Imgproc.COLOR_RGB2GRAY);
+        return grayDifference;
+    }
+
+    private double getDifferenceInPercentage(Mat grayDifference) {
+        //var grayDifference = convertColoredImagesToGray(coloredDifferences);
+        var totalPixels = grayDifference.cols() * grayDifference.rows();
+        var nonZeroPixels = Core.countNonZero(grayDifference);
+
+        var differenceInPercentage = (double) nonZeroPixels / totalPixels * 100;
+        System.out.println(differenceInPercentage);
+        return differenceInPercentage;
+
+    }
+
+    private Mat convertBlackPixelsToTransparentPixels(Mat coloredDifferences) {
+        var mask = Mat.zeros(coloredDifferences.size(), CvType.CV_8UC4);
+
+        for (int row = 0; row < mask.rows(); row++) {
+            for (int column = 0; column < mask.cols(); column++) {
+                var pixelRGB = coloredDifferences.get(row, column);
+                var red = pixelRGB[0];
+                var green = pixelRGB[1];
+                var blue = pixelRGB[2];
+
+                double[] newPixelColors;
+                if (green == 0 && red == 0 && blue == 0) {
+                    newPixelColors = new double[]{0, 0, 0, 0};
+                } else {
+                    newPixelColors = new double[]{red, green, blue, 255};
+                }
+                mask.put(row, column, newPixelColors);
+            }
+        }
+        return mask;
+    }
+
+
+
 
     /***
      * set enroll data
@@ -229,7 +269,7 @@ public class ApiCalls {
                     .startNow()
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
-                                    .withIntervalInSeconds(5)
+                                    .withIntervalInSeconds(1)
                                     .repeatForever())
                     .build();
 
