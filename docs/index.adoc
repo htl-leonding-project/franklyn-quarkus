@@ -17,7 +17,7 @@ ifdef::backend-html5[]
 
 <<./asciidocs/HowTo.adoc#, How-To Start for Development>>
 
-<<./asciidocs/howItWorks.adoc#, How-To Start for Development>>
+<<./asciidocs/howItWorks.adoc#, How-It-Works Screenshots>> (alpha-/betaframes and more)
 
 == Starten des Franklyn3
 
