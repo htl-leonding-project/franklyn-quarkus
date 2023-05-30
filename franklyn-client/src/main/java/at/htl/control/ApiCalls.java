@@ -6,6 +6,7 @@ import at.htl.boundary.ImageService;
 import nu.pattern.OpenCV;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.imgscalr.Scalr;
+import org.jboss.logging.Logger;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -55,13 +56,16 @@ public class ApiCalls {
     @RestClient
     FrameService frameService;
 
+    @Inject
+    Logger LOG;
+
     /***
      * send screenshot to backend
      */
     public void sendScreenshots() {
 
         try {
-            System.out.println(alphaFramePath + " is the main frame");
+            LOG.info(alphaFramePath + " is the main frame");
             OpenCV.loadLocally();
             Robot robot = new Robot();
             String fileExt = "png";
@@ -77,7 +81,7 @@ public class ApiCalls {
                     1280,
                     720);
             File newFile = new File(fileName);
-            System.out.println(newFile.getAbsoluteFile());
+            LOG.info(newFile.getAbsoluteFile());
             ImageIO.write(newImg, fileExt, newFile);
             if (alphaFramePath.length() == 0) {
                 updateAlphaFrame(newFile);
@@ -85,7 +89,7 @@ public class ApiCalls {
 
             }
             if (countOfImages >= 2) {
-                System.out.println("Difference between main and " + countOfImages);
+               LOG.info("Difference between main and " + countOfImages);
 
 
                 var image1 = Imgcodecs.imread(alphaFramePath);
@@ -121,7 +125,7 @@ public class ApiCalls {
             //imageService.uploadFile(newFile, fileName);
             //newFile.delete();
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            LOG.error(ex.getMessage());
 
         }
 
@@ -150,7 +154,7 @@ public class ApiCalls {
         var nonZeroPixels = Core.countNonZero(grayDifference);
 
         var differenceInPercentage = (double) nonZeroPixels / totalPixels * 100;
-        System.out.println(differenceInPercentage);
+        LOG.info(differenceInPercentage);
         return differenceInPercentage;
 
     }
