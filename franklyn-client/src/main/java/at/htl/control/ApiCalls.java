@@ -111,7 +111,8 @@ public class ApiCalls {
                     String newFileName = newFile.getAbsolutePath();
 
                     Imgcodecs.imwrite(newFileName, result);
-                    frameService.sendBetaFrame(newFile);
+                    var resultAsFile = new File(newFileName);
+                    frameService.sendBetaFrame(fileToBytes(resultAsFile));
                 }
 
             }
@@ -126,10 +127,15 @@ public class ApiCalls {
 
     }
 
+    private byte[] fileToBytes(File file) throws Exception {
+        return Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+
+    }
+
     private void updateAlphaFrame(File file) throws Exception {
         alphaFramePath = file.getAbsolutePath();
-        var fileToBytes = Files.readAllBytes(Paths.get(alphaFramePath));
-        frameService.saveAlphaFrame(fileToBytes);
+
+        frameService.saveAlphaFrame(fileToBytes(file));
     }
 
     private Mat convertColoredImagesToGray(Mat coloredImage) {

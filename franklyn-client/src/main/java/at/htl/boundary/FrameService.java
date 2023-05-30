@@ -23,6 +23,6 @@ public interface FrameService {
     @POST
     @Path("frame/beta")
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
-    Response sendBetaFrame(File file);
+    Response sendBetaFrame(byte[] file);
 
 }
