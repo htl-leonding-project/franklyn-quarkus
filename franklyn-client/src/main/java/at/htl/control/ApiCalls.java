@@ -1,6 +1,7 @@
 package at.htl.control;
 
 import at.htl.boundary.ExamineeService;
+import at.htl.boundary.FrameService;
 import at.htl.boundary.ImageService;
 import nu.pattern.OpenCV;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -19,6 +20,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -48,6 +51,10 @@ public class ApiCalls {
     @Inject
     Scheduler scheduler;
 
+    @Inject
+    @RestClient
+    FrameService frameService;
+
     /***
      * send screenshot to backend
      */
@@ -73,7 +80,7 @@ public class ApiCalls {
             System.out.println(newFile.getAbsoluteFile());
             ImageIO.write(newImg, fileExt, newFile);
             if (alphaFramePath.length() == 0) {
-                alphaFramePath = newFile.getAbsolutePath();
+                updateAlphaFrame(newFile);
                 return;
 
             }
@@ -88,35 +95,47 @@ public class ApiCalls {
                 var image2Gray = convertColoredImagesToGray(image2);
 
                 Mat difference = new Mat();
-                Core.compare(image1Gray,image2Gray,difference,Core.CMP_NE);
+                Core.compare(image1Gray, image2Gray, difference, Core.CMP_NE);
+                var differenceInPercentage = getDifferenceInPercentage(difference);
+                if (differenceInPercentage == 0) return;
 
+                if (differenceInPercentage >= 30) {
+                    updateAlphaFrame(newFile);
 
-                if (!difference.empty()) {
+                } else {
 
-                    var differenceInPercentage = getDifferenceInPercentage(difference);
-                    if (differenceInPercentage >= 30) {
-                        alphaFramePath = newFile.getAbsolutePath();
-                    } else {
+                    var result = new Mat();
+                    image2.copyTo(result, difference);
 
-                        var result = new Mat();
-                        image2.copyTo(result, difference);
-                        String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
-                                "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
-                        result = convertBlackPixelsToTransparentPixels(result);
+                    result = convertBlackPixelsToTransparentPixels(result);
+                    String newFileName = newFile.getAbsolutePath();
 
-                        Imgcodecs.imwrite(currentWorkingDir, result);
-                    }
-
+                    Imgcodecs.imwrite(newFileName, result);
+                    var resultAsFile = new File(newFileName);
+                    frameService.sendBetaFrame(fileToBytes(resultAsFile));
                 }
 
             }
+
+
             //imageService.uploadFile(newFile, fileName);
             //newFile.delete();
-        } catch (AWTException | IOException ex) {
-            System.err.println(ex);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
 
         }
 
+    }
+
+    private byte[] fileToBytes(File file) throws Exception {
+        return Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+
+    }
+
+    private void updateAlphaFrame(File file) throws Exception {
+        alphaFramePath = file.getAbsolutePath();
+
+        frameService.saveAlphaFrame(fileToBytes(file));
     }
 
     private Mat convertColoredImagesToGray(Mat coloredImage) {
@@ -157,8 +176,6 @@ public class ApiCalls {
         }
         return mask;
     }
-
-
 
 
     /***
