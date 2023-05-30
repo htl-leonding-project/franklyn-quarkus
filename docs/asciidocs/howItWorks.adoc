@@ -74,36 +74,37 @@ public void sendScreenshots() {
     var image2Gray = convertColoredImagesToGray(image2);<3>
 
     Mat difference = new Mat();<4>
-    Core.compare(image1Gray,image2Gray,difference,Core.CMP_NE);
+    Core.compare(image1Gray,image2Gray,difference,Core.CMP_NE);<5>
 
 
     if (!difference.empty()) {
 
-        var differenceInPercentage = getDifferenceInPercentage(difference);<5>
+        var differenceInPercentage = getDifferenceInPercentage(difference);<6>
         if (differenceInPercentage >= 30) {
-            alphaFramePath = newFile.getAbsolutePath();<6>
+            alphaFramePath = newFile.getAbsolutePath();<7>
         } else {
 
         var result = new Mat();<4>
         image2.copyTo(result, difference);
         String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
         "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
-        result = convertBlackPixelsToTransparentPixels(result);<7>
+        result = convertBlackPixelsToTransparentPixels(result);<8>
 
-        Imgcodecs.imwrite(currentWorkingDir, result);<8>
+        Imgcodecs.imwrite(currentWorkingDir, result);<9>
         }
     }
     ...
 }
 ----
-<.> Es werden das alpha-frame
+<.> Es werden das alpha-frame.
 <.> und das aktuelle frame vorgemerkt.
-<3> Diese beiden Bilder werden in Graustufen konvertiert
+<3> Diese beiden Bilder werden in Graustufen konvertiert.
 <4> Die Matrix von OpenCV, wo das Bild gespeichert wird.
-<5> Die prozentuelle Differenz wird ermittelt
-<6> Wenn die marke von `30` überschritten wird gilt das neue image als neuer alpha-frame
-<7> Nicht veränderte Pixel werden transparent gesetzt
-<8> Schreibt das Bild in das File-System.
+<5> CMP_NE = Compare not Equal -> Alle Pixel die nicht gleich sind sind Differenzpixel.
+<6> Die prozentuelle Differenz wird ermittelt.
+<7> Wenn die marke von `30` überschritten wird gilt das neue image als neuer alpha-frame.
+<8> Nicht veränderte Pixel werden transparent gesetzt.
+<9> Schreibt das Bild in das File-System.
 
 === Zusammensetzten
 
