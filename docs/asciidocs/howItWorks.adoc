@@ -24,11 +24,11 @@ Die bilder werden in der APICalls Klasse im Client erstellt.
 ----
 public void sendScreenshots() {
     ...
-    OpenCV.loadLocally();
+    OpenCV.loadLocally();<.>
 
     Robot robot = new Robot();
 
-    String fileExt = "png";
+    String fileExt = "png";<.>
     String localDateTime = LocalDateTime.now().toString()
         .replace(':', '-')
         .replace(".", "-");
@@ -36,58 +36,74 @@ public void sendScreenshots() {
         "_" + lastName +
         "_" + firstName +
         "_" + id +
-        "." + fileExt;
+        "." + fileExt;<.>
 
-    Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+    Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());<.>
 
-    BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+    BufferedImage screenFullImage = robot.createScreenCapture(screenRect);<.>
     BufferedImage newImg = Scalr
-        .resize(screenFullImage,1280,720);
+        .resize(screenFullImage,1280,720);<.>
 
     File newFile = new File(fileName);
-    ImageIO.write(newImg, fileExt, newFile);
+    ImageIO.write(newImg, fileExt, newFile);<.>
     ...
 }
 ----
+<.> Es wird https://opencv.org/[OpenCV] als Libery verwendet.
+<.> Der aufgenomme Screenshot ist ein png, da wir später mit transparenten Bildern arbeiten müssen.
+<.> Zusammensetzung des Namens
+<.> Wir bestimmen, welchhes Arial `screenRect` aufgenommen werden soll. In diesem fall der ganze Screen.
+<.> Dieses vorher bestimmte Arial `screenRect` wird aufgenommen `screenFullImage`.
+<.> Das aufgenommene Bild wird komprimiert.
+<.> Schreibt das Bild in das File-System.
 
 === Verarbeiten (Differenzberechnung)
 
-Die bilder werden in der APICalls Klasse im Client erstellt.
+Es werden *2 Arten* von Bildern verwendet einerseits die *Alpha-frames*, welche immer wieder eine *neue Grundlage* liefern und
+die *Beta-frames*, welche nur die *Änderungen zum letzten Alpha-frame* speichern.
 
 .ApiCalls.java
 [source,java]
 ----
 public void sendScreenshots() {
     ...
-    var image1 = Imgcodecs.imread(alphaFramePath);
-    var image2 = Imgcodecs.imread(newFile.getAbsolutePath());
+    var image1 = Imgcodecs.imread(alphaFramePath);<.>
+    var image2 = Imgcodecs.imread(newFile.getAbsolutePath());<.>
 
-    var image1Gray = convertColoredImagesToGray(image1);
-    var image2Gray = convertColoredImagesToGray(image2);
+    var image1Gray = convertColoredImagesToGray(image1);<3>
+    var image2Gray = convertColoredImagesToGray(image2);<3>
 
-    Mat difference = new Mat();
+    Mat difference = new Mat();<4>
     Core.compare(image1Gray,image2Gray,difference,Core.CMP_NE);
 
 
     if (!difference.empty()) {
 
-        var differenceInPercentage = getDifferenceInPercentage(difference);
+        var differenceInPercentage = getDifferenceInPercentage(difference);<5>
         if (differenceInPercentage >= 30) {
-            alphaFramePath = newFile.getAbsolutePath();
+            alphaFramePath = newFile.getAbsolutePath();<6>
         } else {
 
-        var result = new Mat();
+        var result = new Mat();<4>
         image2.copyTo(result, difference);
         String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
         "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
-        result = convertBlackPixelsToTransparentPixels(result);
+        result = convertBlackPixelsToTransparentPixels(result);<7>
 
-        Imgcodecs.imwrite(currentWorkingDir, result);
+        Imgcodecs.imwrite(currentWorkingDir, result);<8>
         }
     }
     ...
 }
 ----
+<.> Es werden das alpha-frame
+<.> und das aktuelle frame vorgemerkt.
+<3> Diese beiden Bilder werden in Graustufen konvertiert
+<4> Die Matrix von OpenCV, wo das Bild gespeichert wird.
+<5> Die prozentuelle Differenz wird ermittelt
+<6> Wenn die marke von `30` überschritten wird gilt das neue image als neuer alpha-frame
+<7> Nicht veränderte Pixel werden transparent gesetzt
+<8> Schreibt das Bild in das File-System.
 
 === Zusammensetzten
 
