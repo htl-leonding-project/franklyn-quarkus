@@ -877,6 +877,43 @@ include::plantuml/classDiagram.puml[]
 * Dokumentation des zukünftigen Codes
 
 
+== 2023-05-30
+
+.Teilnehmer
+[%collapsible]
+====
+|===
+|Vorname |Nachname |Klasse
+
+|
+| Prof. Stuetz
+|
+
+| Mona
+| Angerer
+| 4BHITM
+
+| Al Sabagh
+| Abdulrahman
+| 4BHITM
+
+| Peter
+| Klose
+| 4BHITM
+
+| David
+| Thaller
+| 4BHITM
+|===
+====
+
+=== Besprochene Themen
+* Vorstellung der Differenzen zwischen Screenshots und das Zusammenfügen von Alpha und deren dazugehörigen Beta-Frames (Differenzbilder)
+* Beziehungen bei Assoziationstabellen: One-to-Many wird mit Many-to-Many ersetzt
+
+
+=== Vereinbarung
+* Jeder Teilnehmer hat seinen eigenen Issue
 
 
 
