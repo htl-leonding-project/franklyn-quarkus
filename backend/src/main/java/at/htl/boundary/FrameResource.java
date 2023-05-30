@@ -6,6 +6,7 @@ import com.aayushatharva.brotli4j.decoder.DecoderJNI;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -20,6 +21,7 @@ public class FrameResource {
     @Inject
     FrameService frameService;
 
+    @Path("alpha")
     @POST
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     public Response saveAlphaFrame(byte[] imageData) {
@@ -28,6 +30,15 @@ public class FrameResource {
                         Response.Status.OK :
                         Response.Status.INTERNAL_SERVER_ERROR)
                 .build();
+    }
+
+    @POST
+    @Path("/beta")
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+    public Response sendBetaFrame(byte[] file) {
+        frameService.mergeWithAlphaFrame(file);
+        return Response.status(Response.Status.OK).build();
+
     }
 
 
