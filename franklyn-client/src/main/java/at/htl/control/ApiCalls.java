@@ -59,6 +59,10 @@ public class ApiCalls {
     @Inject
     Logger LOG;
 
+    int imageWidth = 1280;
+    int imageHeight = 720;
+    int allowedDifferenceInPercentage = 30;
+
     /***
      * send screenshot to backend
      */
@@ -78,8 +82,8 @@ public class ApiCalls {
             BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
             BufferedImage newImg = Scalr.resize(
                     screenFullImage,
-                    1280,
-                    720);
+                    imageWidth,
+                    imageHeight);
             File newFile = new File(fileName);
             LOG.info(newFile.getAbsoluteFile());
             ImageIO.write(newImg, fileExt, newFile);
@@ -103,7 +107,7 @@ public class ApiCalls {
                 var differenceInPercentage = getDifferenceInPercentage(difference);
                 if (differenceInPercentage == 0) return;
 
-                if (differenceInPercentage >= 30) {
+                if (differenceInPercentage >= allowedDifferenceInPercentage) {
                     updateAlphaFrame(newFile);
 
                 } else {
