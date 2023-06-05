@@ -889,6 +889,10 @@ include::plantuml/classDiagram.puml[]
 | Prof. Stuetz
 |
 
+|
+| Prof. Aberger (Online)
+|
+
 | Mona
 | Angerer
 | 4BHITM
@@ -911,9 +915,70 @@ include::plantuml/classDiagram.puml[]
 * Vorstellung der Differenzen zwischen Screenshots und das Zusammenfügen von Alpha und deren dazugehörigen Beta-Frames (Differenzbilder)
 * Beziehungen bei Assoziationstabellen: One-to-Many wird mit Many-to-Many ersetzt
 
+*Pause*
 
-=== Vereinbarung
-* Jeder Teilnehmer hat seinen eigenen Issue
+* Wie können wir 100 Bilder gleichzeitig speichern?
+
+==== Prof. Aberger
+*Anruf 1:*
+
+Client soll intelligent sein
+Speichert Alpha-frames und Diffs
+
+Server übernimmt Steuerung von Bildern
+Server geht Schüler durch und fragt Fotos von Clients ab
+
+websockets !!!
+
+*Anruf 2:*
+
+Grundidee: Jeder Client hat einen Webserver, (klein also NanoHttp)
+wir holen uns immer das aktuelle Bild von Client ohne WS
+
+2 Arten von URLs
+
+* Direkt erreichbar
+* gehen über Server
+
+--
+
+* Quarkus-Proxy-Server leitet nur die Bilder weiter
+** Client meldet sich an und schickt Bilder
+** Lehrer holt sich die bilder ab
+--
+
+
+
+
+
+
+.Chat Prof. Aberger
+[source,text]
+----
+Noch so eine blöde Idee: Wir könnten einen kleinen Http server am client dazugeben: wenn der Lehrer Rechner und der Test Client Rechner im selben LAN sind, brauchen wir gar keine Daten schicken, sondern nur die Url des Client Bildes http://172.16.x.y:8288/img12838.jpg
+----
+.Bedinung für das Verwenden von Http server:
+[source,text]
+----
+wenn http health check fehltschlägt automatisches Umschalten auf "normalen" / bisherigen Modus
+----
+[source,text]
+----
+vielleicht genügt es diese Bilder einfach nur über den Server als eine Art "Proxy" http<-->ws zu tunneln
+----
+
+
+.DC-Chat Prof. Stütz
+[source,text]
+----
+manchmal denke ich einfach zu kompliziert. Das ist ja alles noch viel einfacher: nur einen nginx proxy server in der DMZ installieren ⁉️
+Da ist dann gar nix mehr zu coden, ausser a bisserl Testverwaltung 😊
+----
+
+=== Vereinbarung:
+* Jeder im Team hat seinen eigenen Issue
+* Der Server behält die Kontrolle
+
 
 
 
