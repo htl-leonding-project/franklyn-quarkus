@@ -10,9 +10,8 @@ class ExaminerTest {
 
     @Test
     void simpleSuccess_addExaminer() {
-        Examiner examiner = new Examiner("if180xxx", "Max", "Muster", false);
+        User examiner = new User( "Max", "Muster", false);
 
-        assertEquals("if180xxx", examiner.userName);
         assertEquals("Max", examiner.firstName);
         assertEquals("Muster", examiner.lastName);
         assertEquals(false, examiner.isAdmin);

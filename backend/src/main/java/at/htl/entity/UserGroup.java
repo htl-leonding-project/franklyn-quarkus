@@ -9,13 +9,13 @@ import javax.persistence.*;
 import java.util.List;
 
 @NamedQueries({
-        @NamedQuery(
+      /*  @NamedQuery(
                 name = "UserGroup.getStats",
-                query = "select new at.htl.entity.dto.SchoolClassDto(sc.id, sc.title, count(sc.title)) " +
+                query = "select new at.htl.entity.dto.UserGroupDto(sc.id, sc.title, sc.year) " +
                         "from UserGroup sc " +
                         "where sc.year = ?1 " +
                         "group by sc.id, sc.title"
-        ),
+        ),*/
         @NamedQuery(
                 name = "UserGroup.getByTitleAndYear",
                 query = "select sc from UserGroup sc where sc.title = ?1 and sc.year = ?2"

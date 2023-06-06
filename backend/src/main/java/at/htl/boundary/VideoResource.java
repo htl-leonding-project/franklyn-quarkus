@@ -1,8 +1,9 @@
 package at.htl.boundary;
 
 import at.htl.control.ExamRepository;
-import at.htl.control.ExamineeRepository;
+import at.htl.control.UserRepository;
 import at.htl.entity.Exam;
+import at.htl.entity.User;
 import io.smallrye.mutiny.Multi;
 import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
@@ -35,8 +36,7 @@ public class VideoResource {
     ExamRepository examRepository;
 
     @Inject
-    ExamineeRepository examineeRepository;
-
+    UserRepository userRepository;
     @ConfigProperty(name = "PATHOFSCREENSHOT")
     String pathOfScreenshots;
 
@@ -48,26 +48,26 @@ public class VideoResource {
 
     private String generateVideoOfExamineeAndExamById(String examId, String examineeId) {
         Exam exam = examRepository.findById(Long.parseLong(examId));
-        Examinee examinee = examineeRepository.findById(Long.parseLong(examineeId));
+        User user = userRepository.findById(Long.parseLong(examineeId));
         screenshotPath =
                 Paths.get(String.format("../../%s/%s_%s/%s_%s/",
                         pathOfScreenshots,
                         exam.title,
                         exam.date,
-                        examinee.lastName,
-                        examinee.firstName));
+                        user.lastName,
+                        user.firstName));
 
         videoName = String.format("%s_%s_%s_video.mkv",
-                examinee.lastName,
-                examinee.firstName,
+                user.lastName,
+                user.firstName,
                 exam.title);
 
         String videoOutputPath = String.format("%s/%s_%s/%s_%s/%s",
                 pathOfScreenshots,
                 exam.title,
                 exam.date,
-                examinee.lastName,
-                examinee.firstName,
+                user.lastName,
+                user.firstName,
                 videoName);
 
         try {

@@ -28,21 +28,19 @@ class ExamineeTest {
         exam.title="NVS-Test";
         exam.startTime = LocalDateTime.of(2022, 3, 26, 11, 45);
         exam.endTime = LocalDateTime.of(2022, 3, 26, 13, 45);
-        List<Examiner> examiners = new ArrayList<Examiner>();
-        examiners.add(new Examiner("stuetz", "Thomas", "Stuetz", true));
+        List<User> examiners = new ArrayList<User>();
+        examiners.add(new User("Thomas", "Stuetz", true));
         List<UserGroup> forms = new ArrayList<UserGroup>();
         forms.add(new UserGroup("4AHIF", "2022"));
         forms.add(new UserGroup("3AHIF", "2021"));
-        exam.examiners = examiners;
+        exam.userExaminers = examiners;
         exam.userGroups = forms;
 
-        Examinee examinee = new Examinee();
+        User examinee = new User();
         examinee.firstName = "Tamara";
         examinee.lastName = "Melcher";
-        examinee.exam = exam;
 
         assertEquals("Tamara", examinee.firstName);
         assertEquals("Melcher", examinee.lastName);
-        assertEquals(exam.id, examinee.exam.id);
     }
 }

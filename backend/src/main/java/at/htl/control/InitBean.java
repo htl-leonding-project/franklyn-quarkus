@@ -1,23 +1,12 @@
 package at.htl.control;
 
-import at.htl.entity.*;
-import at.htl.service.WebUntisService;
-import io.quarkus.logging.Log;
 import io.quarkus.runtime.StartupEvent;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class InitBean {
-
-    @Inject
-    ExamineeRepository examineeRepository;
 
     @Inject
     UserRepository userRepository;
@@ -30,10 +19,6 @@ public class InitBean {
 
     @Inject
     ScreenshotRepository screenshotRepository;
-
-    @Inject
-    WebUntisService webUntisService;
-
 
     @Transactional
     public void init(@Observes StartupEvent event){

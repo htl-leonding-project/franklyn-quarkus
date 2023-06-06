@@ -1,7 +1,7 @@
 package at.htl.boundary;
 
 import at.htl.control.ExamRepository;
-import at.htl.control.SchoolClassRepository;
+import at.htl.control.UserGroupRepository;
 import at.htl.entity.Exam;
 import at.htl.entity.UserGroup;
 
@@ -11,11 +11,12 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("schoolclass")
-public class SchoolClassResource {
+@Path("usergroup")
+public class UserGroupResource {
+
 
     @Inject
-    SchoolClassRepository schoolClassRepository;
+    UserGroupRepository userGroupRepository;
 
     @Inject
     ExamRepository examRepository;
@@ -23,7 +24,7 @@ public class SchoolClassResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<UserGroup> listAll() {
-        return schoolClassRepository.getAllSchoolClasses();
+        return userGroupRepository.getAllSchoolClasses();
     }
 
     /**
@@ -34,7 +35,7 @@ public class SchoolClassResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("current")
     public List<UserGroup> getCurrentSchoolClass() {
-        return schoolClassRepository.getCurrentSchoolClass();
+        return userGroupRepository.getCurrentSchoolClass();
     }
 
     /**
@@ -45,7 +46,7 @@ public class SchoolClassResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("stats")
     public List<UserGroup> getStats(){
-        return schoolClassRepository.getStats();
+        return userGroupRepository.getStats();
     }
 
     /**
@@ -59,7 +60,7 @@ public class SchoolClassResource {
             @PathParam("title") String title,
             @PathParam("year") String year
     ){
-        return schoolClassRepository.getSchoolClassByTitleAndYear(title, year);
+        return userGroupRepository.getSchoolClassByTitleAndYear(title, year);
     }
 
     @GET
@@ -67,7 +68,7 @@ public class SchoolClassResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public UserGroup getSchoolClassById(@PathParam("id") String id) {
-        UserGroup userGroup = schoolClassRepository.findById(Long.parseLong(id));
+        UserGroup userGroup = userGroupRepository.findById(Long.parseLong(id));
         if(userGroup == null)
             return null;
         return userGroup;
@@ -82,7 +83,7 @@ public class SchoolClassResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public UserGroup addSchoolClass(UserGroup userGroup){
-        schoolClassRepository.getEntityManager().merge(userGroup);
+        userGroupRepository.getEntityManager().merge(userGroup);
         return userGroup;
     }
 

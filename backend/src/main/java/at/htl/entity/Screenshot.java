@@ -14,11 +14,11 @@ import java.sql.Timestamp;
 
         @NamedQuery(
                 name = "Screenshot.findScreenshot",
-                query = "select s from Screenshot s where s.examinee.id = ?1 " +
+                query = "select s from Screenshot s where s.user.id = ?1 " +
                         "and s.runningNo = ?2"),
         @NamedQuery(
                 name = "Screenshot.findLatestScreenshot",
-                query = "select s from Screenshot s where s.examinee.id = ?1 " +
+                query = "select s from Screenshot s where s.user.id = ?1 " +
                         "order by s.timestamp desc"
         )
 })

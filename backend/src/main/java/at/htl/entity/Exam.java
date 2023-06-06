@@ -68,15 +68,18 @@ public class Exam extends PanacheEntityBase {
     @OnDelete(action = OnDeleteAction.CASCADE)
     public List<UserGroup> userGroups;
 
+    @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @Size(min = 1)
+    @JoinColumn(name = "E_FORM_IDS")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    public List<UserSession> userSessions;
+
     @NotNull
     @ConfigProperty(defaultValue = "5")
     @Column(name = "E_INTERVAL")
     public int interval;
 
-    @Column(name = "E_EXAMINEES")
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    public List<User> examinees;
 
     @Column(name = "E_ADMIN_ID")
     public Long adminId;
@@ -92,15 +95,16 @@ public class Exam extends PanacheEntityBase {
     //@Fetch(value = FetchMode.SUBSELECT)
     @Size(min = 1)*/
     //@LazyCollection(LazyCollectionOption.FALSE)
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
-        name = "F_EXAM_F_EXAMINER",
-        joinColumns = {@JoinColumn(name = "E_ID")},
-        inverseJoinColumns = {@JoinColumn(name = "ER_ID")},
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"ER_ID", "E_ID"})
-        })
-    public List<User> examiners = new ArrayList<>();
+            name = "F_EXAM_F_EXAMINER",
+            joinColumns = {@JoinColumn(name = "E_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ER_ID")},
+            uniqueConstraints = {
+                    @UniqueConstraint(columnNames = {"ER_ID", "E_ID"})
+            })
+    public List<User> userExaminers = new ArrayList<>();
 
     @Column(name = "E_IS_DELETED")
     public boolean isDeleted = false;
@@ -114,7 +118,6 @@ public class Exam extends PanacheEntityBase {
 
     public Exam() {
     }
-
     public Exam(String pin,
                 String title,
                 ExamState state,
@@ -154,14 +157,19 @@ public class Exam extends PanacheEntityBase {
                 LocalDateTime startTime,
                 LocalDateTime endTime,
                 int interval,
-                List<User> examiners) {
+                List<User> userExaminers) {
         this(pin, title, state, date, startTime, endTime, interval);
-        this.examiners = examiners;
+        this.userExaminers = userExaminers;
     }
+
 
 
     @Override
     public String toString() {
         return String.format(this.title + " " + this.date + " " + this.examState);
     }
+
+    public void removeIf(Object o) {
+    }
 }
+

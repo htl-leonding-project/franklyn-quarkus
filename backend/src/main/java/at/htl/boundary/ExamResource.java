@@ -1,15 +1,8 @@
 package at.htl.boundary;
 
-import at.htl.control.ExamRepository;
-import at.htl.control.ExamineeRepository;
-import at.htl.control.ExaminerRepository;
-import at.htl.control.SchoolClassRepository;
-import at.htl.control.UserGroupRepository;
+import at.htl.control.*;
 import at.htl.entity.*;
-import at.htl.entity.dto.ExamDto;
-import at.htl.entity.dto.ExamUpdateDto;
-import at.htl.entity.dto.ExaminerDto;
-import at.htl.entity.dto.ShowExamDto;
+import at.htl.entity.dto.*;
 import io.quarkus.logging.Log;
 import io.quarkus.panache.common.Parameters;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -20,7 +13,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -31,12 +23,11 @@ public class ExamResource {
     @ConfigProperty(name = "CURRENT_ROOT_DIRECTORY")
     File root;
     @Inject
-    ExaminerRepository examinerRepository;
-    @Inject
-    ExamineeRepository examineeRepository;
-    @Inject
     UserGroupRepository userGroupRepository;
-
+    @Inject
+    UserSessionRepository userSessionRepository;
+    @Inject
+    UserRepository userRepository;
     @GET
     @Transactional
     @Path("/examiner/{adminId}")
@@ -55,7 +46,7 @@ public class ExamResource {
     private void BuildShowExamDTO(String adminId, List<ShowExamDto> examSummary, Exam exam) {
         var examiners = examRepository.GetAllExaminersOfExam(exam, Long.parseLong(adminId));
         var forms = examRepository.GetAllSchoolClassesOfExam(exam);
-        var nrOfStudentsPerExam = this.examineeRepository.getCountOfExamineesByExamId(exam.id);
+        var nrOfStudentsPerExam = this.userSessionRepository.getCountOfExamineesByExamId(exam.id);
         boolean canBeDeleted = false;
         boolean canBeEdited = false;
 
@@ -117,7 +108,7 @@ public class ExamResource {
         BuildShowExamDTO(adminId, examSummary, exam);
         return examSummary.get(0);
     }
-
+/*
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
@@ -133,37 +124,50 @@ public class ExamResource {
                 Long.valueOf(exam.examinerIds().get(0))
         );
 
-        e.examiners = new LinkedList<>();
+        e.userExaminers = new LinkedList<>();
         for (String examinerId : exam.examinerIds()) {
-            Examiner examiner = examinerRepository.findById(Long.parseLong(examinerId));
-            if (examiner != null) {
-                e.examiners.add(examiner);
-                examiner.exams.add(e);
+            User user = userRepository.findById(Long.parseLong(examinerId));
+            if (user != null) {
+                e.userExaminers.add(user);
+                UserSession userSession = new UserSession(user, e, UserRole.EXAMINEE);
+                userSession.exam.create(e);
             }
         }
 
-        e.userGroups = new LinkedList<>();
+        e.userSessions = new LinkedList<>();
         for (String formId : exam.formIds()) {
-            UserGroup form = schoolClassRepository.findById(Long.parseLong(formId));
-            if (form != null) {
-                e.userGroups.add(form);
-                form.exams.add(e);
+            UserSession userSession = userSessionRepository.findById(Long.parseLong(formId));
+            if (userSession != null) {
+                e.userSessions.add(userSession);
+                userSession.exam.add(e);
             }
         }
         examRepository.persist(e);
         return pin;
+    }*/
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Exam addExam(ExamDto exam) {
+        Exam e = new Exam(exam.pin(), exam.title(), exam.state(),exam.date(), exam.startTime(), exam.endTime(), exam.interval());
+        examRepository.persist(e);
+        Log.info("Saved Exam: " + e.title);
+        return e;
     }
+
 
     @PUT
     @Path("addExaminer/{id}")
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Exam addExaminerToExam(@PathParam("id") Long id, ExaminerDto examiner) {
-        Exam ex = examRepository.findById(id);
-        Examiner newExaminer = new Examiner(examiner.userName(), examiner.firstName(), examiner.lastName(), examiner.isAdmin());
-        ex.examiners.add(newExaminer);
-        return ex;
+    public Exam addUserToExam(@PathParam("id") Long id, UserDto user) {
+        Exam exam = examRepository.findById(id);
+        User newUser = new User(user.firstName(), user.lastName(), true);
+        exam.userExaminers.add(newUser);
+        return exam;
     }
 
     @DELETE
@@ -174,7 +178,7 @@ public class ExamResource {
         Exam exam = examRepository.findById(examId);
         if (exam == null)
             return null;
-        examinerRepository.deleteExamFromExaminers(examId);
+        userSessionRepository.deleteExamFromExaminers(examId);
 
         //delete screenshots
         //List<File> files = ExamRepository.deleteDirectoryOfScreenshots("Franklyn_2022-02-23", root);
@@ -192,7 +196,7 @@ public class ExamResource {
     @Transactional
     public Exam updateExam(@PathParam("examId") Long examId, ExamUpdateDto updatedExam) {
         Exam exam = examRepository.findById(examId);
-        List<Examiner> examiners = new ArrayList<>();
+        List<User> users = new ArrayList<>();
         List<UserGroup> userGroups = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -200,17 +204,17 @@ public class ExamResource {
             return null;
 
         for (var examiner : updatedExam.examinerIds()) {
-            examiners.add(examinerRepository.findById(Long.valueOf(examiner)));
+            users.add(userRepository.findById(Long.valueOf(examiner)));
         }
 
         for (var form : updatedExam.formIds()) {
-            userGroups.add(schoolClassRepository.findById(Long.valueOf(form)));
+            userGroups.add(userGroupRepository.findById(Long.valueOf(form)));
         }
 
         exam.title = updatedExam.title();
         exam.date = LocalDate.parse(updatedExam.date(), formatter);
         exam.interval = updatedExam.interval();
-        exam.examiners = examiners;
+        exam.userExaminers = users;
         exam.userGroups = userGroups;
 
         examRepository.persist(exam);
@@ -245,16 +249,16 @@ public class ExamResource {
     public Long enrollStudentForExam(@PathParam("examId") Long examId, @PathParam("firstName") String firstName, @PathParam("lastName") String lastName) {
         //show if already exists with first and last name
         Exam exam = examRepository.findById(examId);
-        Examinee examinee = new Examinee(firstName, lastName, exam, true, LocalDateTime.now());
-        boolean examineeAlreadyExists = examineeRepository.checkIfAlreadyEnrolled(examinee.firstName, examinee.lastName, exam.id);
+        User user = new User(firstName, lastName,true);
+        boolean examineeAlreadyExists = userSessionRepository.checkIfAlreadyEnrolled(user.firstName, user.lastName, exam.id);
         if (examineeAlreadyExists) {
             return -1L;
         }
-        examineeRepository.persist(examinee);
-        Examinee returnExaminee = examineeRepository.find("id", examinee.id).firstResult();
-        if (returnExaminee == null)
+        userRepository.persist(user);
+        User returnUser = userRepository.find("id", user.id).firstResult();
+        if (returnUser == null)
             return 0L;
-        return returnExaminee.id;
+        return returnUser.id;
     }
 
     @GET
@@ -265,11 +269,10 @@ public class ExamResource {
                                           @PathParam("firstName") String firstName,
                                           @PathParam("lastName") String lastName) {
 
-        Exam exam = examRepository.findById(id);
-        Examinee examinee = examineeRepository.findByName(id, lastName, firstName);
-        if(examinee == null)
+        User user = userRepository.findByName(lastName, firstName);
+        if(user == null)
             return 0L;
-        return examinee.id;
+        return user.id;
     }
 
     @GET
@@ -285,15 +288,6 @@ public class ExamResource {
     }
 
     // Tran muss definitiv überarbeiten => falsche entitäten, passt nichts zusammen
-    @PUT
-    @Transactional
-    @Path("removeExaminee/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Examinee removeExamineeFromExam(@PathParam("id") Long id, Long examineeId) {
-        Exam ex = examRepository.findById(id);
-        ex.examinees.remove(examineeRepository.findById(examineeId));
-        return examineeRepository.findById(examineeId);
-    }
+
 
 }

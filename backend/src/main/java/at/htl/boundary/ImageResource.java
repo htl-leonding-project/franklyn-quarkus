@@ -1,11 +1,10 @@
 package at.htl.boundary;
 
 import at.htl.control.ExamRepository;
-import at.htl.control.ExamineeRepository;
 import at.htl.control.ScreenshotRepository;
 import at.htl.control.UserRepository;
+import at.htl.control.UserSessionRepository;
 import at.htl.entity.*;
-import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
@@ -36,6 +35,9 @@ public class ImageResource {
 
     @Inject
     UserRepository userRepository;
+
+    @Inject
+    UserSessionRepository userSessionRepository;
 
     @ConfigProperty(name = "PATHOFSCREENSHOT")
     String pathOfScreenshots;
@@ -77,14 +79,14 @@ public class ImageResource {
             //LOG.info(files[1]);
             //Exam exam = examRepository.findById(Long.valueOf(files[3]));
             examRepository.persist(exam);
-            User examinee = userRepository.findByName(exam.id, fullPath[1], fullPath[2]);
-            examinee.isOnline = true;
-            examinee.lastOnline = LocalDateTime.now();
-            userRepository.persist(examinee);
+            UserSession userSession = userSessionRepository.findByName(exam.id, fullPath[1], fullPath[2]);
+            userSession.getUser().isOnline = true;
+            userSession.getUser().lastOnline = LocalDateTime.now();
+            userSessionRepository.persist(userSession);
             Screenshot screenshot = new Screenshot(
                     Timestamp.valueOf(LocalDateTime.now()),
                     cnt,
-                    examinee,
+                    userSession.getUser(),
                     pathOfScreenshots+"/"+ exam.title+"_"+ exam.date +"/"+fullPath[1]+"_"+fullPath[2]+"/"+filename,
                     exam
             );

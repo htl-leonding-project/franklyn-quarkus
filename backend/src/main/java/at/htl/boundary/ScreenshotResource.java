@@ -49,9 +49,9 @@ public class ScreenshotResource {
     @Path("latest/exam/{examId}/examinee/{examineeId}")
     public ScreenshotAngularDto getLatestScreenshot(
             @PathParam("examId") Long examId,
-            @PathParam("examineeId") Long examineeId
+            @PathParam("examineeId") Long userId
     ){
-        Screenshot temp = screenshotRepository.findLatestScreenshot(examineeId);
+        Screenshot temp = screenshotRepository.findLatestScreenshot(userId);
         return null;
     }
 
@@ -60,12 +60,12 @@ public class ScreenshotResource {
     @Path("exam/{examId}/examinee/{examineeId}")
     public List<ScreenshotAngularDto> getScreenshotsOfExaminee(
             @PathParam("examId") Long examId,
-            @PathParam("examineeId") Long examineeId
+            @PathParam("examineeId") Long userId
     ){
-        List<Screenshot> screenshotsTemp = screenshotRepository.getScreenshotsOfExaminee(examId,examineeId);
+        List<Screenshot> screenshotsTemp = screenshotRepository.getScreenshotsOfExaminee(examId,userId);
         List<ScreenshotAngularDto> screenshots = new LinkedList<>();
         for (Screenshot s : screenshotsTemp) {
-            screenshots.add(new ScreenshotAngularDto(s.exam.id,s.examinee.id,currentHost+ s.pathOfScreenshot,s.id));
+            screenshots.add(new ScreenshotAngularDto(s.exam.id,s.user.id,currentHost+ s.pathOfScreenshot,s.id));
         }
         for (int i = 0, j = screenshots.size() - 1; i < j; i++) {
             screenshots.add(i, screenshots.remove(j));

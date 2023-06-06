@@ -1,15 +1,18 @@
 package at.htl.entity.dto;
 
+import at.htl.entity.ExamState;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record ExamDto(
+        String pin,
         String title,
-        String date,
-        List<String> examinerIds,
-        List<String> formIds,
-        String startTime,
-        String endTime,
-        boolean isToday,
+        ExamState state,
+        LocalDate date,
+        LocalDateTime startTime,
+        LocalDateTime endTime,
         int interval
 ) {
 }

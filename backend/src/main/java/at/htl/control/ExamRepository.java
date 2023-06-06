@@ -62,7 +62,7 @@ public class ExamRepository implements PanacheRepository<Exam> {
     public void deleteExaminerFromExams(Long id) {
         var exams = this.listAll();
         for (Exam e : exams) {
-            for (User ex : e.examiners) {
+            for (User ex : e.userExaminers) {
                 if (Objects.equals(ex.id, id) && !e.isDeleted) {
                     this.getEntityManager().remove(ex);
                 }
@@ -72,7 +72,7 @@ public class ExamRepository implements PanacheRepository<Exam> {
 
     public ArrayList<String> GetAllExaminersOfExam(Exam exam, Long adminId) {
         var examiners = new ArrayList<String>();
-        for (User examiner : exam.examiners) {
+        for (User examiner : exam.userExaminers) {
             if (examiner.id != adminId) {
                 examiners.add(examiner.firstName + " " + examiner.lastName);
             }
@@ -96,5 +96,9 @@ public class ExamRepository implements PanacheRepository<Exam> {
         ).setParameter("EXAMID", id);
 
         return query.getSingleResult().interval;
+    }
+
+    public void createExam() {
+
     }
 }
