@@ -903,11 +903,6 @@ Problem: die Clients und Lehrer dürfen nicht aufeinander zugreifen.
 Die URL wird an unseren Reverse Proxy (nginx) gesendet.
 Im DMZ können wir beliebig viel Proxys verwenden.
 
-Server wird mit Docker Compose betrieben:
-
-* App Server
-* Streaming Server
-* Reverse Proxy
 
 Browser ist im [.line-through]#TeacherClient# instructorClient
 
@@ -924,11 +919,30 @@ Es werden drei Docker-Container verwendet: Streaming, nginx und Repository.
 
 In Zukunft ist geplant, einen Prototyp zu erstellen, der die Konvertierung von PNG-Dateien in JPG und von JPG-Dateien in MP4 ermöglicht
 
+==== Wir haben drei Arten von Servern:
+(Server wird mit Docker Compose betrieben)
 
+* App Server:
+** Zuständig für die Verwaltung von Tests und die Authentifizierung.
+* Streaming Server:
+** Zuständig für die Zusammenführung von Bildern und die Generierung von MP4-Dateien.
+* Webserver (aktueller Schülerclient):
+** Zuständig für die Differenzberechnung und Aufnahme von Screenshots.
 
+==== Funktion:
 
+* Der Lehrerclient holt sich die Bilder von den Schülerwebservern.
+Dabei handelt es sich nur um reine Screenshots (ohne Alpha- und Betaframes).
+Diese müssen auch in JPG konvertiert werden.
 
+* Unser Reverse Proxy repräsentiert die DMZ. Die Schülerwebserver müssen auch die Differenzen alle n Sekunden an den Server senden.
 
+* Am Ende des Tests oder nach einer bestimmten Zeit werden die Alpha- und Betaframes verwendet, um ein MP4-Video zu generieren.
+Der Lehrer kann die Videos am nächsten Tag herunterladen.
+
+==== Ziele für dieses Schuljahr:
+Entwicklung eines funktionierenden Systems ohne Streaming Server.
+Es wird jedoch ein Prototyp für einen Streaming Server benötigt.
 // Template
 // == yyyy-mm-dd
 
