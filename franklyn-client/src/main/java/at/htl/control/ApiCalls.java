@@ -76,9 +76,26 @@ public class ApiCalls {
                     screenFullImage,
                     1280,
                     720);
-            File newFile = new File(fileName);
+
+            File pngFolder = new File("pngImages/");
+            if (!pngFolder.exists()) {
+                pngFolder.mkdir();
+            }
+
+            File newFile = new File(pngFolder, fileName);
             System.out.println(newFile.getAbsoluteFile());
             ImageIO.write(newImg, fileExt, newFile);
+
+            File jpgFolder = new File("jpgImages/");
+            if (!jpgFolder.exists()) {
+                jpgFolder.mkdir();
+            }
+            // Konvertieren der PNG-Datei in JPG
+            String jpgFileName = fileName.replace(".png", ".jpg");
+            File jpgFile = new File(jpgFolder, jpgFileName);
+            BufferedImage pngImage = ImageIO.read(newFile);
+            ImageIO.write(pngImage, "jpg", jpgFile);
+
             if (alphaFramePath.length() == 0) {
                 updateAlphaFrame(newFile);
                 return;
@@ -109,11 +126,14 @@ public class ApiCalls {
 
                         var result = new Mat();
                         image2.copyTo(result, difference);
-                        String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
+                       // String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
+                       //         "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
+                        String pngDir = pngFolder.getPath() + File.separator + countOfImages +
                                 "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
+
                         result = convertBlackPixelsToTransparentPixels(result);
 
-                        Imgcodecs.imwrite(currentWorkingDir, result);
+                        Imgcodecs.imwrite(pngDir, result);
                     }
 
                 }
