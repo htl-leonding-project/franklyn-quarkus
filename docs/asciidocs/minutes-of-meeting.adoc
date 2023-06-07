@@ -850,6 +850,82 @@ include::plantuml/classDiagram.puml[]
 
 
 
+== 2023-06-06
+
+.Teilnehmer
+[%collapsible]
+====
+|===
+|Vorname |Nachname |Klasse
+
+|
+| Prof. Stuetz
+|
+
+|
+| Prof. Aberger (Online)
+|
+
+| Mona
+| Angerer
+| 4BHITM
+
+| Al Sabagh
+| Abdulrahman
+| 4BHITM
+
+| Peter
+| Klose
+| 4BHITM
+
+| David
+| Thaller
+| 4BHITM
+|===
+====
+
+=== Besprochene Themen
+
+Es sollen mehrere Bilder gleichzeitig, parallel gespeichert werden können.
+
+Es können 100 mal so viel Clients wie Server erstellt werden.
+
+Es gibt mehrere kleine Webserver.
+
+Der Lehrerclient lädt das Bild von einem Webserver herunter.
+
+Der Server verwaltet die ganzen Tests, Schüler, Rechner, Applikationen, Authentifizureng und Differenzen
+
+Schülerrechner können auf server welcher in demilitarisierte Zone (DMZ) zugreifen, jedoch nicht über das Internet
+
+Problem: die Clients und Lehrer dürfen nicht aufeinander zugreifen.
+
+Die URL wird an unseren Reverse Proxy (nginx) gesendet.
+Im DMZ können wir beliebig viel Proxys verwenden.
+
+Server wird mit Docker Compose betrieben:
+
+* App Server
+* Streaming Server
+* Reverse Proxy
+
+Browser ist im [.line-through]#TeacherClient# instructorClient
+
+instructorClient ist ein RestClient: <img src="...">  wird an Webserver gesendet.
+
+
+Streaming Server:
+holt sich mit Diffs die Daten
+->ein Ordner für jeden Schüler, ...
+
+Aufgabe Client: kann auf Anfrage ein http request machen und schickt divs an Streaming und an Lehrer
+
+Es werden drei Docker-Container verwendet: Streaming, nginx und Repository.
+
+In Zukunft ist geplant, einen Prototyp zu erstellen, der die Konvertierung von PNG-Dateien in JPG und von JPG-Dateien in MP4 ermöglicht
+
+
+
 
 
 
