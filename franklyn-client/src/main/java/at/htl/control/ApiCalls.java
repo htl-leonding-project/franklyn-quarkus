@@ -9,6 +9,7 @@ import org.imgscalr.Scalr;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.videoio.VideoWriter;
 import org.quartz.*;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.TriggerBuilder;
@@ -24,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class ApiCalls {
@@ -52,8 +54,17 @@ public class ApiCalls {
     Scheduler scheduler;
 
     @Inject
+    Logger LOG;
+
+    int imageWidth = 1280;
+    int imageHeight = 720;
+    int allowedDifferenceInPercentage = 30;
+
+    @Inject
     @RestClient
     FrameService frameService;
+
+    File jpgFolder = new File("jpgImages/");
 
     /***
      * send screenshot to backend
@@ -61,7 +72,7 @@ public class ApiCalls {
     public void sendScreenshots() {
 
         try {
-            System.out.println(alphaFramePath + " is the main frame");
+            LOG.info(alphaFramePath + " is the main frame");
             OpenCV.loadLocally();
             Robot robot = new Robot();
             String fileExt = "png";
@@ -74,8 +85,8 @@ public class ApiCalls {
             BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
             BufferedImage newImg = Scalr.resize(
                     screenFullImage,
-                    1280,
-                    720);
+                    imageWidth,
+                    imageHeight);
 
             File pngFolder = new File("pngImages/");
             if (!pngFolder.exists()) {
@@ -83,10 +94,9 @@ public class ApiCalls {
             }
 
             File newFile = new File(pngFolder, fileName);
-            System.out.println(newFile.getAbsoluteFile());
+            LOG.info(newFile.getAbsoluteFile());
             ImageIO.write(newImg, fileExt, newFile);
 
-            File jpgFolder = new File("jpgImages/");
             if (!jpgFolder.exists()) {
                 jpgFolder.mkdir();
             }
@@ -96,13 +106,17 @@ public class ApiCalls {
             BufferedImage pngImage = ImageIO.read(newFile);
             ImageIO.write(pngImage, "jpg", jpgFile);
 
+            // Alle JPGs zu einem MP4 konvertieren
+            mergeJpgImagesToVideo();
+
+
             if (alphaFramePath.length() == 0) {
                 updateAlphaFrame(newFile);
                 return;
 
             }
             if (countOfImages >= 2) {
-                System.out.println("Difference between main and " + countOfImages);
+                LOG.info("Difference between main and " + countOfImages);
 
 
                 var image1 = Imgcodecs.imread(alphaFramePath);
@@ -118,7 +132,7 @@ public class ApiCalls {
                 if (!difference.empty()) {
 
                     var differenceInPercentage = getDifferenceInPercentage(difference);
-                    if (differenceInPercentage >= 30) {
+                    if (differenceInPercentage >= allowedDifferenceInPercentage) {
 
                         updateAlphaFrame(newFile);
 
@@ -142,10 +156,34 @@ public class ApiCalls {
             //imageService.uploadFile(newFile, fileName);
             //newFile.delete();
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            LOG.error(ex.getMessage());
 
         }
 
+    }
+
+    private void mergeJpgImagesToVideo() {
+        try {
+            nu.pattern.OpenCV.loadLocally();
+
+            Size frameSize = new Size(imageWidth, imageHeight);
+            int fourCC = VideoWriter.fourcc('X', '2', '6', '4');
+            VideoWriter videoWriter = new VideoWriter("video.mp4", fourCC, 30, frameSize);
+
+            File[] jpgFiles = jpgFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".jpg"));
+            if (jpgFiles != null) {
+                for (File jpgFile : jpgFiles) {
+                    Mat frame = Imgcodecs.imread(jpgFile.getAbsolutePath());
+                    videoWriter.write(frame);
+                }
+            }
+
+            videoWriter.release();
+
+            LOG.info("Video created successfully at: video.mp4");
+        } catch (Exception ex) {
+            LOG.error(ex.getMessage());
+        }
     }
 
     private void updateAlphaFrame(File file) throws Exception {
@@ -166,7 +204,7 @@ public class ApiCalls {
         var nonZeroPixels = Core.countNonZero(grayDifference);
 
         var differenceInPercentage = (double) nonZeroPixels / totalPixels * 100;
-        System.out.println(differenceInPercentage);
+        LOG.info(differenceInPercentage);
         return differenceInPercentage;
 
     }
