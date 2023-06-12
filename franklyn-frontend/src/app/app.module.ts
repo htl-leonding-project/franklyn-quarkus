@@ -41,6 +41,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { TestNewArchComponent } from './test-new-arch/test-new-arch.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     HowtoComponent,
     ScreenshotsComponent,
     NavbarComponent,
-    EditTestComponent
+    EditTestComponent,
+    TestNewArchComponent
     ],
   imports: [
     BrowserModule,

@@ -344,7 +344,7 @@ public class ApiCalls {
                     .startNow()
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
-                                    .withIntervalInSeconds(1)
+                                    .withIntervalInSeconds(1000)
                                     .repeatForever())
                     .build();
 

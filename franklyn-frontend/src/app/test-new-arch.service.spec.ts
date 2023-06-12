@@ -1,14 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PollingService } from './polling.service';
+import { TestNewArchService } from './test-new-arch.service';
 
-describe('PollingService', () => {
-  let service: PollingService;
-
+describe('TestNewArchService', () => {
+  let service: TestNewArchService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PollingService);
+    service = TestBed.inject(TestNewArchService);
   });
 
   it('should be created', () => {
