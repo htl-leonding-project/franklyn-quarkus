@@ -150,7 +150,7 @@ public class ApiCalls {
 
     }
 
-    private BufferedImage getNewBufferedImage() {
+    public BufferedImage getNewBufferedImage() {
         try {
             Robot robot = new Robot();
             Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
