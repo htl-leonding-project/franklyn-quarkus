@@ -20,7 +20,6 @@ import javax.inject.Inject;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -74,19 +73,11 @@ public class ApiCalls {
         try {
             LOG.info(alphaFramePath + " is the main frame");
             OpenCV.loadLocally();
-            Robot robot = new Robot();
             String fileExt = "png";
-            String localDateTime = LocalDateTime.now().toString()
-                    .replace(':', '-')
-                    .replace(".", "-");
             String fileName = ++countOfImages + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
-            Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-            BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
-            BufferedImage newImg = Scalr.resize(
-                    screenFullImage,
-                    imageWidth,
-                    imageHeight);
+
+            var newImage = getNewBufferedImage();
 
             File pngFolder = new File("pngImages/");
             if (!pngFolder.exists()) {
@@ -95,7 +86,7 @@ public class ApiCalls {
 
             File newFile = new File(pngFolder, fileName);
             LOG.info(newFile.getAbsoluteFile());
-            ImageIO.write(newImg, fileExt, newFile);
+            ImageIO.write(newImage, fileExt, newFile);
 
             if (!jpgFolder.exists()) {
                 jpgFolder.mkdir();
@@ -109,15 +100,12 @@ public class ApiCalls {
             // Alle JPGs zu einem MP4 konvertieren
             mergeJpgImagesToVideo();
 
-
             if (alphaFramePath.length() == 0) {
                 updateAlphaFrame(newFile);
                 return;
-
             }
             if (countOfImages >= 2) {
                 LOG.info("Difference between main and " + countOfImages);
-
 
                 var image1 = Imgcodecs.imread(alphaFramePath);
                 var image2 = Imgcodecs.imread(newFile.getAbsolutePath());
@@ -160,6 +148,22 @@ public class ApiCalls {
 
         }
 
+    }
+
+    private BufferedImage getNewBufferedImage() {
+        try {
+            Robot robot = new Robot();
+            Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+            BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+            BufferedImage newImg = Scalr.resize(
+                    screenFullImage,
+                    imageWidth,
+                    imageHeight);
+            return newImg;
+        }catch (Exception ex) {
+                LOG.error(ex.getMessage());
+        }
+        return null;
     }
 
     private void mergeJpgImagesToVideo() {
