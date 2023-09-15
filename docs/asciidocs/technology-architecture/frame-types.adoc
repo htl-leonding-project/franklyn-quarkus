@@ -2,7 +2,7 @@
 
 
 
-== Verwendet Technologien
+== Verwendete Technologien
 
 - Java
 - Quarkus Client
@@ -17,15 +17,13 @@
 - Alpha Frames
 - Beta Frames
 
-
-
 == Alpha Frames:
 
-- Das sind reine Screenshots, die auf dem Schüler Client gespeichert werden +
+- Diese sind reine Screenshots, die auf dem Schüler-Client gespeichert werden +
 Diese werden später bei der Differenzenrechnung verwendet.
 
 == Beta Frames:
-- Diese sind Screenshots, die mit den Alpha Frames verglichen werden. Die Unterschiede werden auf in einem File (png) kopiert und auf dem Schüler Client gespeichert.
+- Diese sind Screenshots, die mit den Alpha Frames verglichen werden. Die Unterschiede werden in einem File (png) kopiert und auf dem Schüler-Client gespeichert.
 
 == Live Bilder:
 
@@ -33,8 +31,8 @@ Diese werden später bei der Differenzenrechnung verwendet.
 
 == Video Frames:
 
-Am Ende müsesn die Alpha und die Beta Frames zusammengelegt werden. +
-Die zusammengelegten Frameswerden dann später in der Erstellung von mp4s verwendet.
+Am Ende müssen die Alpha und die Beta Frames zusammengelegt werden. +
+Die zusammengelegten Frames werden später in der Erstellung von mp4s verwendet.
 
 
 
@@ -49,7 +47,7 @@ Die zusammengelegten Frameswerden dann später in der Erstellung von mp4s verwen
 
 - Die Masken werden wieder in RGB Farbformat umgewandelt und auf der Festplatten von dem Schüler-Client gespeichert.
 
-
+NOTE: Wenn der Prozentsatz von den Differenzen über 30% liegt, wird der Alpha Frame aktualisiert
 
 
 ////
