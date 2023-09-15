@@ -22,7 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
+
 import java.util.Scanner;
 import org.jboss.logging.Logger;
 
@@ -100,7 +100,7 @@ public class ApiCalls {
             // Alle JPGs zu einem MP4 konvertieren
             mergeJpgImagesToVideo();
 
-            if (alphaFramePath.length() == 0) {
+            if (alphaFramePath.isEmpty()) {
                 updateAlphaFrame(newFile);
                 return;
             }
@@ -344,7 +344,7 @@ public class ApiCalls {
                     .startNow()
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
-                                    .withIntervalInSeconds(1000)
+                                    .withIntervalInSeconds(3)
                                     .repeatForever())
                     .build();
 

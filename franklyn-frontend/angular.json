@@ -108,5 +108,8 @@
       }
     }
   },
-  "defaultProject": "frankyn-frontend"
+  "defaultProject": "frankyn-frontend",
+  "cli": {
+    "analytics": "b17101bc-f216-445c-a9aa-e9406adf6db0"
+  }
 }
