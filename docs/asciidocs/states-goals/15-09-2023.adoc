@@ -1,0 +1,31 @@
+= Aktueller Stand 15.09.2023
+
+
+== Aktuell vorhanden
+
+
+
+- Ein Schüler-Client, der Screenshots aufnehmen kann.
+- Differnzen Rechnung.
+- Zusammenlegung von Frame.s
+- Anzeigen der Frames auf Teacher-Client.
+- Aufzeichnen von Tests
+
+== Bugs und Probleme
+
+Aktuell keine
+
+
+
+== Erledigte Aufgaben
+
+
+== Ziele:
+
+bis zum 22.09.2023:
+
+- Vortragsqualität verbessern
+- Plantuml oder eine doc as code Technologie für die Diagramme verwenden +
+- Meilensteine festlegen +
+- Qualität von Protokollen verbessern +
+- Doku für den technischen Teil schreiben
