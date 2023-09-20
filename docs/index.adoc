@@ -13,25 +13,42 @@ ifdef::backend-html5[]
 // print the toc here (not at the default position)
 //toc::[]
 
-== Development
+== Generelle Information
+
+<<./asciidocs/general-information.adoc#, Generelle Informationen über Franklyn>>
+
+== Starten im Development
 
 <<./asciidocs/HowTo.adoc#, How-To Start for Development>>
 
-== Starten des Franklyn3
-
-<<./asciidocs/startfranklyn3.adoc#, How-To Start Franklyn3>>
-
 == System Specification
+
+<<./asciidocs/technology-architecture/frame-types.adoc#, Frame Management >>
+
+
+NOTE: Folgendes wurde von der vorherigen Generation übernommen.
 
 <<./asciidocs/system-specification.adoc#, System Specification>>
 
+
+== Benutzung des Franklyn3
+
+IMPORTANT: Aktuell noch nicht möglich
+
+//<<./asciidocs/startfranklyn3.adoc#, How-To Start Franklyn3>>
+
 == Protocol
 
-<<./asciidocs/minutes-of-meeting.adoc#, Minutes of Meeting>>
+<<./asciidocs/minutes-of-meeting.adoc#, Minutes of Meeting - Lagacy & 4. Klasse>>
 
 == Franklyn2 maintenance
 
+NOTE: Übernommen von vorheriger Generation
+
 <<./asciidocs/stop-restart-franklyn.adoc#, How to stop and restart Franklyn>>
+
+
+////
 
 == Slides
 
@@ -41,6 +58,8 @@ https://htl-leonding-project.github.io/franklyn-quarkus/slides/#/
 
 TODO
 
+
+////
 
 
 
