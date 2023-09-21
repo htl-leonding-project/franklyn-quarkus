@@ -19,35 +19,36 @@
 
 == Alpha Frames:
 
-- Diese sind reine Screenshots, die auf dem Schüler-Client gespeichert werden +
-Diese werden später bei der Differenzenrechnung verwendet.
+Alpha Frames sind reine Screenshots, die auf dem Schüler-Client gespeichert werden. +
+Sie werden später bei der Differenzenrechnung verwendet.
 
 == Beta Frames:
-- Diese sind Screenshots, die mit den Alpha Frames verglichen werden. Die Unterschiede werden in einem File (png) kopiert und auf dem Schüler-Client gespeichert.
+Beta Frames sind Screenshots, die mit den Alpha Frames verglichen werden. Die Unterschiede werden in ein File (.png) kopiert und auf dem Schüler-Client gespeichert.
 
 == Live Bilder:
 
- - Live Bilder sind reine Screenshots, die zum Teacher Client während des Tests geschickt werden
+Live Bilder sind reine Screenshots, die zum Instructor Client während des Tests geschickt werden.
+
 
 == Video Frames:
 
 Am Ende müssen die Alpha und die Beta Frames zusammengelegt werden. +
-Die zusammengelegten Frames werden später in der Erstellung von mp4s verwendet.
+Die zusammengelegten Frames werden später in der Erstellung von .mp4s verwendet.
 
 
 
 == Wie werden die Differenzen gerechnet
 
 
-- Am Anfang wird ein Screenshot aufgenommen. Dieser wird als Alpha Frame bezeichnet
+- Am Anfang wird ein Screenshot aufgenommen, welcher als Alpha Frame bezeichnet wird.
 
-- Die nächsten Screenshots werden mit diesem Alpha Frame verglichen. Die Pixels von den Bildern werden miteinander verglichen. Für genauere Ergebnisse werden die Bilder in Graustufen umgewandelt.
+- Die nächsten Screenshots werden mit diesem Alpha Frame verglichen. Die Pixel von den Bildern werden miteinander verglichen. Für genauere Ergebnisse werden die Bilder in Graustufen umgewandelt.
 
 - Die Differenzen werden auf einer Bitmap (Matrix oder Maske) gezeichnet.
 
-- Die Masken werden wieder in RGB Farbformat umgewandelt und auf der Festplatten von dem Schüler-Client gespeichert.
+- Die Masken werden wieder in das RGB Farbformat umgewandelt und auf der Festplatte von dem Schüler-Client gespeichert.
 
-NOTE: Wenn der Prozentsatz von den Differenzen über 30% liegt, wird der Alpha Frame aktualisiert
+NOTE: Wenn der Prozentsatz der Differenzen über 30% liegt, wird der Alpha Frame aktualisiert
 
 
 ////

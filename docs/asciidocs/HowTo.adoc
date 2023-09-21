@@ -29,7 +29,7 @@ ng serve --open
 
 == Starten des Screenshot-Clients
 
-* download the `latest relese jar` from the Releses
+* download the `latest release jar` from the Releases
 
 
 

@@ -28,19 +28,19 @@ Franklyn 3 Dev-Team
 
 | Mona
 | Angerer
-| 4BHITM
+| 5BHITM
 
 | Al Sabagh
 | Abdulrahman
-| 4BHITM
+| 5BHITM
 
 | Peter
 | Klose
-| 4BHITM
+| 5BHITM
 
 | David
 | Thaller
-| 4BHITM
+| 5BHITM
 |===
 
 == Github-Repository
@@ -52,20 +52,20 @@ link:https://github.com/htl-leonding-project/franklyn-quarkus[Github-Repository]
 
 === Was ist Franklyn
 
-Franklyn ist ein Demon, der eine faire und realitätsnahe Testumgebung schafft, indem es den Schüler ermöglicht das
-Internet während eines Tests zu benutzten.
+Franklyn ist ein Daemon, der eine faire und realitätsnahe Testumgebung schafft, die es den Schüler ermöglicht, das
+Internet während eines Testes zu benutzten.
 
 === Was macht Franklyn
 
-Frankyln nimmt Screenshots auf und stellt diese einerseits Live dem Instructor bereit bietet aber auch die Möglichkeit
+Frankyln nimmt Screenshots auf und stellt diese einerseits Live dem Instructor bereit, bietet aber auch die Möglichkeit des Anschauens
 im Nachhinein.
 
 
-=== Bestandteile und deren Funktionsweise:
+=== Bestandteile und deren Funktionsweisen:
 
 ==== Examine
 
-Dieser Client ist ein Tool, welcher als Demon Screenshots aufnimmt und verarbeitet.
+Dieser Client ist ein Tool, welcher als Daemon Screenshots aufnimmt und verarbeitet.
 
 
 ////
@@ -90,13 +90,13 @@ Kann Tests erstellen und die Bildschirme der Schüler von seinem Rechner aus beo
 ** Den PIN den SchülerInnen mitteilen
 ////
 
-==== Streming-Server
+==== Streaming-Server
 
 Erhält Bilder vom Examine-Client und erstellt somit eine nachvollziehbare History jedes Examinees.
 
 ==== Application-Server
 
-Dient zur Verwaltung von Schüler und Lehrer Daten. Die informationen welcher Examine zu welchem Test gehört stellt er für den Streaming-Server bereit.
+Dient zur Verwaltung von Schüler- und Lehrerdaten. Die Informationen, welcher Examine zu welchem Test gehört, stellt er für den Streaming-Server bereit.
 
 == Dokumentation
 
