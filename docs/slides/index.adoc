@@ -1,8 +1,7 @@
 = Franklyn-3
 
-ifndef::imagesdir[:imagesdir: ./images]
-
-image::./title.jpg[background, size=cover]
+ifndef::imagesdir[:imagesdir: ../images]
+:icons: font
 
 == Was ist Franklyn?
 
@@ -44,11 +43,11 @@ In unserer Architektur unterscheiden wir zwischen 3 bzw. 4 Frame Arten
 
 === Beispiel Alpha-Frame
 
-image::./alpha-example.png[]
+image::slides-alpha-example.png[size=cover]
 
 === Beispiel Beta-Frame
 
-image::./beta-example.png[]
+image::slides-beta-example.png[size=cover]
 
 
 === Stream-Bilder bzw. Video
@@ -57,13 +56,28 @@ Am Ende werden die Alpha und Beta-Frames zusammengelegt und aus ihnen wird ein M
 
 == Instructor
 
+* Kann einen Test erstellen und diesen entweder einer Klasse zuteilen und oder per PIN zugänglich machen
+* Während des Tests kann er entweder im zufallsprinzip die Bildschirme beobachten oder sich einen Schüler aussuchen,
+den er beobachten möchte
+
 == Streaming-Server
+
+* Setzt Alpha und Beta-Frames wieder zusammen
+* Speichert die zusammengesetzten Screenshots, um eine History nach dem Test bereitzustellen
+* Kann ein Video aus besagten Screenshots erstellen
 
 == Application-Server
 
-== Überblick:
+* Händelt die Anmeldung und Verwaltung der Benutzer
+* Stellt für den Streaming-Server und den Instructor-Client die nötigen Information bereit (Adressen der Examinees)
 
-image::./title.jpg[size=cover]
+== Projektstruktur - Aktuell:
+
+image::slides-bg-title.jpg[]
+
+== Projektstruktur - Zukünftig:
+
+image::slides-architektur-ziel.png[]
 
 == Kommende Schritte
 
