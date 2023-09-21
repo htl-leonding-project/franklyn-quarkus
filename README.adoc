@@ -9,11 +9,36 @@ Der Schülerclient nimmt dabei in einem regelmäßigen Intervall Screenshots auf
 
 == Wie starte ich den Franklyn (Dev)
 
-* Downloade des GitHub-Repo
-
 === Instructor Client
 
+[source,shell]
+----
+git clone https://github.com/htl-leonding-project/franklyn-quarkus <1>
+cd franklyn-quarkus <2>
+cd franklyn-frontend <2>
+npm i --force <3>
+ng serve --open <3>
+----
+
+<1> Klone das Franklyn-3 Repo
+<2> wechsel in das `Frontend`-Verzeichnis
+<3> Angular CLI und Dependency's installieren und anschließendes starten
+
 === Examine Client
+
+Laden Sie sich das Letzte .jar File aus unseren Releases herunter
+
+.Ausführen des .jar Files
+[source,shell]
+----
+java -jar <Name des Heruntergeladenen Files>.jar
+----
+
+=== Überprüfen
+
+Gehen Sie auf http://localhost:4200/impementation-test um das laufende Programm zu sehen.
+
+Um die gespeicherten Alpha- und Beta-Frames zu sehen suchen sie in ihren `franklyn-quarkus/franklyn-client`-Verzeichnis die Ordner `jpgImages` und `pngImages`
 
 
 == Technologien
