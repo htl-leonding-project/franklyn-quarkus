@@ -1,10 +1,6 @@
 package at.htl.control;
 
-import at.htl.boundary.ExamineeService;
-import at.htl.boundary.FrameService;
-import at.htl.boundary.ImageService;
 import nu.pattern.OpenCV;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.imgscalr.Scalr;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -29,12 +25,13 @@ import org.jboss.logging.Logger;
 @ApplicationScoped
 public class ApiCalls {
 
-    @Inject
+    //@Inject
+    //@RestClient
+    //ImageService imageService;
+
+   /* @Inject
     @RestClient
-    ImageService imageService;
-    @Inject
-    @RestClient
-    ExamineeService examineeService;
+    ExamineeService examineeService;*/
     private String firstName = "max";
     private String lastName = "muster";
     private Long id = -1L;
@@ -59,9 +56,9 @@ public class ApiCalls {
     int imageHeight = 720;
     int allowedDifferenceInPercentage = 30;
 
-    @Inject
+    /*@Inject
     @RestClient
-    FrameService frameService;
+    FrameService frameService;*/
 
     File jpgFolder = new File("jpgImages/");
 
@@ -98,7 +95,7 @@ public class ApiCalls {
             ImageIO.write(pngImage, "jpg", jpgFile);
 
             // Alle JPGs zu einem MP4 konvertieren
-            mergeJpgImagesToVideo();
+            //mergeJpgImagesToVideo();
 
             if (alphaFramePath.isEmpty()) {
                 updateAlphaFrame(newFile);
@@ -193,7 +190,7 @@ public class ApiCalls {
     private void updateAlphaFrame(File file) throws Exception {
         alphaFramePath = file.getAbsolutePath();
         var fileToBytes = Files.readAllBytes(Paths.get(alphaFramePath));
-        frameService.saveAlphaFrame(fileToBytes);
+        //frameService.saveAlphaFrame(fileToBytes);
     }
 
     private Mat convertColoredImagesToGray(Mat coloredImage) {
@@ -240,96 +237,6 @@ public class ApiCalls {
      * set enroll data
      * @param id
      * @return
-     */
-
-    public Long enterName(String id) {
-        Long response;
-
-        do {
-            System.out.print("Enter your first name: ");
-            firstName = sc.next();
-
-            System.out.print("Enter your last name: ");
-            lastName = sc.next();
-
-            response = executeEnrollService(id, firstName, lastName);
-
-            if (response == -1L) {
-                System.out.println("You are already enrolled for this exam!");
-
-                System.out.print("Enroll again with the same name? [Y | N]: ");
-                enrollOption = sc.next();
-
-                if (enrollOption.equalsIgnoreCase("Y")) {
-                    response = executeEnrollAgainService(id, firstName, lastName);
-                } else if (enrollOption.equalsIgnoreCase("N")) {
-                    response = -100L;
-                }
-
-            }
-        } while (response == -1L);
-
-        if (response != -100L) {
-            authenticated = true;
-        }
-        return response;
-    }
-
-    /***
-     * enroll student in exam (POST)
-     *
-     * @param id
-     * @param firstName
-     * @param lastName
-     * @return
-     */
-
-    public Long executeEnrollService(String id, String firstName, String lastName) {
-        return examineeService
-                .enrollStudentForExam(id, firstName, lastName);
-    }
-
-    /***
-     * enroll student in exam again (POST)
-     *
-     * @param id
-     * @param firstName
-     * @param lastName
-     * @return
-     */
-    public Long executeEnrollAgainService(String id, String firstName, String lastName) {
-        return examineeService
-                .enrollStudentForExamAgain(id, firstName, lastName);
-    }
-
-
-    /***
-     * send pin to backend (POST)
-     * @return exam id
-     */
-
-    public Long enterPIN() {
-        do {
-            System.out.print("Enter your pin: ");
-            String pin = sc.next();
-
-            id = examineeService.verifyPIN(pin);
-        } while (id == 0L);
-        return id;
-    }
-
-    /***
-     * retrieve interval from backend (GET)
-     * @param examId
-     */
-
-    public void getIntervall(String examId) {
-        interval = examineeService.getInterval(examId);
-    }
-
-    /***
-     * overwrite scheduler with interval given
-     * @throws SchedulerException
      */
 
     public void setScheduler() throws SchedulerException {
