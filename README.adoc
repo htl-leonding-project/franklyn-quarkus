@@ -26,13 +26,16 @@ ng serve --open <3>
 <2> wechsel in das `Frontend`-Verzeichnis
 <3> Starten der Seite
 
-Falls es probleme gibt, kann es sein das Angular nicht installiet ist. In diesem fall installieren sie einfach Angular.
+.Probleme aufgetreten?
+[%collapsible]
+====
+Falls es probleme gibt, kann es sein das Angular nicht installiert ist. In diesem Fall installieren sie einfach Angular.
 
 [source,bash]
 ----
 npm install @angular/cli
 ----
-
+====
 
 === Examine Client
 
