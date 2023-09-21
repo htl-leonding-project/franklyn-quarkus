@@ -63,7 +63,7 @@ im Nachhinein.
 
 === Bestandteile und deren Funktionsweisen:
 
-==== Examine
+==== Examinee
 
 Dieser Client ist ein Tool, welcher als Daemon Screenshots aufnimmt und verarbeitet.
 
@@ -92,11 +92,11 @@ Kann Tests erstellen und die Bildschirme der Schüler von seinem Rechner aus beo
 
 ==== Streaming-Server
 
-Erhält Bilder vom Examine-Client und erstellt somit eine nachvollziehbare History jedes Examinees.
+Erhält Bilder vom Examinee-Client und erstellt somit eine nachvollziehbare History jedes Examinees.
 
 ==== Application-Server
 
-Dient zur Verwaltung von Schüler- und Lehrerdaten. Die Informationen, welcher Examine zu welchem Test gehört, stellt er für den Streaming-Server bereit.
+Dient zur Verwaltung von Schüler- und Lehrerdaten. Die Informationen, welcher Examinee zu welchem Test gehört, stellt er für den Streaming-Server bereit.
 
 == Dokumentation
 
