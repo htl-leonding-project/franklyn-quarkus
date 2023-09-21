@@ -1,10 +1,11 @@
-= How-To Start for Development
-Melcher Tamara, Tran Michael
-22. Juli 2022
-:toc:
+= HowTo - Franklyn 3 im Development Starten
+Franklyn 3 Dev-Team
+2023/24: franklyn-quarkus
+ifndef::imagesdir[:imagesdir: images]
+:sourcedir: ../src/main/java
 :icons: font
-:url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
-
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
 ////
 == Start the backend first
 
