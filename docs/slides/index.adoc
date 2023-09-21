@@ -1,10 +1,8 @@
 = Franklyn-3
 
-Für eine faire und realitätsnahe Testumgebung
-
 ifndef::imagesdir[:imagesdir: ./images]
 
-image::title.jpg[]
+image::./title.jpg[background, size=cover]
 
 == Was ist Franklyn?
 
@@ -17,7 +15,69 @@ Ein Tool, welches Bilder am Schüler PC aufnimmt und dem Lehrer darstellt.
 * Examine-Client
 * Instructor-Client
 * Streaming-Server
-* Applications-Server
+* Application-Server
 
-IMPORTANT: Aktuell sind die Server noch nicht getrennt
+IMPORTANT: Aktuell sind Streaming und Application-Server ein gemeinsamer Server
 
+
+== Examine-Client
+
+* nimmt in regelmäßigen Abstand Screenshots auf wandelt diese in Alpha und Beta frames und schickt Sie zum Streaming-Server, wo diese gespeichert werden.
+* nimmt aktuellen screenshot auf Anfrage von Instructor-Client auf und stellt diesen bereit. Dieses Bild wird nicht gespeichert.
+
+== Frame-Management
+
+In unserer Architektur unterscheiden wir zwischen 3 bzw. 4 Frame Arten
+
+=== Live-Bilder
+
+* einfachste Möglichkeit Bilder zu erhalten
+* keine Speicherung notwendig
+* nur dann aufgenommen und bereitgestellt, wenn Instructor-Client diesen Examine beobachtet.
+
+=== Alpha u. Beta-Frames
+
+* Bilder werden regelmäßig aufgenommen und verarbeitet zu
+** Alpha-Frames - vollständiges Bild
+** Beta-Frames - Änderungen zum letzten Alpha-Frame
+* Das jeweilige Bild wird zum Streaming-Server geschickt
+
+=== Beispiel Alpha-Frame
+
+image::./alpha-example.png[]
+
+=== Beispiel Beta-Frame
+
+image::./beta-example.png[]
+
+
+=== Stream-Bilder bzw. Video
+
+Am Ende werden die Alpha und Beta-Frames zusammengelegt und aus ihnen wird ein MP4 Video erstellt.
+
+== Instructor
+
+== Streaming-Server
+
+== Application-Server
+
+== Überblick:
+
+image::./title.jpg[size=cover]
+
+== Kommende Schritte
+
+=== bis zum Herbst
+
+plantuml::../asciidocs/plantuml/todoGantt-alpha.puml[]
+
+=== bis Neujahr
+
+plantuml::../asciidocs/plantuml/todoGantt-beta.puml[]
+
+
+=== im kommenden Jahr
+
+plantuml::../asciidocs/plantuml/todoGantt-final.puml[]
+
+== Vielen Dank für Ihre Aufmerksamkeit
