@@ -28,31 +28,81 @@ Franklyn 3 Dev-Team
 
 | Mona
 | Angerer
-| 4BHITM
+| 5BHITM
 
 | Al Sabagh
 | Abdulrahman
-| 4BHITM
+| 5BHITM
 
 | Peter
 | Klose
-| 4BHITM
+| 5BHITM
 
 | David
 | Thaller
-| 4BHITM
+| 5BHITM
 |===
-
 
 == Github-Repository
 
 link:https://github.com/htl-leonding-project/franklyn-quarkus[Github-Repository]
 
+
+== Übersicht
+
+=== Was ist Franklyn
+
+Franklyn ist ein Daemon, der eine faire und realitätsnahe Testumgebung schafft, die es den Schüler ermöglicht, das
+Internet während eines Testes zu benutzten.
+
+=== Was macht Franklyn
+
+Frankyln nimmt Screenshots auf und stellt diese einerseits Live dem Instructor bereit, bietet aber auch die Möglichkeit des Anschauens
+im Nachhinein.
+
+
+=== Bestandteile und deren Funktionsweisen:
+
+==== Examinee
+
+Dieser Client ist ein Tool, welcher als Daemon Screenshots aufnimmt und verarbeitet.
+
+
+////
+* Auf der Startseite den Client herunterladen
+* Bei Verwendung des .jar-Files
+** cd Downloads
+** java -jar franklyn3-client.jar
+
+* Den Namen eingeben
+* Den PIN eingeben
+* Das Fenster nicht schließen
+////
+
+==== Instructor
+
+Kann Tests erstellen und die Bildschirme der Schüler von seinem Rechner aus beobachten.
+
+////
+* Den Test gewohnt wie in Franklyn2 anlegen
+** Auf Test anlegen klicken
+** Die benötigten Daten eingeben
+** Den PIN den SchülerInnen mitteilen
+////
+
+==== Streaming-Server
+
+Erhält Bilder vom Examinee-Client und erstellt somit eine nachvollziehbare History jedes Examinees.
+
+==== Application-Server
+
+Dient zur Verwaltung von Schüler- und Lehrerdaten. Die Informationen, welcher Examinee zu welchem Test gehört, stellt er für den Streaming-Server bereit.
+
 == Dokumentation
 
 link:https://htl-leonding-project.github.io/franklyn-quarkus/[Dokumentation]
 
-== VM von Franklyn2 (auf Nachfrage)
+//== VM von Franklyn2 (auf Nachfrage)
 
 
 

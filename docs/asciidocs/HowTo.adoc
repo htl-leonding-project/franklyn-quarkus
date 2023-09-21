@@ -5,6 +5,7 @@ Melcher Tamara, Tran Michael
 :icons: font
 :url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
 
+////
 == Start the backend first
 
 * open a terminal in `backend`-project and execute:
@@ -13,6 +14,8 @@ Melcher Tamara, Tran Michael
 ----
 ./mvnw clean quarkus:dev
 ----
+
+////
 
 == Start the frontend
 
@@ -23,6 +26,10 @@ Melcher Tamara, Tran Michael
 npm i --force
 ng serve --open
 ----
+
+== Starten des Screenshot-Clients
+
+* download the `latest release jar` from the Releases
 
 
 

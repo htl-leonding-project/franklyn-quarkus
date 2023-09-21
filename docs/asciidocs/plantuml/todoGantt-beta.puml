@@ -1,0 +1,24 @@
+@startgantt
+saturday are closed
+sunday are closed
+
+Project starts the 13th of november 2023
+
+[Streaming-Server reaktivieren] as [TASK1-1] lasts 5 days
+[Instructor kann Videos herunterladen und Frontend Erweiterungen] as [TASK2-1] lasts 10 days
+[Domainüberprüfung (ChatGPT, GitHub, etc.)] as [TASK3-1] lasts 10 days
+["Flags" bei erkannten Chatversuchen] as [TASK4-1] lasts 5 days
+[Deployment Pipeline] as [TASK1-2] lasts 10 days
+
+[Streaming-Server reaktivieren] as [TASK1-1] lasts 5 days
+
+[TASK1-1] -> [TASK2-1]
+[TASK2-1] -> [TASK3-1]
+[TASK3-1] -> [TASK4-1]
+
+
+
+
+2023-11-05 to 2023-11-10 are named [Brüssel]
+2023-11-05 to 2023-11-10 are colored in salmon
+@endgantt
