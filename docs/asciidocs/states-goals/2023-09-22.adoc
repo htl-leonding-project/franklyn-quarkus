@@ -26,7 +26,7 @@ plantuml::../plantuml/todoGantt-final.puml[]
 - Screenshots laufen nicht auf allen Betriebssystemen einwandfrei
 
 ==== Fragen:
-- Ist im Schulnetztwerk der direkte zugriff auf einen anderen PC möglich? (WS kommunikation mit Instructor, Streaming-Server)
+- Ist im Schulnetzwerk der direkte zugriff auf einen anderen PC möglich? (WS kommunikation mit Instructor, Streaming-Server)
 
 
 === Besprochene Themen:
