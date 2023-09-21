@@ -13,8 +13,6 @@
 - Mp4 wird auf dem Examine-Client erstellt und nicht am Streaming-Server
 - Linux muss auf xorg-Linux laufen sonst funktionieren die Screenshots nicht
 
-=== Erledigte Aufgaben:
--
 
 === Besprochene Themen:
 -
