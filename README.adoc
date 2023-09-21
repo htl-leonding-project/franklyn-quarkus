@@ -9,6 +9,8 @@ Der Schülerclient nimmt dabei in einem regelmäßigen Intervall Screenshots auf
 
 == Wie starte ich den Franklyn (Dev)
 
+Aktuell leider nur auf Linux und Mac möglich!
+
 === Instructor Client
 
 [source,shell]
@@ -16,13 +18,21 @@ Der Schülerclient nimmt dabei in einem regelmäßigen Intervall Screenshots auf
 git clone https://github.com/htl-leonding-project/franklyn-quarkus <1>
 cd franklyn-quarkus <2>
 cd franklyn-frontend <2>
-npm i --force <3>
+npm i --force
 ng serve --open <3>
 ----
 
 <1> Klone das Franklyn-3 Repo
 <2> wechsel in das `Frontend`-Verzeichnis
-<3> Angular CLI und Dependency's installieren und anschließendes starten
+<3> Starten der Seite
+
+Falls es probleme gibt, kann es sein das Angular nicht installiet ist. In diesem fall installieren sie einfach Angular.
+
+[source,bash]
+----
+npm install @angular/cli
+----
+
 
 === Examine Client
 
@@ -31,7 +41,7 @@ Laden Sie sich das Letzte .jar File aus unseren link:https://github.com/htl-leon
 .Ausführen des .jar Files
 [source,shell]
 ----
-java -jar franklyn3-client.jar
+java -jar franklyn3-client-prealpha.jar
 ----
 
 === Überprüfen
