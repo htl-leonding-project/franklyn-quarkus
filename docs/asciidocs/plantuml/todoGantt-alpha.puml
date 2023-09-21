@@ -1,0 +1,22 @@
+@startgantt
+saturday are closed
+sunday are closed
+
+Project starts the 22nd of september 2023
+
+[Authentifizierung] as [TASK1-1] lasts 11 days
+[Legacy-Struktur auf 2 Server aufteilen] as [TASK1-2] lasts 11 days
+[Live-Bilder per Web-Sockets schicken] as [TASK2-1] lasts 5 days
+[Test anlegen bei dem sich n-Schüler registieren können] as [TASK2-2] lasts 10 days
+
+
+[Deployment ohne Pipline] as [TASK3-3] lasts 21 days
+
+
+[TASK1-1]->[TASK2-1]
+[TASK1-1]->[TASK2-2]
+
+
+2023-10-23 to 2023-11-05 are named [Herbsferien]
+2023-10-23 to 2023-11-05 are colored in salmon
+@endgantt
