@@ -50,9 +50,12 @@ Die zusammengelegten Frames werden später in der Erstellung von mp4s verwendet.
 NOTE: Wenn der Prozentsatz von den Differenzen über 30% liegt, wird der Alpha Frame aktualisiert
 
 
-////
+
 == Wie werden die Alpha und Beta Frames zusammengelegt
 
-
-(coming soon)////
+- Das Programm ruft die letzten Alpha- und Beta-Frames ab.
+- Eine leere Matrix wird erstellt.
+- Die farbigen Pixel des Beta-Frames werden in die Matrix gezeichnet.
+- Der Alpha-Frame wird in die Maske kopiert. Bereits vorhandene farbige Pixel in der Matrix bleiben unverändert. Es werden lediglich transparente Pixel durch farbige ersetzt.
+- Die Matrix wird in eine Datei umgewandelt und auf der Festplatte des Servers gespeichert.
 
