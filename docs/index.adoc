@@ -39,7 +39,9 @@ IMPORTANT: Aktuell noch nicht möglich
 
 == Protocol
 
-<<./asciidocs/minutes-of-meeting.adoc#, Minutes of Meeting - Lagacy & 4. Klasse>>
+<<./asciidocs/minutes-of-meeting-legacy.adoc#, Minutes of Meeting - 2023/24>>
+
+<<./asciidocs/minutes-of-meeting-legacy.adoc#, Minutes of Meeting - Lagacy & 4. Klasse>>
 
 == Franklyn2 maintenance
 
@@ -48,18 +50,9 @@ NOTE: Übernommen von vorheriger Generation
 <<./asciidocs/stop-restart-franklyn.adoc#, How to stop and restart Franklyn>>
 
 
-////
-
 == Slides
 
-https://htl-leonding-project.github.io/franklyn-quarkus/slides/#/
-
-== Systemregeln
-
-TODO
-
-
-////
+https://htl-leonding-project.github.io/franklyn-quarkus/slides/#/[Adoc-Slides für Franklyn-3]
 
 
 

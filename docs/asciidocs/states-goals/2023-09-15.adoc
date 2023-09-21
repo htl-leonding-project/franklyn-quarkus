@@ -1,11 +1,6 @@
-= Meeting 15.09.2023
-Franklyn 3 Dev-Team
-15.Sep 2023: franklyn-quarkus
-:toc:
-:icons: font
-:url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
+== Meeting 2023-09-15
 
-== Aktuell vorhanden:
+=== Aktuell vorhanden:
 
 - Ein Schüler-Client, der Screenshots aufnehmen kann.
 - Differnzen Rechnung.
@@ -13,20 +8,20 @@ Franklyn 3 Dev-Team
 - Anzeigen der Frames auf Teacher-Client.
 - Aufzeichnen von Tests
 
-== Bugs und Probleme:
+=== Bugs, Probleme und Fragen:
 
 - Mp4 wird auf dem Examine-Client erstellt und nicht am Streaming-Server
 - Linux muss auf xorg-Linux laufen sonst funktionieren die Screenshots nicht
 
-== Erledigte Aufgaben:
+=== Erledigte Aufgaben:
 -
 
-== Besprochene Themen:
+=== Besprochene Themen:
 -
 
-== Ziele:
+=== Ziele:
 
-bis zum 22.09.2023:
+*bis 22.09.2023:*
 
 - Vortragsqualität verbessern
 - Plantuml oder eine doc as code Technologie für die Diagramme verwenden +
