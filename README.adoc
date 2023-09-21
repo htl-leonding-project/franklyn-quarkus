@@ -26,12 +26,12 @@ ng serve --open <3>
 
 === Examine Client
 
-Laden Sie sich das Letzte .jar File aus unseren Releases herunter
+Laden Sie sich das Letzte .jar File aus unseren link:https://github.com/htl-leonding-project/franklyn-quarkus/releases[Releases] herunter
 
 .Ausführen des .jar Files
 [source,shell]
 ----
-java -jar <Name des Heruntergeladenen Files>.jar
+java -jar franklyn3-client.jar
 ----
 
 === Überprüfen
