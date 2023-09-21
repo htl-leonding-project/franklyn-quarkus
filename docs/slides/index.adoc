@@ -73,7 +73,7 @@ den er beobachten möchte
 
 == Projektstruktur - Aktuell:
 
-image::slides-bg-title.jpg[]
+image::slides-architektur-aktuell.png[]
 
 == Projektstruktur - Zukünftig:
 
