@@ -1,0 +1,39 @@
+= franklyn-quarkus
+
+== Neuimplementierung von Franklyn mit Quarkus
+
+Franklyn ist eine Applikation, welche Schülern eine der Berufswelt entsprechende Arbeitsumgebung während Leistungsfeststellungen bietet.
+
+Lehrkräfte bekommen die Möglichkeit, Testsitzungen zu erstellen. Schüler können sich zu einer Sitzung mit einem PIN oder per Vor- und Nachnamen anmelden. 
+Der Schülerclient nimmt dabei in einem regelmäßigen Intervall Screenshots auf, welche sich die Lehrkraft ansehen kann. 
+
+== Wie starte ich den Franklyn (Dev)
+
+* Downloade des GitHub-Repo
+
+=== Instructor Client
+
+=== Examine Client
+
+
+== Technologien
+* Quarkus
+* Angular
+* PostgreSQl
+
+== Team
+* Angerer Mona
+* Al Sabagh Abdulrahman
+* Klose Peter
+* Thaller David
+
+== Links
+
+link:https://student.cloud.htl-leonding.ac.at/t.melcher/franklyn/start[Franklyn 3]
+
+link:https://htl-leonding-project.github.io/franklyn-quarkus/[Dokumentation]
+
+
+link:https://vm81.htl-leonding.ac.at/agiles/99-313/current[YouTrack]
+
+Ein Projekt der link:https://www.htl-leonding.at/[HTL Leonding]
