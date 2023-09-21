@@ -1,0 +1,37 @@
+== Meeting 2022-09-22
+
+=== Aktuell vorhanden:
+
+- Beinahe die gesamte Dokumentation wurde überarbeitet und erneuert.
+- Dabei wurden auch die vererbten Dateien bzw. Skripten auf den stand des link:https://github.com/htl-leonding-college/asciidoctor-convert-template[asciidoctor-convert-template] gebracht.
+- Eine Adoc-Slides Presentation wurde erstellt um das Projekt bestmöglichst vorstellen zu können.
+- Die letzte Version des Programms ist als `.jar` in den GitHub-Releases aufzufinden.
+
+
+==== Planung:
+
+.bis zum Herbst
+plantuml::../plantuml/todoGantt-alpha.puml[]
+
+.bis Neujahr
+plantuml::../plantuml/todoGantt-beta.puml[]
+
+.im kommenden Jahr
+plantuml::../plantuml/todoGantt-final.puml[]
+
+
+=== Bugs, Probleme und Fragen:
+
+==== Bugs:
+- Screenshots laufen nicht auf allen Betriebssystemen einwandfrei
+
+==== Fragen:
+- Ist im Schulnetztwerk der direkte zugriff auf einen anderen PC möglich? (WS kommunikation mit Instructor, Streaming-Server)
+
+
+=== Besprochene Themen:
+-
+
+=== Ziele:
+
+*bis xx.xx.202x:*
