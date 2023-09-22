@@ -11,7 +11,7 @@ Ein Tool, welches Bilder am Schüler PC aufnimmt und dem Lehrer darstellt.
 
 === Aufbau
 
-* Examine-Client
+* Examinee-Client
 * Instructor-Client
 * Streaming-Server
 * Application-Server
@@ -21,8 +21,8 @@ IMPORTANT: Aktuell sind Streaming und Application-Server ein gemeinsamer Server
 
 == Examine-Client
 
-* nimmt in regelmäßigen Abstand Screenshots auf wandelt diese in Alpha und Beta frames und schickt Sie zum Streaming-Server, wo diese gespeichert werden.
-* nimmt aktuellen screenshot auf Anfrage von Instructor-Client auf und stellt diesen bereit. Dieses Bild wird nicht gespeichert.
+* Nimmt in regelmäßigen Abstand Screenshots auf wandelt diese in Alpha- und Beta-Frames um und schickt Sie zum Streaming-Server, wo diese gespeichert werden.
+* Nimmt aktuellen Screenshot auf Anfrage von Instructor-Client auf und stellt diesen bereit. Dieses Bild wird nicht gespeichert.
 
 == Frame-Management
 
@@ -34,7 +34,7 @@ In unserer Architektur unterscheiden wir zwischen 3 bzw. 4 Frame Arten
 * keine Speicherung notwendig
 * nur dann aufgenommen und bereitgestellt, wenn Instructor-Client diesen Examine beobachtet.
 
-=== Alpha u. Beta-Frames
+=== Alpha- u. Beta-Frames
 
 * Bilder werden regelmäßig aufgenommen und verarbeitet zu
 ** Alpha-Frames - vollständiges Bild
@@ -52,13 +52,13 @@ image::slides-beta-example.png[size=cover]
 
 === Stream-Bilder bzw. Video
 
-Am Ende werden die Alpha und Beta-Frames zusammengelegt und aus ihnen wird ein MP4 Video erstellt.
+Am Ende werden die Alpha- und Beta-Frames zusammengelegt und aus ihnen wird ein MP4 Video erstellt.
 
 == Instructor
 
-* Kann einen Test erstellen und diesen entweder einer Klasse zuteilen und oder per PIN zugänglich machen
+* Kann einen Test erstellen und diesen entweder einer Klasse zuteilen und oder per PIN zugänglich machen.
 * Während des Tests kann er entweder im zufallsprinzip die Bildschirme beobachten oder sich einen Schüler aussuchen,
-den er beobachten möchte
+den er beobachten möchte.
 
 == Streaming-Server
 

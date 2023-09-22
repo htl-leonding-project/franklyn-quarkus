@@ -10,7 +10,7 @@
 
 === Bugs, Probleme und Fragen:
 
-- Mp4 wird auf dem Examine-Client erstellt und nicht am Streaming-Server
+- Mp4 wird auf dem Examinee-Client erstellt und nicht am Streaming-Server
 - Linux muss auf xorg-Linux laufen sonst funktionieren die Screenshots nicht
 
 

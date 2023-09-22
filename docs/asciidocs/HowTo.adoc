@@ -11,12 +11,12 @@ ifndef::imagesdir[:imagesdir: images]
 
 === Technologien
 
-* Der Node-Package-Manager - npm muss installiert sein
+* Der Node-Package-Manager -npm muss installiert sein
 * Java muss installiert sein
 
 === Hardware
 
-* Aktuell kann es noch zu Problemen bei Linus und Windows Geräten kommen
+* Aktuell kann es noch zu Problemen bei Linux und Windows Geräten kommen
 * Es wird an einer Lösung mit Docker gearbeitet
 
 == Repository Klonen
@@ -39,7 +39,7 @@ ng serve --open
 .Probleme aufgetreten?
 [%collapsible]
 ====
-Falls es probleme gibt, kann es sein das Angular nicht installiert ist. In diesem Fall installieren sie einfach Angular.
+Falls es probleme gibt, kann es sein das Angular nicht installiert ist. In diesem Fall installieren Sie einfach Angular.
 
 [source,bash]
 ----
@@ -57,6 +57,6 @@ npm install @angular/cli
 java -jar franklyn3-client-prealpha.jar
 ----
 
-* In dem Ordner, wo Sie sich befinden sollten jetzt 2 Ordner mit alpha bzw. beta frames erscheinen.
+* In dem Ordner, wo Sie sich befinden sollten jetzt 2 Ordner mit Alpha- bzw. Beta-Frames erscheinen.
 
 
