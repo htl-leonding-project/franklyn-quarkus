@@ -29,7 +29,7 @@ ng serve --open <3>
 .Probleme aufgetreten?
 [%collapsible]
 ====
-Falls es probleme gibt, kann es sein das Angular nicht installiert ist. In diesem Fall installieren sie einfach Angular.
+Falls es probleme gibt, kann es sein das Angular nicht installiert ist. In diesem Fall installieren Sie einfach Angular.
 
 [source,bash]
 ----
@@ -37,7 +37,7 @@ npm install @angular/cli
 ----
 ====
 
-=== Examine Client
+=== Examinee Client
 
 Laden Sie sich das Letzte .jar File aus unseren link:https://github.com/htl-leonding-project/franklyn-quarkus/releases[Releases] herunter
 
@@ -51,7 +51,7 @@ java -jar franklyn3-client-prealpha.jar
 
 Gehen Sie auf http://localhost:4200/impementation-test um das laufende Programm zu sehen.
 
-Um die gespeicherten Alpha- und Beta-Frames zu sehen suchen sie in ihren `franklyn-quarkus/franklyn-client`-Verzeichnis die Ordner `jpgImages` und `pngImages`
+Um die gespeicherten Alpha- und Beta-Frames zu sehen suchen Sie in ihren `franklyn-quarkus/franklyn-client`-Verzeichnis die Ordner `jpgImages` und `pngImages`
 
 
 == Technologien
