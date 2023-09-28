@@ -44,6 +44,10 @@ In unserer Architektur unterscheiden wir zwischen 3 bzw. 4 Frame Arten
 ** Beta-Frames - Änderungen zum letzten Alpha-Frame
 * Das jeweilige Bild wird zum Streaming-Server geschickt
 
+=== Alpha- u. Beta-Frames Vorgehensweise
+
+image::slides-alpha-beta-vorgehensweise.png[size=cover]
+
 [.columns]
 === Beispiel Alpha- u. Beta-Frame
 
