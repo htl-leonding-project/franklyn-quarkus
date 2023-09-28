@@ -30,7 +30,12 @@ plantuml::../plantuml/todoGantt-final.puml[]
 
 
 === Besprochene Themen:
--
+- anstatt "Bilder" soll der Begriff "Screenshots" verwendet werden (Folie bearbeiten)
+- Schüler und Lehrer sollen nicht genannt werden. -> allgemeiner!
+** Instructor and Student
+- Folie "Aufbau": Gleich Diagramm zeigen (Marketingdiagramm)
+- Backroundimage von PC-Raum für die Präsentation, wo Studenten sitzen und arbeiten (Fotos in Action)
+
 
 === Ziele:
 
