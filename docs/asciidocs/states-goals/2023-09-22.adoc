@@ -35,3 +35,6 @@ plantuml::../plantuml/todoGantt-final.puml[]
 === Ziele:
 
 *bis xx.xx.202x:*
+
+Was machen wir bis zum Ende des Jahres?
+Übersichtlichen informative 
