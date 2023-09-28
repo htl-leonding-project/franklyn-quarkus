@@ -1,6 +1,6 @@
 = Franklyn3
-Melcher Tamara und Michael Tran
-12.04.2023: Dokumentation für Franklyn3
+Franklyn 3 Dev-Team
+2023/24
 ifndef::imagesdir[:imagesdir: images]
 :sourcedir: ../src/main/java
 :icons: font

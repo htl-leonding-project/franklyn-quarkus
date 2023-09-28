@@ -9,17 +9,13 @@ Ein Tool, welches Bildschirmaufnahmen von angemeldeten PCs erstellt und diese de
 
 == Wie funktioniert Franklyn?
 
+image::../images/slides-bg-title.jpg[background, size=cover]
+
 === Aufbau
 
-* Examinee-Client
-* Instructor-Client
-* Streaming-Server
-* Application-Server
+image::../images/slides-franklyn-overview.png[]
 
-IMPORTANT: Aktuell sind Streaming und Application-Server ein gemeinsamer Server
-
-
-== Examine-Client
+== Examinee-Client
 
 * Nimmt in regelmäßigen Abstand Screenshots auf wandelt diese in Alpha- und Beta-Frames um und schickt Sie zum Streaming-Server, wo diese gespeichert werden.
 * Nimmt aktuellen Screenshot auf Anfrage von Instructor-Client auf und stellt diesen bereit. Dieses Bild wird nicht gespeichert.
@@ -41,13 +37,21 @@ In unserer Architektur unterscheiden wir zwischen 3 bzw. 4 Frame Arten
 ** Beta-Frames - Änderungen zum letzten Alpha-Frame
 * Das jeweilige Bild wird zum Streaming-Server geschickt
 
-=== Beispiel Alpha-Frame
+[.columns]
+=== Beispiel Alpha- u. Beta-Frame
+
+[.column]
+--
+Alpha-Frame
 
 image::slides-alpha-example.png[size=cover]
-
-=== Beispiel Beta-Frame
+--
+[.column]
+--
+Beta-Frame
 
 image::slides-beta-example.png[size=cover]
+--
 
 
 === Stream-Bilder bzw. Video
@@ -70,6 +74,23 @@ den er beobachten möchte.
 
 * Händelt die Anmeldung und Verwaltung der Benutzer
 * Stellt für den Streaming-Server und den Instructor-Client die nötigen Information bereit (Adressen der Examinees)
+
+[.columns]
+== Projektstruktur Überblick:
+
+[.column]
+--
+Aktuelle Projektstruktur
+
+image::slides-architektur-aktuell.png[]
+--
+[.column]
+--
+Ziel-Projektstruktur
+
+image::slides-architektur-ziel.png[]
+--
+
 
 == Projektstruktur - Aktuell:
 
