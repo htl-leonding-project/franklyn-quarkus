@@ -2,9 +2,19 @@
 
 == Zeitplan
 
-plantuml::docs/asciidocs/plantuml/todoGantt-alpha.puml[]
-plantuml::docs/asciidocs/plantuml/todoGantt-beta.puml[]
-plantuml::docs/asciidocs/plantuml/todoGantt-final.puml[]
+[plantuml, svg]
+=====
+include::docs/asciidocs/plantuml/todoGantt-alpha.puml[]
+=====
+[plantuml, svg]
+=====
+include::docs/asciidocs/plantuml/todoGantt-beta.puml[]
+=====
+[plantuml, svg]
+=====
+include::docs/asciidocs/plantuml/todoGantt-final.puml[]
+=====
+
 
 == Neuimplementierung von Franklyn mit Quarkus
 
