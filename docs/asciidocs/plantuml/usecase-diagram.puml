@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+
+actor Instructor as I
+actor Examainee as E
+
+rectangle Franklyn {
+  usecase "Observe the displays of the examinees" as UC1
+  usecase "Download the last sessions" as UC2
+  usecase "Track the changes of the files which were made by the examinee" as UC3
+  usecase "Get alerted if specific domains were opened by an examinee (chatGPT)" as UC4
+  usecase "Create a test session" as UC5
+  usecase "Subscribe to a test session" as UC6
+}
+
+
+I -- UC1
+I -- UC2
+I -- UC3
+I -- UC4
+I -- UC5
+E -- UC6
+@enduml
