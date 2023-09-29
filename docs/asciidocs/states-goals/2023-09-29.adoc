@@ -1,0 +1,21 @@
+== Meeting 2023-09-29
+
+=== Aktuell vorhanden:
+- Präsentation
+
+=== Bugs, Probleme und Fragen:
+- Keine User Stories
+- Test account: (Peter?)
+- Rechtschreibung
+
+=== Besprochene Themen:
+Präsentation: sehr gut
+Inhalt: nicht genügend
+
+=== Ziele:
+- User Stories werden zum Sprintplanning gebraucht
+- Rechtschreibfehler & Design der Folie ausbessern
+- Gantt-Diagramme oben in Readme.md
+
+*bis 06.10.2023:*
+

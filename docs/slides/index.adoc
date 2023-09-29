@@ -3,6 +3,9 @@
 
 ifndef::imagesdir[:imagesdir: ../images]
 :icons: font
+:stylesheet: style.css
+:stylesdir: style
+
 image::../images/franklyn.png[background,size=cover]
 == Was ist Franklyn?
 
@@ -25,7 +28,7 @@ image::../images/slides-overview.png[]
 
 == Examinee-Client
 
-* Nimmt in regelmäßigen Abstand Screenshots auf wandelt diese in Alpha- und Beta-Frames um und schickt Sie zum Streaming-Server, wo diese gespeichert werden.
+* Nimmt in regelmäßigem Abstand Screenshots auf, wandelt diese in Alpha- und Beta-Frames um und schickt Sie zum Streaming-Server, wo diese gespeichert werden.
 * Nimmt aktuellen Screenshot auf Anfrage von Instructor-Client auf und stellt diesen bereit. Dieses Bild wird nicht gespeichert.
 
 == Frame-Management
@@ -44,6 +47,7 @@ In unserer Architektur unterscheiden wir zwischen 3 bzw. 4 Frame Arten
 ** Alpha-Frames - vollständiges Bild
 ** Beta-Frames - Änderungen zum letzten Alpha-Frame
 * Das jeweilige Bild wird zum Streaming-Server geschickt
+* Wenn die Differenz des Beta-Frames zum Alpha-Frame über 30% beträgt, wird dieser zum neuen Alpha-Frame
 
 === Alpha- u. Beta-Frames Vorgehensweise
 
@@ -73,18 +77,18 @@ Am Ende werden die Alpha- und Beta-Frames zusammengelegt und aus ihnen wird ein 
 == Instructor
 
 * Kann einen Test erstellen und diesen entweder einer Klasse zuteilen und oder per PIN zugänglich machen.
-* Während des Tests kann er entweder im zufallsprinzip die Bildschirme beobachten oder sich einen Schüler aussuchen,
+* Während des Tests kann er entweder per Zufallsprinzip die Bildschirme beobachten oder sich einen Schüler aussuchen,
 den er beobachten möchte.
 
 == Streaming-Server
 
-* Setzt Alpha und Beta-Frames wieder zusammen
+* Setzt Alpha- und Beta-Frames wieder zusammen
 * Speichert die zusammengesetzten Screenshots, um eine History nach dem Test bereitzustellen
 * Kann ein Video aus besagten Screenshots erstellen
 
 == Application-Server
 
-* Händelt die Anmeldung und Verwaltung der Benutzer
+* Handelt die Anmeldung und Verwaltung der Benutzer
 * Stellt für den Streaming-Server und den Instructor-Client die nötigen Information bereit (Adressen der Examinees)
 
 [.columns]
