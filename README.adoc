@@ -2,15 +2,15 @@
 
 == Zeitplan
 
-[plantuml, svg]
+[plantuml]
 =====
 include::docs/asciidocs/plantuml/todoGantt-alpha.puml[]
 =====
-[plantuml, svg]
+[plantuml]
 =====
 include::docs/asciidocs/plantuml/todoGantt-beta.puml[]
 =====
-[plantuml, svg]
+[plantuml]
 =====
 include::docs/asciidocs/plantuml/todoGantt-final.puml[]
 =====
