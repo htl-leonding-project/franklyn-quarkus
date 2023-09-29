@@ -3,6 +3,9 @@
 
 ifndef::imagesdir[:imagesdir: ../images]
 :icons: font
+:stylesheet: style.css
+:stylesdir: style
+
 image::../images/franklyn.png[background,size=cover]
 == Was ist Franklyn?
 
