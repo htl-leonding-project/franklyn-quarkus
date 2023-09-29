@@ -20,7 +20,7 @@ image::../images/slides-bg-title.jpg[background, size=cover]
 
 === Aufbau
 
-image::../images/slides-franklyn-overview.png[]
+image::../images/slides-overview.png[]
 
 == Examinee-Client
 
