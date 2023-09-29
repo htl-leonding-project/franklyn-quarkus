@@ -111,6 +111,10 @@ image::slides-architektur-aktuell.png[]
 
 image::slides-architektur-ziel.png[]
 
+== Gesamter Umfang des Projekts
+
+image::slides-gesamter-umfang.png[]
+
 == Kommende Schritte
 
 === bis zum Herbst
