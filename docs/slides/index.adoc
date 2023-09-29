@@ -5,7 +5,6 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 == Was ist Franklyn?
 
-Ein Tool, welches Screenshots am Examinee PC aufnimmt, und diese dann entweder dem Instructor live darstellt oder am Server gespeichert werden.
 Ein Tool, welches Bildschirmaufnahmen von angemeldeten PCs erstellt und diese dem Host präsentiert.
 
 == Problem bei Franklyn-2
