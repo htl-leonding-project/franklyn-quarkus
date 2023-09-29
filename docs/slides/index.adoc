@@ -1,8 +1,9 @@
 = Franklyn-3
 
+
 ifndef::imagesdir[:imagesdir: ../images]
 :icons: font
-
+image::../images/franklyn.png[background,size=cover]
 == Was ist Franklyn?
 
 Ein Tool, welches Bildschirmaufnahmen von angemeldeten PCs erstellt und diese dem Host präsentiert.
