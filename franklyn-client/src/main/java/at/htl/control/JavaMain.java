@@ -1,11 +1,8 @@
 package at.htl.control;
 
-import io.quarkus.logging.Log;
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.QuarkusApplication;
 import io.quarkus.runtime.annotations.QuarkusMain;
-import org.quartz.*;
-
 import javax.inject.Inject;
 
 @QuarkusMain

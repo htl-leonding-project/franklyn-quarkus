@@ -1,0 +1,24 @@
+= Franklyn-Datenblatt
+Melcher Tamara, Tran Michael
+23.Juni 2022: Verwendung des Franklyn3
+:toc:
+:icons: font
+:url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
+
+== Examiner
+
+* Den Test gewohnt wie in Franklyn2 anlegen
+** Auf Test anlegen klicken
+** Die benötigten Daten eingeben
+** Den PIN den SchülerInnen mitteilen
+
+== Examinees
+
+* Auf der Startseite den Client herunterladen
+* Bei Verwendung des .jar-Files
+** cd Downloads
+** java -jar franklyn3-client.jar
+
+* Den Namen eingeben
+* Den PIN eingeben
+* Das Fenster nicht schließen
