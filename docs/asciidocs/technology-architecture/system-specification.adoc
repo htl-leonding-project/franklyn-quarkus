@@ -1,10 +1,8 @@
 = System specification (Franklyn3 Relaunch)
-== SystemArchitektur
 
-[plantuml,img1,svg]
-----
-include::../plantuml/system-architecture.puml[]
-----
+== architecture of the system
+
+image::../../images/slides-architektur-ziel.png[]
 
 == usecase diagram
 
@@ -12,3 +10,4 @@ include::../plantuml/system-architecture.puml[]
 ----
 include::../plantuml/usecase-diagram.puml[]
 ----
+
