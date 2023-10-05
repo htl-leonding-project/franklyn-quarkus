@@ -3,12 +3,12 @@
 
 [plantuml,img1,svg]
 ----
-include::../plantuml/system-architecture.puml
+include::../plantuml/system-architecture.puml[]
 ----
 
 == usecase diagram
 
 [plantuml,img2,svg]
 ----
-include::../plantuml/usecase-diagram.puml
+include::../plantuml/usecase-diagram.puml[]
 ----
