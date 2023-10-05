@@ -23,7 +23,7 @@ ifdef::backend-html5[]
 
 == System Specification
 
-<<./asciidocs/technology-architecture/frame-types.adoc#, Frame Management >>
+<<./asciidocs/technology-architecture/frame-types.adoc#, Frame Management >> +
 <<./asciidocs/technology-architecture/system-specification.adoc#, System Specification (Franklyn 3 Relaunch)>>
 
 NOTE: Folgendes wurde von der vorherigen Generation übernommen.
