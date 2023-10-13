@@ -10,9 +10,13 @@ ifndef::imagesdir[:imagesdir: images]
 
 
 
+////
+
 == architecture of the system
 
 image::../../images/slides-architektur-ziel.png[]
+////
+
 
 == usecase diagram
 
