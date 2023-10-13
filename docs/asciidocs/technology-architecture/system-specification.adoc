@@ -2,7 +2,7 @@
 
 == architecture of the system
 
-image::../../images/slides-architektur-ziel.png[]
+image::../images/system-architecture.png[]
 
 == usecase diagram
 
