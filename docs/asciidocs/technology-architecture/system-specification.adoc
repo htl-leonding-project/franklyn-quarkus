@@ -1,24 +1,17 @@
 = System specification (Franklyn3 Relaunch)
 Franklyn 3 Dev-Team
 2023/24: franklyn-quarkus
-ifndef::imagesdir[:imagesdir: images]
-:sourcedir: ../src/main/java
 :icons: font
 :sectnums:    // Nummerierung der Überschriften / section numbering
 :toc: left
 
 
+== Architecture of the system
+
+image::../images/system-architecture.png[]
 
 
-////
-
-== architecture of the system
-
-image::../../images/slides-architektur-ziel.png[]
-////
-
-
-== usecase diagram
+== Usecase diagram
 
 [plantuml,img2,svg]
 ----
