@@ -12,7 +12,7 @@ ifndef::imagesdir[:imagesdir: images]
 
 == architecture of the system
 
-image::../images/system-architecture.png[]
+image::../../images/slides-architektur-ziel.png[]
 
 == usecase diagram
 
