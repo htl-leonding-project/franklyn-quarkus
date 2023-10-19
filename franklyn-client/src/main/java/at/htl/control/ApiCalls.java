@@ -61,6 +61,7 @@ public class ApiCalls {
     FrameService frameService;*/
 
     File jpgFolder = new File("jpgImages/");
+    File pngFolder = new File("pngImages/");
 
     /***
      * send screenshot to backend
@@ -69,25 +70,17 @@ public class ApiCalls {
 
         try {
             LOG.info(alphaFramePath + " is the main frame");
-            OpenCV.loadLocally();
             String fileExt = "png";
             String fileName = ++countOfImages + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
 
             var newImage = getNewBufferedImage();
 
-            File pngFolder = new File("pngImages/");
-            if (!pngFolder.exists()) {
-                pngFolder.mkdir();
-            }
 
             File newFile = new File(pngFolder, fileName);
             LOG.info(newFile.getAbsoluteFile());
             ImageIO.write(newImage, fileExt, newFile);
 
-            if (!jpgFolder.exists()) {
-                jpgFolder.mkdir();
-            }
             // Konvertieren der PNG-Datei in JPG
             String jpgFileName = fileName.replace(".png", ".jpg");
             File jpgFile = new File(jpgFolder, jpgFileName);
@@ -107,7 +100,7 @@ public class ApiCalls {
                 var image1 = Imgcodecs.imread(alphaFramePath);
                 var image2 = Imgcodecs.imread(newFile.getAbsolutePath());
 
-                var image1Gray = convertColoredImagesToGray(image1);
+              var image1Gray = convertColoredImagesToGray(image1);
                 var image2Gray = convertColoredImagesToGray(image2);
 
                 Mat difference = new Mat();
