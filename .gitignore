@@ -52,3 +52,5 @@ dist
 /backend/db-postgres/
 
 /client
+franklyn-client/jpgImages
+franklyn-client/pngImages
