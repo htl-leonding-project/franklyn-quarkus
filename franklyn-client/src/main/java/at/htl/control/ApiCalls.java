@@ -1,6 +1,5 @@
 package at.htl.control;
 
-import nu.pattern.OpenCV;
 import org.imgscalr.Scalr;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -20,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.util.Scanner;
+
 import org.jboss.logging.Logger;
 
 @ApplicationScoped
@@ -29,9 +29,9 @@ public class ApiCalls {
     //@RestClient
     //ImageService imageService;
 
-   /* @Inject
-    @RestClient
-    ExamineeService examineeService;*/
+    /* @Inject
+     @RestClient
+     ExamineeService examineeService;*/
     private String firstName = "max";
     private String lastName = "muster";
     private Long id = -1L;
@@ -45,6 +45,9 @@ public class ApiCalls {
     private static int countOfImages = 0;
 
     private int interval = 12;
+
+    private String fileExt = "png";
+
 
     @Inject
     Scheduler scheduler;
@@ -69,17 +72,13 @@ public class ApiCalls {
     public void sendScreenshots() {
 
         try {
-            LOG.info(alphaFramePath + " is the main frame");
-            String fileExt = "png";
+            LOG.info(alphaFramePath + " is the alpha frame");
             String fileName = ++countOfImages + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
-
-
-            var newImage = getNewBufferedImage();
 
 
             File newFile = new File(pngFolder, fileName);
             LOG.info(newFile.getAbsoluteFile());
-            ImageIO.write(newImage, fileExt, newFile);
+            ImageIO.write(getNewBufferedImage(), fileExt, newFile);
 
             // Konvertieren der PNG-Datei in JPG
             String jpgFileName = fileName.replace(".png", ".jpg");
@@ -94,46 +93,35 @@ public class ApiCalls {
                 updateAlphaFrame(newFile);
                 return;
             }
-            if (countOfImages >= 2) {
-                LOG.info("Difference between main and " + countOfImages);
 
-                var image1 = Imgcodecs.imread(alphaFramePath);
-                var image2 = Imgcodecs.imread(newFile.getAbsolutePath());
+            LOG.info("Difference between main and " + countOfImages);
 
-              var image1Gray = convertColoredImagesToGray(image1);
-                var image2Gray = convertColoredImagesToGray(image2);
+            var image1 = Imgcodecs.imread(alphaFramePath, Imgcodecs.IMREAD_UNCHANGED);
+            var image2 = Imgcodecs.imread(newFile.getAbsolutePath(), Imgcodecs.IMREAD_UNCHANGED);
 
-                Mat difference = new Mat();
-                Core.compare(image1Gray, image2Gray, difference, Core.CMP_NE);
+            Imgproc.cvtColor(image1, image1, Imgproc.COLOR_BGR2RGBA);
+            Imgproc.cvtColor(image2, image2, Imgproc.COLOR_BGR2RGBA);
 
+            Mat difference = new Mat();
+            Core.compare(
+                    convertColoredImagesToGray(image1),
+                    convertColoredImagesToGray(image2),
+                    difference,
+                    Core.CMP_NE
+            );
 
-                if (!difference.empty()) {
-
-                    var differenceInPercentage = getDifferenceInPercentage(difference);
-                    if (differenceInPercentage >= allowedDifferenceInPercentage) {
-
-                        updateAlphaFrame(newFile);
-
-                    } else {
-
-                        var result = new Mat();
-                        image2.copyTo(result, difference);
-                       // String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
-                       //         "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
-                        String pngDir = pngFolder.getPath() + File.separator + countOfImages +
-                                "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
-
-                        result = convertBlackPixelsToTransparentPixels(result);
-
-                        Imgcodecs.imwrite(pngDir, result);
-                    }
-
-                }
-
+            if (difference.empty()) return;
+            if (getDifferenceInPercentage(difference) >= allowedDifferenceInPercentage) {
+                updateAlphaFrame(newFile);
+            } else {
+                saveBetaFrame(difference, image2);
             }
+
+
             //imageService.uploadFile(newFile, fileName);
             //newFile.delete();
-        } catch (Exception ex) {
+        } catch (
+                Exception ex) {
             LOG.error(ex.getMessage());
 
         }
@@ -145,15 +133,28 @@ public class ApiCalls {
             Robot robot = new Robot();
             Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
             BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
-            BufferedImage newImg = Scalr.resize(
+            return Scalr.resize(
                     screenFullImage,
                     imageWidth,
                     imageHeight);
-            return newImg;
-        }catch (Exception ex) {
-                LOG.error(ex.getMessage());
+        } catch (Exception ex) {
+            LOG.error(ex.getMessage());
         }
         return null;
+    }
+
+
+    private void saveBetaFrame(Mat difference, Mat screenShot) {
+        var result = new Mat();
+        screenShot.copyTo(result, difference);
+        // String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
+        //         "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
+        String pngDir = pngFolder.getPath() + File.separator + countOfImages +
+                "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
+
+        convertBlackPixelsToTransparentPixels(result);
+
+        Imgcodecs.imwrite(pngDir, result);
     }
 
     private void mergeJpgImagesToVideo() {
@@ -203,34 +204,12 @@ public class ApiCalls {
 
     }
 
-    private Mat convertBlackPixelsToTransparentPixels(Mat coloredDifferences) {
-        var mask = Mat.zeros(coloredDifferences.size(), CvType.CV_8UC4);
-
-        for (int row = 0; row < mask.rows(); row++) {
-            for (int column = 0; column < mask.cols(); column++) {
-                var pixelRGB = coloredDifferences.get(row, column);
-                var red = pixelRGB[0];
-                var green = pixelRGB[1];
-                var blue = pixelRGB[2];
-
-                double[] newPixelColors;
-                if (green == 0 && red == 0 && blue == 0) {
-                    newPixelColors = new double[]{0, 0, 0, 0};
-                } else {
-                    newPixelColors = new double[]{red, green, blue, 255};
-                }
-                mask.put(row, column, newPixelColors);
-            }
-        }
-        return mask;
+    private void convertBlackPixelsToTransparentPixels(Mat coloredDifferences) {
+        var blackPixels = new Mat(coloredDifferences.size(), coloredDifferences.channels());
+        Core.inRange(coloredDifferences, new Scalar(0, 0, 0, 255), new Scalar(0, 0, 0, 255), blackPixels);
+        coloredDifferences.setTo(new Scalar(0, 0, 0, 0), blackPixels);
     }
 
-
-    /***
-     * set enroll data
-     * @param id
-     * @return
-     */
 
     public void setScheduler() throws SchedulerException {
         if (interval != 0) {
