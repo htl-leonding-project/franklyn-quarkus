@@ -316,6 +316,7 @@ Wenn Sie das Program auf ihren Namespace deployen wollen, dann müssen Sie bei j
 == Deployment einer Java Applikation
 
 <Comming soon>
+man braucht docker push dafür
 
 == Deployment einer Angular Applikation
 

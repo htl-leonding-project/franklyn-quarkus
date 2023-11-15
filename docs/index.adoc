@@ -31,6 +31,8 @@ NOTE: Folgendes wurde von der vorherigen Generation übernommen.
 <<./asciidocs/system-specification.adoc#, System Specification>>
 
 
+<<./asciidocs/technology-architecture/deployment-tutorial.adoc#, deployment tutorial>>
+
 == Benutzung des Franklyn3
 
 IMPORTANT: Aktuell noch nicht möglich
