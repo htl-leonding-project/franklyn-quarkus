@@ -4,6 +4,7 @@ import at.htl.control.ExamRepository;
 import at.htl.control.ExaminerRepository;
 import at.htl.entity.Exam;
 import at.htl.entity.Examiner;
+import at.htl.entity.User;
 import at.htl.entity.dto.ExaminerDto;
 import io.quarkus.logging.Log;
 
@@ -67,16 +68,17 @@ public class ExaminerResource {
     @Path("exam/{examId}/examiner/{examinerId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public List<Examiner> getExaminerByExamId(@PathParam("examId") Long examId, @PathParam("examinerId") Long examinerId) {
-        Exam exam = examRepository.findById(examId);
-        var examiners = exam.examiners;
-        for (Examiner examiner : examiners) {
+    public List<User> getExaminerByExamId(@PathParam("examId") Long examId, @PathParam("examinerId") Long examinerId) {
+      /*  Exam exam = examRepository.findById(examId);
+        var examiners = exam.userExaminers();
+        for (User examiner : examiners) {
             if (Objects.equals(examiner.id, examinerId)) {
                 examiners.remove(examiner);
                 break;
             }
         }
-        return examiners;
+        return examiners;*/
+        return null;
     }
 
     @GET

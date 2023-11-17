@@ -1,5 +1,5 @@
-= AsciiDoc Article Title
-Firstname Lastname <author@asciidoctor.org>
+= Deployment Tutorial
+Abdulrahman Al Sabagh
 3.0, July 29, 2022: AsciiDoc article template
 :toc:
 :icons: font
@@ -8,13 +8,13 @@ Firstname Lastname <author@asciidoctor.org>
 
 == Description
 
-In diesem Tutorial geht werden wir eine Postgresql Datenbank, Quarkus Backend und ein Angular Client deployen
+In diesem Tutorial werden wir eine Postgresql Datenbank, Quarkus Backend und ein Angular Client deployen
 
 
-== Requirments
+== Requirements
 
 
-- kubectl muss intsalliert und konfiguriert sein
+- kubectl muss installiert und konfiguriert sein
 - Kind oder Minikube
 - Linux oder WSL2 Terminal
 - Docker muss installiert sein
@@ -85,7 +85,7 @@ Folgender  Befehl wurde verwendet, um ein Deployment für unsere Datenbank zu er
 === Warum rennt die Datenbank nicht
 
 Wenn man jetzt `kubectl get pods` oder `kubectl get deployments` im Terminal eingibt, dann könnte man sehen, dass bei der Spalten `Ready` #0/1#  dabei steht.
-Um das Problem zu finden können wir folgendes machen.
+Um das Problem zu finden, können wir folgendes machen.
 Wir kopieren uns den Namen des Pods in der Zwischen ablage und geben dann folgendes im Terminal ein
 ----
 kubectl log <Name des Pods> -c <Name des Images, welches von dem Pod verwendet wird>
@@ -315,9 +315,30 @@ Wenn Sie das Program auf ihren Namespace deployen wollen, dann müssen Sie bei j
 
 == Deployment einer Java Applikation
 
-<Comming soon>
-man braucht docker push dafür
+Vorgehensweise:
+
+1. Hochladen des Image auf ghcr.io oder andere Conatiner Registries
+2. Erstellung eines Deployments
+3. Erstellung einer Service
+4. Erstellung einer Ingress
+
+=== Hochladen des Images auf ghcr.io
+
+Siehe <<./how-to-upload-an-image-to-ghcr.adoc#, how to upload an image to ghcr - 2023/24>>
+
+=== Erstellung eines Deployments
+
+
 
 == Deployment einer Angular Applikation
 
-<Coming soon>
+Vorgehensweise:
+
+1. Hochladen des Image auf ghcr.io oder andere Conatiner Registries
+2. Erstellung eines Deployments
+3. Erstellung einer Service
+
+
+=== Hochladen des Images auf ghcr.io
+
+Siehe <<./how-to-upload-an-image-to-ghcr.adoc#, how to upload an image to ghcr - 2023/24>>

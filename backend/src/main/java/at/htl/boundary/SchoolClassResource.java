@@ -93,6 +93,6 @@ public class SchoolClassResource {
     @Transactional
     public List<SchoolClass> getExaminerByExamId(@PathParam("id") String id) {
         Exam exam = examRepository.findById(Long.parseLong(id));
-        return exam.schoolClasses;
+        return null;
     }
 }

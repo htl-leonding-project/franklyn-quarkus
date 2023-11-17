@@ -30,7 +30,7 @@ public class ExaminerRepository implements PanacheRepository<Examiner> {
         }
 
         Exam exam = examRepository.findById(id);
-        exam.examiners.clear();
+        /// exam.examiners.clear();
         examRepository.getEntityManager().merge(exam);
         examRepository.flush();
     }

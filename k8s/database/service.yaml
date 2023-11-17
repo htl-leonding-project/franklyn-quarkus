@@ -3,25 +3,16 @@ kind: Service
 metadata:
   labels:
     app: franklyn-db
-  name: franklyn-db
+  name: franklyn-db-service
   namespace: student-it190204
 spec:
-  clusterIP: 10.107.18.190
-  clusterIPs:
-  - 10.107.18.190
-  externalTrafficPolicy: Cluster
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
-  - nodePort: 30944
-    port: 5432
-    protocol: TCP
-    targetPort: 5432
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+      name: franklyn-db-service
   selector:
     app: franklyn-db
   sessionAffinity: None
   type: LoadBalancer
-status:
-  loadBalancer: {}
+

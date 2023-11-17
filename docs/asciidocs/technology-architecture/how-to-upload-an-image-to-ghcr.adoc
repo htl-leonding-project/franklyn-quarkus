@@ -1,0 +1,112 @@
+= How to upload an image to ghcr
+Firstname Lastname <author@asciidoctor.org>
+3.0, July 29, 2022: AsciiDoc article template
+:toc:
+:icons: font
+:url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
+
+Content entered directly below the header but before the first section heading is called the preamble.
+
+
+== Allgemeines
+
+Wenn Sie teilnehmen möchten, können Sie dieses Repository klonen: https://github.com/htl-leonding-project/franklyn-quarkus und in den Ordner "Backend" wechseln. Dieses Tutorial hängt nicht von Java ab, aber nicht von dem Projekt "Franklyn". Sie können dieses Projekt auch für andere Technologien verwenden.
+
+
+== Voraussetzungen
+
+- Docker muss installiert sein.
+
+== Was ist ein Container Registery
+
+[quote, https://redhat.com/de/topics/cloud-native-apps/what-is-a-container-registry, block="true"]
+Eine Container Registry ist ein Repository oder eine Sammlung von Repositories, in der Container Images gespeichert werden und auf diese Images zugegriffen werden kann.
+
+== Welche Container Registery gibt es
+
+- **G**it**H**ub ** C**ontainer **R**egistry (GHCR)
+
+- Docker Hub Container Registry
+
+- **G**oogle **A**rtifact **R**egistry (GAR)
+- Red Hat Quay
+
+- etc.
+
+== Vorgehensweise
+
+1. Erstellung eines Docker-Images für die Applikation
+
+2. Bauen dieses Images
+
+3. hochladen mittels docker push
+
+
+=== Erstellung eines Docker-Images für die Applikation
+
+Dafür könnte man eine Library wie zum Beispiel **J**ava **I**mage **B**uilder (JIB) verwenden oder ein Dockerfile schreiben.
+
+Für diesen Tutorial habe ich mich entschieden, ein Dockerfile zu schreiben.
+
+In dem Ordner Backend werden wir jetzt ein Dockerfile erstellen. Der Inahlt dieses Files schaut so aus:
+
+[source,Dockerfile]
+----
+FROM openjdk:17-alpine
+
+WORKDIR /app
+
+# Copy Maven Wrapper files
+COPY .mvn .mvn
+
+# Copy the rest of the application files
+COPY lib lib
+COPY src src
+COPY pom.xml pom.xml
+COPY mvnw mvnw
+
+# Build the application
+RUN ["chmod", "+x", "mvnw"]
+RUN ["./mvnw", "clean", "package", "-DskipTests"]
+
+# Run the application
+CMD ["java", "-jar", "./target/quarkus-app/quarkus-run.jar"]
+
+----
+
+NOTE: Passen Sie dabei auf, dass Sie nur die Ordner, Files etc. kopieren, die sie für den Build brauchen. Ordner wie dist/, target/, node_modules (für nodejs, Angular und sonstige js-Projekte) etc. dürfen nicht in das Docker-Image kopiert werden, da man diese in dem Image auch generieren kann.
+
+Damit wir das ein Image aus diesem Dockerfile erstellen können müssen wir folgende Befehle im Terminal eingeben:
+
+[source,shell]
+----
+docker build -t <Name des Images> .
+----
+
+=== Hochladen mittels docker push
+
+Wir müssen jetzt das Image `taggen` (markieren)
+
+[source,shell]
+----
+docker tag <Name des Images> ghcr.io/<Name der Organisation oder Name des Githubusers>/<Name des Packages>:<Version des Packets>
+----
+
+Damit wir jetzt das Paket pushen können müssen uns in ghcr.io einloggen.
+
+[source,shell]
+----
+docker login -u <Name des Githubusers oder Name von der Organisation> ghcr.io
+----
+Danach müssen Sie ein Github Token als Passwort eingeben.
+
+Nach der erfolgreichen Anmeldung kann das Paket gepusht werden
+
+[source,shell]
+----
+docker push ghcr.io/<Name des Githubusers oder Name von der Organisation>/<Der Tag, den Sie bereits erstellt haben>:<Version>
+----
+
+NOTE: Es kann schon sein, dass sie die Fehelrmeldung  "premission_denied" kriegen. In diesem Fall müssen Sie sich beim Administrator der Organisation reden.
+
+Gratuliere Sie haben ihr Paket erfolgreich generiert.
