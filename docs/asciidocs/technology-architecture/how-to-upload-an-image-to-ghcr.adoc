@@ -115,3 +115,79 @@ docker push ghcr.io/<Name des Githubusers oder Name von der Organisation>/<Der T
 NOTE: Es kann schon sein, dass sie die Fehelrmeldung  "premission_denied" kriegen. In diesem Fall müssen Sie sich beim Administrator der Organisation reden.
 
 Gratuliere Sie haben ihr Paket erfolgreich generiert.
+
+=== Überprüfung
+
+Um zu überprüfen, ob das Image funktioniert könnte man ein docker-compose erstellen.
+Dabei brauchen wir zwei Services:
+
+- eine für die Datenbank
+- die andere für das Backend
+
+Zuerst muss die Datenbank gestartet werden und dann die Anwendung.
+
+[source,yml]
+----
+version: '3.1'
+
+services:
+
+  backend:
+    depends_on:
+      - db
+    container_name: franklyn_backend
+    image: ghcr.io/htl-leonding-project/franklyn-application-server-image:latest
+    ports:
+      - 8080:8080
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: db
+      DB_URL: jdbc:postgresql://franklyn_postgres:5432/db
+    networks:
+      - postgres
+
+  db:
+    container_name: franklyn_postgres
+    image: postgres:14.4-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db-postgres/db:/var/lib/postgresql/data
+      - ./db-postgres/import:/import
+    networks:
+      - postgres
+
+  #  adminer:
+  #    image: adminer
+  #    restart: always
+  #    ports:
+  #      - 8090:8080
+
+  # https://github.com/khezen/compose-postgres/blob/master/docker-compose.yml
+  pgadmin:
+    container_name: franklyn_pgadmin
+    image: dpage/pgadmin4:5.5
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - ./db-postgres/pgadmin:/root/.pgadmin
+    ports:
+      - 8095:80
+    networks:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+----
+
+Sie müssen keine Volumes, Network und environment Konfigurationen verwenden, wenn sie das nicht wollen.
