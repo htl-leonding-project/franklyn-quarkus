@@ -6,7 +6,7 @@ metadata:
   labels:
     app: franklyn-db
   name: franklyn-db
-  namespace: student-it190204
+  namespace: default
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -28,6 +28,8 @@ spec:
       containers:
 
       - env:
+        - name: DB_URL
+          value: jdbc:postgresql://franklyn-db:5432/db
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:

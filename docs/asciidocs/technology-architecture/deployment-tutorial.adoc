@@ -328,6 +328,13 @@ Siehe <<./how-to-upload-an-image-to-ghcr.adoc#, how to upload an image to ghcr -
 
 === Erstellung eines Deployments
 
+Für die Erstellung des Services kann man diesen Befehl verwenden
+[source,shell]
+----
+kubectl create deployment <beliebiger Namen> --image=<Name des Images, was sie bereits auf ghcr hochgeladen haben> --port=<beliebiger Port>
+
+----
+
 
 
 == Deployment einer Angular Applikation

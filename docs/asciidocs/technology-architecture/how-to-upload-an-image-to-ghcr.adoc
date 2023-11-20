@@ -1,16 +1,15 @@
 = How to upload an image to ghcr
-Firstname Lastname <author@asciidoctor.org>
+Abdulrahman Al Sabagh
 3.0, July 29, 2022: AsciiDoc article template
 :toc:
 :icons: font
 :url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
 
-Content entered directly below the header but before the first section heading is called the preamble.
 
 
 == Allgemeines
 
-Wenn Sie teilnehmen möchten, können Sie dieses Repository klonen: https://github.com/htl-leonding-project/franklyn-quarkus und in den Ordner "Backend" wechseln. Dieses Tutorial hängt nicht von Java ab, aber nicht von dem Projekt "Franklyn". Sie können dieses Projekt auch für andere Technologien verwenden.
+Wenn Sie mitmachen möchten, können Sie dieses Repository klonen: https://github.com/htl-leonding-project/franklyn-quarkus und in den Ordner "Backend" wechseln. Dieses Tutorial hängt nicht von Java und  von dem Projekt "Franklyn" nicht ab. Sie können dieses Projekt auch für andere Technologien und Projekte verwenden.
 
 
 == Voraussetzungen
@@ -65,6 +64,9 @@ COPY src src
 COPY pom.xml pom.xml
 COPY mvnw mvnw
 
+ENV DB_URL="jdbc:postgresql://localhost:5432/db" \
+    POSTGRES_USERNAME="app" \
+    POSTGRES_PASSWORD="app"
 # Build the application
 RUN ["chmod", "+x", "mvnw"]
 RUN ["./mvnw", "clean", "package", "-DskipTests"]
@@ -72,7 +74,10 @@ RUN ["./mvnw", "clean", "package", "-DskipTests"]
 # Run the application
 CMD ["java", "-jar", "./target/quarkus-app/quarkus-run.jar"]
 
+
 ----
+
+NOTE: Die Werte für `DB_URL,`POSTGRES_USERNAME` und `POSTGRES_PASSWORD` sind sogenannte default Werte. Falls Sie keine Werte beim docker run oder in ihrem k8s-deployment File definieren, werden diese Werte genommen.
 
 NOTE: Passen Sie dabei auf, dass Sie nur die Ordner, Files etc. kopieren, die sie für den Build brauchen. Ordner wie dist/, target/, node_modules (für nodejs, Angular und sonstige js-Projekte) etc. dürfen nicht in das Docker-Image kopiert werden, da man diese in dem Image auch generieren kann.
 

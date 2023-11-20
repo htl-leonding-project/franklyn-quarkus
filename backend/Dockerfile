@@ -11,6 +11,9 @@ COPY src src
 COPY pom.xml pom.xml
 COPY mvnw mvnw
 
+ENV DB_URL="jdbc:postgresql://localhost:5432/db" \
+    POSTGRES_USERNAME="app" \
+    POSTGRES_PASSWORD="app"
 # Build the application
 RUN ["chmod", "+x", "mvnw"]
 RUN ["./mvnw", "clean", "package", "-DskipTests"]
