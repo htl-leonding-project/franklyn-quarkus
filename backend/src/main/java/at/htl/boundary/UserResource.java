@@ -36,7 +36,7 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> listAll() {
-        return userRepository.list("select * from user");
+        return userRepository.listAll();
     }
 
 

@@ -97,13 +97,13 @@ public class Exam extends PanacheEntityBase {
     //@LazyCollection(LazyCollectionOption.FALSE)
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
+/*    @JoinTable(
             name = "F_EXAM_F_EXAMINER",
             joinColumns = {@JoinColumn(name = "E_ID")},
             inverseJoinColumns = {@JoinColumn(name = "ER_ID")},
             uniqueConstraints = {
                     @UniqueConstraint(columnNames = {"ER_ID", "E_ID"})
-            })
+            })*/
     public List<User> userExaminers = new ArrayList<>();
 
     @Column(name = "E_IS_DELETED")
