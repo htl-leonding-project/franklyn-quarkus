@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: franklyn-ingress
+  namespace: student-it190204
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: student.cloud.htl-leonding.ac.at
+      http:
+        paths:
+          - path: /it190204
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  name: http
+
+          - path: /it190204/franklyn
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  name: http
+
+          - path: /it190204/franklyn/api(/|$)(.*)$
+            pathType: Prefix
+            backend:
+              service:
+                name: franklyn-application-server-service
+                port:
+                  name: http
+

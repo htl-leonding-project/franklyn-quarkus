@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: franklyn-application-server
+  name: franklyn-application-server-service
+  namespace: student-it190204
+
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 10.110.54.245
+  clusterIPs:
+  - 10.110.54.245
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 30167
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: franklyn-application-server
+  sessionAffinity: None
+  type: LoadBalancer

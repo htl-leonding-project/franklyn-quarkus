@@ -4,7 +4,7 @@ metadata:
   labels:
     app: franklyn-db
   name: franklyn-db-service
-  namespace: default
+  namespace: student-it190204
 spec:
   ports:
     - port: 5432
@@ -14,5 +14,5 @@ spec:
   selector:
     app: franklyn-db
   sessionAffinity: None
-  type: LoadBalancer
+  type: ClusterIP
 
