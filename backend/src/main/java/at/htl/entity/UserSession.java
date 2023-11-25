@@ -1,29 +1,28 @@
 package at.htl.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.util.List;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
-@Entity
-public class UserSession extends PanacheEntityBase {
+@Entity(name = "f_user_session")
+public class UserSession {
     @Id
+    @Column(name = "US_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private
     Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "US_USER_ID")
+    @JoinColumn(name = "U_ID")
+    @MapsId("US_U_ID")
     @NotNull
-    private
-    User user;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "US_EXAM_ID")
+    @JoinColumn(name = "E_ID")
+    @MapsId("US_E_ID")
     @NotNull
-    private
-    Exam exam;
+    private Exam exam;
 
     @Column(name = "US_ROLE")
     @Enumerated(EnumType.STRING)

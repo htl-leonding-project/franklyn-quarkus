@@ -1,11 +1,13 @@
 package at.htl.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.util.List;
 
 @NamedQueries({
@@ -24,7 +26,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "F_USER_GROUP")
-public class UserGroup extends PanacheEntityBase {
+public class UserGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UG_ID")
@@ -40,11 +42,13 @@ public class UserGroup extends PanacheEntityBase {
     @Enumerated(EnumType.STRING)
     public UserGroupType userGroupType;
 
-//    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-//    @Fetch(value = FetchMode.SUBSELECT)
-//    @JoinTable
-//    @JsonIgnore
-//    public List<Exam> exams;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinTable(name = "F_USER",
+            joinColumns = { @JoinColumn(name = "U_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "UG_U_ID") })
+    public List<User> users;
 
     public UserGroup() {
     }

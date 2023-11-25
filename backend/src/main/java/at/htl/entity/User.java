@@ -1,16 +1,14 @@
 package at.htl.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.jboss.jandex.AnnotationInstanceBuilder;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 
 @Entity
 @Table(name = "F_USER")
 
-public class User extends PanacheEntityBase {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "U_ID")
@@ -24,9 +22,6 @@ public class User extends PanacheEntityBase {
 
     @Column(name = "U_EMAIL")
     public String email;
-
-    //@JoinColumn(name = "U_EXAM")
-    //public Exam exam;
 
     @Column(name = "U_IS_ONLINE")
     public boolean isOnline;

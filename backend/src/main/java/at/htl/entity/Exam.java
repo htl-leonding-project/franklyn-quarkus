@@ -1,22 +1,19 @@
 package at.htl.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.hibernate.annotations.*;
 
-import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.validation.constraints.*;
+import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @NamedQueries({
@@ -30,7 +27,7 @@ import java.util.List;
         property="e_id")
 @Entity
 @Table(name = "F_EXAM")
-public class Exam extends PanacheEntityBase {
+public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "E_ID")
@@ -61,25 +58,18 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_END_TIME")
     public LocalDateTime endTime;
 
-    @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
+    @ManyToMany( cascade = {CascadeType.ALL, CascadeType.MERGE}, fetch=FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
-    @Size(min = 1)
-    @JoinColumn(name = "E_FORM_IDS")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    public List<UserGroup> userGroups;
-
-    @ManyToMany( cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @Size(min = 1)
-    @JoinColumn(name = "E_FORM_IDS")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    public List<UserSession> userSessions;
+    @JoinTable(name = "F_USER",
+            joinColumns = { @JoinColumn(name = "U_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "E_U_ID") })
+    public List<User> users;
 
     @NotNull
     @ConfigProperty(defaultValue = "5")
     @Column(name = "E_INTERVAL")
     public int interval;
-
 
     @Column(name = "E_ADMIN_ID")
     public Long adminId;
@@ -90,31 +80,8 @@ public class Exam extends PanacheEntityBase {
     @Column(name = "E_COMPRESSION")
     public int compression;
 
-/*    @JoinColumn(name = "E_EXAMINER_IDS")
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //fetch = FetchType.EAGER
-    //@Fetch(value = FetchMode.SUBSELECT)
-    @Size(min = 1)*/
-    //@LazyCollection(LazyCollectionOption.FALSE)
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-/*    @JoinTable(
-            name = "F_EXAM_F_EXAMINER",
-            joinColumns = {@JoinColumn(name = "E_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ER_ID")},
-            uniqueConstraints = {
-                    @UniqueConstraint(columnNames = {"ER_ID", "E_ID"})
-            })*/
-    public List<User> userExaminers = new ArrayList<>();
-
     @Column(name = "E_IS_DELETED")
     public boolean isDeleted = false;
-
-/*    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "F_EXAM_EXAMINER",
-            joinColumns = @JoinColumn(name = "examiner_id"),
-            inverseJoinColumns = @JoinColumn(name = "exam_id"))
-    @JsonIgnore
-    public List<Examiner> examiners = new ArrayList<>();*/
 
     public Exam() {
     }
@@ -157,11 +124,10 @@ public class Exam extends PanacheEntityBase {
                 LocalDateTime startTime,
                 LocalDateTime endTime,
                 int interval,
-                List<User> userExaminers) {
+                List<User> users) {
         this(pin, title, state, date, startTime, endTime, interval);
-        this.userExaminers = userExaminers;
+        this.users = users;
     }
-
 
 
     @Override
@@ -169,7 +135,5 @@ public class Exam extends PanacheEntityBase {
         return String.format(this.title + " " + this.date + " " + this.examState);
     }
 
-    public void removeIf(Object o) {
-    }
 }
 

@@ -1,7 +1,7 @@
 package at.htl.service;
 
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
