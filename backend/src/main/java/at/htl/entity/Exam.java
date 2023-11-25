@@ -119,7 +119,6 @@ public class Exam {
     public Exam(String pin,
                 String title,
                 ExamState state,
-                List<UserGroup> userGroupIds,
                 LocalDate date,
                 LocalDateTime startTime,
                 LocalDateTime endTime,
