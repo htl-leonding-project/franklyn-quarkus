@@ -8,7 +8,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/exam")
+@Path("/api/exam")
 @RegisterRestClient(configKey = "exam-api")
 public interface UserService {
 
