@@ -10,9 +10,7 @@ Abdulrahman Al Sabagh
 
 In diesem Tutorial werden wir eine Postgresql Datenbank, Quarkus Backend und ein Angular Client deployen
 
-
 == Requirements
-
 
 - kubectl muss installiert und konfiguriert sein
 - Kind oder Minikube
@@ -24,12 +22,13 @@ In diesem Tutorial werden wir eine Postgresql Datenbank, Quarkus Backend und ein
 === Wichtige Begriffe
 
 ==== Pod
+
 ---
 
 Ein Pod besteht aus einem oder mehreren (Docker, Podman, usw.) Containern
 
-
 ==== Deployment
+
 ---
 
 Mit einem Deployment kann man ein Pod erstellen und dabei festlegen, welche und wie viele Secrets, Volumes, CPUs, RAM und Replikationen für diesen benötigt werden.
@@ -37,56 +36,61 @@ Mit einem Deployment kann man ein Pod erstellen und dabei festlegen, welche und 
 ==== Node
 
 '''
+
 Eine physikalische oder eine virtuelle Maschine, wo mehrere Pods darauf rennen
 
 ==== Service
 
 '''
+
 Um einen Zugriff auf die Pods mittels REST, TCP oder andere Protokolle zu erhalten, werden sogenannte Services verwendet
 
 ==== ConfigMaps
 
 '''
+
 Damit ein Pod einen Zugriff auf Umgebungsvariablen erhält, wird dafür eine ConfigMap verwendet
 
 ==== Secrets
 
 '''
-Ähnlich wie bei einer ConfigMap. Allerdings werden Secrets für sensible Daten wie zum Beispiel Credentials (Login Daten)
-verwendet.
+
+Ähnlich wie bei einer ConfigMap.
+Allerdings werden Secrets für sensible Daten wie zum Beispiel Credentials (Login Daten) verwendet.
 
 ==== Persistence Volume
 
 '''
+
 Damit die Daten im Falle eines Ausfalls eines Servers nicht verloren gehen, werden sogenannte Volumes erstellt.
 Diese sind vergleichbar mit docker volumes.
 
 ==== Persistence Volume Claim (PVC)
 
 '''
+
 Damit ein Pod auf einer Persistence Volume zugreifen kann, werden Persistence Volume Claim (PVC) verwendet.
 
 NOTE: Schüler haben keinen Zugriff auf die Persistence Volumes von der Leocloud.
 
 ---
 
-Grundsätzlich braucht für jede Komponente in unserem System ein Deployment
-
+Grundsätzlich braucht man für jede Komponente in unserem System ein Deployment und eine Service
 
 == Deployment von einer Postresql Datenbank
-
 
 ----
 kubectl create deployment postgres-demo --image=postgres:12.16-bullseye --port=5432
 ----
-Folgender  Befehl wurde verwendet, um ein Deployment für unsere Datenbank zu erstellen.
 
+Folgender Befehl wurde verwendet, um ein Deployment für unsere Datenbank zu erstellen.
 
 === Warum rennt die Datenbank nicht
 
-Wenn man jetzt `kubectl get pods` oder `kubectl get deployments` im Terminal eingibt, dann könnte man sehen, dass bei der Spalten `Ready` #0/1#  dabei steht.
+Wenn man jetzt `kubectl get pods` oder `kubectl get deployments` im Terminal eingibt, dann könnte man sehen, dass bei der Spalten `Ready` #0/1# dabei steht.
 Um das Problem zu finden, können wir folgendes machen.
-Wir kopieren uns den Namen des Pods in der Zwischen ablage und geben dann folgendes im Terminal ein
+Wir kopieren uns den Namen des Pods in der Zwischenablage und geben dann folgendes im Terminal ein
+
 ----
 kubectl log <Name des Pods> -c <Name des Images, welches von dem Pod verwendet wird>
 ----
@@ -113,10 +117,11 @@ Error: Database is uninitialized and superuser password is not specified.
 
 ----
 
-Für das Lösen dieses Problems müssen wir jetzt ein ConfigMap oder ein Secret erstellen, wo wir die benötigten Umgebungsvariablen definieren können.
+Für das Lösen dieses Problems müssen wir jetzt eine ConfigMap oder ein Secret erstellen, wo wir die benötigten Umgebungsvariablen definieren können.
 
-
-NOTE: `kubectl get deployments/postgres-demo -o yaml > deployment.yaml` im Terminal eingeben, damit man die ganze Konfiguration von dem Deployment in einem YAML File speichert. (Das könnte man auch bei Services, Secrets usw. auch machen ). Es lohnt sich auch, diesen Befehl nach jeder Änderung zu machen und die Files STÄNDIG zu kontrollieren.
+NOTE: `kubectl get deployments/postgres-demo -o yaml > deployment.yaml` im Terminal eingeben, damit man die ganze Konfiguration von dem Deployment in einem YAML File speichert.
+(Das könnte man auch bei Services, Secrets usw. auch machen ).
+Es lohnt sich auch, diesen Befehl nach jeder Änderung zu machen und dann die Files STÄNDIG zu kontrollieren.
 
 === Erstellung von des Secrets
 
@@ -129,7 +134,8 @@ kubectl create secret generic  postgres-secret \
 --from-literal=POSTGRES_DB=<Name der DBs>
 ----
 
-NOTE: Die Argumente,welches nach `--from-literal` kommt, soll mit den Namen der benötigten Umgebenungsvariablen übereinstimmen. Das zweite Argument ist einfach der Wert dieser Umgebungsvariable.
+NOTE: Die Argumente,welche nach `--from-literal` kommen, sollen mit den Namen der benötigten Umgebenungsvariablen übereinstimmen.
+Das zweite Argument ist einfach der Wert dieser Umgebungsvariable.
 
 Jetzt kann man die Konfigurationen von unserem Secret mit der Verwendung von diesem Befehl in einem YAML File speichern
 
@@ -137,14 +143,16 @@ Jetzt kann man die Konfigurationen von unserem Secret mit der Verwendung von die
 kubectl get secrets postgres-secret -o yaml > secret.yaml
 ----
 
-Wir sind aber noch immer nicht fertig mit dem Secret. Das Deployment soll sich die Werte von diesem Secret für seine Umgebungsvariablen lösen. Dafür muss man folgendes im Terminal eingeben:
+Wir sind aber noch immer nicht fertig mit dem Secret.
+Das Deployment soll sich die Werte von diesem Secret für seine Umgebungsvariablen holen.
+Dafür muss man folgendes im Terminal eingeben:
 
 ----
 kubectl set env deployment/postgres-demo --from=secret/postgres-secret
 ----
 
 Unser Deployment soll jetzt problemlos funktionieren.
-Wenn das nicht der Fall ist könnte man folgendes machen (Nicht vergessen, YAML Files mit Hilfe der kubectl CLI zu generieren):
+Wenn das nicht der Fall ist, könnte man folgendes machen (Nicht vergessen, YAML Files mit Hilfe der kubectl CLI zu generieren):
 
 ----
 kubectl delete deployments/postgres-demo
@@ -153,7 +161,8 @@ kubectl apply -f postgres.yaml
 
 === Erstellung einer Service
 
-Wir haben die Datenbank jetzt zum Laufen gebracht. Damit wir auf diese zugreifen können müssen wir eine Service erstellen:
+Wir haben die Datenbank jetzt zum Laufen gebracht.
+Damit wir auf diese zugreifen können, müssen wir ein Service erstellen:
 
 ----
 kubectl expose deployments/postgres-demo --type=LoadBalancer --port=5432
@@ -161,14 +170,17 @@ kubectl get services
 ----
 
 Connection String von postgres schaut dann wie folgendes aus:
+
 ----
 jdbc:postgresql://<Minikube IP>:<NodePort>/db
 ----
+
 die Minikube IP kann man mit dem Befehl `minikube ip` anzeigen lassen. beim NodePort muss mann `kubectl get services/postgres-demo` eingeben und dann den Port, welcher nach dem Doppelpunkt steht nehmen
 
 == Persistence Volume/Persistence Volume Claim
 
-Bei der Leocloud sind diese schon definiert. Auf dem lokalen Minikube könnte man diese Konfiguration verwenden
+Bei der Leocloud sind diese schon vordefiniert.
+Auf dem lokalen Minikube könnte man folgende Konfiguration verwenden
 
 [source,yaml]
 ----
@@ -199,6 +211,10 @@ status:
 
 ----
 
+Wir brauchen noch ein PVC, damit unsere Anwendung auf die Datenbank zugreifen kann.
+
+Folgende Konfiguration kann dafür verwendet werden
+
 [source,yaml]
 ----
 apiVersion: v1
@@ -219,19 +235,12 @@ spec:
 ----
 
 
-Wir brauchen noch ein PVC, damit die Datenbank später ein SQL lesen und ausführen kann
 
-Folgende Konfiguration kann dafür verwendet werden
-
-
-
-
-Jetzt muss unser Deployment umkonfigurieren, sodass es dieses Volume verwendet.
-Leider können wir diese Konfigurationen nicht mit der Verwendung von der kubectl CLI hinzufügen. Deshalb habe ich sie in diesem Code-Snippet markiert.
-(Ich rate Ihnen, den Code nicht zu kopieren, sondern nur die Zeilen, die einen Plus enthalten, in ihrem Config Files händisch hinzufügen. Ohne die Plus-Symbole natürlich)
-
-
-
+Jetzt müssen wir unser Deployment umkonfigurieren, sodass es dieses Volume verwendet.
+Leider können wir diese Konfigurationen nicht mit der Verwendung von der kubectl CLI hinzufügen.
+Deshalb habe ich sie in diesem Code-Snippet markiert.
+(Ich rate Ihnen, den Code nicht zu kopieren, sondern nur die Zeilen, die einen Plus enthalten, in ihrem Config Files händisch hinzufügen.
+Ohne die Plus-Symbole natürlich)
 
 [source,diff]
 ----
@@ -306,12 +315,14 @@ spec:
 +            claimName: my-pvc
 
 ----
-Es ist jetzt völlig egal, ob die Pods aus irgendeinem Grund gestoppt oder gekillt werden. Die Daten existieren noch immer.
 
-Gratuliere! Sie haben jetzt die Datenbank erfolgreich deployed :)
+Es ist jetzt völlig egal, ob die Pods aus irgendeinem Grund gestoppt oder gekillt werden.
+Die Daten existieren noch immer.
+
+Gratuliere!
+Sie haben jetzt die Datenbank erfolgreich deployed :)
 
 Wenn Sie das Program auf ihren Namespace deployen wollen, dann müssen Sie bei jedem YAML File das Attribut `namespace` ändern
-
 
 == Deployment einer Java Applikation
 
@@ -319,8 +330,8 @@ Vorgehensweise:
 
 1. Hochladen des Image auf ghcr.io oder andere Conatiner Registries
 2. Erstellung eines Deployments
-3. Erstellung einer Service
-4. Erstellung einer Ingress
+3. Erstellung eines Services
+4. Zugriffsroute in der Ingress.yml Datei definieren
 
 === Hochladen des Images auf ghcr.io
 
@@ -329,6 +340,7 @@ Siehe <<./how-to-upload-an-image-to-ghcr.adoc#, how to upload an image to ghcr -
 === Erstellung eines Deployments
 
 Für die Erstellung des Services kann man diesen Befehl verwenden
+
 [source,shell]
 ----
 kubectl create deployment <beliebiger Namen> --image=<Name des Images, was sie bereits auf ghcr hochgeladen haben> --port=<beliebiger Port>
@@ -336,16 +348,139 @@ kubectl create deployment <beliebiger Namen> --image=<Name des Images, was sie b
 ----
 
 
+=== Erstellung eines Services
+Gleich wie <<Erstellung einer Service>> allerdings müssen sie das richtige Deployment auswählen
+
+
+=== Zugriffsroute in der Ingress.yml Datei definieren
+
+<<Erstellung von Ingress>>
 
 == Deployment einer Angular Applikation
 
-Vorgehensweise:
-
-1. Hochladen des Image auf ghcr.io oder andere Conatiner Registries
-2. Erstellung eines Deployments
-3. Erstellung einer Service
+Vorgehensweise: gleich wie <<Deployment einer Java Applikation>>
 
 
-=== Hochladen des Images auf ghcr.io
+== Erstellung von Ingress
 
-Siehe <<./how-to-upload-an-image-to-ghcr.adoc#, how to upload an image to ghcr - 2023/24>>
+Damit man auf die deployten Komponenten mittels http und https von außen zugreifen kann, wird ein Ingress gebraucht.
+
+Wir müssen zuerst ein Reverse Proxy mittels nginx erstellen und dann die Routen für unsere Komopnenten definieiren.
+
+=== Erstellung von nginx Reverse Proxy
+
+Es gibt 100 unterschiedliche Lösungen und Konfigurationen dafür, aber wir können uns an der Lösung von Prof. Christian Aberger orientieren.
+
+[source,conf]
+----
+server {
+    listen 80;
+    root /usr/share/nginx/html;
+    rewrite_log on;
+    error_log /dev/stdout debug;
+
+    location /api/ {
+        proxy_pass <Name von dem Service>:8080;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Host $host:$server_port;
+    }
+}
+----
+
+Danach sollen wir ein Dockerfile erstellen, in dem wir diese Konfigurationen kopieren
+
+[source,Dockerfile]
+----
+FROM nginx:stable
+
+# COPY frontend/* /usr/share/nginx/html/
+COPY ./default.conf /etc/nginx/conf.d/default.conf
+----
+
+Letztendlich sollen wir dieses Image auf ghcr.io publishen <<./how-to-upload-an-image-to-ghcr.adoc#, how to upload an image to ghcr - 2023/24>>
+
+== Erstellung von Deployment und Service für unser Reverse Proxy
+
+Sie sollen mittlerweile wissen, wie man ein Deployment und eine Service erstellt.
+
+[source,yml]
+----
+# nginx Web Server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: <Name von dem nginx Package, den Sie bereits auf einem Container Registery hochladen haben>
+          # remove imagePullPolicy when stable. Currently we do not take care of version numbers
+          ports:
+            - containerPort: 80
+#          livenessProbe:
+#            httpGet:
+#              path: /index.html
+#              port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: nginx
+----
+
+
+=== Konfiguration von Routen
+
+Dafür muss man auch eine fertige Konfiguration nehmen und diese  umändern
+
+[source,yml]
+----
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  name: nginx-ingress
+  namespace: <Namespace von Ihnen>
+spec:
+  rules:
+    - host: student.cloud.htl-leonding.ac.at
+      http:
+        paths:
+          - path: <Ihr Namen in diesem Format m.mustermann >
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  number: 80
+
+          - path: <Name von Ihnen in diesem Format m.mustermann>/<belieger Namen für die Route ihrer Anwendung>
+            pathType: Prefix
+            backend:
+              service:
+                name: <Name von dem Service, was sie deployen möchten>
+                port:
+                  number: <Port von dem Service, was sie deployen möchten>
+----
+
+
