@@ -1,13 +1,16 @@
 package at.htl.control;
 
 
+import at.htl.boundary.UserService;
 import io.quarkus.runtime.ShutdownContext;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import nu.pattern.OpenCV;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 import java.io.File;
 import java.util.logging.Logger;
 
@@ -31,7 +34,6 @@ public class InitBean {
             jpgFolder.mkdir();
         }
 
-        //
     }
 
     void onStop(@Observes ShutdownEvent event) {

@@ -1,5 +1,7 @@
 package at.htl.control;
 
+import at.htl.boundary.UserService;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.imgscalr.Scalr;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -32,6 +34,12 @@ public class ApiCalls {
     /* @Inject
      @RestClient
      ExamineeService examineeService;*/
+
+    @Inject
+    @RestClient
+    UserService userService;
+
+
     private String firstName = "max";
     private String lastName = "muster";
     private Long id = -1L;
@@ -223,13 +231,73 @@ public class ApiCalls {
                     .startNow()
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
-                                    .withIntervalInSeconds(3)
+                                    .withIntervalInSeconds(interval)
                                     .repeatForever())
                     .build();
 
             scheduler.scheduleJob(job, trigger);
         }
     }
+
+    public Long enterPIN() {
+        do {
+            System.out.print("Enter your pin: ");
+            String pin = sc.next();
+
+            id = userService.verifyPIN(pin);
+        } while (id == 0L);
+        return id;
+    }
+
+    public Long enterName(String id) {
+        Long response;
+
+        do {
+            System.out.print("Enter your first name: ");
+            firstName = sc.next();
+
+            System.out.print("Enter your last name: ");
+            lastName = sc.next();
+
+            response = executeEnrollService(id, firstName, lastName);
+
+            if (response == -1L) {
+                System.out.println("You are already enrolled for this exam!");
+
+                System.out.print("Enroll again with the same name? [Y | N]: ");
+                enrollOption = sc.next();
+
+                if (enrollOption.equalsIgnoreCase("Y")) {
+                    response = executeEnrollAgainService(id, firstName, lastName);
+                }
+                else if(enrollOption.equalsIgnoreCase("N")){
+                    response = -100L;
+                }
+
+            }
+        } while (response == -1L);
+
+        if(response != -100L){
+            authenticated = true;
+        }
+        return response;
+    }
+
+    public int getIntervall(String examId) {
+        interval = userService.getInterval(examId);
+        return 0;
+    }
+
+    public Long executeEnrollService(String id, String firstName, String lastName) {
+        return userService
+                .enrollStudentForExam(id, firstName, lastName);
+    }
+
+    public Long executeEnrollAgainService(String id, String firstName, String lastName) {
+        return userService
+                .enrollStudentForExamAgain(id, firstName, lastName);
+    }
+
 
     /***
      * Job executes sendScreenshot() method
