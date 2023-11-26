@@ -17,6 +17,7 @@ public class UserSessionResource {
     UserSessionRepository userSessionRepository;
 
     @GET
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<UserSession> getAll() {
         return userSessionRepository.listAll();

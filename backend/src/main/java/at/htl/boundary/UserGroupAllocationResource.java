@@ -18,6 +18,7 @@ public class UserGroupAllocationResource {
     UserGroupAllocationRepository userGroupAllocationRepository;
 
     @GET
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<UserGroupAllocation> getAll() {
         return userGroupAllocationRepository.listAll();

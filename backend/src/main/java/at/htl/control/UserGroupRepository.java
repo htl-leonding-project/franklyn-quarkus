@@ -1,6 +1,9 @@
 package at.htl.control;
 
+import at.htl.entity.UserGroup;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 
-public class UserGroupRepository implements PanacheRepository<UserGroupRepository> {
+@ApplicationScoped
+public class UserGroupRepository implements PanacheRepository<UserGroup> {
 }

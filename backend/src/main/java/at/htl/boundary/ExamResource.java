@@ -17,6 +17,7 @@ public class ExamResource {
     ExamRepository examRepository;
 
     @GET
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Exam> getAll() {
         return examRepository.listAll();

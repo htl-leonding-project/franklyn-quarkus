@@ -17,6 +17,7 @@ public class UserResource {
     UserRepository userRepository;
 
     @GET
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> getAll() {
         return userRepository.listAll();
