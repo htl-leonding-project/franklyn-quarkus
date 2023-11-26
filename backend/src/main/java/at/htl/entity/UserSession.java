@@ -14,13 +14,13 @@ public class UserSession {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "U_ID")
-    @MapsId("US_U_ID")
+    //@MapsId("US_U_ID")
     @NotNull
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "E_ID")
-    @MapsId("US_E_ID")
+    //@MapsId("US_E_ID")
     @NotNull
     private Exam exam;
 
@@ -68,5 +68,15 @@ public class UserSession {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    @Override
+    public String toString() {
+        return "UserSession{" +
+                "id=" + id +
+                ", user=" + user +
+                ", exam=" + exam +
+                ", userRole=" + userRole +
+                '}';
     }
 }

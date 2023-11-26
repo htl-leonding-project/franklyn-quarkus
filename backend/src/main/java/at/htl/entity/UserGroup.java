@@ -42,13 +42,13 @@ public class UserGroup {
     @Enumerated(EnumType.STRING)
     public UserGroupType userGroupType;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    /*@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(name = "F_USER",
             joinColumns = { @JoinColumn(name = "U_ID") },
             inverseJoinColumns = { @JoinColumn(name = "UG_U_ID") })
-    public List<User> users;
+    public List<User> users;*/
 
     public UserGroup() {
     }
