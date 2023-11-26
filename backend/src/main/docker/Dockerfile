@@ -1,20 +1,6 @@
-FROM maven
+FROM eclipse-temurin:17-jre
 
-WORKDIR /app
-
-# Copy Maven Wrapper files
-
-# Copy the rest of the application files
-COPY ../../../lib lib
-COPY ../.. src
-COPY ../../../pom.xml pom.xml
-
-
-ENV DB_URL="jdbc:postgresql://localhost:5432/db" \
-    POSTGRES_USERNAME="app" \
-    POSTGRES_PASSWORD="app"
-# Build the application
-RUN ["mvn", "clean", "package", "-DskipTests"]
-
-# Run the application
-CMD ["java", "-jar", "./target/quarkus-app/quarkus-run.jar"]
+RUN mkdir -p /opt/application
+COPY *-runner.jar /opt/application/backend.jar
+CMD [ "java", "-jar", "backend.jar" ]
+WORKDIR /opt/application
