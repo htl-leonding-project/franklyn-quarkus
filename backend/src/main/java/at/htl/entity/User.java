@@ -20,7 +20,7 @@ public class User {
     @Column(name = "U_LAST_NAME")
     public String lastName;
 
-    @Column(name = "U_EMAIL")
+    @Column(unique = true, name = "U_EMAIL")
     public String email;
 
     @Column(name = "U_IS_ONLINE")
@@ -39,10 +39,21 @@ public class User {
         this.lastName = lastName;
         this.isOnline = isOnline;
     }
+    public User(String firstName, String lastName, boolean isOnline, LocalDateTime lastOnline) {
+        this(firstName,lastName,isOnline);
+        this.lastOnline = lastOnline;
+    }
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public User(String firstName, String lastName, String email, boolean isAdmin) {
+        this(firstName, lastName);
+        this.email = email;
+        this.isAdmin = isAdmin;
+
     }
 
     public Long getId() {

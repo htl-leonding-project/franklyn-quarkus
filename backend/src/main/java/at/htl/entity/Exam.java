@@ -16,17 +16,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@NamedQueries({
-        @NamedQuery(
-                name = "Exam.findExamWithSameDateAndPIN",
-                query = "select e from Exam e where e.date = :DATE and e.pin LIKE :PIN")
-})
-
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.StringIdGenerator.class,
         property="e_id")
-@Entity
-@Table(name = "F_EXAM")
+@Entity(name = "F_EXAM")
+@NamedQueries({
+        @NamedQuery(
+                name = "Exam.findExamWithSameDateAndPIN",
+                query = "select e from F_EXAM e where e.date = :DATE and e.pin LIKE :PIN"),
+        @NamedQuery(name = "Exam.getIntervalByExamId", query = "from F_EXAM e where id = ?1")
+})
 public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,7 +112,18 @@ public class Exam {
         this.startTime = startTime;
         this.endTime = endTime;
         this.interval = interval;
+    }
 
+    public Exam(String pin,
+                String title,
+                ExamState state,
+                LocalDate date,
+                LocalDateTime startTime,
+                LocalDateTime endTime,
+                int interval,
+                Long adminId){
+        this(pin, title, state, date, startTime, endTime, interval);
+        this.adminId = adminId;
     }
 
 

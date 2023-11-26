@@ -4,7 +4,10 @@ package at.htl.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-@Entity(name = "f_user_session")
+@Entity(name = "F_USER_SESSION")
+@NamedQueries({
+        @NamedQuery(name = "UserSession.isUserPartOfExam", query = "from F_USER_SESSION us where us.exam.id = ?1 and us.user.firstName = ?2 and us.user.lastName = ?3")
+})
 public class UserSession {
     @Id
     @Column(name = "US_ID")

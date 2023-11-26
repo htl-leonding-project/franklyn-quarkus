@@ -28,11 +28,10 @@ public class InitBean {
 
         List<User> testUsers = List.of(testUser01,testUser02);
         userRepository.persist(testUsers);
-
         Exam testExam = new Exam("123",
                 "test-exam",
                 ExamState.IN_PREPARATION,
-                LocalDate.of(2023,12,23),
+                LocalDate.now(),
                 LocalDateTime.of(2023,12,23,8,0),
                 LocalDateTime.of(2023,12,23,10,0),
                 5);
