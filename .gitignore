@@ -54,3 +54,5 @@ dist
 /client
 franklyn-client/jpgImages
 franklyn-client/pngImages
+
+*.mp4
