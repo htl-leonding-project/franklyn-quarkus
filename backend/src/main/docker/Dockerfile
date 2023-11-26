@@ -5,9 +5,9 @@ WORKDIR /app
 # Copy Maven Wrapper files
 
 # Copy the rest of the application files
-COPY lib lib
-COPY src src
-COPY pom.xml pom.xml
+COPY ../../../lib lib
+COPY ../.. src
+COPY ../../../pom.xml pom.xml
 
 
 ENV DB_URL="jdbc:postgresql://localhost:5432/db" \

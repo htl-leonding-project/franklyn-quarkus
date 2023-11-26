@@ -2,62 +2,71 @@ name: ci-cd
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - releases
+
+
 
 env:
   REGISTRY: ghcr.io
+  BACKEND_IMAGE: "ghcr.io/${{ github.repository_owner }}/franklyn-application-server-image:latest"
+
+permissions:
+  packages: write
+  contents: read
 
 jobs:
-  buildfrontend:
-    name: build-frontend
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+  #buildfrontend:
+  #  name: build-frontend
+  # runs-on: ubuntu-latest
+  # steps:
+  #   - uses: actions/checkout@v2
 
-      #- name: Set up QEMU
-      #  uses: docker/setup-qemu-action@v1
+  #   #- name: Set up QEMU
+  #   #  uses: docker/setup-qemu-action@v1
 
-      - name: convert github repository name to lowercase
-        run: echo "IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+  #   #- name: convert github repository name to lowercase
+  #   #  run: echo "IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-      - name: convert github registry name to lowercase
-        run: echo "IMAGE_REGISTRY=$(echo ${{ env.REGISTRY }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+  #   #- name: convert github registry name to lowercase
+  #   #  run: echo "IMAGE_REGISTRY=$(echo ${{ env.REGISTRY }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+  #   - name: Log in to the Container registry
+  #     uses: docker/login-action@v1
+  #     with:
+  #       registry: ${{ env.REGISTRY }}
+  #       username: ${{ github.actor }}
+  #       password: ${{ secrets.GITHUB_TOKEN }}
+  #
+  #    - name: Set up Docker Buildx
+  #      uses: docker/setup-buildx-action@v1
+  #
+  #    - name: Build and push frontend
+  #      uses: docker/build-push-action@v2
+  #      with:
+  #        context: ./franklyn-frontend
+  #        file: ./franklyn-frontend/Dockerfile
+  #        push: true
+  #        tags: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-frontend:latest
+  #        cache-from: type=registry,ref=${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-frontend:buildcache
+  #        cache-to: type=registry,ref=${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-frontend:buildcache,mode=max
+  #        #platforms: linux/amd64,linux/arm64
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Build and push frontend
-        uses: docker/build-push-action@v2
-        with:
-          context: ./franklyn-frontend
-          file: ./franklyn-frontend/Dockerfile
-          push: true
-          tags: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-frontend:latest
-          cache-from: type=registry,ref=${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-frontend:buildcache
-          cache-to: type=registry,ref=${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-frontend:buildcache,mode=max
-          #platforms: linux/amd64,linux/arm64
-
-  buildbackend:
+  backend:
     name: build backend
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-
-      - name: convert github repository name to lowercase
-        run: echo "IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-
-      - name: convert github registry name to lowercase
-        run: echo "IMAGE_REGISTRY=$(echo ${{ env.REGISTRY }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+      - name: build backend
+        run: |
+          ./build.sh
+        working-directory: backend
 
       - name: Log in to the Container registry
         uses: docker/login-action@v1
@@ -66,16 +75,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - name: push backend docker image
+        run: |
+          echo "tagging backend $BACKEND_IMAGE"
+          docker tag franklyn-application-server-image $BACKEND_IMAGE
+          docker push $BACKEND_IMAGE
 
-      - name: Build and push backend
-        uses: docker/build-push-action@v2
-        with:
-          context: ./backend
-          file: ./backend/src/main/docker/Dockerfile.jvm
-          push: true
-          tags: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-backend:latest
-          cache-from: type=registry,ref=${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-backend:buildcache
-          cache-to: type=registry,ref=${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-backend:buildcache,mode=max
           #platforms: linux/amd64,linux/arm64
