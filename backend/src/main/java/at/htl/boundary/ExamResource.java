@@ -98,8 +98,10 @@ public class ExamResource {
         var request = routingContext.request();
         var clientIp = request.getHeader("X-Forwarded-For");
         String ip = null;
+        LOG.info(clientIp);
+        LOG.info(request.remoteAddress().host());
         if (clientIp != null && !clientIp.isEmpty()) {
-            ip = routingContext.request().remoteAddress().host();
+            ip = clientIp;
 
         }
         LOG.info(ip);
