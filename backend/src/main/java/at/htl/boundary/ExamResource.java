@@ -5,7 +5,9 @@ import at.htl.control.UserRepository;
 import at.htl.control.UserSessionRepository;
 import at.htl.entity.*;
 import at.htl.entity.dto.ExamDto;
+import at.htl.entity.dto.ExamParticipantDTO;
 import io.quarkus.logging.Log;
+import io.vertx.ext.web.RoutingContext;
 import jakarta.ejb.PostActivate;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -22,6 +24,9 @@ import java.util.Objects;
 @Path("/exam")
 public class ExamResource {
 
+
+    @Inject
+    RoutingContext routingContext;
     @Inject
     Logger LOG;
 
@@ -39,6 +44,14 @@ public class ExamResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Exam> getAll() {
         return examRepository.listAll();
+    }
+
+
+    @GET
+    @Path("/participants")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UserSession> getAllParticipantsByExamId(@QueryParam("examId") Long examId) {
+        return userSessionRepository.getAllParticipantsOfExam(examId);
     }
 
     @POST
@@ -76,17 +89,23 @@ public class ExamResource {
     @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Long enrollStudentForExam(@PathParam("examId") Long examId, @PathParam("firstName") String firstName, @PathParam("lastName") String lastName) {
+    public Long enrollStudentForExam(
+            @PathParam("examId") Long examId,
+            @PathParam("firstName") String firstName,
+            @PathParam("lastName") String lastName
+    ) {
         //TODO: get IP of Client and save it for Images on Frontend
+        var ip = routingContext.request().remoteAddress().host();
+        LOG.info(ip);
         Exam exam = examRepository.findById(examId);
         User user = new User(firstName, lastName, true, LocalDateTime.now());
 
-        boolean userAlreadyConnectedToExam = userSessionRepository.checkIfAlreadyPartOfExam(firstName,lastName,examId);
+        boolean userAlreadyConnectedToExam = userSessionRepository.checkIfAlreadyPartOfExam(firstName, lastName, examId);
         if (userAlreadyConnectedToExam) {
             return -1L;
         }
         userRepository.persist(user);
-        UserSession userSession = new UserSession(user, exam, UserRole.EXAMINEE);
+        UserSession userSession = new UserSession(user, exam, UserRole.EXAMINEE,ip);
         userSessionRepository.persist(userSession);
         return user.getId();
     }
@@ -100,7 +119,9 @@ public class ExamResource {
                                           @PathParam("lastName") String lastName) {
 
         //TODO: get IP of Client and save it for Images on Frontend
-        return userSessionRepository.getUserId(firstName,lastName,examId);
+        LOG.info(routingContext.request().remoteAddress().host());
+
+        return userSessionRepository.getUserId(firstName, lastName, examId);
 
     }
 
@@ -109,7 +130,7 @@ public class ExamResource {
     @Path("getIntervalByExamId/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public int getIntervalByExam(@PathParam("id") Long id){
+    public int getIntervalByExam(@PathParam("id") Long id) {
         int interval = examRepository.getIntervalByExamId(id);
         Log.info(interval);
         return interval;

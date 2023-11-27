@@ -38,7 +38,7 @@ public class InitBean {
         examRepository.persist(testExam);
 
         testUsers.forEach(user -> {
-            UserSession userSession = new UserSession(user, testExam, UserRole.EXAMINEE);
+            UserSession userSession = new UserSession(user, testExam, UserRole.EXAMINEE, null);
             userSessionRepository.persist(userSession);
         });
 

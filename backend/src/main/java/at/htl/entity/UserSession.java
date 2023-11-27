@@ -6,7 +6,12 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity(name = "F_USER_SESSION")
 @NamedQueries({
-        @NamedQuery(name = "UserSession.isUserPartOfExam", query = "from F_USER_SESSION us where us.exam.id = ?1 and us.user.firstName = ?2 and us.user.lastName = ?3")
+        @NamedQuery(name = "UserSession.isUserPartOfExam",
+                query = "from F_USER_SESSION us" +
+                        " where us.exam.id = ?1 and us.user.firstName = ?2 and us.user.lastName = ?3"),
+        @NamedQuery(name = "UserSession.allParticipants",
+                query = "SELECT  new at.htl.entity.dto.ExamParticipantDTO(us.user, userIP)  " +
+                        "FROM F_USER_SESSION us where exam.id = ?1 ")
 })
 public class UserSession {
     @Id
@@ -31,14 +36,26 @@ public class UserSession {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    public UserSession(User user, Exam exam, UserRole userRole) {
+    private String userIP;
+
+
+    public UserSession(User user, Exam exam, UserRole userRole, String userIP) {
         this.user = user;
         this.exam = exam;
         this.userRole = userRole;
+        this.userIP = userIP;
     }
 
     public UserSession() {
 
+    }
+
+    public String getUserIP() {
+        return userIP;
+    }
+
+    public void setUserIP(String userIP) {
+        this.userIP = userIP;
     }
 
     public Long getId() {
