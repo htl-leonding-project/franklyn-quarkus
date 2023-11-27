@@ -17,7 +17,7 @@ public class UserSessionRepository implements PanacheRepository<UserSession> {
 
     public Long getUserId(String firstName, String lastName, Long examId) {
         UserSession us = find("#UserSession.isUserAlreadyPartOfExam", examId, firstName, lastName).firstResult();
-        if(us == null) {
+        if (us == null) {
             return 0L;
         } else {
             return us.getUser().getId();
@@ -26,4 +26,10 @@ public class UserSessionRepository implements PanacheRepository<UserSession> {
         //return us.getUser().getId();
 
     }
+
+    public List<UserSession> getAllParticipantsOfExam(Long examId) {
+        return find("#UserSession.allParticipants", examId).stream().toList();
+    }
+
+
 }
