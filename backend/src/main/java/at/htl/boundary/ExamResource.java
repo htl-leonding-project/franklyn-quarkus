@@ -95,7 +95,13 @@ public class ExamResource {
             @PathParam("lastName") String lastName
     ) {
         //TODO: get IP of Client and save it for Images on Frontend
-        var ip = routingContext.request().remoteAddress().hostAddress();
+        var request = routingContext.request();
+        var clientIp = request.getHeader("X-Forwarded-For");
+        String ip = null;
+        if (clientIp != null && !clientIp.isEmpty()) {
+            ip = routingContext.request().remoteAddress().host();
+
+        }
         LOG.info(ip);
         Exam exam = examRepository.findById(examId);
         User user = new User(firstName, lastName, true, LocalDateTime.now());
@@ -105,7 +111,7 @@ public class ExamResource {
             return -1L;
         }
         userRepository.persist(user);
-        UserSession userSession = new UserSession(user, exam, UserRole.EXAMINEE,ip);
+        UserSession userSession = new UserSession(user, exam, UserRole.EXAMINEE, ip);
         userSessionRepository.persist(userSession);
         return user.getId();
     }
