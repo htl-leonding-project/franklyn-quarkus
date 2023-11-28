@@ -144,4 +144,17 @@ public class ExamResource {
         Log.info(interval);
         return interval;
     }
+
+    @DELETE
+    @Transactional
+    @Path("/{examId}/participants/{participantId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response kickStudent(
+            @PathParam("examId") Long examId,
+            @PathParam("participantId") Long participantId){
+            userSessionRepository.kickUser(examId, participantId);
+            return Response.accepted().build();
+    }
+
 }
