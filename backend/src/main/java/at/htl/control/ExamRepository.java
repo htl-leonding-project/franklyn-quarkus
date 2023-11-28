@@ -1,6 +1,8 @@
 package at.htl.control;
 
 import at.htl.entity.Exam;
+import at.htl.entity.UserSession;
+import at.htl.entity.dto.ExamParticipantDTO;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -24,6 +26,9 @@ public class ExamRepository implements PanacheRepository<Exam> {
         } while (pinIsValid);
         return pin;
     }
+
+
+
 
     public int getIntervalByExamId(Long id) {
         return find("#Exam.getIntervalByExamId", id).firstResult().interval;
