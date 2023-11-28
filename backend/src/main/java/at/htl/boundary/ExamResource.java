@@ -48,11 +48,13 @@ public class ExamResource {
 
 
     @GET
-    @Path("/participants/{examId}")
+    @Path("/{examId}/participants")
     @Produces(MediaType.APPLICATION_JSON)
     public List<UserSession> getAllParticipantsByExamId(@PathParam("examId") Long examId) {
         LOG.info("remote Address IP: " + routingContext.request().remoteAddress().host());
         LOG.info("X-Forwarded IP: " + routingContext.request().getHeader("X-Forwarded-For"));
+        LOG.info("REAL_IP_HEADER: " + routingContext.request().getHeader("X-Real-IP"));
+
         LOG.info("local address IP: " + routingContext.request().localAddress().host());
         return userSessionRepository.getAllParticipantsOfExam(examId);
     }
