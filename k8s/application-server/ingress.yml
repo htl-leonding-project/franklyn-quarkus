@@ -18,10 +18,18 @@ spec:
                 port:
                   number: 80
 
-          - path: /it190204/franklyn/(.*)$
+
+          - path: /it190204/(.*)$
             pathType: Prefix
             backend:
               service:
-                name: franklyn-application-server
+                name: nginx
                 port:
-                  number: 8080
+                  number: 80
+#          - path: /it190204/franklyn/(.*)$
+#            pathType: Prefix
+#            backend:
+#              service:
+#                name: franklyn-application-server
+#                port:
+#                  number: 8080
