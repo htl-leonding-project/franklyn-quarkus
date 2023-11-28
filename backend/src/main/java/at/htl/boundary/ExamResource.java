@@ -48,9 +48,9 @@ public class ExamResource {
 
 
     @GET
-    @Path("/participants")
+    @Path("/participants/{examId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UserSession> getAllParticipantsByExamId(@QueryParam("examId") Long examId) {
+    public List<UserSession> getAllParticipantsByExamId(@PathParam("examId") Long examId) {
         LOG.info("remote Address IP: " + routingContext.request().remoteAddress().host());
         LOG.info("X-Forwarded IP: " + routingContext.request().getHeader("X-Forwarded-For"));
         LOG.info("local address IP: " + routingContext.request().localAddress().host());
@@ -159,9 +159,9 @@ public class ExamResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response kickStudent(
             @PathParam("examId") Long examId,
-            @PathParam("participantId") Long participantId){
-            userSessionRepository.kickUser(examId, participantId);
-            return Response.accepted().build();
+            @PathParam("participantId") Long participantId) {
+        userSessionRepository.kickUser(examId, participantId);
+        return Response.accepted().build();
     }
 
 }
