@@ -51,6 +51,9 @@ public class ExamResource {
     @Path("/participants")
     @Produces(MediaType.APPLICATION_JSON)
     public List<UserSession> getAllParticipantsByExamId(@QueryParam("examId") Long examId) {
+        LOG.info("remote Address IP: " + routingContext.request().remoteAddress().host());
+        LOG.info("X-Forwarded IP: " + routingContext.request().getHeader("X-Forwarded-For"));
+        LOG.info("local address IP: " + routingContext.request().localAddress().host());
         return userSessionRepository.getAllParticipantsOfExam(examId);
     }
 
@@ -94,12 +97,16 @@ public class ExamResource {
             @PathParam("firstName") String firstName,
             @PathParam("lastName") String lastName
     ) {
+
+        LOG.info("remote Address IP: " + routingContext.request().remoteAddress().host());
+        LOG.info("X-Forwarded IP: " + routingContext.request().getHeader("X-Forwarded-For"));
+        LOG.info("local address IP: " + routingContext.request().localAddress().host());
+
         //TODO: get IP of Client and save it for Images on Frontend
         var request = routingContext.request();
         var clientIp = request.getHeader("X-Forwarded-For");
         String ip = null;
-        LOG.info(clientIp);
-        LOG.info(request.remoteAddress().host());
+
         if (clientIp != null && !clientIp.isEmpty()) {
             ip = clientIp;
 
@@ -144,4 +151,17 @@ public class ExamResource {
         Log.info(interval);
         return interval;
     }
+
+    @DELETE
+    @Transactional
+    @Path("/{examId}/participants/{participantId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response kickStudent(
+            @PathParam("examId") Long examId,
+            @PathParam("participantId") Long participantId){
+            userSessionRepository.kickUser(examId, participantId);
+            return Response.accepted().build();
+    }
+
 }
