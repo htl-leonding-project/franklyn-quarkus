@@ -12,6 +12,8 @@ import jakarta.ejb.PostActivate;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
@@ -50,7 +52,10 @@ public class ExamResource {
     @GET
     @Path("/{examId}/participants")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UserSession> getAllParticipantsByExamId(@PathParam("examId") Long examId) {
+    public List<UserSession> getAllParticipantsByExamId(@Context HttpHeaders headers, @PathParam("examId") Long examId) {
+        LOG.info("headers X-Real-IP: " + headers.getHeaderString("X-Real-IP"));
+        LOG.info("headers X-Forwarded-For: " + headers.getHeaderString("X-Forwarded-For"));
+
         LOG.info("remote Address IP: " + routingContext.request().remoteAddress().host());
         LOG.info("X-Forwarded IP: " + routingContext.request().getHeader("X-Forwarded-For"));
         LOG.info("REAL_IP_HEADER: " + routingContext.request().getHeader("X-Real-IP"));
