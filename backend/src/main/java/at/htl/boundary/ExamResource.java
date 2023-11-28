@@ -12,6 +12,8 @@ import jakarta.ejb.PostActivate;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
@@ -48,9 +50,17 @@ public class ExamResource {
 
 
     @GET
-    @Path("/participants")
+    @Path("/{examId}/participants")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UserSession> getAllParticipantsByExamId(@QueryParam("examId") Long examId) {
+    public List<UserSession> getAllParticipantsByExamId(@Context HttpHeaders headers, @PathParam("examId") Long examId) {
+        LOG.info("headers X-Real-IP: " + headers.getHeaderString("X-Real-IP"));
+        LOG.info("headers X-Forwarded-For: " + headers.getHeaderString("X-Forwarded-For"));
+
+        LOG.info("remote Address IP: " + routingContext.request().remoteAddress().host());
+        LOG.info("X-Forwarded IP: " + routingContext.request().getHeader("X-Forwarded-For"));
+        LOG.info("REAL_IP_HEADER: " + routingContext.request().getHeader("X-Real-IP"));
+
+        LOG.info("local address IP: " + routingContext.request().localAddress().host());
         return userSessionRepository.getAllParticipantsOfExam(examId);
     }
 
@@ -94,12 +104,16 @@ public class ExamResource {
             @PathParam("firstName") String firstName,
             @PathParam("lastName") String lastName
     ) {
+
+        LOG.info("remote Address IP: " + routingContext.request().remoteAddress().host());
+        LOG.info("X-Forwarded IP: " + routingContext.request().getHeader("X-Forwarded-For"));
+        LOG.info("local address IP: " + routingContext.request().localAddress().host());
+
         //TODO: get IP of Client and save it for Images on Frontend
         var request = routingContext.request();
         var clientIp = request.getHeader("X-Forwarded-For");
         String ip = null;
-        LOG.info(clientIp);
-        LOG.info(request.remoteAddress().host());
+
         if (clientIp != null && !clientIp.isEmpty()) {
             ip = clientIp;
 
@@ -144,4 +158,17 @@ public class ExamResource {
         Log.info(interval);
         return interval;
     }
+
+    @DELETE
+    @Transactional
+    @Path("/{examId}/participants/{participantId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response kickStudent(
+            @PathParam("examId") Long examId,
+            @PathParam("participantId") Long participantId) {
+        userSessionRepository.kickUser(examId, participantId);
+        return Response.accepted().build();
+    }
+
 }
