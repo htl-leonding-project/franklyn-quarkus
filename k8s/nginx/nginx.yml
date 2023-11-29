@@ -31,6 +31,8 @@ metadata:
   name: nginx
 
 spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - port: 80
       targetPort: 80

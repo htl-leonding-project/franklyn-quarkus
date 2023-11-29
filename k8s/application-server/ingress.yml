@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+
   name: nginx-ingress
   namespace: student-it190204
 spec:

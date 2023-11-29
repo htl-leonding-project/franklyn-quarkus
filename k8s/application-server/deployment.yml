@@ -9,7 +9,6 @@ metadata:
   labels:
     app: franklyn-application-server
   name: franklyn-application-server
-  namespace: student-it190204
 
 spec:
   progressDeadlineSeconds: 600

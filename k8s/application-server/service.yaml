@@ -4,6 +4,8 @@ metadata:
   name: franklyn-application-server
 
 spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
     - port: 8080
       targetPort: 8080

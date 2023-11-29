@@ -6,6 +6,7 @@ import at.htl.control.UserSessionRepository;
 import at.htl.entity.*;
 import at.htl.entity.dto.ExamDto;
 import at.htl.entity.dto.ExamParticipantDTO;
+import at.htl.util.UtilClass;
 import io.quarkus.logging.Log;
 import io.vertx.ext.web.RoutingContext;
 import jakarta.ejb.PostActivate;
@@ -53,14 +54,7 @@ public class ExamResource {
     @Path("/{examId}/participants")
     @Produces(MediaType.APPLICATION_JSON)
     public List<UserSession> getAllParticipantsByExamId(@Context HttpHeaders headers, @PathParam("examId") Long examId) {
-        LOG.info("headers X-Real-IP: " + headers.getHeaderString("X-Real-IP"));
-        LOG.info("headers X-Forwarded-For: " + headers.getHeaderString("X-Forwarded-For"));
 
-        LOG.info("remote Address IP: " + routingContext.request().remoteAddress().host());
-        LOG.info("X-Forwarded IP: " + routingContext.request().getHeader("X-Forwarded-For"));
-        LOG.info("REAL_IP_HEADER: " + routingContext.request().getHeader("X-Real-IP"));
-
-        LOG.info("local address IP: " + routingContext.request().localAddress().host());
         return userSessionRepository.getAllParticipantsOfExam(examId);
     }
 
@@ -105,20 +99,9 @@ public class ExamResource {
             @PathParam("lastName") String lastName
     ) {
 
-        LOG.info("remote Address IP: " + routingContext.request().remoteAddress().host());
-        LOG.info("X-Forwarded IP: " + routingContext.request().getHeader("X-Forwarded-For"));
-        LOG.info("local address IP: " + routingContext.request().localAddress().host());
 
         //TODO: get IP of Client and save it for Images on Frontend
-        var request = routingContext.request();
-        var clientIp = request.getHeader("X-Forwarded-For");
-        String ip = null;
-
-        if (clientIp != null && !clientIp.isEmpty()) {
-            ip = clientIp;
-
-        }
-        LOG.info(ip);
+        var ip = UtilClass.getIpAddress(routingContext.request());
         Exam exam = examRepository.findById(examId);
         User user = new User(firstName, lastName, true, LocalDateTime.now());
 
@@ -141,8 +124,6 @@ public class ExamResource {
                                           @PathParam("lastName") String lastName) {
 
         //TODO: get IP of Client and save it for Images on Frontend
-        LOG.info(routingContext.request().remoteAddress().host());
-        Log.info(routingContext.request().localAddress().hostAddress());
 
         return userSessionRepository.getUserId(firstName, lastName, examId);
 
