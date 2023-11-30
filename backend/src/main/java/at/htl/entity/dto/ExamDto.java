@@ -12,8 +12,7 @@ public record ExamDto(
         LocalDate date,
         LocalDateTime startTime,
         LocalDateTime endTime,
-        int interval,
-        User admin
+        int interval
 ) {
 
 }

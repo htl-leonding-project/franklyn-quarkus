@@ -60,13 +60,15 @@ public class ExamResource {
 
     @POST
     @Path("/create")
+    @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createExam(ExamDto exam) {
+    public String createExam(ExamDto exam) {
         String pin = examRepository.createPIN();
-        Exam e = new Exam(pin, exam.title(), exam.state(), exam.date(), exam.startTime(), exam.endTime(), exam.interval(), exam.admin().id);
+        Exam e = new Exam(pin, exam.title(), exam.state(), exam.date(), exam.startTime(), exam.endTime(), exam.interval());
         LOG.info("Exam: <" + e.title + "> added");
-        return Response.created(null).build();
+        examRepository.persist(e);
+        return e.pin;
     }
 
     @GET

@@ -6,11 +6,6 @@ interface ExamViewModel {
   admin: number;
 }
 
-function createExam() {
-  const titleInput = this.shadowRoot.querySelector('#title');
-  const title = titleInput.value;
-}
-
 
 const examTemplate = (vm: ExamViewModel) => {
 
@@ -27,8 +22,8 @@ const examTemplate = (vm: ExamViewModel) => {
 
       <label for="state">State:</label>
       <select id="state" name="state" required>
-        <option value="IN_PROGRESS">In Progress</option>
-        <option value="COMPLETED">Completed</option>
+        <option value="IN_PREPARATION">In Vorbereitung</option>
+        <option value="RUNNING">Aktuell laufen</option>
       </select><br>
 
       <label for="date">Date:</label>
@@ -77,7 +72,7 @@ class ExamFormComponent extends HTMLElement {
         });
   }
 
-  createExam() {
+  async createExam() {
     // @ts-ignore
     const titleInput = this.shadowRoot.querySelector('#title').value;
     // @ts-ignore
@@ -95,15 +90,27 @@ class ExamFormComponent extends HTMLElement {
       title: titleInput,
       state: stateInput,
       date: dateInput,
-      startTime: startTimeInput,
-      endTime: endTimeInput,
+      startTime: dateInput + "T" + startTimeInput,
+      endTime: dateInput + "T" + endTimeInput,
       interval: intervalInput
     };
 
+    console.log(JSON.stringify(exam));
 
-
-    console.log("Creating exam:", JSON.stringify(exam));
-
+    fetch('/api/exam/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(exam),
+    })
+        .then(response => response.json())
+        .then(data => {
+          alert(`Test erstellt - PIN: ${data}`);
+        })
+        .catch((error) => {
+          console.error('Fehler beim Erstellen des Tests:', error);
+        });
   }
 }
 customElements.define("exam-form", ExamFormComponent);
