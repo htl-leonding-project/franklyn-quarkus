@@ -1,32 +1,36 @@
-import { BehaviorSubject } from "rxjs";
+import {BehaviorSubject} from "rxjs";
+import * as string_decoder from "string_decoder";
 
 export interface User {
-  readonly id: number;
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly emial: string;
-  readonly isOnine: boolean;
-  readonly isAdmin: boolean;
-  readonly lastOnline: Date;
-  readonly onine: boolean;
-  readonly admin: boolean;
+    readonly id: number;
+    readonly firstName: string;
+    readonly lastName: string;
+    readonly emial: string;
+    readonly isOnine: boolean;
+    readonly isAdmin: boolean;
+    readonly lastOnline: Date;
+    readonly onine: boolean;
+    readonly admin: boolean;
 }
 
 export interface Model {
-  readonly users: User[];
-  readonly message: string;
-  readonly admin: number;
-  readonly sessions: UserSession[];
+    readonly users: User[];
+    readonly message: string;
+    readonly admin: number;
+    readonly sessions: UserSession[];
+     selectedIp: string
 }
-export type UserSession = User & {ip: string | null}
+
+export type UserSession = { user: User, ip: string | null }
 
 const initialState: Model = {
-  users: [],
-  admin: 1,
-  message: "lassen wir die Pause ausfallen und hören 5 Minuten früher auf",
-  sessions: []
+    users: [],
+    admin: 1,
+    message: "lassen wir die Pause ausfallen und hören 5 Minuten früher auf",
+    sessions: [],
+    selectedIp: null
 };
 
 const store = new BehaviorSubject<Model>(initialState);
 
-export { store };
+export {store};

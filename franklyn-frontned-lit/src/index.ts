@@ -3,8 +3,9 @@ import { Model, store } from "./model";
 import { userService } from "./user-service";
 import "./components/user-table-component";
 import "./components/exam-component";
+import "./components/user-session-component";
+
 import userSessionService from "./user-session-service";
-import "./components/exam-component";
 
 const users = await userService.getAll();
 const admin = 1;

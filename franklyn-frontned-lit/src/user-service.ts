@@ -1,4 +1,4 @@
-import { User } from "./model";
+  import { User } from "./model";
 
 class UserService {
   #url1 = "/api/user/all";

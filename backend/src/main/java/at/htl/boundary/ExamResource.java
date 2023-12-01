@@ -103,6 +103,7 @@ public class ExamResource {
 
 
         //TODO: get IP of Client and save it for Images on Frontend
+
         var ip = UtilClass.getIpAddress(routingContext.request());
         Exam exam = examRepository.findById(examId);
         User user = new User(firstName, lastName, true, LocalDateTime.now());
