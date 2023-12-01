@@ -14,10 +14,8 @@ const sessionTemplate = (vm: SessionViewModel) => {
     const sessions = vm.sessions.map(value => session(vm, value))
     return html`
         <div>
-            hahahahah
             ${sessions}
             ${vm.selectedIp}
-
         </div>`;
 }
 
