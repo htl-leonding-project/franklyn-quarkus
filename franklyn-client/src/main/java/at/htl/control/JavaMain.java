@@ -30,6 +30,7 @@ public class JavaMain implements QuarkusApplication {
         }
         apiCalls.getIntervall(id.toString());               // get intervall for Screenshots
         apiCalls.setScheduler();                            // set Scheduler adjusted to the intervall
+        apiCalls.getEndOfExam(id.toString());
         Quarkus.waitForExit();
         return 0;
     }

@@ -7,6 +7,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
@@ -32,6 +33,10 @@ public class ExamRepository implements PanacheRepository<Exam> {
 
     public int getIntervalByExamId(Long id) {
         return find("#Exam.getIntervalByExamId", id).firstResult().interval;
+    }
+
+    public LocalDateTime getEndOfExamByExamId(Long id) {
+        return find("#Exam.getIntervalByExamId", id).firstResult().endTime;
     }
 
 }

@@ -20,6 +20,8 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import org.jboss.logging.Logger;
@@ -55,6 +57,8 @@ public class ApiCalls {
     private int interval = 12;
 
     private String fileExt = "png";
+
+    private LocalDateTime endOfExam;
 
 
     @Inject
@@ -296,6 +300,13 @@ public class ApiCalls {
     public Long executeEnrollAgainService(String id, String firstName, String lastName) {
         return userService
                 .enrollStudentForExamAgain(id, firstName, lastName);
+    }
+
+    public void getEndOfExam(String examId) {
+        endOfExam = userService.getEndOfExam(examId);
+        Long hours =Duration.between(LocalDateTime.now(),endOfExam).toHours();
+        Long minutes = Duration.between(LocalDateTime.now(), endOfExam).toMinutes();
+        System.out.println("Time left -> Minuten: "+ minutes);
     }
 
 
