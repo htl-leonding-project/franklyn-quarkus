@@ -32,8 +32,8 @@ public class InitBean {
                 "test-exam",
                 ExamState.IN_PREPARATION,
                 LocalDate.now(),
-                LocalDateTime.of(2023,12,23,8,0),
-                LocalDateTime.of(2023,12,23,10,0),
+                LocalDateTime.now().plusHours(2),
+                LocalDateTime.now().plusHours(4),
                 5);
         examRepository.persist(testExam);
 

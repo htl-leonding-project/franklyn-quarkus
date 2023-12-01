@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.time.LocalDateTime;
 
 @Path("/api/exam")
 @RegisterRestClient(configKey = "exam-api")
@@ -38,4 +39,8 @@ public interface UserService {
     @Produces(MediaType.APPLICATION_JSON)
     int getInterval(@PathParam("id") String examId);
 
+    @GET
+    @Path("getEndOfExamByExamId/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    LocalDateTime getEndOfExam(@PathParam("id") String examId);
 }

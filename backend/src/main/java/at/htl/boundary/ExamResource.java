@@ -142,6 +142,16 @@ public class ExamResource {
         return interval;
     }
 
+    @GET
+    @Transactional
+    @Path("getEndOfExamByExamId/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public LocalDateTime getEndOfExamByExam(@PathParam("id") Long id) {
+        LocalDateTime endOfLesson = examRepository.getEndOfExamByExamId(id);
+        return endOfLesson;
+    }
+
     @DELETE
     @Transactional
     @Path("/{examId}/participants/{participantId}")
