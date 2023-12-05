@@ -1,0 +1,23 @@
+@startuml
+
+left to right direction
+
+:Student: as student
+:Examiner: as examiner
+
+
+
+rectangle "Franklyn" {
+    rectangle Client {
+        usecase "Sends screenshots" as uc_sendsScreenshots
+    }
+    rectangle Examiner {
+            usecase "Creates virtual classroom" as uc_createLobby
+            usecase "Observes desktops of all participants" as uc_seeScreenshots
+        }
+}
+
+student -- uc_sendsScreenshots
+examiner -- uc_createLobby
+examiner -- uc_seeScreenshots
+@enduml

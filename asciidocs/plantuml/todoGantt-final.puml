@@ -1,0 +1,21 @@
+@startgantt
+
+saturday are closed
+sunday are closed
+
+Project starts the 8th of jan 2024
+
+
+[erweiterte Konfiguration der Tests (Bildformate, Schüler kicken) ] as [TASK1-1] lasts 10 days
+[Wie funktioniert RSYNC] as [TASK2-1] lasts 10 days
+[RSYNC implementieren] as [TASK3-1] lasts 10 days
+
+[Finale Version ist lauffähig für Tests] as [TASK3-2] lasts 10 days
+
+[TASK1-1] -> [TASK2-1]
+[TASK2-1] -> [TASK3-1]
+[TASK2-1] -> [TASK3-2]
+
+2024-01-25 to 2024-01-26 are named [Tag der Offenen Tür]
+2024-01-25 to 2024-01-26 are colored in orange
+@endgantt

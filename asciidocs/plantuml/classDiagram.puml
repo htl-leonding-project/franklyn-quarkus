@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class Exam{
+
+}
+
+class User{
+
+}
+
+class Screenshot{
+
+}
+
+class Role{
+Examinee,
+Examiner,
+Superadmin
+}
+
+
+class UserSession {
+}
+
+class UserGroupAllocation {
+
+}
+class UserGroup
+class UserGroupType
+
+
+User "*" -right- "*" Exam
+UserSession -up- Role
+Screenshot "*" -up- "1" User
+Screenshot "*" -up- "1" Exam
+UserGroup -- UserGroupType
+UserGroup "*" -right- "*" User
+
+UserGroupAllocation .. (UserGroup, User)
+UserSession "1" .. (User, Exam)
+
+
+@enduml

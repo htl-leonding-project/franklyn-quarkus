@@ -1,0 +1,96 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class Exam{
+    id: Long
+    pin: String
+    title: String
+    ongoing: boolean
+    schoolClasses: SchoolClass
+    date: LocalDate
+    startTime: LocalDateTime
+    endTime: LocalDateTime
+}
+
+
+
+class Examinee{
+    id: Long
+    firstName: String
+    lastName: String
+    exam: Exam
+    isOnline: boolean
+    lastOnline: LocalDateTime
+}
+
+class ExaminerExam{
+    id: Long
+    examiner: Examiner
+    exam: Exam
+}
+
+class Examiner{
+    id: Long
+    userName: String
+    firstName: String
+    lastName: String
+    isAdmin: boolean
+    exam: Exam
+}
+
+class Screenshot{
+    id: Long
+    timestamp: Timestamp
+    runningNo: Integer
+    examinee: Examinee
+    resolution: Resolution
+    compression: Integer
+    isCompressed: IsCompressed
+    pathOfScreenshot: String
+}
+
+enum IsCompressed{
+    NOT_COMPRESSED
+    CURRENTLY_COMPRESSED
+    COMPRESSED
+}
+
+class requestSummary{
+    duration: Number
+    endpoint: String (?)
+    date: LocalDate
+}
+
+class SchoolClass{
+    id: Long
+    title: String
+    year: String
+}
+
+class config{
+    configVersion: Number
+    examinerLoginType: String
+    storage: ?
+    storageUtilizationCheck: ?
+    heartbeat: ?
+    examsToDelete:
+    pinLength: Number
+    webUntis:
+    endOfSchoolYear: String
+    maintenance: boolean
+}
+
+enum Resolution{
+    HD,
+    NATIVE,
+    FHD
+}
+
+
+Examinee "1".."*" Exam
+Examinee "*".."1" Screenshot
+Exam "1".."*" SchoolClass
+Examiner "1".."*" ExaminerExam
+Exam "1".."*" ExaminerExam
+@enduml
