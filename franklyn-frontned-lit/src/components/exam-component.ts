@@ -13,8 +13,10 @@ const examTemplate = (vm: ExamViewModel) => {
   console.log("exam Template")
   console.log(vm.admin)
   return html`
-    
-    <h1>Test erstellen</h1>
+
+    <link rel="stylesheet" href="../../styles/style.css" />
+   
+    <h2>Test erstellen</h2>
 
     <form id="examForm">
       <label for="title">Title:</label>

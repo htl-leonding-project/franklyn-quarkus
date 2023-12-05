@@ -21,10 +21,13 @@ const rowTemplate = (user: User) => html`
 const tableTemplate = (vm: UserViewModel) => {
   const rows = vm.users.map((user) => rowTemplate(user));
   return html`
-   
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-    <h1>User Tabelle</h1>
-    <table class="w3-table-all">
+    
+    
+    <h2>User Tabelle</h2>
+
+    <link rel="stylesheet" href="../../styles/style.css" />
+
+    <table style="width: 60%">
       <thead>
         <tr>
           <th>Id</th>
