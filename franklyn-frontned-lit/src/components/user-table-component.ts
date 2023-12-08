@@ -27,13 +27,13 @@ const tableTemplate = (vm: UserViewModel) => {
 
     <link rel="stylesheet" href="../../styles/style.css" />
 
-    <table style="width: 60%">
+    <table>
       <thead>
         <tr>
-          <th>Id</th>
-          <th>Vorname</th>
-          <th>Nachname</th>
-          <th>E-Mail</th>
+          <th id="Id">Id</th>
+          <th id="Vorname">Vorname</th>
+          <th id="Nachname">Nachname</th>
+          <th id="Email">E-Mail</th>
         </tr>
       </thead>
       <tbody>

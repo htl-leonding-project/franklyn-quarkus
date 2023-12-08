@@ -13,7 +13,9 @@ interface SessionViewModel {
 const sessionTemplate = (vm: SessionViewModel) => {
     const sessions = vm.sessions.map(value => session(vm, value))
     return html`
-        <div>
+        <link rel="stylesheet" href="../../styles/style.css" />
+        
+        <div id="responsive">
             ${sessions}
             ${vm.selectedIp}
         </div>`;
@@ -23,12 +25,16 @@ const sessionTemplate = (vm: SessionViewModel) => {
 const session = (vm: SessionViewModel, session: UserSession) => {
     console.info(session)
     return html`
-        <button @click=${() => {
-            vm.selectUser(session)
-        }}>
-            <h2>${session.user.lastName} ${session.user.firstName}</h2>
+        <div class="gallery">
+            <img src="../../placeholger-image.png" alt="Screenshots">
 
-        </button>
+            <button @click=${() => {
+                vm.selectUser(session)
+            }}>
+                <a>${session.user.lastName} ${session.user.firstName}</a>
+            </button>
+            <br>
+        </div>
     `
 }
 

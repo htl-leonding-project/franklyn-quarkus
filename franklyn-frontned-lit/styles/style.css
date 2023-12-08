@@ -25,7 +25,7 @@ body{
     border-radius: 1em;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 1em;
-    width: 40%;
+    width: 100%;
 }
 
 label {
@@ -83,6 +83,7 @@ button:after {
 button:hover,
 button:focus {
     color: white;
+    cursor:pointer;
 }
 
 button:hover:before,
@@ -102,9 +103,10 @@ button:focus:after {
 }
 
 table {
-    width: 60%;
+    width: 100%;
     border-collapse: collapse;
     margin-bottom: 4em;
+    flex-direction: column;
 }
 
 table th, table td {
@@ -121,8 +123,74 @@ table tbody tr:hover {
     background-color: #f5f5f5;
 }
 
+th#Id, td#Id {
+    width: 8%;
+}
+
+th#Vorname, td#Vorname,
+th#Nachname, td#Nachname {
+    width: 20%;
+}
+
+th#Email, td#Email {
+    width: 100%;
+}
+
 h2{
     font-family: raleway-thin;
     font-size: 1.8em;
 }
 
+#flex-container{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#flex-column{
+    flex: auto;
+    margin-right: 5%;
+}
+
+img{
+    width: 100%;
+    height: auto;
+    margin-bottom: 0.5em;
+}
+
+div.gallery {
+    margin: 1rem;
+    float: left;
+    width: 10%;
+    text-align: center;
+    margin-top: 4em;
+    background-color: white;
+    border-radius: 1em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 1em;
+    transition: width 0.3s ease-in-out;
+}
+
+div.gallery:hover {
+    width: 13%;
+    cursor:pointer;
+}
+
+.responsive {
+    padding: 0 6px;
+    float: left;
+    width: 24.99999%;
+}
+
+@media only screen and (max-width: 700px) {
+    .responsive {
+        width: 49.99999%;
+        margin: 6px 0;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .responsive {
+        width: 100%;
+    }
+}
