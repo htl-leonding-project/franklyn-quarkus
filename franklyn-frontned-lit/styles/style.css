@@ -194,3 +194,12 @@ div.gallery:hover {
         width: 100%;
     }
 }
+
+.gallery p{
+    color: #3d3d3d;
+}
+
+.gallery:hover p{
+    color: black;
+    transition: 0.3s ease-in-out;
+}
