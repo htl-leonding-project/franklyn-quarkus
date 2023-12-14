@@ -84,12 +84,12 @@ public class ApiCalls {
     public void sendScreenshots() {
 
         try {
-            LOG.info(alphaFramePath + " is the alpha frame");
+           // LOG.info(alphaFramePath + " is the alpha frame");
             String fileName = ++countOfImages + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
 
             File newFile = new File(pngFolder, fileName);
-            LOG.info(newFile.getAbsoluteFile());
+            //LOG.info(newFile.getAbsoluteFile());
             ImageIO.write(getNewBufferedImage(), fileExt, newFile);
 
             // Konvertieren der PNG-Datei in JPG
@@ -106,7 +106,7 @@ public class ApiCalls {
                 return;
             }
 
-            LOG.info("Difference between main and " + countOfImages);
+           // LOG.info("Difference between main and " + countOfImages);
 
             var image1 = Imgcodecs.imread(alphaFramePath, Imgcodecs.IMREAD_UNCHANGED);
             var image2 = Imgcodecs.imread(newFile.getAbsolutePath(), Imgcodecs.IMREAD_UNCHANGED);
@@ -134,7 +134,7 @@ public class ApiCalls {
             //newFile.delete();
         } catch (
                 Exception ex) {
-            LOG.error(ex.getMessage());
+        //    LOG.error(ex.getMessage());
 
         }
 
@@ -150,7 +150,7 @@ public class ApiCalls {
                     imageWidth,
                     imageHeight);
         } catch (Exception ex) {
-            LOG.error(ex.getMessage());
+        //    LOG.error(ex.getMessage());
         }
         return null;
     }
@@ -211,7 +211,7 @@ public class ApiCalls {
         var nonZeroPixels = Core.countNonZero(grayDifference);
 
         var differenceInPercentage = (double) nonZeroPixels / totalPixels * 100;
-        LOG.info(differenceInPercentage);
+       // LOG.info(differenceInPercentage);
         return differenceInPercentage;
 
     }

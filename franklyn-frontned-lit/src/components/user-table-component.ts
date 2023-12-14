@@ -7,7 +7,7 @@ interface UserViewModel {
 }
 
 function toDoClicked(user: User) {
-  alert(`user: ${user.emial} clicked`);
+  alert(`user: ${user.email} clicked`);
 }
 
 const rowTemplate = (user: User) => html`
@@ -15,7 +15,7 @@ const rowTemplate = (user: User) => html`
     <td>${user.id}</td>
     <td>${user.firstName}</td>
     <td>${user.lastName}</td>
-    <td>${user.emial}</td>
+    <td>${user.email}</td>
   </tr>
 `;
 const tableTemplate = (vm: UserViewModel) => {

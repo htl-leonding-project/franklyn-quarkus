@@ -29,27 +29,30 @@ export interface Exam {
 }
 
 export interface Model {
-  readonly users: User[];
-  readonly exams: Exam[];
-  readonly message: string;
-  readonly admin: number;
-  readonly sessions: UserSession[];
-  selectedIp: string;
-  selectedExam: Exam;
+    readonly users: User[];
+    readonly message: string;
+    readonly admin: number;
+    readonly sessions: UserSession[];
+    readonly imagesOfStudents: Map<number, string>
+    readonly exams: Exam[];
+    selectedIp: string;
+    selectedExam: Exam;
 }
 
 export type UserSession = { user: User; ip: string | null };
 
 const initialState: Model = {
-  users: [],
-  exams: [],
-  admin: 1,
-  message: "lassen wir die Pause ausfallen und hören 5 Minuten früher auf",
-  sessions: [],
-  selectedIp: null,
-  selectedExam: null,
+    users: [],
+    admin: 1,
+    exams: [],
+    message: "lassen wir die Pause ausfallen und hören 5 Minuten früher auf",
+    sessions: [],
+    imagesOfStudents: new Map<number, string>(),
+    selectedIp: null,
+    selectedExam: null,
+
 };
 
 const store = new BehaviorSubject<Model>(initialState);
 
-export { store };
+export {store};

@@ -1,7 +1,6 @@
 body{
     font-family: raleway-regular;
-    margin-left: 2%;
-    margin-right: 2%;
+    margin: 0;
 }
 
 @font-face {
@@ -17,6 +16,11 @@ body{
 @font-face {
     font-family: raleway-thin;
     src: url(Raleway/static/Raleway-Thin.ttf);
+}
+
+@font-face {
+    font-family: raleway-bold;
+    src: url(Raleway/static/Raleway-Bold.ttf);
 }
 
 #examForm {
@@ -144,6 +148,8 @@ h2{
 h1{
     text-align: center;
     text-transform: uppercase;
+    font-size: 4em;
+    font-family: raleway-bold;
 }
 
 
@@ -155,7 +161,8 @@ h1{
 
 #flex-column{
     flex: auto;
-    margin-right: 5%;
+    margin-right: 3%;
+    margin-left: 3%;
 }
 
 #screenshot img{
@@ -212,10 +219,13 @@ div.gallery:hover {
 
 #nav a {
     text-decoration: none;
-    color: black;
-    margin-right: 3em;
+    color: white;
+    margin-right: 1.5em;
+    margin-left: 1.5em;
     text-transform: uppercase;
 }
+
+
 
 #nav a:not(:has(img)):after {
     content: '';
@@ -224,7 +234,7 @@ div.gallery:hover {
     left: 0;
     width: 0;
     height: 1px;
-    background-color: black;
+    background-color: white;
     transition: width 0.3s ease-in-out;
 }
 
@@ -233,11 +243,13 @@ div.gallery:hover {
 }
 
 #nav{
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-bottom: 0em;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #0C242C;
+    color: white;
+    padding: 1em;
 }
 
 #nav a img{
@@ -254,3 +266,50 @@ div.gallery:hover {
     opacity: 1;
 }
 
+#about h2{
+    text-align: center;
+}
+
+#about #flex-container #flex-column img{
+    width: 3em;
+}
+
+#about{
+    text-align: center;
+}
+
+#heading{
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 4em;
+}
+
+#heading h1{
+    margin: 0;
+}
+
+#heading p{
+    margin: 0;
+}
+
+#about #flex-container #flex-column{
+    background-color: white;
+    border-radius: 1em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 1em;
+}
+
+#about #flex-container{
+    width: 70%;
+}
+
+#about #explainFranklyn{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4em;
+}
+
+#about #explainFranklyn h2{
+    margin-bottom: 0;
+}

@@ -1,4 +1,4 @@
-  import { User } from "./model";
+import {User} from "./model";
 
 class UserService {
   #url1 = "/api/user/all";
@@ -23,4 +23,4 @@ class UserService {
 }
 
 const userService = new UserService();
-export { userService };
+export {userService};
