@@ -1,10 +1,10 @@
 import { render, html } from "lit-html";
-import { Model, User, store } from "../model";
+import { Exam, Model, User, store } from "../model";
 import { distinctUntilChanged, map } from "rxjs";
 
 interface ExamViewModel {
   admin: number;
-  selectedExam: number;
+  selectedExam: Exam;
 }
 
 const examTemplate = (vm: ExamViewModel) => {

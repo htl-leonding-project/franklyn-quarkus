@@ -1,15 +1,16 @@
 import { html, render } from "lit-html";
+import { produce } from "immer";
+import { store } from "../model";
 
 class RouterComponent extends HTMLElement {
-
   #routes = {};
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
 
-    const stylesheetLink = document.createElement('link');
-    stylesheetLink.rel = 'stylesheet';
-    stylesheetLink.href = '/../../styles/style.css';
+    const stylesheetLink = document.createElement("link");
+    stylesheetLink.rel = "stylesheet";
+    stylesheetLink.href = "/../../styles/style.css";
     document.head.appendChild(stylesheetLink);
 
     this.#routes = {
@@ -33,9 +34,15 @@ class RouterComponent extends HTMLElement {
       this.matchRoute(route, pattern)
     );
 
+    // const nextState = produce(store.getValue(), (model) => {
+    // });
+    // store.next(nextState);
+
     if (matchedRoute) {
       const params = this.extractParams(route, matchedRoute);
       this.renderComponent(this.#routes[matchedRoute](params));
+      console.log(store.getValue().exams);
+      console.log(params);
     } else {
       // Handle 404 or default route
       this.renderComponent(html`<p>Not Found</p>`);

@@ -35,7 +35,7 @@ export interface Model {
   readonly admin: number;
   readonly sessions: UserSession[];
   selectedIp: string;
-  selectedExam: number;
+  selectedExam: Exam;
 }
 
 export type UserSession = { user: User; ip: string | null };
