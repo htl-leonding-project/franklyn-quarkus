@@ -25,11 +25,11 @@ const sessionTemplate = (vm: SessionViewModel) => {
 const session = (vm: SessionViewModel, session: UserSession) => {
     console.info(session)
     return html`
-        <a target="_blank" href="/${session.user.id}" >
+        <a target="_blank" href="/${session.user.id}">
             <div class="gallery">
-            <img src="../../placeholger-image.png" alt="Screenshots">
+                <img id="screenshot" src="../../img/placeholger-image.png" alt="Screenshots">
                 <p>${session.user.lastName} ${session.user.firstName}</p>
-            <br>
+                <br>
             </div>
         </a>
     `

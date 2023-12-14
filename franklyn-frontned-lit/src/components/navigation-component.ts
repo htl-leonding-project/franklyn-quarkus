@@ -2,9 +2,13 @@ import { render, html } from "lit-html";
 
 const navTemplate = () => {
   return html`
-    <a href="/">Home</a>
-    <a href="/exams">Exam übersicht</a>
-    <a href="/users">alle User</a>
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+
+    <div id="nav">
+      <a href="/"><img src="../../img/logo.png"></a>
+      <a href="/exams">Prüfungen</a>
+      <a href="/users">Nutzerübersicht</a>
+    </div>
   `;
 };
 

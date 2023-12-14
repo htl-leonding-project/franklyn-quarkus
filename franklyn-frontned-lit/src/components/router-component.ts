@@ -1,19 +1,25 @@
 import { html, render } from "lit-html";
 
 class RouterComponent extends HTMLElement {
+
   #routes = {};
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
 
+    const stylesheetLink = document.createElement('link');
+    stylesheetLink.rel = 'stylesheet';
+    stylesheetLink.href = '/../../styles/style.css';
+    document.head.appendChild(stylesheetLink);
+
     this.#routes = {
-      "/": () => html`<h1>Homepage</h1>`,
+      "/": () => html`<h1>Franklyn</h1>`,
       "/users": () => html`<user-table></user-table>`,
       "/exams": () => html`<exam-table></exam-table>`,
       "/exam/:id": () => html`<exam-form></exam-form>`,
       "/exam/edit/:id": (params) =>
         html`<exam-form id="${params.id}"></exam-form>`,
-      "/home": () => html`<h1>Homepage</h1>`,
+      "/home": () => html`<h1>Franklyn</h1>`,
       // Add more routes as needed
     };
 
