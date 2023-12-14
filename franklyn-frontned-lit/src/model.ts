@@ -5,7 +5,7 @@ export interface User {
   readonly id: number;
   readonly firstName: string;
   readonly lastName: string;
-  readonly emial: string;
+  readonly email: string;
   readonly isOnine: boolean;
   readonly isAdmin: boolean;
   readonly lastOnline: Date;

@@ -1,7 +1,8 @@
-import {User} from "./model";
+import { User } from "./model";
 
 class UserService {
   #url1 = "/api/user/all";
+
   //#url2 = "https://jsonplaceholder.typicode.com/todos";
   async getAll() {
     let users: User[];
@@ -23,4 +24,4 @@ class UserService {
 }
 
 const userService = new UserService();
-export {userService};
+export { userService };
