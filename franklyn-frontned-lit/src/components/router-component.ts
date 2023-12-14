@@ -9,17 +9,17 @@ class RouterComponent extends HTMLElement {
 
     const stylesheetLink = document.createElement('link');
     stylesheetLink.rel = 'stylesheet';
-    stylesheetLink.href = '/../../styles/style.css';
+    stylesheetLink.href = '/styles/style.css';
     document.head.appendChild(stylesheetLink);
 
     this.#routes = {
-      "/": () => html`<h1>Franklyn</h1>`,
+      "/": () => html`<franklyn-home></franklyn-home>`,
       "/users": () => html`<user-table></user-table>`,
       "/exams": () => html`<exam-table></exam-table>`,
       "/exam/:id": () => html`<exam-form></exam-form>`,
       "/exam/edit/:id": (params) =>
         html`<exam-form id="${params.id}"></exam-form>`,
-      "/home": () => html`<h1>Franklyn</h1>`,
+      "/home": () => html`<franklyn-home></franklyn-home>`,
       // Add more routes as needed
     };
 

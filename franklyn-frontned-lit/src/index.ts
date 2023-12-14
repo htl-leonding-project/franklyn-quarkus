@@ -11,6 +11,7 @@ import "./components/user-table-component";
 import "./components/exam-form-component";
 import "./components/exam-table-component";
 import "./components/user-session-component";
+import "./components/home-component";
 
 import userSessionService from "./user-session-service";
 
