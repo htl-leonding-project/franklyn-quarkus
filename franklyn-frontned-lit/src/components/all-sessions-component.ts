@@ -1,6 +1,6 @@
 import {render, html} from "lit-html";
 import {Model, store, UserSession} from "../model";
-import {distinctUntilChanged, map, repeat} from "rxjs";
+import {distinctUntilChanged, map} from "rxjs";
 
 interface SessionViewModel {
     sessions: UserSession[];
@@ -94,4 +94,4 @@ class SessionComponent extends HTMLElement {
     }
 }
 
-customElements.define("session-view", SessionComponent);
+customElements.define("all-sessions", SessionComponent);
