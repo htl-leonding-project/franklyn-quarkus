@@ -22,11 +22,11 @@ public class InitBean {
     UserSessionRepository userSessionRepository;
 
     @Transactional
-    public void init(@Observes StartupEvent ev){
+    public void init(@Observes StartupEvent ev) {
         User testUser01 = new User("Max", "Muster", false);
         User testUser02 = new User("Susi", "Sonne", false);
 
-        List<User> testUsers = List.of(testUser01,testUser02);
+        List<User> testUsers = List.of(testUser01, testUser02);
         userRepository.persist(testUsers);
         Exam testExam = new Exam("123",
                 "test-exam",
@@ -38,7 +38,7 @@ public class InitBean {
         examRepository.persist(testExam);
 
         testUsers.forEach(user -> {
-            UserSession userSession = new UserSession(user, testExam, UserRole.EXAMINEE, null);
+            UserSession userSession = new UserSession(user, testExam, UserRole.EXAMINEE, "127.0.0.1");
             userSessionRepository.persist(userSession);
         });
 

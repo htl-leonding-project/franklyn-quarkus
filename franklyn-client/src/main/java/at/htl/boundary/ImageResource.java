@@ -1,58 +1,93 @@
 package at.htl.boundary;
 
 import at.htl.control.ApiCalls;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.smallrye.common.annotation.Blocking;
+import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.awt.*;
-import java.awt.image.BufferedImage;
+
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 
 @ApplicationScoped
 @ServerEndpoint("/image")
 public class ImageResource {
 
+    @Inject
+    Logger logger;
+    @Inject
+    ApiCalls apiCalls;
 
     Session session = null;
 
-    @OnOpen
-    public void onOpen(Session session) {
-        this.session = session;
+    ObjectMapper mapper = new ObjectMapper();
 
+    @OnOpen
+    public synchronized void onOpen(Session s) {
+        this.session = s;
 
     }
 
-    @OnMessage
-    public void onMessage(String message) {
+    @OnClose
+    public void onClose(Session s) {
 
+        s.getAsyncRemote().sendText("Connection closed");
         try {
-            var image = apiCalls.getNewBufferedImage();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", baos);
-            session.getAsyncRemote().sendBinary(ByteBuffer.wrap(baos.toByteArray()));
-        } catch (Exception e) {
+            s.close();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @Inject
-    ApiCalls apiCalls;
+    @OnError
+    public void onError(Session s, Throwable throwable) {
 
+        session.getAsyncRemote().sendText("Connection closed due to an error" + throwable.getMessage());
+
+        try {
+            session.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @OnMessage
+    public void onMessage(String message) {
+        var json = mapper.createObjectNode();
+        json.put("message", getLatestImage());
+
+        session.getAsyncRemote().sendText(json.toPrettyString());
+
+    }
+
+
+    public String getLatestImage() {
+        var image = apiCalls.getNewBufferedImage();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(image, "png", baos);
+            return Base64.getEncoder().encodeToString(baos.toByteArray());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     ;
 

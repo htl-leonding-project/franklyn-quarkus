@@ -18,7 +18,7 @@ export interface Model {
     readonly message: string;
     readonly admin: number;
     readonly sessions: UserSession[];
-     selectedIp: string
+    readonly imagesOfStudents: Map<number, string>
 }
 
 export type UserSession = { user: User, ip: string | null }
@@ -28,7 +28,7 @@ const initialState: Model = {
     admin: 1,
     message: "lassen wir die Pause ausfallen und hören 5 Minuten früher auf",
     sessions: [],
-    selectedIp: null
+    imagesOfStudents: new Map<number, string>()
 };
 
 const store = new BehaviorSubject<Model>(initialState);
