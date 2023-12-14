@@ -1,5 +1,5 @@
-import {produce} from "immer";
-import {Model, store} from "./model";
+import {produce, enableMapSet} from "immer";
+import {store} from "./model";
 
 import {userService} from "./user-service";
 import {examService} from "./exam-service";
@@ -7,16 +7,12 @@ import {examService} from "./exam-service";
 import "./components/navigation-component";
 
 import "./components/router-component";
-import {enableMapSet, produce} from "immer";
-import {Model, store} from "./model";
-import {userService} from "./user-service";
 import "./components/user-table-component";
 import "./components/exam-form-component";
 import "./components/exam-table-component";
 import "./components/user-session-component";
 import "./components/home-component";
 
-import "./components/exam-component";
 import "./components/all-sessions-component";
 import "./components/session-component"
 import userSessionService from "./user-session-service";

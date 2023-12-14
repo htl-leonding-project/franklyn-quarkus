@@ -1,15 +1,14 @@
-import { BehaviorSubject } from "rxjs";
-import * as string_decoder from "string_decoder";
+import {BehaviorSubject} from "rxjs";
 
 export interface User {
     readonly id: number;
     readonly firstName: string;
     readonly lastName: string;
-    readonly emial: string;
-    readonly isOnine: boolean;
+    readonly email: string;
+    readonly isOnline: boolean;
     readonly isAdmin: boolean;
     readonly lastOnline: Date;
-    readonly onine: boolean;
+    readonly online: boolean;
     readonly admin: boolean;
 }
 
@@ -35,7 +34,6 @@ export interface Model {
     readonly sessions: UserSession[];
     readonly imagesOfStudents: Map<number, string>
     readonly exams: Exam[];
-    readonly message: string;
     selectedIp: string;
     selectedExam: number;
 }
@@ -56,4 +54,4 @@ const initialState: Model = {
 
 const store = new BehaviorSubject<Model>(initialState);
 
-export { store };
+export {store};
