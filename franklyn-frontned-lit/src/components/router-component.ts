@@ -17,7 +17,7 @@ class RouterComponent extends HTMLElement {
       "/": () => html`<franklyn-home></franklyn-home>`,
       "/users": () => html`<user-table></user-table>`,
       "/exams": () => html`<exam-table></exam-table>`,
-      "/exam/:id": () => html`<exam-form></exam-form>`,
+      "/exam/:id": () => html`<all-sessions></all-sessions>`,
       "/exam/edit/:id": (params) =>
         html`<exam-form id="${params.id}"></exam-form>`,
       "/home": () => html`<franklyn-home></franklyn-home>`,

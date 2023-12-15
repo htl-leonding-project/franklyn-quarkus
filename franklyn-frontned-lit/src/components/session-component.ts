@@ -10,13 +10,12 @@ interface ViewModel {
 }
 
 const userSession = (vm: ViewModel) => {
-    console.info("viewModel-value", vm)
     return html`
         <link rel="stylesheet" href="../../styles/style.css""/>
 
         <a target="_blank" href="/${vm.session.user.id}">
             <div class="gallery">
-                <img src=${"data:image/png;base64," + vm.currentImage} alt="Screenshots">
+                <img id="screenshot" width="200px" src=${"data:image/png;base64," + vm.currentImage} alt="Screenshots">
                 <p>${vm.session.user.lastName} ${vm.session.user.firstName}</p>
                 <br>
             </div>
@@ -69,7 +68,6 @@ class UserSessionComponent extends HTMLElement {
                     model.imagesOfStudents = model.imagesOfStudents.set(this.#id, message);
                     return model
                 })
-                console.log(newModel.imagesOfStudents.get(this.#id))
                 store.next(newModel);
                 render(userSession({
                     session: store.getValue().sessions.find(s => s.user.id === this.#id),

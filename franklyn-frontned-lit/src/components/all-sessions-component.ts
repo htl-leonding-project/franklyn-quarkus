@@ -4,16 +4,12 @@ import {distinctUntilChanged, map} from "rxjs";
 
 interface SessionViewModel {
     sessions: UserSession[];
-
-
 }
 
-
 const sessionTemplate = (vm: SessionViewModel) => {
-
-
     console.log(store.getValue().sessions)
     const sessions = vm.sessions.map(value => {
+        console.log(value)
         return html`
             <user-session-view user-id=${value.user.id}>
             </user-session-view>`
@@ -25,7 +21,6 @@ const sessionTemplate = (vm: SessionViewModel) => {
             ${sessions}
         </div>`;
 }
-
 
 /*const session = (vm: SessionViewModel, session: UserSession) => {
     /!*

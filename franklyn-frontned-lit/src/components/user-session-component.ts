@@ -45,7 +45,6 @@ function toViewModel(model: Model) {
            const socketSubscription = socket.asObservable().subscribe(
                 (image: Blob) => {
                     console.log("blob received")
-                    console.log(image)
                 },
                 error => console.log,
                () =>  {}
