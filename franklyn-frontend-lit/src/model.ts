@@ -1,5 +1,4 @@
 import { BehaviorSubject } from "rxjs";
-import * as string_decoder from "string_decoder";
 
 export interface User {
   readonly id: number;
