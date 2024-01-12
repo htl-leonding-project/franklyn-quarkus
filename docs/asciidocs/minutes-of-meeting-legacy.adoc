@@ -1004,16 +1004,17 @@ Somit können andere Schüler nicht zugreifen
 
 Übertragungstechnik von Live Bildern
 
-=== Vereinbarung
+=== Vereinbarung bis 19.01.
 .Was kommt als nächstes?
 * Streamingserver implementieren
 ** Streaming Server - um Bilder zu speichern
-** Streaming Server - um Bilder abzurufen
+** Streaming Server - um Bilder mittels Websocket abzurufen (-> Instructor Client)
 * Screenshots werden zeitgesteuert zum Streamingserver geschickt.
 * Der Streamingserver setzt die Bilder zusammen und der Instructor kann sich diese holen.
 * Instructor Client kann Bilder anzeigen
+* Zustandsdiagramm (Prozesse)
 
-.Nice to have (nicht notwendig am 19.01)
+.Nice to have (nicht notwendig am 19.01.)
 * Hinter dem Application Server befindet sich `Keycloak`
 
 // Template
