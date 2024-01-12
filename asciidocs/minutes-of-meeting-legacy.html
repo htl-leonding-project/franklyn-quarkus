@@ -548,6 +548,12 @@ pre.rouge .hll * {
 <li><a href="#_besprochene_themen_9">16.1. Besprochene Themen</a></li>
 </ul>
 </li>
+<li><a href="#_2024_01_12">17. 2024-01-12</a>
+<ul class="sectlevel2">
+<li><a href="#_besprochene_themen_10">17.1. Besprochene Themen</a></li>
+<li><a href="#_vereinbarung_5">17.2. Vereinbarung</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -2558,10 +2564,159 @@ Es wird jedoch ein Prototyp für einen Streaming Server benötigt.</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_2024_01_12"><a class="anchor" href="#_2024_01_12"></a>17. 2024-01-12</h2>
+<div class="sectionbody">
+<details>
+<summary class="title">Teilnehmer</summary>
+<div class="content">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Vorname</th>
+<th class="tableblock halign-left valign-top">Nachname</th>
+<th class="tableblock halign-left valign-top">Klasse</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prof. Stuetz</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mona</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Angerer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5BHITM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Al Sabagh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Abdulrahman</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5BHITM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Peter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Klose</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5BHITM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">David</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Thaller</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5BHITM</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<div class="sect2">
+<h3 id="_besprochene_themen_10"><a class="anchor" href="#_besprochene_themen_10"></a>17.1. Besprochene Themen</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Szenario 1: Server lokal</p>
+</li>
+<li>
+<p>Szenario 2: Server deployed</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_warum_ist_der_schüler_pc_ein_server"><a class="anchor" href="#_warum_ist_der_schüler_pc_ein_server"></a>17.1.1. Warum ist der Schüler-Pc ein Server?</h4>
+<div class="paragraph">
+<p>Aktuell stellt der Schüler-Pc die Bilder dem Instructor zu Verfügung.
+&#8594; Instructor fragt den Schüler-Pc nach den Bildern ab.</p>
+</div>
+<div class="paragraph">
+<div class="title">Problem:</div>
+<p>Websockets funktioniert nicht gut. (Wurde mit Prof. Aberger ausprobiert)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_welche_probleme_gibts_es"><a class="anchor" href="#_welche_probleme_gibts_es"></a>17.1.2. Welche Probleme gibts es?</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>IP</strong> - es werden nur die privaten IP-Adressen (10.x.x.x) geschickt und die Kommunikation von diesen Adressen ist unmöglich
+Somit können andere Schüler nicht zugreifen</p>
+</li>
+<li>
+<p>Die Screenshots sollen nicht geschickt werden, sondern geholt.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_was_funktioniert"><a class="anchor" href="#_was_funktioniert"></a>17.1.3. Was funktioniert?</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Backend</p>
+</li>
+<li>
+<p>Application Server</p>
+</li>
+<li>
+<p>Testmanagement (Erstellung von Tests)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_was_fehlt"><a class="anchor" href="#_was_fehlt"></a>17.1.4. Was fehlt?</h4>
+<div class="paragraph">
+<p>Übertragungstechnik von Live Bildern</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vereinbarung_5"><a class="anchor" href="#_vereinbarung_5"></a>17.2. Vereinbarung</h3>
+<div class="ulist">
+<div class="title">Was kommt als nächstes?</div>
+<ul>
+<li>
+<p>Streamingserver implementieren</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Streaming Server - um Bilder zu speichern</p>
+</li>
+<li>
+<p>Streaming Server - um Bilder abzurufen</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Screenshots werden zeitgesteuert zum Streamingserver geschickt.</p>
+</li>
+<li>
+<p>Der Streamingserver setzt die Bilder zusammen und der Instructor kann sich diese holen.</p>
+</li>
+<li>
+<p>Instructor Client kann Bilder anzeigen</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Nice to have (nicht notwendig am 19.01)</div>
+<ul>
+<li>
+<p>Hinter dem Application Server befindet sich <code>Keycloak</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-12-05 15:39:52 UTC
+Last updated 2024-01-12 10:01:00 UTC
 </div>
 </div>
 </body>
