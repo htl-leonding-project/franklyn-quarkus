@@ -1,15 +1,20 @@
 package at.htl.control;
 
+import at.htl.boundary.StreamingServerService;
 import at.htl.entity.*;
+import at.htl.entity.dto.ExamDto;
 import io.quarkus.runtime.StartupEvent;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@ApplicationScoped
 public class InitBean {
 
     @Inject
@@ -17,6 +22,10 @@ public class InitBean {
 
     @Inject
     ExamRepository examRepository;
+
+    @Inject
+    @RestClient
+    StreamingServerService streamingServerService;
 
     @Inject
     UserSessionRepository userSessionRepository;
@@ -35,7 +44,14 @@ public class InitBean {
                 LocalDateTime.now().plusHours(2),
                 LocalDateTime.now().plusHours(4),
                 5);
+        ExamDto examDto = new ExamDto("init-bean-test-exam",
+                ExamState.IN_PREPARATION,
+                LocalDate.now(),
+                LocalDateTime.now().plusHours(2),
+                LocalDateTime.now().plusHours(4),
+                5);
         examRepository.persist(testExam);
+        streamingServerService.createExam(examDto);
 
         testUsers.forEach(user -> {
             UserSession userSession = new UserSession(user, testExam, UserRole.EXAMINEE, "127.0.0.1");

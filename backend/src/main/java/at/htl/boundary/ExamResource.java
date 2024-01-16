@@ -5,11 +5,9 @@ import at.htl.control.UserRepository;
 import at.htl.control.UserSessionRepository;
 import at.htl.entity.*;
 import at.htl.entity.dto.ExamDto;
-import at.htl.entity.dto.ExamParticipantDTO;
 import at.htl.util.UtilClass;
 import io.quarkus.logging.Log;
 import io.vertx.ext.web.RoutingContext;
-import jakarta.ejb.PostActivate;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -17,6 +15,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
@@ -35,6 +34,10 @@ public class ExamResource {
 
     @Inject
     ExamRepository examRepository;
+
+    @Inject
+    @RestClient
+    StreamingServerService streamingServerService;
 
     @Inject
     UserRepository userRepository;
@@ -68,6 +71,7 @@ public class ExamResource {
         Exam e = new Exam(pin, exam.title(), exam.state(), exam.date(), exam.startTime(), exam.endTime(), exam.interval());
         LOG.info("Exam: <" + e.title + "> added");
         examRepository.persist(e);
+        streamingServerService.createExam(exam);
         return e.pin;
     }
 
