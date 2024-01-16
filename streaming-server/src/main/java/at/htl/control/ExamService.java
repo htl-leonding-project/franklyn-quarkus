@@ -31,19 +31,11 @@ public class ExamService {
 
         File newFolder = UtilClass.folderNameForTitleDateAndDirectory(title,date,examDirectory);
         if (newFolder.exists()) {
-            purgeDirectory(newFolder);
+            UtilClass.purgeDirectory(newFolder);
             wasSuccessful = true;
         } else {
             wasSuccessful = newFolder.mkdirs();
         }
         return wasSuccessful;
-    }
-    private void purgeDirectory(File dir) {
-        for (File file: Objects.requireNonNull(dir.listFiles())) {
-            if (file.isDirectory()) {
-                purgeDirectory(file);
-            }
-            file.delete();
-        }
     }
 }

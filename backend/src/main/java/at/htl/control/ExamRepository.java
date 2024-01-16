@@ -32,11 +32,15 @@ public class ExamRepository implements PanacheRepository<Exam> {
 
 
     public int getIntervalByExamId(Long id) {
-        return find("#Exam.getIntervalByExamId", id).firstResult().interval;
+        return find("#Exam.getByExamId", id).firstResult().interval;
+    }
+
+    public String getTitleByExamId(Long id) {
+        return find("#Exam.getByExamId", id).firstResult().title;
     }
 
     public LocalDateTime getEndOfExamByExamId(Long id) {
-        return find("#Exam.getIntervalByExamId", id).firstResult().endTime;
+        return find("#Exam.getByExamId", id).firstResult().endTime;
     }
 
 }

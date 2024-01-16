@@ -23,8 +23,11 @@ public class JavaMain implements QuarkusApplication {
                 "                                                                                     |___/               ");
         Long id = apiCalls.enterPIN();                      // get ExamId
         Long code = apiCalls.enterName(id.toString());      // get ExamineeId
+        apiCalls.getExamTitle(id.toString());
+        apiCalls.enrollInStreamingServer();
         System.out.println("Do NOT close this window!");
         System.out.println("Good Luck!");
+
         if(code == -100L){                                  // exit if student declines to enroll again
             return 1;
         }

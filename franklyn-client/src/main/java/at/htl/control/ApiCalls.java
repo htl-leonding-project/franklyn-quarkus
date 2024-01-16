@@ -1,5 +1,6 @@
 package at.htl.control;
 
+import at.htl.boundary.StreamingServerService;
 import at.htl.boundary.UserService;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.imgscalr.Scalr;
@@ -29,21 +30,19 @@ import org.jboss.logging.Logger;
 @ApplicationScoped
 public class ApiCalls {
 
-    //@Inject
-    //@RestClient
-    //ImageService imageService;
-
-    /* @Inject
-     @RestClient
-     ExamineeService examineeService;*/
-
     @Inject
     @RestClient
     UserService userService;
 
+    @Inject
+    @RestClient
+    StreamingServerService streamingServerService;
+
 
     private String firstName = "max";
     private String lastName = "muster";
+
+    private String examTitle = "";
     private Long id = -1L;
 
     private static String alphaFramePath = "";
@@ -159,8 +158,6 @@ public class ApiCalls {
     private void saveBetaFrame(Mat difference, Mat screenShot) {
         var result = new Mat();
         screenShot.copyTo(result, difference);
-        // String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
-        //         "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
         String pngDir = pngFolder.getPath() + File.separator + countOfImages +
                 "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
@@ -196,7 +193,7 @@ public class ApiCalls {
     private void updateAlphaFrame(File file) throws Exception {
         alphaFramePath = file.getAbsolutePath();
         var fileToBytes = Files.readAllBytes(Paths.get(alphaFramePath));
-        //frameService.saveAlphaFrame(fileToBytes);
+        streamingServerService.sendAlphaFrame(fileToBytes,"",firstName.toLowerCase()+lastName.toLowerCase());
     }
 
     private Mat convertColoredImagesToGray(Mat coloredImage) {
@@ -287,9 +284,8 @@ public class ApiCalls {
         return response;
     }
 
-    public int getIntervall(String examId) {
+    public void getIntervall(String examId) {
         interval = userService.getInterval(examId);
-        return 0;
     }
 
     public Long executeEnrollService(String id, String firstName, String lastName) {
@@ -307,6 +303,14 @@ public class ApiCalls {
         Long hours =Duration.between(LocalDateTime.now(),endOfExam).toHours();
         Long minutes = Duration.between(LocalDateTime.now(), endOfExam).toMinutes();
         System.out.println("Time left -> Minuten: "+ minutes);
+    }
+
+    public void enrollInStreamingServer() {
+        streamingServerService.enrollSelf(examTitle,firstName.toLowerCase(), lastName.toLowerCase());
+    }
+
+    public void getExamTitle(String examId) {
+        examTitle = userService.getTitle(examId);
     }
 
 

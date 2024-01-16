@@ -24,7 +24,7 @@ import java.util.List;
         @NamedQuery(
                 name = "Exam.findExamWithSameDateAndPIN",
                 query = "select e from F_EXAM e where e.date = :DATE and e.pin LIKE :PIN"),
-        @NamedQuery(name = "Exam.getIntervalByExamId", query = "from F_EXAM e where id = ?1")
+        @NamedQuery(name = "Exam.getByExamId", query = "from F_EXAM e where id = ?1")
 })
 public class Exam {
     @Id

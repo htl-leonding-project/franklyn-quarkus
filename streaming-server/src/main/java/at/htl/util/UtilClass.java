@@ -5,6 +5,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class UtilClass {
 
@@ -20,5 +21,13 @@ public class UtilClass {
                         DateTimeFormatter.ofPattern("yyyyMMdd")
                 )
         ));
+    }
+    static public void purgeDirectory(File dir) {
+        for (File file: Objects.requireNonNull(dir.listFiles())) {
+            if (file.isDirectory()) {
+                purgeDirectory(file);
+            }
+            file.delete();
+        }
     }
 }

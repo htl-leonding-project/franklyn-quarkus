@@ -146,6 +146,16 @@ public class ExamResource {
         Log.info(interval);
         return interval;
     }
+    @GET
+    @Transactional
+    @Path("getTitleByExamId/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String getTitleByExam(@PathParam("id") Long id) {
+        String title = examRepository.getTitleByExamId(id);
+        Log.info(title);
+        return title;
+    }
 
     @GET
     @Transactional

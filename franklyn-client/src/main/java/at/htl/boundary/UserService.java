@@ -40,6 +40,11 @@ public interface UserService {
     int getInterval(@PathParam("id") String examId);
 
     @GET
+    @Path("getTitleByExamId/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    String getTitle(@PathParam("id") String examId);
+
+    @GET
     @Path("getEndOfExamByExamId/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     LocalDateTime getEndOfExam(@PathParam("id") String examId);
