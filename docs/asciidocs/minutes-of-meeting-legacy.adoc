@@ -943,6 +943,80 @@ Der Lehrer kann die Videos am nächsten Tag herunterladen.
 ==== Ziele für dieses Schuljahr:
 Entwicklung eines funktionierenden Systems ohne Streaming Server.
 Es wird jedoch ein Prototyp für einen Streaming Server benötigt.
+
+== 2024-01-12
+
+.Teilnehmer
+[%collapsible]
+====
+|===
+|Vorname |Nachname |Klasse
+
+|
+| Prof. Stuetz
+|
+
+| Mona
+| Angerer
+| 5BHITM
+
+| Al Sabagh
+| Abdulrahman
+| 5BHITM
+
+| Peter
+| Klose
+| 5BHITM
+
+| David
+| Thaller
+| 5BHITM
+|===
+====
+
+
+=== Besprochene Themen
+* Szenario 1: Server lokal
+* Szenario 2: Server deployed
+
+==== Warum ist der Schüler-Pc ein Server?
+Aktuell stellt der Schüler-Pc die Bilder dem Instructor zu Verfügung.
+-> Instructor fragt den Schüler-Pc nach den Bildern ab.
+
+.Problem:
+Websockets funktioniert nicht gut. (Wurde mit Prof. Aberger ausprobiert)
+
+==== Welche Probleme gibts es?
+
+* *IP* - es werden nur die privaten IP-Adressen (10.x.x.x) geschickt und die Kommunikation von diesen Adressen ist unmöglich
+Somit können andere Schüler nicht zugreifen
+
+* Die Screenshots sollen nicht geschickt werden, sondern geholt.
+
+
+==== Was funktioniert?
+
+* Backend
+* Application Server
+* Testmanagement (Erstellung von Tests)
+
+==== Was fehlt?
+
+Übertragungstechnik von Live Bildern
+
+=== Vereinbarung bis 19.01.
+.Was kommt als nächstes?
+* Streamingserver implementieren
+** Streaming Server - um Bilder zu speichern
+** Streaming Server - um Bilder mittels Websocket abzurufen (-> Instructor Client)
+* Screenshots werden zeitgesteuert zum Streamingserver geschickt.
+* Der Streamingserver setzt die Bilder zusammen und der Instructor kann sich diese holen.
+* Instructor Client kann Bilder anzeigen
+* Zustandsdiagramm (Prozesse)
+
+.Nice to have (nicht notwendig am 19.01.)
+* Hinter dem Application Server befindet sich `Keycloak`
+
 // Template
 // == yyyy-mm-dd
 
