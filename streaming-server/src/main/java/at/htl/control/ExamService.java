@@ -1,7 +1,9 @@
 package at.htl.control;
 
+import at.htl.util.UtilClass;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jdk.jshell.execution.Util;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
@@ -27,16 +29,7 @@ public class ExamService {
     public boolean initializeExam(String title, LocalDate date) {
         boolean wasSuccessful;
 
-        String formatedTitle = title.toLowerCase().replace(" ","");
-        String location = String.format("%s/%s_%s",
-                examDirectory,
-                formatedTitle,
-                date.format(
-                        DateTimeFormatter.ofPattern("yyyyMMdd")
-                )
-        );
-
-        File newFolder = new File(location);
+        File newFolder = UtilClass.folderNameForTitleDateAndDirectory(title,date,examDirectory);
         if (newFolder.exists()) {
             purgeDirectory(newFolder);
             wasSuccessful = true;
