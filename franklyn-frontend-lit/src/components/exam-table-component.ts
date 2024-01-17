@@ -30,10 +30,10 @@ const tableTemplate = (vm: ExamViewModel) => {
       <thead>
         <tr>
           <th id="Id">Id</th>
-          <th id="Title">Vorname</th>
-          <th id="Status">Nachname</th>
-          <th id="Pin">E-Mail</th>
-          <th id="Interval">E-Mail</th>
+          <th id="Title">Titel</th>
+          <th id="Status">Status</th>
+          <th id="Pin">Pin</th>
+          <th id="Interval">Interval</th>
         </tr>
       </thead>
       <tbody>
