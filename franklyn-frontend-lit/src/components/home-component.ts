@@ -6,7 +6,7 @@ const homeTemplate = () => {
         
         <div id="heading">
             <h1>Franklyn</h1>
-            <p>Prüfungssystem</p>
+            <p>PRÜFUNGSSYSTEM</p>
         </div>
         
         <div id="about">
@@ -14,24 +14,27 @@ const homeTemplate = () => {
             <div id="flex-container">
                 <div id="flex-column">
                     <img src="../../img/cloud.png">
-                    <h3>Überall verfügbar</h3>
-                    <p>Franklyn läuft auf jeder Plattform und benötigt keine Installation</p>
+                    <h3>Netzwerkzugang</h3>
+                    <p>Direkter Online-Zugriff für Recherche und Hilfsmittel</p>
                 </div>
                 <div id="flex-column">
                     <img src="../../img/analyse.png">
-                    <h3>Analyse</h3>
-                    <p>Lehrkräfte können sich den Fortschritt ihrer Schüler live oder im Nachhinein ansehen</p>
+                    <h3>Realitätsnah</h3>
+                    <p>Online-Lösungssuche, spiegelt reale Arbeitssituationen wider</p>
                 </div>
                 <div id="flex-column">
                     <img src="../../img/chancengleichheit.png">
-                    <h3>Chancengleichheit</h3>
-                    <p>Franklyn läuft auf jeder Plattform und benötigt keine Installation</p>
+                    <h3>Echtzeit-Feedback und -Unterstützung</h3>
+                    <p>Lehrkräfte können die Schritte ihrer Schüler live verfolgen</p>
                 </div>
             </div>
             
             <div id="explainFranklyn">
                 <h2>Was ist Franklyn?</h2>
-                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</p>
+                <p> Franklyn ist ein Tool, das eine realitätsnahe Prüfungssituation schafft, 
+                    indem es Bildschirminhalte dokumentiert und diese dem Host (z.B. Lehrkraft) präsentiert.
+                    Dies ermöglicht den Schülern, Internetressourcen während eines Tests zu nutzen. 
+                </p>
             </div>
         </div>
         
