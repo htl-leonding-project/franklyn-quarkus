@@ -1,6 +1,6 @@
 package at.htl;
 
-import at.htl.control.LiveImageService;
+import at.htl.control.ImageService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.websocket.*;
@@ -22,7 +22,7 @@ public class LiveImageResource {
     Logger logger;
 
     @Inject
-    LiveImageService liveImageService;
+    ImageService imageService;
     Map<String, Session> sessions = new ConcurrentHashMap<>();
 
     @OnOpen
@@ -30,7 +30,7 @@ public class LiveImageResource {
             Session session,
             @PathParam("test") String testName,
             @PathParam("student") String studentName) {
-        liveImageService.checkIfStudentOrTestDirectoryExist(studentName, testName, session, sessions);
+        imageService.checkIfStudentOrTestDirectoryExist(studentName, testName, session, sessions);
 
     }
 
