@@ -55,7 +55,7 @@ public class ApiCalls {
 
     private static int countOfImages = 0;
 
-    private int interval = 3;
+    private int interval = 12;
 
     private String fileExt = "png";
 
@@ -85,7 +85,7 @@ public class ApiCalls {
     public void sendScreenshots() {
 
         try {
-            // LOG.info(alphaFramePath + " is the alpha frame");
+           // LOG.info(alphaFramePath + " is the alpha frame");
             String fileName = ++countOfImages + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
 
@@ -107,7 +107,7 @@ public class ApiCalls {
                 return;
             }
 
-            // LOG.info("Difference between main and " + countOfImages);
+           // LOG.info("Difference between main and " + countOfImages);
 
             var image1 = Imgcodecs.imread(alphaFramePath, Imgcodecs.IMREAD_UNCHANGED);
             var image2 = Imgcodecs.imread(newFile.getAbsolutePath(), Imgcodecs.IMREAD_UNCHANGED);
@@ -124,7 +124,6 @@ public class ApiCalls {
             );
 
             if (difference.empty()) return;
-            LOG.log(Logger.Level.INFO, getDifferenceInPercentage(difference));
             if (getDifferenceInPercentage(difference) >= allowedDifferenceInPercentage) {
                 updateAlphaFrame(newFile);
             } else {
@@ -136,7 +135,7 @@ public class ApiCalls {
             //newFile.delete();
         } catch (
                 Exception ex) {
-            //    LOG.error(ex.getMessage());
+            LOG.error(ex.getMessage());
 
         }
 
@@ -152,7 +151,7 @@ public class ApiCalls {
                     imageWidth,
                     imageHeight);
         } catch (Exception ex) {
-            //    LOG.error(ex.getMessage());
+        //    LOG.error(ex.getMessage());
         }
         return null;
     }
@@ -161,14 +160,14 @@ public class ApiCalls {
     private void saveBetaFrame(Mat difference, Mat screenShot) {
         var result = new Mat();
         screenShot.copyTo(result, difference);
-        // String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
-        //         "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
         String pngDir = pngFolder.getPath() + File.separator + countOfImages +
                 "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
         convertBlackPixelsToTransparentPixels(result);
 
         Imgcodecs.imwrite(pngDir, result);
+        // Save file in Streaming-Server
+        // streamingServerService.sendBetaFrame(fileToBytes,examTitle,lastName.toLowerCase()+firstName.toLowerCase());
     }
 
     private void mergeJpgImagesToVideo() {
@@ -198,7 +197,7 @@ public class ApiCalls {
     private void updateAlphaFrame(File file) throws Exception {
         alphaFramePath = file.getAbsolutePath();
         var fileToBytes = Files.readAllBytes(Paths.get(alphaFramePath));
-        streamingServerService.sendAlphaFrame(fileToBytes, "", firstName.toLowerCase() + lastName.toLowerCase());
+        streamingServerService.sendAlphaFrame(fileToBytes,examTitle,lastName.toLowerCase()+firstName.toLowerCase());
     }
 
     private Mat convertColoredImagesToGray(Mat coloredImage) {
@@ -213,7 +212,7 @@ public class ApiCalls {
         var nonZeroPixels = Core.countNonZero(grayDifference);
 
         var differenceInPercentage = (double) nonZeroPixels / totalPixels * 100;
-        // LOG.info(differenceInPercentage);
+       // LOG.info(differenceInPercentage);
         return differenceInPercentage;
 
     }
@@ -275,14 +274,15 @@ public class ApiCalls {
 
                 if (enrollOption.equalsIgnoreCase("Y")) {
                     response = executeEnrollAgainService(id, firstName, lastName);
-                } else if (enrollOption.equalsIgnoreCase("N")) {
+                }
+                else if(enrollOption.equalsIgnoreCase("N")){
                     response = -100L;
                 }
 
             }
         } while (response == -1L);
 
-        if (response != -100L) {
+        if(response != -100L){
             authenticated = true;
         }
         return response;
