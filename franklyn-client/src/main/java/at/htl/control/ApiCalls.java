@@ -2,6 +2,7 @@ package at.htl.control;
 
 import at.htl.boundary.StreamingServerService;
 import at.htl.boundary.UserService;
+import io.quarkus.logging.Log;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.imgscalr.Scalr;
 import org.opencv.core.*;
@@ -23,6 +24,7 @@ import java.nio.file.Paths;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import org.jboss.logging.Logger;
@@ -53,7 +55,7 @@ public class ApiCalls {
 
     private static int countOfImages = 0;
 
-    private int interval = 12;
+    private int interval = 3;
 
     private String fileExt = "png";
 
@@ -83,7 +85,7 @@ public class ApiCalls {
     public void sendScreenshots() {
 
         try {
-           // LOG.info(alphaFramePath + " is the alpha frame");
+            // LOG.info(alphaFramePath + " is the alpha frame");
             String fileName = ++countOfImages + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
 
@@ -105,7 +107,7 @@ public class ApiCalls {
                 return;
             }
 
-           // LOG.info("Difference between main and " + countOfImages);
+            // LOG.info("Difference between main and " + countOfImages);
 
             var image1 = Imgcodecs.imread(alphaFramePath, Imgcodecs.IMREAD_UNCHANGED);
             var image2 = Imgcodecs.imread(newFile.getAbsolutePath(), Imgcodecs.IMREAD_UNCHANGED);
@@ -122,6 +124,7 @@ public class ApiCalls {
             );
 
             if (difference.empty()) return;
+            LOG.log(Logger.Level.INFO, getDifferenceInPercentage(difference));
             if (getDifferenceInPercentage(difference) >= allowedDifferenceInPercentage) {
                 updateAlphaFrame(newFile);
             } else {
@@ -133,7 +136,7 @@ public class ApiCalls {
             //newFile.delete();
         } catch (
                 Exception ex) {
-        //    LOG.error(ex.getMessage());
+            //    LOG.error(ex.getMessage());
 
         }
 
@@ -149,7 +152,7 @@ public class ApiCalls {
                     imageWidth,
                     imageHeight);
         } catch (Exception ex) {
-        //    LOG.error(ex.getMessage());
+            //    LOG.error(ex.getMessage());
         }
         return null;
     }
@@ -158,6 +161,8 @@ public class ApiCalls {
     private void saveBetaFrame(Mat difference, Mat screenShot) {
         var result = new Mat();
         screenShot.copyTo(result, difference);
+        // String currentWorkingDir = System.getProperty("user.dir") + "/" + countOfImages +
+        //         "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
         String pngDir = pngFolder.getPath() + File.separator + countOfImages +
                 "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
@@ -193,7 +198,7 @@ public class ApiCalls {
     private void updateAlphaFrame(File file) throws Exception {
         alphaFramePath = file.getAbsolutePath();
         var fileToBytes = Files.readAllBytes(Paths.get(alphaFramePath));
-        streamingServerService.sendAlphaFrame(fileToBytes,"",firstName.toLowerCase()+lastName.toLowerCase());
+        streamingServerService.sendAlphaFrame(fileToBytes, "", firstName.toLowerCase() + lastName.toLowerCase());
     }
 
     private Mat convertColoredImagesToGray(Mat coloredImage) {
@@ -208,7 +213,7 @@ public class ApiCalls {
         var nonZeroPixels = Core.countNonZero(grayDifference);
 
         var differenceInPercentage = (double) nonZeroPixels / totalPixels * 100;
-       // LOG.info(differenceInPercentage);
+        // LOG.info(differenceInPercentage);
         return differenceInPercentage;
 
     }
@@ -270,15 +275,14 @@ public class ApiCalls {
 
                 if (enrollOption.equalsIgnoreCase("Y")) {
                     response = executeEnrollAgainService(id, firstName, lastName);
-                }
-                else if(enrollOption.equalsIgnoreCase("N")){
+                } else if (enrollOption.equalsIgnoreCase("N")) {
                     response = -100L;
                 }
 
             }
         } while (response == -1L);
 
-        if(response != -100L){
+        if (response != -100L) {
             authenticated = true;
         }
         return response;
@@ -300,13 +304,13 @@ public class ApiCalls {
 
     public void getEndOfExam(String examId) {
         endOfExam = userService.getEndOfExam(examId);
-        Long hours =Duration.between(LocalDateTime.now(),endOfExam).toHours();
+        Long hours = Duration.between(LocalDateTime.now(), endOfExam).toHours();
         Long minutes = Duration.between(LocalDateTime.now(), endOfExam).toMinutes();
-        System.out.println("Time left -> Minuten: "+ minutes);
+        System.out.println("Time left -> Minuten: " + minutes);
     }
 
     public void enrollInStreamingServer() {
-        streamingServerService.enrollSelf(examTitle,firstName.toLowerCase(), lastName.toLowerCase());
+        streamingServerService.enrollSelf(examTitle, firstName.toLowerCase(), lastName.toLowerCase());
     }
 
     public void getExamTitle(String examId) {
