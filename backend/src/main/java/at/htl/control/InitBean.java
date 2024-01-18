@@ -38,7 +38,7 @@ public class InitBean {
         List<User> testUsers = List.of(testUser01, testUser02);
         userRepository.persist(testUsers);
         Exam testExam = new Exam("123",
-                "test-exam",
+                "init-bean-test-exam",
                 ExamState.IN_PREPARATION,
                 LocalDate.now(),
                 LocalDateTime.now().plusHours(2),

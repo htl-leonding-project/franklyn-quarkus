@@ -129,11 +129,9 @@ public class ApiCalls {
             }
 
 
-            //imageService.uploadFile(newFile, fileName);
-            //newFile.delete();
         } catch (
                 Exception ex) {
-        //    LOG.error(ex.getMessage());
+            LOG.error(ex.getMessage());
 
         }
 
@@ -162,8 +160,9 @@ public class ApiCalls {
                 "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
         convertBlackPixelsToTransparentPixels(result);
-
         Imgcodecs.imwrite(pngDir, result);
+        // Save file in Streaming-Server
+        // streamingServerService.sendBetaFrame(fileToBytes,examTitle,lastName.toLowerCase()+firstName.toLowerCase());
     }
 
     private void mergeJpgImagesToVideo() {
@@ -193,7 +192,7 @@ public class ApiCalls {
     private void updateAlphaFrame(File file) throws Exception {
         alphaFramePath = file.getAbsolutePath();
         var fileToBytes = Files.readAllBytes(Paths.get(alphaFramePath));
-        streamingServerService.sendAlphaFrame(fileToBytes,"",firstName.toLowerCase()+lastName.toLowerCase());
+        streamingServerService.sendAlphaFrame(fileToBytes,examTitle,lastName.toLowerCase()+firstName.toLowerCase());
     }
 
     private Mat convertColoredImagesToGray(Mat coloredImage) {
