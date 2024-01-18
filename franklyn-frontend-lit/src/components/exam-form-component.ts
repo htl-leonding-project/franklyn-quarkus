@@ -16,28 +16,32 @@ const examTemplate = (vm: ExamViewModel) => {
     <h2>Test erstellen</h2>
 
     <form id="examForm">
-      <label for="title">Title:</label>
+      <label for="title">Titel:</label>
       <input type="text" id="title" name="title" required /><br />
 
-      <label for="state">State:</label>
+      <label for="state">Status:</label>
       <select id="state" name="state" required>
         <option value="IN_PREPARATION">In Vorbereitung</option>
         <option value="RUNNING">Aktuell laufen</option></select
       ><br />
 
-      <label for="date">Date:</label>
+      <label for="date">Datum:</label>
       <input type="date" id="date" name="date" required /><br />
 
-      <label for="startTime">Start Time:</label>
+      <label for="startTime">Beginnt um</label>
       <input type="time" id="startTime" name="startTime" required /><br />
 
-      <label for="endTime">End Time:</label>
+      <label for="endTime">Endet um</label>
       <input type="time" id="endTime" name="endTime" required /><br />
 
-      <label for="interval">Interval:</label>
-      <input type="number" id="interval" name="interval" required /><br />
-
-      <button type="button">Create</button>
+      <div id="flex-container2">
+        <label for="interval">Bilder pro Sekunde:</label>
+        <span id="intervalValue">0</span>
+      </div>
+        <input type="range" id="slider" name="slider" min="1" max="30" step="1" required />
+      <br>
+      
+      <button type="button">Test erstellen</button>
     </form>
   `;
 };
@@ -70,9 +74,13 @@ class ExamFormComponent extends HTMLElement {
       .subscribe((viewModel) => {
         render(examTemplate(viewModel), this.shadowRoot);
 
-        // Hier fügen Sie den Event-Listener für den "Create" -Button hinzu
         const createButton = this.shadowRoot.querySelector("button");
         createButton.addEventListener("click", () => this.createExam(params));
+
+        const slider = this.shadowRoot.querySelector("#slider");
+        slider.addEventListener("input", () => this.updateIntervalDisplay());
+
+        this.updateIntervalDisplay();
       });
   }
 
@@ -82,6 +90,18 @@ class ExamFormComponent extends HTMLElement {
       id: routeParts[routeParts.length - 1], // Annahme: ID ist der letzte Teil der Route
     };
   }
+
+  updateIntervalDisplay() {
+    const slider = this.shadowRoot.querySelector("#slider");
+    if (slider instanceof HTMLInputElement) {
+      const sliderValue = slider.value;
+      const intervalDisplay = this.shadowRoot.querySelector("#intervalValue");
+      if (intervalDisplay) {
+        intervalDisplay.textContent = sliderValue;
+      }
+    }
+  }
+
 
   async createExam(params) {
     // @ts-ignore
