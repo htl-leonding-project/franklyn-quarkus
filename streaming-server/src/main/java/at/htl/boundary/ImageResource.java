@@ -32,7 +32,7 @@ public class ImageResource {
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Produces(MediaType.APPLICATION_JSON)
     public Response saveBetaImage(@PathParam("testname") String test, @PathParam("student") String student, byte[] imageData) {
-        var imageSaved = imageService.saveFrame(imageData, student, test, "alpha");
+        var imageSaved = imageService.saveFrame(imageData, student, test, "beta");
         System.out.println("Save Beta in Test: " + test);
         return Response.status(imageSaved ?
                         Response.Status.OK :

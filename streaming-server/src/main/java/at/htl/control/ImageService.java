@@ -25,11 +25,11 @@ public class ImageService {
 
     // Key username
     // Value latest alpha Frame
-    ConcurrentHashMap<String, String> alphaFrames;
+    ConcurrentHashMap<String, String> alphaFrames = new ConcurrentHashMap<>();
 
     // Key username
     // Value latest beta Frame
-    ConcurrentHashMap<String, String> betaFrames;
+    ConcurrentHashMap<String, String> betaFrames = new ConcurrentHashMap<>();
 
     @Inject
     Logger logger;
@@ -70,15 +70,14 @@ public class ImageService {
                 student.replace(" ", ""),
                 type, finalFileName)
         );
-        System.out.println(saveFilePath);
-        /*
+
         if (Objects.equals(type, "alpha")) {
             alphaFrames.put(student, finalFileName);
         } else {
             betaFrames.put(student, finalFileName);
         }
 
-*/
+
         try {
             Files.write(saveFilePath,image);
         } catch (IOException e) {
