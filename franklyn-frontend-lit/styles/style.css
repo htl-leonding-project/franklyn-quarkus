@@ -109,7 +109,7 @@ button:focus:after {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 4em;
+    padding-bottom: 1em;
     flex-direction: column;
 }
 
@@ -243,11 +243,14 @@ div.gallery:hover {
     text-decoration: none;
     color: #0C242C;
     transition: 0.5s;
+    float: right;
+    font-size: 1.1em;
 }
 
 #basicLink:hover{
     text-decoration: none;
     color: #11404e;
+    font-size: 1.2em;
 }
 
 #nav a {
