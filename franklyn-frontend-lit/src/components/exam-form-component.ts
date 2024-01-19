@@ -115,7 +115,7 @@ class ExamFormComponent extends HTMLElement {
     // @ts-ignore
     const endTimeInput = this.shadowRoot.querySelector("#endTime").value;
     // @ts-ignore
-    const intervalInput = this.shadowRoot.querySelector("#interval").value;
+    const intervalInput = this.shadowRoot.querySelector("#slider").value;
 
     const exam = {
       title: titleInput,
