@@ -52,7 +52,12 @@ dist
 /backend/db-postgres/
 
 /client
-franklyn-client/jpgImages
-franklyn-client/pngImages
+franklyn-client/alpha
+franklyn-client/beta
 
 *.mp4
+
+beta/**
+alpha/**
+**/*.jpg
+**/*.png

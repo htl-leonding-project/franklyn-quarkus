@@ -19,8 +19,8 @@ public class InitBean {
 
     private static final Logger LOGGER = Logger.getLogger("ListenerBean");
 
-    File jpgFolder = new File("jpgImages/");
-    File pngFolder = new File("pngImages/");
+    File jpgFolder = new File("alpha/");
+    File pngFolder = new File("beta/");
 
     void onStart(@Observes StartupEvent event) {
         LOGGER.info("Application started");

@@ -1,50 +1,34 @@
 package at.htl;
 
 import at.htl.control.ImageService;
-import jakarta.enterprise.context.ApplicationScoped;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.inject.Inject;
-import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
-import jakarta.websocket.server.ServerEndpoint;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.jboss.logging.Logger;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
 
-@ServerEndpoint("/live-image/{test}/{student}")
-@ApplicationScoped
+@Path("live-image")
 public class LiveImageResource {
 
-    @ConfigProperty(name = "exam-directory")
-    String directoryName;
     @Inject
-    Logger logger;
+    FrameService frameService;
 
     @Inject
     ImageService imageService;
-    Map<String, Session> sessions = new ConcurrentHashMap<>();
 
-    @OnOpen
-    public void onOpen(
-            Session session,
-            @PathParam("test") String testName,
-            @PathParam("student") String studentName) {
-        imageService.checkIfStudentOrTestDirectoryExist(studentName, testName, session, sessions);
-
+    @GET
+    @Path("{test}/{user}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public ObjectNode getAcutalImage(@PathParam("test") String test, @PathParam("user") String user) {
+        var objectMapper = new ObjectMapper();
+        var json = objectMapper.createObjectNode();
+        json.put("image", frameService.generateStreamingFrame(test, user));
+        return json;
     }
 
-    @OnClose
-    public void onClose(Session session, @PathParam("username") String username) {
-        sessions.remove(username);
-    }
-
-    @OnError
-    public void onError(Session session, @PathParam("username") String username, Throwable throwable) {
-        sessions.remove(username);
-    }
-
-    @OnMessage
-    public void onMessage(String message, @PathParam("username") String username) {
-    }
 }

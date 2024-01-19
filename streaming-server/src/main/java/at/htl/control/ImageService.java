@@ -6,6 +6,7 @@ import jakarta.websocket.Session;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,31 +35,28 @@ public class ImageService {
     @Inject
     Logger logger;
 
-    public void checkIfStudentOrTestDirectoryExist(String studentName, String testName, Session session, Map<String, Session> sessions
-    ) {
+    public void checkIfStudentOrTestDirectoryExist(String studentName, String testName) {
         //TODO: Name of directory isn't just the exam title parse also the date for the Exam
         // should look something like this var testDirectory = UtilClass.folderNameForTitleDateAndDirectory(testName,date,directoryName);
         var testDirectory = Paths.get(examDirectory + "/" + testName).toFile();
         var studentDirectory = Paths.get(testDirectory.toPath() + "/" + studentName).toFile();
         logger.log(Logger.Level.INFO, studentDirectory.toPath().toAbsolutePath());
         if (testDirectory.exists() && studentDirectory.exists()) {
-            sessions.put(studentName, session);
+
             logger.log(Logger.Level.INFO, "Requesting images for student " + studentName);
         } else {
-            try {
-                logger.log(Logger.Level.ERROR, !testDirectory.exists() ? "Test doesn't exist" : "The student directory doesn't exist");
-                session.close();
-                throw new RuntimeException("test doesn't exist");
+            logger.log(Logger.Level.ERROR, !testDirectory.exists() ? "Test doesn't exist" : "The student directory doesn't exist");
+            throw new RuntimeException("test doesn't exist");
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+
         }
 
     }
 
     public boolean saveFrame(byte[] image, String student, String test, String type) {
-        String fileExtention = Objects.equals(type, "alpha") ? ".jpg":".png";
+        System.out.println(test);
+        System.out.println(student);
+        String fileExtention = ".png";
         Long filename = System.currentTimeMillis();
 
         String finalFileName = String.format("%d%s", filename, fileExtention);
@@ -79,7 +77,7 @@ public class ImageService {
 
 
         try {
-            Files.write(saveFilePath,image);
+            Files.write(saveFilePath, image);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -87,6 +85,30 @@ public class ImageService {
         return true;
     }
 
+
+    public String getThePathOfLatestAlphaFrame(String studentName, String testName) {
+        return examDirectory +
+                "/" +
+                testName +
+                "/" +
+                studentName +
+                "/" +
+                "alpha" + "/" +
+                alphaFrames.get(studentName);
+
+    }
+
+    public String getThePathOfLatestBeta(String studentName, String testName) {
+        return examDirectory +
+                "/" +
+                testName +
+                "/" +
+                studentName +
+                "/" +
+                "beta" + "/" +
+                betaFrames.get(studentName);
+
+    }
 
 
 }

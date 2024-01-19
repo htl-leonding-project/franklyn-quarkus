@@ -1,8 +1,9 @@
 import {Model, store, UserSession} from "../model";
-import {webSocket, WebSocketSubject} from "rxjs/webSocket";
+import {WebSocketSubject} from "rxjs/webSocket";
 import {html, render} from "lit-html";
-import {combineLatest, distinctUntilChanged, interval, map, repeat} from "rxjs";
+import {catchError, interval, switchMap} from "rxjs";
 import {produce} from "immer";
+import frameService from "../frame-service";
 
 interface ViewModel {
     session: UserSession
@@ -10,12 +11,14 @@ interface ViewModel {
 }
 
 const userSession = (vm: ViewModel) => {
+    console.log(vm.currentImage)
     return html`
         <link rel="stylesheet" href="../../styles/style.css""/>
 
         <a target="_blank" href="/${vm.session.user.id}">
             <div class="gallery">
-                <img id="screenshot" width="200px" src=${"data:image/png;base64," + vm.currentImage} alt="Screenshots">
+                <img id="screenshot" width="200px" src=${"data:image/png;base64," + vm.currentImage}
+                     alt="Screenshots">
                 <p>${vm.session.user.lastName} ${vm.session.user.firstName}</p>
                 <br>
             </div>
@@ -31,11 +34,13 @@ const toViewModel = (model: Model, id: number) => {
 }
 
 class UserSessionComponent extends HTMLElement {
-    static observedAttributes = ["user-id"];
+    static observedAttributes = ["user-id", "exam-name", "user-name"];
 
     #session: UserSession
     #webSocket: WebSocketSubject<{ message: string }>;
     #id: number
+    #userName: string
+    #examName: string
 
 
     constructor() {
@@ -45,62 +50,33 @@ class UserSessionComponent extends HTMLElement {
 
     }
 
-    attributeChangedCallback(_: string, __: string, newValue: string) {
-        this.#id = Number(newValue)
-        console.log("id: ", this.#id)
-        if (this.#id) {
-            this.#session = store.getValue().sessions.find(s => s.user.id === this.#id);
-            console.info("session: ", this.#session)
-            this.#webSocket = new WebSocketSubject<{
-                message: string
-            }>(`ws://${this.#session.ip || "localhost"}:8081/image`)
-        }
+    attributeChangedCallback(name: string, __: string, newValue: string) {
+        this.#id = name === "user-id" ? Number(newValue) : this.#id;
+        this.#examName = name === "exam-name" ? newValue : this.#examName
+        this.#userName = name === "user-name" ? newValue : this.#userName
 
     }
 
     connectedCallback() {
-        interval(1000).subscribe(() => {
-            this.#webSocket.next({message: "hi"})
-        });
-        this.#webSocket.subscribe({
-            next: ({message}) => {
-                const newModel = produce(store.getValue(), model => {
-                    model.imagesOfStudents = model.imagesOfStudents.set(this.#id, message);
-                    return model
+        interval(3000)
+            .pipe(
+                switchMap(async () => await frameService.getImageForUser(this.#examName, this.#userName)),
+                catchError(e => {
+                    console.error("Error with fetching data", e.data)
+                    return ""
                 })
-                store.next(newModel);
-                render(userSession({
-                    session: store.getValue().sessions.find(s => s.user.id === this.#id),
-                    currentImage: message
-                }), this.shadowRoot)
-            }
+            ).subscribe(data => {
+            console.info(data, "structure of data")
+            const newModel = produce(store.getValue(), model => {
+                model.imagesOfStudents = model.imagesOfStudents.set(this.#id, typeof data === "string" ? "" : data?.image)
+                return model;
+            })
+            store.next(newModel)
+            render(userSession({
+                session: store.getValue().sessions.find(s => s.user.id === this.#id),
+                currentImage: store.getValue().imagesOfStudents.get(this.#id)
+            }), this.shadowRoot);
         })
-        this.#webSocket.next({message: "hi"})
-
-
-        /*   combineLatest([
-               this.#webSocket
-                   .pipe(
-                       repeat({delay: 200}),
-                       distinctUntilChanged(undefined, value => value.message)
-                   ), store
-                   .pipe(
-                       distinctUntilChanged(undefined, value => value.message),
-                       map(model => toViewModel(model, this.#id))
-                   )]
-           ).subscribe({
-               next: ([message, viewModel]) => {
-                   console.log(message)
-                   store.next({
-                       ...store.getValue(),
-                       imagesOfStudents: store
-                           .getValue()
-                           .imagesOfStudents
-                           .set(this.#session.user.id, "data:image/png;base64," + message.message)
-                   })
-                   render(userSession(viewModel), this.shadowRoot)
-               }
-           })*/
 
     }
 

@@ -1,12 +1,13 @@
 import { Exam } from "./model";
 
 class ExamService {
-  #url1 = "/api/exam/all";
+  #url1 = "/api/exam";
+
   //#url2 = "https://jsonplaceholder.typicode.com/todos";
   async getAll() {
     let exams: Exam[];
 
-    const response = await fetch(this.#url1, {
+    const response = await fetch(this.#url1+"/all", {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -19,6 +20,20 @@ class ExamService {
     }
     console.log(exams);
     return exams;
+  }
+  async getById(id:number) {
+    const response = await  fetch(this.#url1+"/"+id, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      }
+    })
+    if (response.ok) {
+      return await response.json() as Exam;
+    } else {
+      console.log(response.statusText)
+      return null;
+    }
   }
 }
 

@@ -11,7 +11,6 @@ import "./components/user-table-component";
 import "./components/exam-form-component";
 import "./components/exam-table-component";
 import "./components/exam-detail-component";
-import "./components/user-session-component";
 import "./components/home-component";
 
 import "./components/all-sessions-component";

@@ -2,13 +2,11 @@ package at.htl.control;
 
 import at.htl.boundary.StreamingServerService;
 import at.htl.boundary.UserService;
-import io.quarkus.logging.Log;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.imgscalr.Scalr;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.videoio.VideoWriter;
 import org.quartz.*;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.TriggerBuilder;
@@ -20,11 +18,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import org.jboss.logging.Logger;
@@ -76,8 +74,8 @@ public class ApiCalls {
     @RestClient
     FrameService frameService;*/
 
-    File jpgFolder = new File("jpgImages/");
-    File pngFolder = new File("pngImages/");
+    File alphaFolder = new File("alpha/");
+    File betaFolder = new File("beta/");
 
     /***
      * send screenshot to backend
@@ -85,29 +83,27 @@ public class ApiCalls {
     public void sendScreenshots() {
 
         try {
-           // LOG.info(alphaFramePath + " is the alpha frame");
+            // LOG.info(alphaFramePath + " is the alpha frame");
             String fileName = ++countOfImages + "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
 
-            File newFile = new File(pngFolder, fileName);
-            //LOG.info(newFile.getAbsoluteFile());
-            ImageIO.write(getNewBufferedImage(), fileExt, newFile);
 
-            // Konvertieren der PNG-Datei in JPG
-            String jpgFileName = fileName.replace(".png", ".jpg");
-            File jpgFile = new File(jpgFolder, jpgFileName);
-            BufferedImage pngImage = ImageIO.read(newFile);
-            ImageIO.write(pngImage, "jpg", jpgFile);
 
-            // Alle JPGs zu einem MP4 konvertieren
-            //mergeJpgImagesToVideo();
+
 
             if (alphaFramePath.isEmpty()) {
+                File newFile = new File(alphaFolder, fileName);
+
+                ImageIO.write(getNewBufferedImage(), fileExt, newFile);
                 updateAlphaFrame(newFile);
+
                 return;
             }
+            File newFile = new File(betaFolder, fileName);
 
-           // LOG.info("Difference between main and " + countOfImages);
+            ImageIO.write(getNewBufferedImage(), fileExt, newFile);
+
+            // LOG.info("Difference between main and " + countOfImages);
 
             var image1 = Imgcodecs.imread(alphaFramePath, Imgcodecs.IMREAD_UNCHANGED);
             var image2 = Imgcodecs.imread(newFile.getAbsolutePath(), Imgcodecs.IMREAD_UNCHANGED);
@@ -151,7 +147,7 @@ public class ApiCalls {
                     imageWidth,
                     imageHeight);
         } catch (Exception ex) {
-        //    LOG.error(ex.getMessage());
+            //    LOG.error(ex.getMessage());
         }
         return null;
     }
@@ -160,17 +156,28 @@ public class ApiCalls {
     private void saveBetaFrame(Mat difference, Mat screenShot) {
         var result = new Mat();
         screenShot.copyTo(result, difference);
-        String pngDir = pngFolder.getPath() + File.separator + countOfImages +
+        String imageAsPath = betaFolder.getPath() + File.separator + countOfImages +
                 "_" + lastName + "_" + firstName + "_" + id + "." + fileExt;
 
         convertBlackPixelsToTransparentPixels(result);
 
-        Imgcodecs.imwrite(pngDir, result);
+        Imgcodecs.imwrite(imageAsPath, result);
         // Save file in Streaming-Server
-        // streamingServerService.sendBetaFrame(fileToBytes,examTitle,lastName.toLowerCase()+firstName.toLowerCase());
+
+        streamingServerService.sendBetaFrame(fileToBytes(Path.of(imageAsPath)), examTitle, lastName.toLowerCase() + firstName.toLowerCase());
     }
 
-    private void mergeJpgImagesToVideo() {
+
+    private byte[] fileToBytes(Path path) {
+        try {
+            return Files.readAllBytes(path);
+        } catch (Exception ex) {
+            //
+        }
+        return null;
+    }
+
+/*    private void mergeJpgImagesToVideo() {
         try {
             nu.pattern.OpenCV.loadLocally();
 
@@ -192,12 +199,12 @@ public class ApiCalls {
         } catch (Exception ex) {
             LOG.error(ex.getMessage());
         }
-    }
+    }*/
 
     private void updateAlphaFrame(File file) throws Exception {
         alphaFramePath = file.getAbsolutePath();
         var fileToBytes = Files.readAllBytes(Paths.get(alphaFramePath));
-        streamingServerService.sendAlphaFrame(fileToBytes,examTitle,lastName.toLowerCase()+firstName.toLowerCase());
+        streamingServerService.sendAlphaFrame(fileToBytes, examTitle, lastName.toLowerCase() + firstName.toLowerCase());
     }
 
     private Mat convertColoredImagesToGray(Mat coloredImage) {
@@ -212,7 +219,7 @@ public class ApiCalls {
         var nonZeroPixels = Core.countNonZero(grayDifference);
 
         var differenceInPercentage = (double) nonZeroPixels / totalPixels * 100;
-       // LOG.info(differenceInPercentage);
+        // LOG.info(differenceInPercentage);
         return differenceInPercentage;
 
     }
@@ -274,15 +281,14 @@ public class ApiCalls {
 
                 if (enrollOption.equalsIgnoreCase("Y")) {
                     response = executeEnrollAgainService(id, firstName, lastName);
-                }
-                else if(enrollOption.equalsIgnoreCase("N")){
+                } else if (enrollOption.equalsIgnoreCase("N")) {
                     response = -100L;
                 }
 
             }
         } while (response == -1L);
 
-        if(response != -100L){
+        if (response != -100L) {
             authenticated = true;
         }
         return response;

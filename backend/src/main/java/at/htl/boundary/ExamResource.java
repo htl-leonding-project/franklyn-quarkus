@@ -61,6 +61,13 @@ public class ExamResource {
         return userSessionRepository.getAllParticipantsOfExam(examId);
     }
 
+    @GET
+    @Path("{examId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Exam getExamById(@PathParam("examId") Long id) {
+        return examRepository.findById(id);
+    }
+
     @POST
     @Path("/create")
     @Transactional
@@ -146,6 +153,7 @@ public class ExamResource {
         Log.info(interval);
         return interval;
     }
+
     @GET
     @Transactional
     @Path("getTitleByExamId/{id}")
