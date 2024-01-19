@@ -6,18 +6,29 @@ interface ExamViewModel {
   exams: Exam[];
 }
 
+function formatTime(isoDateString) {
+  const date = new Date(isoDateString);
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
+
+
 function toDoClicked(exam: Exam) {
   alert(`exam: ${exam.id} clicked`);
 }
-
 const rowTemplate = (exam: Exam) => html`
   <tr id=${`tr-${exam.id}`} @click=${() => toDoClicked(exam)}>
+    
     <td>${exam.id}</td>
     <td>${exam.title}</td>
     <td>${exam.examState}</td>
     <td>${exam.pin}</td>
     <td>${exam.interval}</td>
+    <td title="Beginnt um ${formatTime(exam.startTime)}">${exam.date}</td>
   </tr>
+  <br>
+  <a id="basicLink" href="/exam/edit/${exam.id}">Test erstellen</a>
 `;
 const tableTemplate = (vm: ExamViewModel) => {
   const rows = vm.exams.map((exam) => rowTemplate(exam));
@@ -33,7 +44,8 @@ const tableTemplate = (vm: ExamViewModel) => {
           <th id="Title">Titel</th>
           <th id="Status">Status</th>
           <th id="Pin">Pin</th>
-          <th id="Interval">Interval</th>
+          <th id="Interval">Bilder pro Sekunde</th>
+          <th id="Date">Datum</th> 
         </tr>
       </thead>
       <tbody>
@@ -59,14 +71,14 @@ class ExamTableComponent extends HTMLElement {
     console.log("connected");
 
     store
-      .pipe(
-        // distinctUntilChanged(undefined, (model) => model.todos),
-        distinctUntilChanged(undefined, (model) => model.users),
-        map(toViewModel)
-      )
-      .subscribe((viewModel) =>
-        render(tableTemplate(viewModel), this.shadowRoot)
-      );
+        .pipe(
+            // distinctUntilChanged(undefined, (model) => model.todos),
+            distinctUntilChanged(undefined, (model) => model.users),
+            map(toViewModel)
+        )
+        .subscribe((viewModel) =>
+            render(tableTemplate(viewModel), this.shadowRoot)
+        );
   }
 }
 customElements.define("exam-table", ExamTableComponent);
