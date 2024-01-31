@@ -50,7 +50,7 @@ dist
 !/franklyn-frontend/src/assets/franklyn3-client.zip
 !/backend/lib/*.jar
 /backend/db-postgres/
-
+!/franklyn-frontend-lit/target
 /client
 franklyn-client/alpha
 franklyn-client/beta
@@ -61,3 +61,4 @@ beta/**
 alpha/**
 **/*.jpg
 **/*.png
+

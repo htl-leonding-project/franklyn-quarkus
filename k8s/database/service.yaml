@@ -4,7 +4,6 @@ metadata:
   labels:
     app: franklyn-db
   name: franklyn-db-service
-  namespace: student-it190204
 spec:
   ports:
     - port: 5432

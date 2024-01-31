@@ -1,4 +1,4 @@
-body{
+body {
     font-family: raleway-regular;
     margin: 0;
 }
@@ -38,7 +38,7 @@ label {
 }
 
 input,
-select{
+select {
     width: 100%;
     padding: 0.5em;
     margin-bottom: 1em;
@@ -87,7 +87,7 @@ button:after {
 button:hover,
 button:focus {
     color: white;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 button:hover:before,
@@ -140,16 +140,16 @@ th#Email, td#Email {
     width: 100%;
 }
 
-th#Interval, td#Interval{
+th#Interval, td#Interval {
     width: 15%;
 }
 
-h2{
+h2 {
     font-family: raleway-thin;
     font-size: 1.8em;
 }
 
-h1{
+h1 {
     text-align: center;
     text-transform: uppercase;
     font-size: 4em;
@@ -157,18 +157,18 @@ h1{
 }
 
 
-#flex-container{
+#flex-container {
     flex-wrap: wrap;
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
 }
 
-#flex-container, #flex-container2{
+#flex-container, #flex-container2 {
     display: flex;
 }
 
-#flex-column{
+#flex-column {
     flex: 0 0 15%;
     margin-right: 3%;
     margin-left: 3%;
@@ -188,13 +188,15 @@ h1{
     }
 }
 
-#screenshot img{
+#screenshot img {
     width: 100%;
     height: auto;
     margin-bottom: 0.5em;
 }
 
 div.gallery {
+    min-width: 200px;
+    background-color: red;
     margin: 1rem;
     float: left;
     width: 10%;
@@ -209,7 +211,7 @@ div.gallery {
 
 div.gallery:hover {
     width: 13%;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .responsive {
@@ -230,22 +232,22 @@ div.gallery:hover {
     }
 }
 
-.gallery p{
+.gallery p {
     color: #3d3d3d;
 }
 
-.gallery:hover p{
+.gallery:hover p {
     color: black;
     transition: 0.3s ease-in-out;
 }
 
-#basicLink{
+#basicLink {
     text-decoration: none;
     color: #0C242C;
     transition: 0.5s;
 }
 
-#basicLink:hover{
+#basicLink:hover {
     text-decoration: none;
     color: #11404e;
 }
@@ -273,7 +275,7 @@ div.gallery:hover {
     width: 100%;
 }
 
-#nav{
+#nav {
     margin-bottom: 0em;
     display: flex;
     justify-content: center;
@@ -283,47 +285,46 @@ div.gallery:hover {
     padding: 1em;
 }
 
-#nav a img{
+#nav a img {
     width: 3em;
     height: auto;
     text-decoration: none;
     opacity: 0.9;
-    transition: scale 0.3s ease-in-out, opacity 0.3s ease-in-out;
-;
+    transition: scale 0.3s ease-in-out, opacity 0.3s ease-in-out;;
 }
 
-#nav a img:hover{
+#nav a img:hover {
     scale: 110%;
     opacity: 1;
 }
 
-#about h2{
+#about h2 {
     text-align: center;
 }
 
-#about #flex-container #flex-column img{
+#about #flex-container #flex-column img {
     width: 3em;
 }
 
-#about{
+#about {
     text-align: center;
 }
 
-#heading{
+#heading {
     text-align: center;
     margin-top: 2em;
     margin-bottom: 4em;
 }
 
-#heading h1{
+#heading h1 {
     margin: 0;
 }
 
-#heading p{
+#heading p {
     margin: 0;
 }
 
-#about #flex-container #flex-column{
+#about #flex-container #flex-column {
     background-color: white;
     border-radius: 1em;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -331,33 +332,35 @@ div.gallery:hover {
 }
 
 
-#about #explainFranklyn{
+#about #explainFranklyn {
     margin-left: auto;
     margin-right: auto;
     margin-top: 4em;
 }
 
-#about #explainFranklyn h2{
+#about #explainFranklyn h2 {
     margin-bottom: 0;
 }
 
-@media screen and (max-width: 800px){
-    #explainFranklyn{
+@media screen and (max-width: 800px) {
+    #explainFranklyn {
         width: 90%;
     }
 }
+
 @media screen and (min-width: 801px) and (max-width: 1000px) {
-    #explainFranklyn{
+    #explainFranklyn {
         width: 65%;
     }
 }
-@media screen and (min-width: 1001px){
-    #explainFranklyn{
+
+@media screen and (min-width: 1001px) {
+    #explainFranklyn {
         width: 50%;
     }
 }
 
-#intervalValue{
+#intervalValue {
     font-family: Arial, sans-serif;
     font-weight: lighter;
     padding-left: 0.5em;
@@ -384,14 +387,14 @@ input[type="range"] {
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
-    padding:0;
+    padding: 0;
 }
 
 input[type="range"]:hover {
     opacity: 1;
 }
 
-input[type="range"]::-webkit-slider-thumb{
+input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 1.5rem;
@@ -399,11 +402,11 @@ input[type="range"]::-webkit-slider-thumb{
     background: #4CAF50;
     cursor: pointer;
     border-radius: 100%;
-    padding:0;
+    padding: 0;
     margin-left: -1em;
 }
 
-input[type="range"]::-moz-range-thumb{
+input[type="range"]::-moz-range-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 1.5rem;

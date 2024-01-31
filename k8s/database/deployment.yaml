@@ -6,7 +6,6 @@ metadata:
   labels:
     app: franklyn-db
   name: franklyn-db
-  namespace: student-it190204
 spec:
   progressDeadlineSeconds: 600
   replicas: 1

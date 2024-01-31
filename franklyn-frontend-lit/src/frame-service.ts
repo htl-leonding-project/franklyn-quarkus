@@ -11,8 +11,9 @@ class FrameService {
             },
         })
         if (response.ok) {
-            console.log(await response.json())
-            return await response.json() as { image: string }
+            const data = await response.json() satisfies  { image: string }
+            console.log(data)
+            return data
         } else {
             console.log(response.statusText)
 

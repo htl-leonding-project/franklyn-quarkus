@@ -1,9 +1,9 @@
-import {Model, store, UserSession} from "../model";
-import {WebSocketSubject} from "rxjs/webSocket";
-import {html, render} from "lit-html";
-import {catchError, interval, switchMap} from "rxjs";
-import {produce} from "immer";
+import { produce } from "immer";
+import { html, render } from "lit-html";
+import { catchError, interval, switchMap } from "rxjs";
+import { WebSocketSubject } from "rxjs/webSocket";
 import frameService from "../frame-service";
+import { Model, UserSession, store } from "../model";
 
 interface ViewModel {
     session: UserSession
@@ -11,9 +11,8 @@ interface ViewModel {
 }
 
 const userSession = (vm: ViewModel) => {
-    console.log(vm.currentImage)
     return html`
-        <link rel="stylesheet" href="../../styles/style.css""/>
+        <link rel="stylesheet" href="../../styles/style.css">
 
         <a target="_blank" href="/${vm.session.user.id}">
             <div class="gallery">
@@ -46,7 +45,7 @@ class UserSessionComponent extends HTMLElement {
     constructor() {
         super();
 
-        this.attachShadow({mode: "open"})
+        this.attachShadow({ mode: "open" })
 
     }
 
@@ -58,25 +57,23 @@ class UserSessionComponent extends HTMLElement {
     }
 
     connectedCallback() {
-        interval(3000)
+        interval(1000)
             .pipe(
                 switchMap(async () => await frameService.getImageForUser(this.#examName, this.#userName)),
                 catchError(e => {
-                    console.error("Error with fetching data", e.data)
                     return ""
                 })
             ).subscribe(data => {
-            console.info(data, "structure of data")
-            const newModel = produce(store.getValue(), model => {
-                model.imagesOfStudents = model.imagesOfStudents.set(this.#id, typeof data === "string" ? "" : data?.image)
-                return model;
+                const newModel = produce(store.getValue(), model => {
+                    model.imagesOfStudents = model.imagesOfStudents.set(this.#id, typeof data === "string" ? "" : data?.image)
+                    return model;
+                })
+                store.next(newModel)
+                render(userSession({
+                    session: store.getValue().sessions.find(s => s.user.id === this.#id),
+                    currentImage: store.getValue().imagesOfStudents.get(this.#id)
+                }), this.shadowRoot);
             })
-            store.next(newModel)
-            render(userSession({
-                session: store.getValue().sessions.find(s => s.user.id === this.#id),
-                currentImage: store.getValue().imagesOfStudents.get(this.#id)
-            }), this.shadowRoot);
-        })
 
     }
 

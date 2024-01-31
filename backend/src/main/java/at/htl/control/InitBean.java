@@ -55,7 +55,7 @@ public class InitBean {
 
         testUsers.forEach(user -> {
             UserSession userSession = new UserSession(user, testExam, UserRole.EXAMINEE, "127.0.0.1");
-            userSessionRepository.persist(userSession);
+            /*userSessionRepository.persist(userSession);*/
         });
 
 

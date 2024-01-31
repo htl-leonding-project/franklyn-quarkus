@@ -4,7 +4,6 @@ metadata:
   finalizers:
   - kubernetes.io/pvc-protection
   name: franklyn-pvc
-  namespace: student-it190204
 spec:
     accessModes:
       - ReadWriteMany

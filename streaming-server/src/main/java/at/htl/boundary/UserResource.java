@@ -22,7 +22,7 @@ public class UserResource {
         if (initializeSuccsessfull) {
             return Response.created(null).build();
         } else {
-            return Response.ok().build();
+            return Response.ok().build( );
         }
     }
 }

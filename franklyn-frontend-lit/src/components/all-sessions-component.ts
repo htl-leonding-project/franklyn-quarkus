@@ -1,7 +1,7 @@
-import {render, html} from "lit-html";
-import {Exam, Model, store, UserSession} from "../model";
-import {distinctUntilChanged, map} from "rxjs";
-import {examService} from "../exam-service";
+import { html, render } from "lit-html";
+import { distinctUntilChanged, map } from "rxjs";
+import { examService } from "../exam-service";
+import { Exam, Model, UserSession, store } from "../model";
 
 interface SessionViewModel {
     sessions: UserSession[];
@@ -10,6 +10,7 @@ interface SessionViewModel {
 
 const sessionTemplate = (vm: SessionViewModel) => {
     const sessions = vm.sessions.map(value => {
+        console.log(value)
         return html`
             <user-session-view user-id=${value.user.id} exam-name=${vm.examName}
                                user-name=${value.user.lastName + "" + value.user.firstName}>
@@ -38,7 +39,7 @@ function toViewModel(model: Model, test: Exam) {
 class SessionComponent extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({mode: "open"});
+        this.attachShadow({ mode: "open" });
     }
 
     extractParams(route) {
@@ -50,7 +51,7 @@ class SessionComponent extends HTMLElement {
 
     async connectedCallback() {
         const route = window.location.pathname;
-        const {id} = this.extractParams(route);
+        const { id } = this.extractParams(route);
         console.log(id)
         const test = await examService.getById(Number(id));
 
