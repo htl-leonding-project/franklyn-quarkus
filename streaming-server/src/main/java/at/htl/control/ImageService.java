@@ -26,11 +26,11 @@ public class ImageService {
 
     // Key username
     // Value latest alpha Frame
-    ConcurrentHashMap<String, String> alphaFrames = new ConcurrentHashMap<>();
+    ConcurrentHashMap<String, Integer> alphaFrames = new ConcurrentHashMap<>();
 
     // Key username
     // Value latest beta Frame
-    ConcurrentHashMap<String, String> betaFrames = new ConcurrentHashMap<>();
+    ConcurrentHashMap<String, Integer> betaFrames = new ConcurrentHashMap<>();
 
     @Inject
     Logger logger;
@@ -54,36 +54,40 @@ public class ImageService {
     }
 
     public boolean saveFrame(byte[] image, String student, String test, String type) {
-        System.out.println(test);
-        System.out.println(student);
-        String fileExtention = ".png";
-        Long filename = System.currentTimeMillis();
-
-        String finalFileName = String.format("%d%s", filename, fileExtention);
-
-        Path saveFilePath = Path.of(String.format("%s/%s_%s/%s/%s/%s",
-                examDirectory,
-                test,
-                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")),
-                student.replace(" ", ""),
-                type, finalFileName)
-        );
-
-        if (Objects.equals(type, "alpha")) {
-            alphaFrames.put(student, finalFileName);
-        } else {
-            betaFrames.put(student, finalFileName);
-        }
-
-
         try {
+            System.out.println(test);
+            System.out.println(student);
+            String fileExtension = ".png";
+            String finalFileName;
+
+            if (Objects.equals(type, "alpha")) {
+                int count = alphaFrames.getOrDefault(student, 0) + 1;
+                alphaFrames.put(student, count);
+                betaFrames.put(student, 0);
+                finalFileName = count + fileExtension;
+            } else {
+                int alphaCount = alphaFrames.getOrDefault(student, 1);
+                int betaCount = betaFrames.getOrDefault(student, 0) + 1;
+                betaFrames.put(student, betaCount);
+                finalFileName = alphaCount + "-" + betaCount + fileExtension;
+            }
+
+            Path saveFilePath = Paths.get(examDirectory, test + "_" +
+                            LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")),
+                    student.replace(" ", ""), type, finalFileName);
+
+            File directory = saveFilePath.getParent().toFile();
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
             Files.write(saveFilePath, image);
+            return true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return true;
     }
+
 
 
     public String getThePathOfLatestAlphaFrame(String studentName, String testName) {

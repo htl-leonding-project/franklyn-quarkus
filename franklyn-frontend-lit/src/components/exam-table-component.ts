@@ -25,10 +25,9 @@ const rowTemplate = (exam: Exam) => html`
     <td>${exam.examState}</td>
     <td>${exam.pin}</td>
     <td>${exam.interval}</td>
-    <td title="Beginnt um ${formatTime(exam.startTime)}">${exam.date}</td>
+    <td title="Beginnt teStum ${formatTime(exam.startTime)}">${exam.date}</td>
   </tr>
   <br>
-  <a id="basicLink" href="/exam/edit/${exam.id}">Test erstellen</a>
 `;
 const tableTemplate = (vm: ExamViewModel) => {
   const rows = vm.exams.map((exam) => rowTemplate(exam));
@@ -52,6 +51,7 @@ const tableTemplate = (vm: ExamViewModel) => {
         ${rows}
       </tbody>
     </table>
+    <a id="basicLink" href="/exam/edit/0">Test erstellen</a>
   `;
 };
 

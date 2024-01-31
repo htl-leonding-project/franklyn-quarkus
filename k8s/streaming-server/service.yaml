@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2024-01-25T10:36:33Z"
+  labels:
+    app: franklyn-streaming-server
+  name: franklyn-streaming-server
+  resourceVersion: "16043"
+  uid: bf85fc44-4009-475a-aa7d-1d244a3eca84
+spec:
+  clusterIP: 10.109.104.196
+  clusterIPs:
+  - 10.109.104.196
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 8082
+    protocol: TCP
+    targetPort: 8082
+  selector:
+    app: franklyn-streaming-server
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
