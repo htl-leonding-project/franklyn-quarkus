@@ -1,5 +1,6 @@
 package at.htl.control;
 
+import at.htl.FrameService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.websocket.Session;
@@ -24,6 +25,9 @@ public class ImageService {
     @ConfigProperty(name = "exam-directory")
     String examDirectory;
 
+
+    @Inject
+    FrameService frameService;
     // Key username
     // Value latest alpha Frame
     ConcurrentHashMap<String, Integer> alphaFrames = new ConcurrentHashMap<>();
@@ -89,7 +93,6 @@ public class ImageService {
     }
 
 
-
     public String getThePathOfLatestAlphaFrame(String studentName, String testName) {
         return examDirectory +
                 "/" +
@@ -112,6 +115,13 @@ public class ImageService {
                 "beta" + "/" +
                 betaFrames.get(studentName);
 
+    }
+
+
+    public byte[] sendStreamImage(String test, String student) {
+        String pathOfAlphaFrame = examDirectory + "/" + test + "/" + student + "/alpha" + alphaFrames.get(student);
+        String pathOfBetaFrame = examDirectory + "/" + test + "/" + student + "/beta" + betaFrames.get(student);
+        return frameService.generateStreamingFrame(pathOfAlphaFrame, pathOfBetaFrame);
     }
 
 

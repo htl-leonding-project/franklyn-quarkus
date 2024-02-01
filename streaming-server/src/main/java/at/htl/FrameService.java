@@ -28,18 +28,11 @@ public class FrameService {
     }
 
 
-    public byte[] generateStreamingFrame(String testName, String studentName) {
-        var pathOfAlphaFrame = Path.of(imageService.getThePathOfLatestAlphaFrame(studentName, testName));
-        var pathOfBetaFrame = Path.of(imageService.getThePathOfLatestBeta(studentName, testName));
-        logger.info(pathOfAlphaFrame.toString());
-        logger.info(pathOfBetaFrame);
-        var alphaFileExists = Files.exists(pathOfAlphaFrame);
-        var betaFrameExists = Files.exists(pathOfBetaFrame);
-        logger.log(Logger.Level.INFO, alphaFileExists + " is the status of alphaframe");
-        logger.log(Logger.Level.INFO, betaFrameExists + " is the status of betaframe");
+    public byte[] generateStreamingFrame(String pathOfAlphaFrame, String pathOfBetaFrame) {
 
-        var alphaFrame = Imgcodecs.imread(pathOfAlphaFrame.toString(), Imgcodecs.IMWRITE_PAM_FORMAT_RGB_ALPHA);
-        var betaFrame = Imgcodecs.imread(pathOfBetaFrame.toString(), Imgcodecs.IMWRITE_PAM_FORMAT_RGB_ALPHA);
+
+        var alphaFrame = Imgcodecs.imread(pathOfAlphaFrame, Imgcodecs.IMWRITE_PAM_FORMAT_RGB_ALPHA);
+        var betaFrame = Imgcodecs.imread(pathOfBetaFrame, Imgcodecs.IMWRITE_PAM_FORMAT_RGB_ALPHA);
 
         System.out.println(alphaFrame.type() + " " + alphaFrame.size());
         System.out.println(betaFrame.type() + " " + betaFrame.size());
