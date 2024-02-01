@@ -1,0 +1,62 @@
+package at.htl.control;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.jboss.logging.Logger;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.videoio.VideoWriter;
+
+import java.io.File;
+import java.util.Arrays;
+
+@ApplicationScoped
+public class VideoService {
+    private final int imageWidth = 1080;
+    private final int imageHeight = 720;
+
+    @ConfigProperty(name = "exam-directory")
+    String pathOfExamDirectory;
+
+    @Inject
+    Logger LOG;
+
+    @Inject
+    FrameService frameService;
+
+    public void generateVideo(String testName, String studentName) {
+        try {
+
+            Size frameSize = new Size(imageWidth, imageHeight);
+            int fourCC = VideoWriter.fourcc('X', '2', '6', '4');
+            var studentDirectory = new File(pathOfExamDirectory + "/" + testName + "/" + studentName);
+            var pathOfVideo = studentDirectory.getPath() + "/video/" + studentName + ".mp4";
+            LOG.info(pathOfVideo);
+            VideoWriter videoWriter = new VideoWriter(pathOfVideo, fourCC, 30, frameSize);
+            var betaFrameFolder = new File(studentDirectory.getPath() + "/beta");
+            //File[] jpgFiles = jpgFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".jpg"));
+            Arrays.stream(betaFrameFolder.listFiles()).toList().forEach(image -> {
+                var imageName = image.getName();
+                var alphaFrameName = imageName.substring(imageName.indexOf('-') + 1, imageName.indexOf('.'));
+                var mergedImage = frameService.generateStreamingFrame(
+                        studentDirectory.getPath() + "/alpha/" + alphaFrameName + ".png", image.getPath());
+                LOG.info("=================================");
+                LOG.info("value of the merged Image:  " +mergedImage);
+                LOG.info("=================================");
+
+                var bytesToImage = new MatOfByte(mergedImage);
+                videoWriter.write(bytesToImage);
+            });
+
+            videoWriter.release();
+
+            LOG.info("Video created successfully at: video.mp4");
+        } catch (Exception ex) {
+            LOG.error(ex.getMessage());
+        }
+    }
+
+}

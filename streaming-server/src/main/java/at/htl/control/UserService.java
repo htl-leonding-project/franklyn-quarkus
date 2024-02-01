@@ -25,6 +25,7 @@ public class UserService {
             newUser.mkdir();
             File alpha = new File(newUser.getPath()+"/alpha");
             File beta = new File(newUser.getPath()+"/beta");
-        return alpha.mkdir() && beta.mkdir();
+            File video = new File(newUser.getPath()+"/video");
+        return alpha.mkdir() && beta.mkdir() && video.mkdir();
     }
 }

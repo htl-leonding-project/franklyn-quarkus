@@ -1,7 +1,5 @@
 package at.htl.boundary;
-
-import at.htl.control.UserService;
-import at.htl.entity.dto.ExamDto;
+import at.htl.control.*;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;

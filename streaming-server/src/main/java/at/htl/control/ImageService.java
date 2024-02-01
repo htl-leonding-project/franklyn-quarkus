@@ -1,6 +1,5 @@
 package at.htl.control;
 
-import at.htl.FrameService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.websocket.Session;

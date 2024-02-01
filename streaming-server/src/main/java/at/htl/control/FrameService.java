@@ -1,7 +1,6 @@
-package at.htl;
+package at.htl.control;
 
 
-import at.htl.control.ImageService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
@@ -14,19 +13,6 @@ import java.nio.file.Path;
 
 @ApplicationScoped
 public class FrameService {
-
-    @Inject
-    ImageService imageService;
-
-    @Inject
-    Logger logger;
-
-
-    private String generateFileName() {
-        long timestamp = System.currentTimeMillis();
-        return "alpha-frame_" + timestamp + ".png";
-    }
-
 
     public byte[] generateStreamingFrame(String pathOfAlphaFrame, String pathOfBetaFrame) {
 
@@ -43,7 +29,6 @@ public class FrameService {
         betaFrame.copyTo(alphaFrame, diffMask);
         MatOfByte matOfByte = new MatOfByte();
         Imgcodecs.imencode(".png", alphaFrame, matOfByte);
-        logger.log(Logger.Level.INFO, matOfByte.toArray().length);
         return matOfByte.toArray();
     }
 }
