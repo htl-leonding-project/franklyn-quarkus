@@ -14,8 +14,12 @@ import java.nio.file.Path;
 @ApplicationScoped
 public class FrameService {
 
-    public byte[] generateStreamingFrame(String pathOfAlphaFrame, String pathOfBetaFrame) {
+    @Inject
+    Logger logger;
 
+    public byte[] generateStreamingFrame(String pathOfAlphaFrame, String pathOfBetaFrame) {
+        logger.info(pathOfAlphaFrame);
+        logger.info(pathOfBetaFrame);
 
         var alphaFrame = Imgcodecs.imread(pathOfAlphaFrame, Imgcodecs.IMWRITE_PAM_FORMAT_RGB_ALPHA);
         var betaFrame = Imgcodecs.imread(pathOfBetaFrame, Imgcodecs.IMWRITE_PAM_FORMAT_RGB_ALPHA);

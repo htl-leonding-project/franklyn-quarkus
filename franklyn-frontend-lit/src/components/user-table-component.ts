@@ -21,10 +21,10 @@ const rowTemplate = (user: User) => html`
 const tableTemplate = (vm: UserViewModel) => {
   const rows = vm.users.map((user) => rowTemplate(user));
   return html`
-    <link rel="stylesheet" href="../../styles/style.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
 
     <h2>User Tabelle</h2>
-    
+
     <table>
       <thead>
         <tr>

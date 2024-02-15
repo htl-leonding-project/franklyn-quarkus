@@ -1,0 +1,22 @@
+#heading {
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 4em;
+}
+#heading h1 ,#heading p {
+    margin: 0;
+}
+
+
+
+#about h2 {
+    text-align: center;
+}
+
+#about #flex-container #flex-column img {
+    width: 3em;
+}
+
+#about {
+    text-align: center;
+}

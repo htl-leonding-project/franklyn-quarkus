@@ -1,4 +1,5 @@
 class FrameService {
+
     #link = "/streaming/api/live-image";
 
     async getImageForUser(testName: string, userName: string) {

@@ -11,7 +11,7 @@ const examTemplate = (vm: ExamViewModel) => {
   console.log("exam Template");
   console.log(vm.admin);
   return html`
-    <link rel="stylesheet" href="../../styles/style.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
 
     <h2>Test erstellen</h2>
 
@@ -38,9 +38,17 @@ const examTemplate = (vm: ExamViewModel) => {
         <label for="interval">Bilder pro Sekunde:</label>
         <span id="intervalValue">0</span>
       </div>
-        <input type="range" id="slider" name="slider" min="1" max="30" step="1" required />
-      <br>
-      
+      <input
+        type="range"
+        id="slider"
+        name="slider"
+        min="1"
+        max="30"
+        step="1"
+        required
+      />
+      <br />
+
       <button type="button">Test erstellen</button>
     </form>
   `;
@@ -63,6 +71,7 @@ class ExamFormComponent extends HTMLElement {
   connectedCallback() {
     const route = window.location.pathname;
     const params = this.extractParams(route);
+    console.log(params);
     console.log("Exam ID:", params.id);
     // console.log("connected exam");
 
@@ -101,7 +110,6 @@ class ExamFormComponent extends HTMLElement {
       }
     }
   }
-
 
   async createExam(params) {
     // @ts-ignore

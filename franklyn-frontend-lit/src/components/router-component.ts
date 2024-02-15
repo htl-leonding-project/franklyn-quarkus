@@ -1,44 +1,83 @@
 import { html, render } from "lit-html";
-import { produce } from "immer";
-import { store } from "../model";
 
+declare var process: {
+  env: {
+    BASE_HREF: string;
+  };
+};
+
+type ValuesOfTheMap = (params?: { id: number }) => ReturnType<typeof html>;
 class RouterComponent extends HTMLElement {
-  #routes = {};
+  #routes = new Map<string, ValuesOfTheMap>();
   constructor() {
+    const baseHRef = process.env.BASE_HREF;
+    if (baseHRef) {
+      const base = document.querySelector("base");
+      if (base) {
+        console.log("base=", baseHRef);
+        base.setAttribute("href", baseHRef);
+      }
+    }
+
     super();
     this.attachShadow({ mode: "open" });
 
-    const stylesheetLink = document.createElement('link');
-    stylesheetLink.rel = 'stylesheet';
-    stylesheetLink.href = '/styles/style.css';
+    const stylesheetLink = document.createElement("link");
+    stylesheetLink.rel = "stylesheet";
+    stylesheetLink.href = "/styles/style.css";
+    this.#routes.get("/home");
+
     document.head.appendChild(stylesheetLink);
 
-    this.#routes = {
-      "/": () => html`<franklyn-home></franklyn-home>`,
-      "/users": () => html`<user-table></user-table>`,
-      "/exams": () => html`<exam-table></exam-table>`,
-      "/exam/:id": (params) => html`<all-sessions id="${params.id}"></all-sessions>`,
-      "/exam/edit/:id": (params) =>
-        html`<exam-form id="${params.id}"></exam-form>`,
-      "/home": () => html`<franklyn-home></franklyn-home>`,
-      // Add more routes as needed
-    };
-
-    window.addEventListener("popstate", () => this.handleRouteChange());
+    this.#routes.set(baseHRef, () => html`<franklyn-home></franklyn-home>`);
+    this.#routes.set(
+      baseHRef + "home",
+      () => html`<franklyn-home></franklyn-home>`
+    );
+    this.#routes.set(
+      baseHRef + "users",
+      (params?: any) => html`<user-table></user-table>`
+    );
+    this.#routes.set(
+      baseHRef + "exams",
+      (params?: any) => html`<exam-table></exam-table>`
+    );
+    this.#routes.set(
+      baseHRef + "exam/:id",
+      (params: { id: number }) =>
+        html`<all-sessions id="${params.id}"></all-sessions>`
+    );
+    this.#routes.set(
+      baseHRef + "exam/edit/:id",
+      (params) => html`<exam-form id="${params.id}"></exam-form>`
+    );
+    window.addEventListener("popstate", (params?: any) =>
+      this.handleRouteChange()
+    );
     this.handleRouteChange();
   }
 
   handleRouteChange() {
     const route = window.location.pathname;
-    const matchedRoute = Object.keys(this.#routes).find((pattern) =>
-      this.matchRoute(route, pattern)
-    );
+    const mapKeys = Array.from(this.#routes.keys());
+    console.log(mapKeys);
+    const matchedRoute = mapKeys.find((pattern) => {
+      console.log(pattern);
+      return this.matchRoute(route, pattern);
+    });
+    console.log(matchedRoute);
 
     if (matchedRoute) {
-      const params = this.extractParams(route, matchedRoute);
-      this.renderComponent(this.#routes[matchedRoute](params));
-      console.log(store.getValue().exams);
-      console.log(params);
+      const params = this.extractParams(route, matchedRoute) as
+        | { id: number }
+        | {};
+      let component: ReturnType<typeof html>;
+      if ("id" in params) {
+        component = this.#routes.get(matchedRoute)(params);
+      } else {
+        component = this.#routes.get(matchedRoute)();
+      }
+      this.renderComponent(component);
     } else {
       // Handle 404 or default route
       this.renderComponent(html`<p>Not Found</p>`);
@@ -80,7 +119,7 @@ class RouterComponent extends HTMLElement {
     return params;
   }
 
-  renderComponent(component) {
+  renderComponent(component: ReturnType<typeof html>) {
     render(component, this.shadowRoot);
   }
 }

@@ -54,8 +54,8 @@ public class InitBean {
         streamingServerService.createExam(examDto);
 
         testUsers.forEach(user -> {
-            UserSession userSession = new UserSession(user, testExam, UserRole.EXAMINEE, "127.0.0.1");
-            /*userSessionRepository.persist(userSession);*/
+            UserSession userSession = new UserSession(user, testExam, UserRole.EXAMINEE);
+            userSessionRepository.persist(userSession);
         });
 
 

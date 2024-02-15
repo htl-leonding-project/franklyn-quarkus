@@ -5,7 +5,7 @@ const navTemplate = () => {
     <link rel="stylesheet" type="text/css" href="/styles/style.css" />
 
     <div id="nav">
-      <a href="/"><img src="../../img/logo.png" /></a>
+      <a href="/"><img src="/img/logo.png" /></a>
       <a href="/exams">Prüfungen</a>
       <a href="/users">Nutzerübersicht</a>
     </div>

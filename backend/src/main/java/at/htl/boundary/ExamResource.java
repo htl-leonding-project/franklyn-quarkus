@@ -124,7 +124,7 @@ public class ExamResource {
             return -1L;
         }
         userRepository.persist(user);
-        UserSession userSession = new UserSession(user, exam, UserRole.EXAMINEE, ip);
+        UserSession userSession = new UserSession(user, exam, UserRole.EXAMINEE);
         userSessionRepository.persist(userSession);
         return user.getId();
     }

@@ -13,7 +13,9 @@ public class InitBean {
     ExamService examService;
 
     void onStart(@Observes StartupEvent ev) {
+
         OpenCV.loadLocally();
+
         System.out.println(examService.initializeExam("ITP Test", LocalDate.now()));
 
     }

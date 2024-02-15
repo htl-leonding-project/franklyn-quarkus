@@ -6,78 +6,86 @@ import frameService from "../frame-service";
 import { Model, UserSession, store } from "../model";
 
 interface ViewModel {
-    session: UserSession
-    currentImage: string
+  session: UserSession;
+  currentImage: string;
 }
 
 const userSession = (vm: ViewModel) => {
-    return html`
-        <link rel="stylesheet" href="../../styles/style.css">
+  return html` <link rel="stylesheet" href="/styles/style.css" />
 
-        <a target="_blank" href="/${vm.session.user.id}">
-            <div class="gallery">
-                <img id="screenshot" width="200px" src=${"data:image/png;base64," + vm.currentImage}
-                     alt="Screenshots">
-                <p>${vm.session.user.lastName} ${vm.session.user.firstName}</p>
-                <br>
-            </div>
-        </a>`
-}
-
+    <a target="_blank" href="/${vm.session.user.id}">
+      <div class="gallery">
+        <img
+          id="screenshot"
+          width="200px"
+          src=${"data:image/png;base64," + vm.currentImage}
+          alt="Screenshots"
+        />
+        <p>${vm.session.user.lastName} ${vm.session.user.firstName}</p>
+        <br />
+      </div>
+    </a>`;
+};
 
 const toViewModel = (model: Model, id: number) => {
-    return {
-        session: model.sessions.find(s => s.user.id === id),
-        currentImage: model.imagesOfStudents.get(id)
-    } as ViewModel
-}
+  return {
+    session: model.sessions.find((s) => s.user.id === id),
+    currentImage: model.imagesOfStudents.get(id),
+  } as ViewModel;
+};
 
 class UserSessionComponent extends HTMLElement {
-    static observedAttributes = ["user-id", "exam-name", "user-name"];
+  static observedAttributes = ["user-id", "exam-name", "user-name"];
 
-    #session: UserSession
-    #webSocket: WebSocketSubject<{ message: string }>;
-    #id: number
-    #userName: string
-    #examName: string
+  #session: UserSession;
+  #webSocket: WebSocketSubject<{ message: string }>;
+  #id: number;
+  #userName: string;
+  #examName: string;
 
+  constructor() {
+    super();
 
-    constructor() {
-        super();
+    this.attachShadow({ mode: "open" });
+  }
 
-        this.attachShadow({ mode: "open" })
+  attributeChangedCallback(name: string, __: string, newValue: string) {
+    this.#id = name === "user-id" ? Number(newValue) : this.#id;
+    this.#examName = name === "exam-name" ? newValue : this.#examName;
+    this.#userName = name === "user-name" ? newValue : this.#userName;
+  }
 
-    }
-
-    attributeChangedCallback(name: string, __: string, newValue: string) {
-        this.#id = name === "user-id" ? Number(newValue) : this.#id;
-        this.#examName = name === "exam-name" ? newValue : this.#examName
-        this.#userName = name === "user-name" ? newValue : this.#userName
-
-    }
-
-    connectedCallback() {
-        interval(1000)
-            .pipe(
-                switchMap(async () => await frameService.getImageForUser(this.#examName, this.#userName)),
-                catchError(e => {
-                    return ""
-                })
-            ).subscribe(data => {
-                const newModel = produce(store.getValue(), model => {
-                    model.imagesOfStudents = model.imagesOfStudents.set(this.#id, typeof data === "string" ? "" : data?.image)
-                    return model;
-                })
-                store.next(newModel)
-                render(userSession({
-                    session: store.getValue().sessions.find(s => s.user.id === this.#id),
-                    currentImage: store.getValue().imagesOfStudents.get(this.#id)
-                }), this.shadowRoot);
-            })
-
-    }
-
+  connectedCallback() {
+    interval(3000)
+      .pipe(
+        switchMap(
+          async () =>
+            await frameService.getImageForUser(this.#examName, this.#userName)
+        ),
+        catchError((e) => {
+          return "";
+        })
+      )
+      .subscribe((data) => {
+        const newModel = produce(store.getValue(), (model) => {
+          model.imagesOfStudents = model.imagesOfStudents.set(
+            this.#id,
+            typeof data === "string" ? "" : data?.image
+          );
+          return model;
+        });
+        store.next(newModel);
+        render(
+          userSession({
+            session: store
+              .getValue()
+              .sessions.find((s) => s.user.id === this.#id),
+            currentImage: store.getValue().imagesOfStudents.get(this.#id),
+          }),
+          this.shadowRoot
+        );
+      });
+  }
 }
 
-customElements.define("user-session-view", UserSessionComponent)
-
+customElements.define("user-session-view", UserSessionComponent);

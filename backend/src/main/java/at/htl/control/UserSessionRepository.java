@@ -33,7 +33,8 @@ public class UserSessionRepository implements PanacheRepository<UserSession> {
     }
 
     public List<UserSession> getAllParticipantsOfExam(Long examId) {
-        return find("#UserSession.allParticipants", examId).stream().toList();
+
+        return list("where exam.id = ?1", examId).stream().toList();
     }
 
     public void kickUser(Long examId, Long userId){
