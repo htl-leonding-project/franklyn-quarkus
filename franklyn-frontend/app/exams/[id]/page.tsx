@@ -1,21 +1,35 @@
 import { User } from "@/models/User";
 import { UserSession } from "models/UserSession";
-import { useRouter } from "next/router";
+import { NextPage } from "next";
 
 const fetchParticipantsOfExam = async (examID: number): Promise<User[]> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER}/api/exam/${examID}/participants`
-  );
-  if (response.ok) {
+  console.log(examID);
+  try {
+    const response = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_API_SERVER || ""
+      }/api/exam/${examID}/participants`,
+      {
+        mode: "no-cors",
+      }
+    );
+
     const data = (await response.json()) as UserSession[];
     return data.map((session) => session.user);
+  } catch (e) {
+    console.error(e);
+    return [];
   }
-  return [];
 };
+interface DynamicPageProps {
+  params: {
+    id: string;
+  };
+}
 
-const Page = async () => {
-  const router = useRouter();
-  const examId = Number(router.query.id);
+const Page: NextPage<DynamicPageProps> = async ({ params }) => {
+  console.log(params);
+  const examId = Number(params.id);
   const participants = await fetchParticipantsOfExam(examId);
 
   return (
@@ -30,3 +44,5 @@ const Page = async () => {
     </div>
   );
 };
+
+export default Page;

@@ -55,7 +55,7 @@ const InfoBox: FC<{
 }> = ({ header, imagePath, description }) => {
   return (
     <div className="flex flex-col justify-center items-center p-4  gap-8 shadow-md rounded-md ">
-      <img className="w-12" src={imagePath} />
+      <img className="w-12" src={`${process.env.BASE_PATH}${imagePath}`} />
       <h3>{header}</h3>
       <p>{description}</p>
     </div>

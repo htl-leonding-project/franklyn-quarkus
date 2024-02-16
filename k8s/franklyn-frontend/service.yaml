@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2024-02-15T10:32:32Z"
+  labels:
+    app: franklyn-frontend
+  name: franklyn-frontend
+  resourceVersion: "21350"
+  uid: a69bb415-be59-47ee-b60a-d48152ced064
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: franklyn-frontend
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

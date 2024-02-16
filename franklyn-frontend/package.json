@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "NODE_ENV=production next telemetry disable & next build --no-lint",
+    "start": "NODE_ENV=production & next start",
+    "prebuild": "next telemetry disable",
     "lint": "next lint"
   },
   "dependencies": {

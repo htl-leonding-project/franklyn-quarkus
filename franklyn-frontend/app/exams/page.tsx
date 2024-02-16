@@ -2,7 +2,7 @@ import { Exam } from "models/Exam";
 
 const fetchExams = async (): Promise<Exam[]> => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER!}/api/exam/all`
+    `${process.env.NEXT_PUBLIC_API_SERVER}/api/exam/all`
   );
   return response.ok ? await response.json() : [];
 };
