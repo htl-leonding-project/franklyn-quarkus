@@ -18,6 +18,7 @@ bin/
 *.iml
 *.iws
 
+node_modules/
 # NetBeans
 nb-configuration.xml
 

@@ -118,8 +118,10 @@ public class ImageService {
 
 
     public byte[] sendStreamImage(String test, String student) {
-        String pathOfAlphaFrame = examDirectory + "/" + test + "/" + student + "/alpha" + alphaFrames.get(student);
-        String pathOfBetaFrame = examDirectory + "/" + test + "/" + student + "/beta" + betaFrames.get(student);
+        var alphaFrameIndex = alphaFrames.get(student);
+        String pathOfAlphaFrame = examDirectory + "/" + test + "/" + student + "/alpha/" + alphaFrameIndex + ".png";
+        String pathOfBetaFrame = examDirectory + "/" + test + "/" + student + "/beta/" + alphaFrameIndex + "-" + betaFrames.get(student) + ".png";
+        ;
         return frameService.generateStreamingFrame(pathOfAlphaFrame, pathOfBetaFrame);
     }
 

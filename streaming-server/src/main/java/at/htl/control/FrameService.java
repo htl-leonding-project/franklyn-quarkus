@@ -16,7 +16,8 @@ public class FrameService {
 
     public byte[] generateStreamingFrame(String pathOfAlphaFrame, String pathOfBetaFrame) {
 
-
+        System.out.println(pathOfAlphaFrame + " alpha frame" );
+        System.out.println(pathOfBetaFrame + " beta frame" );
         var alphaFrame = Imgcodecs.imread(pathOfAlphaFrame, Imgcodecs.IMWRITE_PAM_FORMAT_RGB_ALPHA);
         var betaFrame = Imgcodecs.imread(pathOfBetaFrame, Imgcodecs.IMWRITE_PAM_FORMAT_RGB_ALPHA);
 
